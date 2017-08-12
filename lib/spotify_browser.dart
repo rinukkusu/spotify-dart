@@ -1,9 +1,6 @@
 // Copyright (c) 2017, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
 library spotify;
 
 import 'dart:async';
@@ -14,12 +11,16 @@ import 'package:owl/annotation/json.dart';
 
 import 'spotify_browser.json.g.dart';
 
-part 'src/models/token_request.dart';
+import 'src/models/token_request.dart';
+import 'src/models/token_request.json.g.dart';
+
 part 'src/models/artist.dart';
 part 'src/models/followers.dart';
 part 'src/models/image.dart';
+part 'src/models/album.dart';
 
 part 'src/endpoints/artists.dart';
+part 'src/endpoints/albums.dart';
 
 part 'src/spotify_credentials.dart';
 

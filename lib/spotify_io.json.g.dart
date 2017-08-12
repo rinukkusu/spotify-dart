@@ -17,84 +17,6 @@ import 'package:owl/util/json/core.dart' as _owl_json;
 
 // **************************************************************************
 // Generator: JsonGenerator
-// Target: class TokenRequest
-// **************************************************************************
-
-/// Mapper for TokenRequest
-abstract class TokenRequestMapper {
-  /// Converts an instance of TokenRequest to Map.
-  static Map<String, dynamic> map(TokenRequest object) {
-    if (object == null) return null;
-    return (new _owl_json.MapBuilder(ordered: false)
-          ..put('grant_type', object.grantType))
-        .toMap();
-  }
-
-  /// Converts a Map to an instance of TokenRequest.
-  static TokenRequest parse(Map<String, dynamic> map) {
-    if (map == null) return null;
-    final TokenRequest object = new TokenRequest();
-    object.grantType = map['grant_type'];
-    return object;
-  }
-
-  /// Converts a JSON string to an instance of TokenRequest.
-  static TokenRequest fromJson(String json) {
-    if (json == null || json.isEmpty) return null;
-    final Map<String, dynamic> map = JSON.decoder.convert(json);
-    return parse(map);
-  }
-
-  /// Converts an instance of TokenRequest to JSON string.
-  static String toJson(TokenRequest object) {
-    if (object == null) return null;
-    return JSON.encoder.convert(map(object));
-  }
-}
-
-// **************************************************************************
-// Generator: JsonGenerator
-// Target: class ApiToken
-// **************************************************************************
-
-/// Mapper for ApiToken
-abstract class ApiTokenMapper {
-  /// Converts an instance of ApiToken to Map.
-  static Map<String, dynamic> map(ApiToken object) {
-    if (object == null) return null;
-    return (new _owl_json.MapBuilder(ordered: false)
-          ..put('access_token', object.accessToken)
-          ..put('token_type', object.tokenType)
-          ..put('expires_in', object.expiresIn))
-        .toMap();
-  }
-
-  /// Converts a Map to an instance of ApiToken.
-  static ApiToken parse(Map<String, dynamic> map) {
-    if (map == null) return null;
-    final ApiToken object = new ApiToken();
-    object.accessToken = map['access_token'];
-    object.tokenType = map['token_type'];
-    object.expiresIn = map['expires_in'];
-    return object;
-  }
-
-  /// Converts a JSON string to an instance of ApiToken.
-  static ApiToken fromJson(String json) {
-    if (json == null || json.isEmpty) return null;
-    final Map<String, dynamic> map = JSON.decoder.convert(json);
-    return parse(map);
-  }
-
-  /// Converts an instance of ApiToken to JSON string.
-  static String toJson(ApiToken object) {
-    if (object == null) return null;
-    return JSON.encoder.convert(map(object));
-  }
-}
-
-// **************************************************************************
-// Generator: JsonGenerator
 // Target: class Artist
 // **************************************************************************
 
@@ -271,6 +193,192 @@ abstract class ImageMapper {
 
   /// Converts an instance of Image to JSON string.
   static String toJson(Image object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+// **************************************************************************
+// Generator: JsonGenerator
+// Target: class Album
+// **************************************************************************
+
+/// Mapper for Album
+abstract class AlbumMapper {
+  /// Converts an instance of Album to Map.
+  static Map<String, dynamic> map(Album object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('album_type', object.albumType)
+          ..put(
+              'artists', object.artists?.map(ArtistSimpleMapper.map)?.toList())
+          ..put('available_markets', object.availableMarkets?.toList())
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('images', object.images?.map(ImageMapper.map)?.toList())
+          ..put('name', object.name)
+          ..put('type', object.type)
+          ..put('uri', object.uri)
+          ..put('copyrights',
+              object.copyrights?.map(CopyrightMapper.map)?.toList())
+          ..put('genres', object.genres?.toList())
+          ..put('label', object.label)
+          ..put('popularity', object.popularity)
+          ..put('release_date', object.releaseDate)
+          ..put('release_date_precision', object.releaseDatePrecision))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of Album.
+  static Album parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final Album object = new Album();
+    object.albumType = map['album_type'];
+
+    // ignore: avoid_as
+    object.artists = (map['artists'] as List<dynamic>)
+        ?.map(ArtistSimpleMapper.parse)
+        ?.toList();
+
+    // ignore: avoid_as
+    object.availableMarkets =
+        (map['available_markets'] as List<String>)?.toList();
+    object.href = map['href'];
+    object.id = map['id'];
+
+    // ignore: avoid_as
+    object.images =
+        (map['images'] as List<dynamic>)?.map(ImageMapper.parse)?.toList();
+    object.name = map['name'];
+    object.type = map['type'];
+    object.uri = map['uri'];
+
+    // ignore: avoid_as
+    object.copyrights = (map['copyrights'] as List<dynamic>)
+        ?.map(CopyrightMapper.parse)
+        ?.toList();
+
+    // ignore: avoid_as
+    object.genres = (map['genres'] as List<String>)?.toList();
+    object.label = map['label'];
+    object.popularity = map['popularity'];
+    object.releaseDate = map['release_date'];
+    object.releaseDatePrecision = map['release_date_precision'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of Album.
+  static Album fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of Album to JSON string.
+  static String toJson(Album object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+// **************************************************************************
+// Generator: JsonGenerator
+// Target: class AlbumSimple
+// **************************************************************************
+
+/// Mapper for AlbumSimple
+abstract class AlbumSimpleMapper {
+  /// Converts an instance of AlbumSimple to Map.
+  static Map<String, dynamic> map(AlbumSimple object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('album_type', object.albumType)
+          ..put(
+              'artists', object.artists?.map(ArtistSimpleMapper.map)?.toList())
+          ..put('available_markets', object.availableMarkets?.toList())
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('images', object.images?.map(ImageMapper.map)?.toList())
+          ..put('name', object.name)
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of AlbumSimple.
+  static AlbumSimple parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final AlbumSimple object = new AlbumSimple();
+    object.albumType = map['album_type'];
+
+    // ignore: avoid_as
+    object.artists = (map['artists'] as List<dynamic>)
+        ?.map(ArtistSimpleMapper.parse)
+        ?.toList();
+
+    // ignore: avoid_as
+    object.availableMarkets =
+        (map['available_markets'] as List<String>)?.toList();
+    object.href = map['href'];
+    object.id = map['id'];
+
+    // ignore: avoid_as
+    object.images =
+        (map['images'] as List<dynamic>)?.map(ImageMapper.parse)?.toList();
+    object.name = map['name'];
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of AlbumSimple.
+  static AlbumSimple fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of AlbumSimple to JSON string.
+  static String toJson(AlbumSimple object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+// **************************************************************************
+// Generator: JsonGenerator
+// Target: class Copyright
+// **************************************************************************
+
+/// Mapper for Copyright
+abstract class CopyrightMapper {
+  /// Converts an instance of Copyright to Map.
+  static Map<String, dynamic> map(Copyright object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('text', object.text)
+          ..put('type', object.type))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of Copyright.
+  static Copyright parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final Copyright object = new Copyright();
+    object.text = map['text'];
+    object.type = map['type'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of Copyright.
+  static Copyright fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of Copyright to JSON string.
+  static String toJson(Copyright object) {
     if (object == null) return null;
     return JSON.encoder.convert(map(object));
   }

@@ -13,7 +13,10 @@ main() async {
   var credentials = new SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   var spotify = new SpotifyApi(credentials);
 
-  var artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
+  var artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
 
-  print(ArtistMapper.toJson(artist));
+  artists.forEach((x) => print(x.name));
+
+  var album = await spotify.albums.get('6PEYvIrLYHJ8BvpE5uUChz');
+  print(album.name);
 }

@@ -11,9 +11,11 @@ abstract class SpotifyApiBase {
       'https://accounts.spotify.com/api/token';
 
   Artists artists;
+  Albums albums;
 
   SpotifyApiBase(this._credentials) {
     artists = new Artists(this);
+    albums = new Albums(this);
   }
 
   Future<Null> _refreshToken() async {

@@ -1,4 +1,6 @@
-part of spotify;
+library spotify.token;
+
+import 'package:owl/annotation/json.dart';
 
 @JsonClass()
 class TokenRequest {
