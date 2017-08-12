@@ -12,13 +12,6 @@ abstract class SpotifyApiBase {
 
   Artists artists;
 
-  String _getForecastUrl(
-          double lat, double lon, String excludes, String lang, String units) =>
-      '$_baseUrl/forecast/$_apiToken/$lat,$lon' +
-      '?exclude=$excludes' +
-      '&lang=$lang' +
-      '&units=$units';
-
   SpotifyApiBase(this._credentials) {
     artists = new Artists(this);
   }
@@ -33,18 +26,22 @@ abstract class SpotifyApiBase {
     }
   }
 
-  Future<String> _get(String path) async {
-    await _refreshToken();
-    var headers = {'Authorization': 'Bearer ${_apiToken.accessToken}'};
-    var url = '${_baseUrl}/$path';
-    return _getImpl(url, headers);
+  Future<String> _get(String path) {
+    return _requestWrapper(path, _getImpl);
   }
 
-  Future<String> _post(String path, String body) async {
+  Future<String> _post(String path, String body) {
+    return _requestWrapper(
+        path, (url, headers) => _postImpl(url, headers, body));
+  }
+
+  Future<String> _requestWrapper(String path,
+      Future<String> req(String url, Map<String, String> headers)) async {
     await _refreshToken();
     var headers = {'Authorization': 'Bearer ${_apiToken.accessToken}'};
     var url = '${_baseUrl}/$path';
-    return _postImpl(url, headers, body);
+
+    return req(url, headers);
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers);
