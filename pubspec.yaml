@@ -1,0 +1,16 @@
+name: spotify
+description: A dart library for interfacing with the Spotify API.
+version: 0.0.1
+homepage: https://github.com/rinukkusu/spotify-dart
+author: 'rinukkusu <rinukkusu@auen.land>'
+
+environment:
+  sdk: '>=1.20.1 <2.0.0'
+
+dependencies:
+  http: ^0.11.3+14
+  owl: '>=0.2.1 <0.3.0'
+
+dev_dependencies:
+  test: ^0.12.0
+  owl_codegen: '>=0.2.1+2 <0.3.0'
