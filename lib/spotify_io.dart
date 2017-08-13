@@ -19,6 +19,7 @@ part 'src/models/followers.dart';
 part 'src/models/image.dart';
 part 'src/models/album.dart';
 
+part 'src/endpoints/endpoint_base.dart';
 part 'src/endpoints/artists.dart';
 part 'src/endpoints/albums.dart';
 
