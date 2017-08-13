@@ -11,12 +11,14 @@ abstract class SpotifyApiBase {
   static const String _tokenRefreshUrl =
       'https://accounts.spotify.com/api/token';
 
-  Artists artists;
-  Albums albums;
+  Artists _artists;
+  Artists get artists => _artists;
+  Albums _albums;
+  Albums get albums => _albums;
 
   SpotifyApiBase(this._credentials) {
-    artists = new Artists(this);
-    albums = new Albums(this);
+    _artists = new Artists(this);
+    _albums = new Albums(this);
   }
 
   Future<Null> _refreshToken() async {
