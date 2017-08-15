@@ -6,7 +6,7 @@ part of spotify;
 class Artists extends EndpointBase {
   @override
   String get _path => 'v1/albums';
-  
+
   Artists(SpotifyApiBase api) : super(api);
 
   Future<Artist> get(String id) async {

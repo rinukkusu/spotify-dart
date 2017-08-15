@@ -3,10 +3,10 @@
 
 part of spotify;
 
-class Albums extends EndpointBase{
+class Albums extends EndpointBase {
   @override
   String get _path => 'v1/albums';
-  
+
   Albums(SpotifyApiBase api) : super(api);
 
   Future<Album> get(String id) async {

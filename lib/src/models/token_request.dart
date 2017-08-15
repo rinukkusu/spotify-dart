@@ -24,6 +24,6 @@ class ApiToken {
 
   @Transient()
   DateTime _createdOn = new DateTime.now();
-  bool get isExpired => 
+  bool get isExpired =>
       _createdOn.difference(new DateTime.now()).inSeconds.abs() > expiresIn;
 }

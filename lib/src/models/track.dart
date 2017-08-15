@@ -31,7 +31,7 @@ class Track implements TrackSimple {
   @JsonField(key: 'disc_number')
   int discNumber;
 
-  /// The track length in milliseconds. 
+  /// The track length in milliseconds.
   @JsonField(key: 'duration_ms')
   int durationMs;
 
@@ -56,7 +56,7 @@ class Track implements TrackSimple {
   /// A link to the Web API endpoint providing full details of the track.
   String href;
 
-  /// The Spotify ID for the track. 
+  /// The Spotify ID for the track.
   String id;
 
   /**
@@ -75,7 +75,7 @@ class Track implements TrackSimple {
   @JsonField(key: 'linked_from')
   TrackLink linkedFrom;
 
-  /// The name of the track. 
+  /// The name of the track.
   String name;
 
   /**
@@ -139,7 +139,7 @@ class TrackSimple {
   @JsonField(key: 'disc_number')
   int discNumber;
 
-  /// The track length in milliseconds. 
+  /// The track length in milliseconds.
   @JsonField(key: 'duration_ms')
   int durationMs;
 
@@ -160,7 +160,7 @@ class TrackSimple {
   /// A link to the Web API endpoint providing full details of the track.
   String href;
 
-  /// The Spotify ID for the track. 
+  /// The Spotify ID for the track.
   String id;
 
   /**
@@ -179,7 +179,7 @@ class TrackSimple {
   @JsonField(key: 'linked_from')
   TrackLink linkedFrom;
 
-  /// The name of the track. 
+  /// The name of the track.
   String name;
 
   /**
@@ -212,7 +212,7 @@ class TrackLink {
   /// A link to the Web API endpoint providing full details of the track.
   String href;
 
-  /// The Spotify ID for the track. 
+  /// The Spotify ID for the track.
   String id;
 
   /// The object type: "track".

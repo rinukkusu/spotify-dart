@@ -4,19 +4,19 @@
 part of spotify;
 
 class SpotifyApi extends SpotifyApiBase {
-  SpotifyApi(SpotifyApiCredentials credentials)
-      : super(credentials);
+  SpotifyApi(SpotifyApiCredentials credentials) : super(credentials);
 
   @override
   Future<String> _getImpl(String url, Map<String, String> headers) async {
     var client = new http.Client();
     var response = await client.get(url, headers: headers);
-    
+
     return UTF8.decode(response.bodyBytes);
   }
 
   @override
-  Future<String> _postImpl(String url, Map<String, String> headers, dynamic body) async {
+  Future<String> _postImpl(
+      String url, Map<String, String> headers, dynamic body) async {
     var client = new http.Client();
     var response = await client.post(url, headers: headers, body: body);
     return UTF8.decode(response.bodyBytes);

@@ -51,7 +51,7 @@ class Album implements AlbumSimple {
   /// The copyright statements of the album.
   List<Copyright> copyrights;
 
-  // /// Known external IDs for the album. 
+  // /// Known external IDs for the album.
   //@JsonField(key: 'external_ids')
   //Map<String, String> externalIds;
 
@@ -140,7 +140,7 @@ class Copyright {
   /// The copyright text for this album.
   String text;
 
-  /// The type of copyright: 
+  /// The type of copyright:
   ///     C = the copyright
   ///     P = the sound recording (performance) copyright.
   String type;

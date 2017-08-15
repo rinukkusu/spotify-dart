@@ -13,13 +13,16 @@ abstract class SpotifyApiBase {
 
   Artists _artists;
   Albums _albums;
+  Tracks _tracks;
 
   Artists get artists => _artists;
   Albums get albums => _albums;
+  Tracks get tracks => _tracks;
 
   SpotifyApiBase(this._credentials) {
     _artists = new Artists(this);
     _albums = new Albums(this);
+    _tracks = new Tracks(this);
   }
 
   Future<Null> _refreshToken() async {

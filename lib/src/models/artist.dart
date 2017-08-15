@@ -12,7 +12,7 @@ class Artist implements ArtistSimple {
   /// A link to the Web API endpoint providing full details of the artist.
   String href;
 
-  /// The Spotify ID for the artist. 
+  /// The Spotify ID for the artist.
   String id;
 
   /// The name of the artist
@@ -56,7 +56,7 @@ class ArtistSimple {
   /// A link to the Web API endpoint providing full details of the artist.
   String href;
 
-  /// The Spotify ID for the artist. 
+  /// The Spotify ID for the artist.
   String id;
 
   /// The name of the artist

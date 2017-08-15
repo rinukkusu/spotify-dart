@@ -11,6 +11,6 @@ class Image {
   /// The image width in pixels. If unknown: null or not returned.
   int width;
 
-  /// The source URL of the image. 
+  /// The source URL of the image.
   String url;
 }
