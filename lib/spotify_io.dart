@@ -18,10 +18,12 @@ part 'src/models/artist.dart';
 part 'src/models/followers.dart';
 part 'src/models/image.dart';
 part 'src/models/album.dart';
+part 'src/models/track.dart';
 
 part 'src/endpoints/endpoint_base.dart';
 part 'src/endpoints/artists.dart';
 part 'src/endpoints/albums.dart';
+part 'src/endpoints/tracks.dart';
 
 part 'src/spotify_credentials.dart';
 

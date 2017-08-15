@@ -12,8 +12,9 @@ abstract class SpotifyApiBase {
       'https://accounts.spotify.com/api/token';
 
   Artists _artists;
-  Artists get artists => _artists;
   Albums _albums;
+
+  Artists get artists => _artists;
   Albums get albums => _albums;
 
   SpotifyApiBase(this._credentials) {

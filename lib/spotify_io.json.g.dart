@@ -383,3 +383,187 @@ abstract class CopyrightMapper {
     return JSON.encoder.convert(map(object));
   }
 }
+
+// **************************************************************************
+// Generator: JsonGenerator
+// Target: class Track
+// **************************************************************************
+
+/// Mapper for Track
+abstract class TrackMapper {
+  /// Converts an instance of Track to Map.
+  static Map<String, dynamic> map(Track object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('album', AlbumSimpleMapper.map(object.album))
+          ..put('artists', object.artists?.map(ArtistMapper.map)?.toList())
+          ..put('available_markets', object.availableMarkets?.toList())
+          ..put('disc_number', object.discNumber)
+          ..put('duration_ms', object.durationMs)
+          ..put('explicit', object.explicit)
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('is_playable', object.isPlayable)
+          ..put('linked_from', TrackLinkMapper.map(object.linkedFrom))
+          ..put('name', object.name)
+          ..put('popularity', object.popularity)
+          ..put('preview_url', object.previewUrl)
+          ..put('track_number', object.trackNumber)
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of Track.
+  static Track parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final Track object = new Track();
+    object.album = AlbumSimpleMapper.parse(map['album']);
+
+    // ignore: avoid_as
+    object.artists =
+        (map['artists'] as List<dynamic>)?.map(ArtistMapper.parse)?.toList();
+
+    // ignore: avoid_as
+    object.availableMarkets =
+        (map['available_markets'] as List<String>)?.toList();
+    object.discNumber = map['disc_number'];
+    object.durationMs = map['duration_ms'];
+    object.explicit = map['explicit'];
+    object.href = map['href'];
+    object.id = map['id'];
+    object.isPlayable = map['is_playable'];
+    object.linkedFrom = TrackLinkMapper.parse(map['linked_from']);
+    object.name = map['name'];
+    object.popularity = map['popularity'];
+    object.previewUrl = map['preview_url'];
+    object.trackNumber = map['track_number'];
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of Track.
+  static Track fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of Track to JSON string.
+  static String toJson(Track object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+// **************************************************************************
+// Generator: JsonGenerator
+// Target: class TrackSimple
+// **************************************************************************
+
+/// Mapper for TrackSimple
+abstract class TrackSimpleMapper {
+  /// Converts an instance of TrackSimple to Map.
+  static Map<String, dynamic> map(TrackSimple object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('artists', object.artists?.map(ArtistMapper.map)?.toList())
+          ..put('available_markets', object.availableMarkets?.toList())
+          ..put('disc_number', object.discNumber)
+          ..put('duration_ms', object.durationMs)
+          ..put('explicit', object.explicit)
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('is_playable', object.isPlayable)
+          ..put('linked_from', TrackLinkMapper.map(object.linkedFrom))
+          ..put('name', object.name)
+          ..put('preview_url', object.previewUrl)
+          ..put('track_number', object.trackNumber)
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of TrackSimple.
+  static TrackSimple parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final TrackSimple object = new TrackSimple();
+    // ignore: avoid_as
+    object.artists =
+        (map['artists'] as List<dynamic>)?.map(ArtistMapper.parse)?.toList();
+
+    // ignore: avoid_as
+    object.availableMarkets =
+        (map['available_markets'] as List<String>)?.toList();
+    object.discNumber = map['disc_number'];
+    object.durationMs = map['duration_ms'];
+    object.explicit = map['explicit'];
+    object.href = map['href'];
+    object.id = map['id'];
+    object.isPlayable = map['is_playable'];
+    object.linkedFrom = TrackLinkMapper.parse(map['linked_from']);
+    object.name = map['name'];
+    object.previewUrl = map['preview_url'];
+    object.trackNumber = map['track_number'];
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of TrackSimple.
+  static TrackSimple fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of TrackSimple to JSON string.
+  static String toJson(TrackSimple object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+// **************************************************************************
+// Generator: JsonGenerator
+// Target: class TrackLink
+// **************************************************************************
+
+/// Mapper for TrackLink
+abstract class TrackLinkMapper {
+  /// Converts an instance of TrackLink to Map.
+  static Map<String, dynamic> map(TrackLink object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of TrackLink.
+  static TrackLink parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final TrackLink object = new TrackLink();
+    object.href = map['href'];
+    object.id = map['id'];
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of TrackLink.
+  static TrackLink fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of TrackLink to JSON string.
+  static String toJson(TrackLink object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
