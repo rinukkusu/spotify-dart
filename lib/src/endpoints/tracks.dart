@@ -9,13 +9,13 @@ class Tracks extends EndpointBase {
 
   Tracks(SpotifyApiBase api) : super(api);
 
-  Future<Track> get(String id) async {
-    var json = await _api._get('$_path/$id');
+  Future<Track> get(String trackId) async {
+    var json = await _api._get('$_path/$trackId');
     return TrackMapper.fromJson(json);
   }
 
-  Future<Iterable<Track>> list(Iterable<String> ids) async {
-    var json = await _api._get('$_path?ids=${ids.join(',')}');
+  Future<Iterable<Track>> list(Iterable<String> trackIds) async {
+    var json = await _api._get('$_path?ids=${trackIds.join(',')}');
     var map = JSON.decode(json);
 
     var artistsMap = map['tracks'] as Iterable<Map>;

@@ -9,13 +9,13 @@ class Albums extends EndpointBase {
 
   Albums(SpotifyApiBase api) : super(api);
 
-  Future<Album> get(String id) async {
-    var json = await _get('$_path/$id');
+  Future<Album> get(String albumId) async {
+    var json = await _get('$_path/$albumId');
     return AlbumMapper.fromJson(json);
   }
 
-  Future<Iterable<Album>> list(Iterable<String> ids) async {
-    var json = await _get('$_path?ids=${ids.join(',')}');
+  Future<Iterable<Album>> list(Iterable<String> albumIds) async {
+    var json = await _get('$_path?ids=${albumIds.join(',')}');
     var map = JSON.decode(json);
 
     var artistsMap = map['albums'] as Iterable<Map>;
