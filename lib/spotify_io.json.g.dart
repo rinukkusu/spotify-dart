@@ -567,3 +567,74 @@ abstract class TrackLinkMapper {
     return JSON.encoder.convert(map(object));
   }
 }
+
+// **************************************************************************
+// Generator: JsonGenerator
+// Target: class AudioFeature
+// **************************************************************************
+
+/// Mapper for AudioFeature
+abstract class AudioFeatureMapper {
+  /// Converts an instance of AudioFeature to Map.
+  static Map<String, dynamic> map(AudioFeature object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('acousticness', object.acousticness)
+          ..put('analysis_url', object.analysisUrl)
+          ..put('danceability', object.danceability)
+          ..put('duration_ms', object.durationMs)
+          ..put('energy', object.energy)
+          ..put('id', object.id)
+          ..put('instrumentalness', object.instrumentalness)
+          ..put('key', object.key)
+          ..put('liveness', object.liveness)
+          ..put('loudness', object.loudness)
+          ..put('mode', object.mode)
+          ..put('speechiness', object.speechiness)
+          ..put('tempo', object.tempo)
+          ..put('time_signature', object.timeSignature)
+          ..put('track_href', object.trackHref)
+          ..put('type', object.type)
+          ..put('uri', object.uri)
+          ..put('valence', object.valence))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of AudioFeature.
+  static AudioFeature parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final AudioFeature object = new AudioFeature();
+    object.acousticness = map['acousticness'];
+    object.analysisUrl = map['analysis_url'];
+    object.danceability = map['danceability'];
+    object.durationMs = map['duration_ms'];
+    object.energy = map['energy'];
+    object.id = map['id'];
+    object.instrumentalness = map['instrumentalness'];
+    object.key = map['key'];
+    object.liveness = map['liveness'];
+    object.loudness = map['loudness'];
+    object.mode = map['mode'];
+    object.speechiness = map['speechiness'];
+    object.tempo = map['tempo'];
+    object.timeSignature = map['time_signature'];
+    object.trackHref = map['track_href'];
+    object.type = map['type'];
+    object.uri = map['uri'];
+    object.valence = map['valence'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of AudioFeature.
+  static AudioFeature fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of AudioFeature to JSON string.
+  static String toJson(AudioFeature object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
