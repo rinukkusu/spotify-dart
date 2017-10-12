@@ -1,0 +1,336 @@
+{
+    "albums": [
+        {
+            "album_type" : "album",
+            "artists" : [ {
+              "external_urls" : {
+                "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+              },
+              "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+              "id" : "0TnOYISbd1XYRBk9myaseg",
+              "name" : "Pitbull",
+              "type" : "artist",
+              "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+            } ],
+            "copyrights" : [ {
+              "text" : "(P) 2012 RCA Records, a division of Sony Music Entertainment",
+              "type" : "P"
+            } ],
+            "external_ids" : {
+              "upc" : "886443671584"
+            },
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/album/4aawyAB9vmqN3uQ7FjRGTy"
+            },
+            "genres" : [ ],
+            "href" : "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy",
+            "id" : "4aawyAB9vmqN3uQ7FjRGTy",
+            "images" : [ {
+              "height" : 640,
+              "url" : "https://i.scdn.co/image/3edb3f970f4a3af9ef922efd18cdb4dabaf85ced",
+              "width" : 640
+            }, {
+              "height" : 300,
+              "url" : "https://i.scdn.co/image/b6be520fd1dc9feb84100be40f63de4f80694f18",
+              "width" : 300
+            }, {
+              "height" : 64,
+              "url" : "https://i.scdn.co/image/cd113be5fef83497992e17eb923b674187f7aaef",
+              "width" : 64
+            } ],
+            "label" : "Mr.305/Polo Grounds Music/RCA Records",
+            "name" : "Global Warming",
+            "popularity" : 60,
+            "release_date" : "2012-11-13",
+            "release_date_precision" : "day",
+            "tracks" : {
+              "href" : "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy/tracks?offset=0&limit=50&market=ES",
+              "items" : [ {
+                "artists" : [ {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+                  "id" : "0TnOYISbd1XYRBk9myaseg",
+                  "name" : "Pitbull",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/7iJrDbKM5fEkGdm5kpjFzS"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/7iJrDbKM5fEkGdm5kpjFzS",
+                  "id" : "7iJrDbKM5fEkGdm5kpjFzS",
+                  "name" : "Sensato",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:7iJrDbKM5fEkGdm5kpjFzS"
+                } ],
+                "disc_number" : 1,
+                "duration_ms" : 85400,
+                "explicit" : true,
+                "external_urls" : {
+                  "spotify" : "https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2"
+                },
+                "href" : "https://api.spotify.com/v1/tracks/6OmhkSOpvYBokMKQxpIGx2",
+                "id" : "6OmhkSOpvYBokMKQxpIGx2",
+                "is_playable" : true,
+                "name" : "Global Warming",
+                "preview_url" : "https://p.scdn.co/mp3-preview/bf9e33b1bb53c281c5eea0da6c317f2cd7c3eb58?cid=8897482848704f2a8f8d7c79726a70d4",
+                "track_number" : 1,
+                "type" : "track",
+                "uri" : "spotify:track:6OmhkSOpvYBokMKQxpIGx2"
+              }, {
+                "artists" : [ {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+                  "id" : "0TnOYISbd1XYRBk9myaseg",
+                  "name" : "Pitbull",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/69XeznHT7ZrjHaG9GND72h"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/69XeznHT7ZrjHaG9GND72h",
+                  "id" : "69XeznHT7ZrjHaG9GND72h",
+                  "name" : "TJR",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:69XeznHT7ZrjHaG9GND72h"
+                } ],
+                "disc_number" : 1,
+                "duration_ms" : 206120,
+                "explicit" : false,
+                "external_urls" : {
+                  "spotify" : "https://open.spotify.com/track/2iblMMIgSznA464mNov7A8"
+                },
+                "href" : "https://api.spotify.com/v1/tracks/2iblMMIgSznA464mNov7A8",
+                "id" : "2iblMMIgSznA464mNov7A8",
+                "is_playable" : true,
+                "name" : "Don't Stop the Party",
+                "preview_url" : "https://p.scdn.co/mp3-preview/7fd27386664a73671658bce5a9d18ca7ec1936d4?cid=8897482848704f2a8f8d7c79726a70d4",
+                "track_number" : 2,
+                "type" : "track",
+                "uri" : "spotify:track:2iblMMIgSznA464mNov7A8"
+              }, {
+                "artists" : [ {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+                  "id" : "0TnOYISbd1XYRBk9myaseg",
+                  "name" : "Pitbull",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/7bXgB6jMjp9ATFy66eO08Z"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/7bXgB6jMjp9ATFy66eO08Z",
+                  "id" : "7bXgB6jMjp9ATFy66eO08Z",
+                  "name" : "Chris Brown",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:7bXgB6jMjp9ATFy66eO08Z"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/5I7l0lSOyusetwCv1aQPMf"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/5I7l0lSOyusetwCv1aQPMf",
+                  "id" : "5I7l0lSOyusetwCv1aQPMf",
+                  "name" : "Jump Smokers",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:5I7l0lSOyusetwCv1aQPMf"
+                } ],
+                "disc_number" : 1,
+                "duration_ms" : 309626,
+                "explicit" : false,
+                "external_urls" : {
+                  "spotify" : "https://open.spotify.com/track/4TWgcICXXfGty8MHGWJ4Ne"
+                },
+                "href" : "https://api.spotify.com/v1/tracks/4TWgcICXXfGty8MHGWJ4Ne",
+                "id" : "4TWgcICXXfGty8MHGWJ4Ne",
+                "is_playable" : true,
+                "name" : "International Love - Jump Smokers Extended Mix",
+                "preview_url" : "https://p.scdn.co/mp3-preview/91859e93f8dacc22271a0dd31a77e81bcedaa5e1?cid=8897482848704f2a8f8d7c79726a70d4",
+                "track_number" : 18,
+                "type" : "track",
+                "uri" : "spotify:track:4TWgcICXXfGty8MHGWJ4Ne"
+              } ],
+              "limit" : 50,
+              "next" : null,
+              "offset" : 0,
+              "previous" : null,
+              "total" : 18
+            },
+            "type" : "album",
+            "uri" : "spotify:album:4aawyAB9vmqN3uQ7FjRGTy"
+          },
+          {
+            "album_type" : "album",
+            "artists" : [ {
+              "external_urls" : {
+                "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+              },
+              "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+              "id" : "0TnOYISbd1XYRBk9myaseg",
+              "name" : "Pitbull",
+              "type" : "artist",
+              "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+            } ],
+            "copyrights" : [ {
+              "text" : "(P) 2012 RCA Records, a division of Sony Music Entertainment",
+              "type" : "P"
+            } ],
+            "external_ids" : {
+              "upc" : "886443671584"
+            },
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/album/4aawyAB9vmqN3uQ7FjRGTy"
+            },
+            "genres" : [ ],
+            "href" : "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy",
+            "id" : "4aawyAB9vmqN3uQ7FjRGTy",
+            "images" : [ {
+              "height" : 640,
+              "url" : "https://i.scdn.co/image/3edb3f970f4a3af9ef922efd18cdb4dabaf85ced",
+              "width" : 640
+            }, {
+              "height" : 300,
+              "url" : "https://i.scdn.co/image/b6be520fd1dc9feb84100be40f63de4f80694f18",
+              "width" : 300
+            }, {
+              "height" : 64,
+              "url" : "https://i.scdn.co/image/cd113be5fef83497992e17eb923b674187f7aaef",
+              "width" : 64
+            } ],
+            "label" : "Mr.305/Polo Grounds Music/RCA Records",
+            "name" : "Global Warming",
+            "popularity" : 60,
+            "release_date" : "2012-11-13",
+            "release_date_precision" : "day",
+            "tracks" : {
+              "href" : "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy/tracks?offset=0&limit=50&market=ES",
+              "items" : [ {
+                "artists" : [ {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+                  "id" : "0TnOYISbd1XYRBk9myaseg",
+                  "name" : "Pitbull",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/7iJrDbKM5fEkGdm5kpjFzS"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/7iJrDbKM5fEkGdm5kpjFzS",
+                  "id" : "7iJrDbKM5fEkGdm5kpjFzS",
+                  "name" : "Sensato",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:7iJrDbKM5fEkGdm5kpjFzS"
+                } ],
+                "disc_number" : 1,
+                "duration_ms" : 85400,
+                "explicit" : true,
+                "external_urls" : {
+                  "spotify" : "https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2"
+                },
+                "href" : "https://api.spotify.com/v1/tracks/6OmhkSOpvYBokMKQxpIGx2",
+                "id" : "6OmhkSOpvYBokMKQxpIGx2",
+                "is_playable" : true,
+                "name" : "Global Warming",
+                "preview_url" : "https://p.scdn.co/mp3-preview/bf9e33b1bb53c281c5eea0da6c317f2cd7c3eb58?cid=8897482848704f2a8f8d7c79726a70d4",
+                "track_number" : 1,
+                "type" : "track",
+                "uri" : "spotify:track:6OmhkSOpvYBokMKQxpIGx2"
+              }, {
+                "artists" : [ {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+                  "id" : "0TnOYISbd1XYRBk9myaseg",
+                  "name" : "Pitbull",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/69XeznHT7ZrjHaG9GND72h"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/69XeznHT7ZrjHaG9GND72h",
+                  "id" : "69XeznHT7ZrjHaG9GND72h",
+                  "name" : "TJR",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:69XeznHT7ZrjHaG9GND72h"
+                } ],
+                "disc_number" : 1,
+                "duration_ms" : 206120,
+                "explicit" : false,
+                "external_urls" : {
+                  "spotify" : "https://open.spotify.com/track/2iblMMIgSznA464mNov7A8"
+                },
+                "href" : "https://api.spotify.com/v1/tracks/2iblMMIgSznA464mNov7A8",
+                "id" : "2iblMMIgSznA464mNov7A8",
+                "is_playable" : true,
+                "name" : "Don't Stop the Party",
+                "preview_url" : "https://p.scdn.co/mp3-preview/7fd27386664a73671658bce5a9d18ca7ec1936d4?cid=8897482848704f2a8f8d7c79726a70d4",
+                "track_number" : 2,
+                "type" : "track",
+                "uri" : "spotify:track:2iblMMIgSznA464mNov7A8"
+              }, {
+                "artists" : [ {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+                  "id" : "0TnOYISbd1XYRBk9myaseg",
+                  "name" : "Pitbull",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/7bXgB6jMjp9ATFy66eO08Z"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/7bXgB6jMjp9ATFy66eO08Z",
+                  "id" : "7bXgB6jMjp9ATFy66eO08Z",
+                  "name" : "Chris Brown",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:7bXgB6jMjp9ATFy66eO08Z"
+                }, {
+                  "external_urls" : {
+                    "spotify" : "https://open.spotify.com/artist/5I7l0lSOyusetwCv1aQPMf"
+                  },
+                  "href" : "https://api.spotify.com/v1/artists/5I7l0lSOyusetwCv1aQPMf",
+                  "id" : "5I7l0lSOyusetwCv1aQPMf",
+                  "name" : "Jump Smokers",
+                  "type" : "artist",
+                  "uri" : "spotify:artist:5I7l0lSOyusetwCv1aQPMf"
+                } ],
+                "disc_number" : 1,
+                "duration_ms" : 309626,
+                "explicit" : false,
+                "external_urls" : {
+                  "spotify" : "https://open.spotify.com/track/4TWgcICXXfGty8MHGWJ4Ne"
+                },
+                "href" : "https://api.spotify.com/v1/tracks/4TWgcICXXfGty8MHGWJ4Ne",
+                "id" : "4TWgcICXXfGty8MHGWJ4Ne",
+                "is_playable" : true,
+                "name" : "International Love - Jump Smokers Extended Mix",
+                "preview_url" : "https://p.scdn.co/mp3-preview/91859e93f8dacc22271a0dd31a77e81bcedaa5e1?cid=8897482848704f2a8f8d7c79726a70d4",
+                "track_number" : 18,
+                "type" : "track",
+                "uri" : "spotify:track:4TWgcICXXfGty8MHGWJ4Ne"
+              } ],
+              "limit" : 50,
+              "next" : null,
+              "offset" : 0,
+              "previous" : null,
+              "total" : 18
+            },
+            "type" : "album",
+            "uri" : "spotify:album:4aawyAB9vmqN3uQ7FjRGTy"
+          }
+    ]
+}
