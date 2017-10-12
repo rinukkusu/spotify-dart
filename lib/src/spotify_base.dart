@@ -39,7 +39,8 @@ abstract class SpotifyApiBase {
   }
 
   Future<String> _get(String path) {
-    return _requestWrapper(path, _getImpl);
+    return _requestWrapper(path,
+        (url, headers) => _getImpl(url, headers));
   }
 
   Future<String> _post(String path, String body) {
