@@ -221,3 +221,13 @@ class TrackLink {
   /// The Spotify URI for the track.
   String uri;
 }
+
+@JsonClass()
+class TracksLink {
+  /// A link to the Web API endpoint where full details of the playlist's
+  /// tracks can be retrieved
+  String href;
+
+  /// Total number of tracks in the playlist
+  int total;
+}
