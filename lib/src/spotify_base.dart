@@ -5,7 +5,6 @@ part of spotify;
 
 abstract class SpotifyApiBase {
   final SpotifyApiCredentials _credentials;
-  ApiToken _apiToken;
 
   static const String _baseUrl = 'https://api.spotify.com';
   static const String _tokenRefreshUrl =
@@ -29,12 +28,13 @@ abstract class SpotifyApiBase {
   }
 
   Future<Null> _refreshToken() async {
-    if (_apiToken == null || _apiToken.isExpired) {
+    if (_credentials.tokenRequest.canRefresh &&
+        (_credentials.token == null || _credentials.token.isExpired)) {
       var headers = {'Authorization': 'Basic ${_credentials.basicAuth}'};
-      var body = {'grant_type': 'client_credentials'};
+      var body = TokenRequestMapper.map(_credentials.tokenRequest);
 
       var responseJson = await _postImpl(_tokenRefreshUrl, headers, body);
-      _apiToken = ApiTokenMapper.fromJson(responseJson);
+      _credentials.token = ApiTokenMapper.fromJson(responseJson);
     }
   }
 
@@ -51,7 +51,7 @@ abstract class SpotifyApiBase {
   Future<String> _requestWrapper(String path,
       Future<String> req(String url, Map<String, String> headers)) async {
     await _refreshToken();
-    var headers = {'Authorization': 'Bearer ${_apiToken.accessToken}'};
+    var headers = {'Authorization': 'Bearer ${_credentials.token.accessToken}'};
     var url = '${_baseUrl}/$path';
 
     return req(url, headers);
