@@ -4,7 +4,6 @@
 import 'dart:io';
 import 'dart:convert';
 import '../lib/spotify_io.dart';
-import '../lib/spotify_io.json.g.dart';
 
 main() async {
   var keyJson = await new File('.apikeys').readAsString();

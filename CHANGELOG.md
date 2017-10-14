@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5
+
+- add user and playlist endpoints
+
 ## 0.0.4
 
 - fix typo in artists endpoint
