@@ -28,7 +28,8 @@ abstract class SpotifyApiBase {
   }
 
   Future<Null> _refreshToken() async {
-    if (_credentials.tokenRequest.canRefresh &&
+    // TODO: Support refresh with Authorization Code grant flow
+    if (_credentials.tokenRequest.grantType == GrantType.clientCredentials &&
         (_credentials.token == null || _credentials.token.isExpired)) {
       var headers = {'Authorization': 'Basic ${_credentials.basicAuth}'};
       var body = TokenRequestMapper.map(_credentials.tokenRequest);

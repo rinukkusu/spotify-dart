@@ -25,8 +25,7 @@ class TokenRequest {
   GrantType _grantType;
 
   @Transient()
-  bool get canRefresh => _grantType == GrantType.clientCredentials ||
-      _grantType == GrantType.authorizationCode;
+  GrantType get grantType => _grantType;
 
   @override
   String toString() {
@@ -50,6 +49,9 @@ class ApiToken {
   @JsonField(key: 'access_token')
   String accessToken;
 
+  @JsonField(key: 'refresh_token')
+  String refreshToken;
+
   @JsonField(key: 'token_type')
   String tokenType;
 
@@ -61,11 +63,36 @@ class ApiToken {
   bool get isExpired =>
       _createdOn.difference(new DateTime.now()).inSeconds.abs() > expiresIn;
 
+  @Transient()
+  GrantType _grantType = GrantType.clientCredentials;
+  @Transient()
+  GrantType get grantType => _grantType;
+  @Transient()
+  GrantType _refreshGrantType = GrantType.clientCredentials;
+  @Transient()
+  GrantType get refreshGrantType => _refreshGrantType;
+
+  @Transient()
+  bool get canRefresh => _grantType == GrantType.clientCredentials ||
+      _grantType == GrantType.authorizationCode;
+
   ApiToken();
 
   ApiToken.implicitGrant(String accessToken, int expiresIn) {
     this.accessToken = accessToken;
     this.tokenType = 'Bearer';
     this.expiresIn = expiresIn;
+
+    _grantType = GrantType.implicitGrant;
+  }
+
+  ApiToken.authorizationCode(String accessToken, String refreshToken, int expiresIn) {
+    this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
+    this.tokenType = 'Bearer';
+    this.expiresIn = expiresIn;
+
+    _grantType = GrantType.authorizationCode;
+    _refreshGrantType = GrantType.refreshToken;
   }
 }

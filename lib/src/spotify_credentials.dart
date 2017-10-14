@@ -11,11 +11,23 @@ class SpotifyApiCredentials {
 
   SpotifyApiCredentials(this.clientId, this.clientSecret);
 
-  SpotifyApiCredentials.withToken(this.token, GrantType grantType,
+  SpotifyApiCredentials.withToken(this.token,
       [this.clientId = '', this.clientSecret = '']) {
-    _tokenRequest = new TokenRequest(grantType);
+    _tokenRequest = new TokenRequest(token.refreshGrantType);
   }
 
   TokenRequest get tokenRequest => _tokenRequest;
   String get basicAuth => BASE64.encode('$clientId:$clientSecret'.codeUnits);
+
+  static implicitGrant(String accessToken, int expiresIn) {
+    return new SpotifyApiCredentials.withToken(
+      new ApiToken.implicitGrant(accessToken, expiresIn)
+    );
+  }
+
+  static authorizationCode(String accessToken, String refreshToken, int expiresIn) {
+    return new SpotifyApiCredentials.withToken(
+        new ApiToken.authorizationCode(accessToken, refreshToken, expiresIn)
+    );
+  }
 }
