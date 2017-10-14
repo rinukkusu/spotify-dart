@@ -551,6 +551,263 @@ abstract class TracksLinkMapper {
   }
 }
 
+/// Mapper for Playlist
+abstract class PlaylistMapper {
+  /// Converts an instance of Playlist to Map.
+  static Map<String, dynamic> map(Playlist object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('collaborative', object.collaborative)
+          ..put('description', object.description)
+          ..put('followers', FollowersMapper.map(object.followers))
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('images', object.images?.map(ImageMapper.map)?.toList())
+          ..put('name', object.name)
+          ..put('owner', UserMapper.map(object.owner))
+          ..put('public', object.public)
+          ..put('snapshot_id', object.snapshotId)
+          ..put('tracks', object.tracks?.map(TrackMapper.map)?.toList())
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of Playlist.
+  static Playlist parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final Playlist object = new Playlist();
+    object.collaborative = map['collaborative'];
+    object.description = map['description'];
+    object.followers = FollowersMapper.parse(map['followers']);
+    object.href = map['href'];
+    object.id = map['id'];
+
+    // ignore: avoid_as
+    object.images =
+        (map['images'] as List<dynamic>)?.map(ImageMapper.parse)?.toList();
+    object.name = map['name'];
+    object.owner = UserMapper.parse(map['owner']);
+    object.public = map['public'];
+    object.snapshotId = map['snapshot_id'];
+
+    // ignore: avoid_as
+    object.tracks =
+        (map['tracks'] as List<dynamic>)?.map(TrackMapper.parse)?.toList();
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of Playlist.
+  static Playlist fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of Playlist to JSON string.
+  static String toJson(Playlist object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+/// Mapper for PlaylistSimple
+abstract class PlaylistSimpleMapper {
+  /// Converts an instance of PlaylistSimple to Map.
+  static Map<String, dynamic> map(PlaylistSimple object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('collaborative', object.collaborative)
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('images', object.images?.map(ImageMapper.map)?.toList())
+          ..put('name', object.name)
+          ..put('owner', UserMapper.map(object.owner))
+          ..put('public', object.public)
+          ..put('snapshot_id', object.snapshotId)
+          ..put('tracks', TracksLinkMapper.map(object.tracksLink))
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of PlaylistSimple.
+  static PlaylistSimple parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final PlaylistSimple object = new PlaylistSimple();
+    object.collaborative = map['collaborative'];
+    object.href = map['href'];
+    object.id = map['id'];
+
+    // ignore: avoid_as
+    object.images =
+        (map['images'] as List<dynamic>)?.map(ImageMapper.parse)?.toList();
+    object.name = map['name'];
+    object.owner = UserMapper.parse(map['owner']);
+    object.public = map['public'];
+    object.snapshotId = map['snapshot_id'];
+    object.tracksLink = TracksLinkMapper.parse(map['tracks']);
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of PlaylistSimple.
+  static PlaylistSimple fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of PlaylistSimple to JSON string.
+  static String toJson(PlaylistSimple object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+/// Mapper for PlaylistTrack
+abstract class PlaylistTrackMapper {
+  /// Converts an instance of PlaylistTrack to Map.
+  static Map<String, dynamic> map(PlaylistTrack object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('added_at', _owl_json.DateTimeMapper.map(object.addedAt))
+          ..put('added_by', UserPublicMapper.map(object.addedBy))
+          ..put('is_local', object.isLocal)
+          ..put('track', TrackMapper.map(object.track)))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of PlaylistTrack.
+  static PlaylistTrack parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final PlaylistTrack object = new PlaylistTrack();
+    object.addedAt = _owl_json.DateTimeMapper.parse(map['added_at']);
+    object.addedBy = UserPublicMapper.parse(map['added_by']);
+    object.isLocal = map['is_local'];
+    object.track = TrackMapper.parse(map['track']);
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of PlaylistTrack.
+  static PlaylistTrack fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of PlaylistTrack to JSON string.
+  static String toJson(PlaylistTrack object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+/// Mapper for User
+abstract class UserMapper {
+  /// Converts an instance of User to Map.
+  static Map<String, dynamic> map(User object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('birthdate', object.birthdate)
+          ..put('country', object.country)
+          ..put('display_name', object.displayName)
+          ..put('email', object.email)
+          ..put('followers', FollowersMapper.map(object.followers))
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('images', object.images?.map(ImageMapper.map)?.toList())
+          ..put('product', object.product)
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of User.
+  static User parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final User object = new User();
+    object.birthdate = map['birthdate'];
+    object.country = map['country'];
+    object.displayName = map['display_name'];
+    object.email = map['email'];
+    object.followers = FollowersMapper.parse(map['followers']);
+    object.href = map['href'];
+    object.id = map['id'];
+
+    // ignore: avoid_as
+    object.images =
+        (map['images'] as List<dynamic>)?.map(ImageMapper.parse)?.toList();
+    object.product = map['product'];
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of User.
+  static User fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of User to JSON string.
+  static String toJson(User object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+/// Mapper for UserPublic
+abstract class UserPublicMapper {
+  /// Converts an instance of UserPublic to Map.
+  static Map<String, dynamic> map(UserPublic object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('display_name', object.displayName)
+          ..put('followers', FollowersMapper.map(object.followers))
+          ..put('href', object.href)
+          ..put('id', object.id)
+          ..put('images', object.images?.map(ImageMapper.map)?.toList())
+          ..put('type', object.type)
+          ..put('uri', object.uri))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of UserPublic.
+  static UserPublic parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final UserPublic object = new UserPublic();
+    object.displayName = map['display_name'];
+    object.followers = FollowersMapper.parse(map['followers']);
+    object.href = map['href'];
+    object.id = map['id'];
+
+    // ignore: avoid_as
+    object.images =
+        (map['images'] as List<dynamic>)?.map(ImageMapper.parse)?.toList();
+    object.type = map['type'];
+    object.uri = map['uri'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of UserPublic.
+  static UserPublic fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of UserPublic to JSON string.
+  static String toJson(UserPublic object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
 /// Mapper for AudioFeature
 abstract class AudioFeatureMapper {
   /// Converts an instance of AudioFeature to Map.
