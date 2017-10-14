@@ -1,0 +1,29 @@
+{
+  "external_urls" : {
+    "spotify" : "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+  },
+  "followers" : {
+    "href" : null,
+    "total" : 4269723
+  },
+  "genres" : [ "dance pop", "latin", "pop", "pop rap" ],
+  "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+  "id" : "0TnOYISbd1XYRBk9myaseg",
+  "images" : [ {
+    "height" : 640,
+    "url" : "https://i.scdn.co/image/c82dfff224bfb7fe29e0364a5aacc55da29b465b",
+    "width" : 640
+  }, {
+    "height" : 320,
+    "url" : "https://i.scdn.co/image/d482525120fc7eed9ea0696f564c6cba5237c8f5",
+    "width" : 320
+  }, {
+    "height" : 160,
+    "url" : "https://i.scdn.co/image/49a45aac2c93bab9575de13cee2d71b7eb164cab",
+    "width" : 160
+  } ],
+  "name" : "Pitbull",
+  "popularity" : 88,
+  "type" : "artist",
+  "uri" : "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+}
