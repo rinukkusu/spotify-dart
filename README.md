@@ -1,4 +1,4 @@
-# spotify-dart
+# spotify-dart [![Pub](https://img.shields.io/pub/v/spotify.svg)](https://pub.dartlang.org/packages/spotify) [![Build Status](https://travis-ci.org/rinukkusu/spotify-dart.svg?branch=master)](https://travis-ci.org/rinukkusu/spotify-dart)
 
 A dart library for interfacing with the Spotify API.
 
