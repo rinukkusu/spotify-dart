@@ -3,7 +3,7 @@
 
 part of spotify;
 
-class Users extends EndpointBase {
+class Users extends EndpointPaging {
   @override
   String get _path => 'v1/users';
 
@@ -19,12 +19,8 @@ class Users extends EndpointBase {
     return UserPublicMapper.fromJson(json);
   }
 
-  Future<Iterable<PlaylistSimple>> playlists(String userId) async {
-    var json = await _api._get('$_path/$userId/playlists');
-    var map = JSON.decode(json);
-
-    var playlistsMap = map['items'] as Iterable<Map>;
-    return playlistsMap.map((m) => PlaylistSimpleMapper.parse(m));
+  Pages<PlaylistSimple> playlists(String userId) {
+    return _getPages('$_path/$userId/playlists', PlaylistSimpleMapper.parse);
   }
 
   Future<Playlist> playlist(String userId, String playlistId) async {
@@ -32,11 +28,10 @@ class Users extends EndpointBase {
     return PlaylistMapper.fromJson(json);
   }
 
-  Future<Iterable<PlaylistTrack>> playlistTracks(String userId, String playlistId) async {
-    var json = await _api._get('$_path/$userId/playlists/$playlistId');
-    var map = JSON.decode(json);
-
-    var playlistsMap = map['items'] as Iterable<Map>;
-    return playlistsMap.map((m) => PlaylistTrackMapper.parse(m));
+  Pages<PlaylistTrack> playlistTracks(String userId, String playlistId) {
+    return _getPages(
+        '$_path/$userId/playlists/$playlistId/tracks',
+        PlaylistTrackMapper.parse
+    );
   }
 }

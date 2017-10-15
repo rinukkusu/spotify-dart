@@ -117,6 +117,12 @@ class PlaylistSimple {
 }
 
 @JsonClass()
+class PlaylistsFeatured {
+  /// The message of the day for Spotify's featured playlists
+  String message;
+}
+
+@JsonClass()
 class PlaylistTrack {
 
   /// The date and time the track was added.

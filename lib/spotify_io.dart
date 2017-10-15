@@ -16,6 +16,7 @@ import 'spotify_io.json.g.dart';
 import 'src/models/token_request.dart';
 import 'src/models/token_request.json.g.dart';
 
+part 'src/models/paging.dart';
 part 'src/models/artist.dart';
 part 'src/models/followers.dart';
 part 'src/models/image.dart';
@@ -26,6 +27,7 @@ part 'src/models/user.dart';
 part 'src/models/audio_feature.dart';
 
 part 'src/endpoints/endpoint_base.dart';
+part 'src/endpoints/endpoint_paging.dart';
 part 'src/endpoints/artists.dart';
 part 'src/endpoints/albums.dart';
 part 'src/endpoints/tracks.dart';

@@ -18,4 +18,9 @@ main() async {
 
   var album = await spotify.albums.get('6PEYvIrLYHJ8BvpE5uUChz');
   print(album.name);
+
+  var featuredPlaylists = await spotify.playlists.featured.all();
+  featuredPlaylists.forEach((playlist) {
+    print(playlist.name);
+  });
 }
