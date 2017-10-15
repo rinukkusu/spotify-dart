@@ -16,6 +16,7 @@ import 'spotify_io.json.g.dart';
 import 'src/models/token_request.dart';
 import 'src/models/token_request.json.g.dart';
 
+part 'src/models/paging.dart';
 part 'src/models/artist.dart';
 part 'src/models/followers.dart';
 part 'src/models/image.dart';

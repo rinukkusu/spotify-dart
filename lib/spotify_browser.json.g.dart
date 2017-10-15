@@ -668,6 +668,38 @@ abstract class PlaylistSimpleMapper {
   }
 }
 
+/// Mapper for PlaylistsFeatured
+abstract class PlaylistsFeaturedMapper {
+  /// Converts an instance of PlaylistsFeatured to Map.
+  static Map<String, dynamic> map(PlaylistsFeatured object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('message', object.message))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of PlaylistsFeatured.
+  static PlaylistsFeatured parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final PlaylistsFeatured object = new PlaylistsFeatured();
+    object.message = map['message'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of PlaylistsFeatured.
+  static PlaylistsFeatured fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of PlaylistsFeatured to JSON string.
+  static String toJson(PlaylistsFeatured object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
 /// Mapper for PlaylistTrack
 abstract class PlaylistTrackMapper {
   /// Converts an instance of PlaylistTrack to Map.

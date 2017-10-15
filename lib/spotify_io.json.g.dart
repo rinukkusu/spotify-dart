@@ -14,6 +14,50 @@ import 'dart:convert';
 // ignore: unused_import, library_prefixes
 import 'package:owl/util/json/core.dart' as _owl_json;
 
+/// Mapper for Paging
+abstract class PagingMapper {
+  /// Converts an instance of Paging to Map.
+  static Map<String, dynamic> map(Paging object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('href', object.href)
+          ..put('items', object.itemsNative)
+          ..put('limit', object.limit)
+          ..put('next', object.next)
+          ..put('offset', object.offset)
+          ..put('previous', object.previous)
+          ..put('total', object.total))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of Paging.
+  static Paging parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final Paging object = new Paging();
+    object.href = map['href'];
+    object.itemsNative = map['items'];
+    object.limit = map['limit'];
+    object.next = map['next'];
+    object.offset = map['offset'];
+    object.previous = map['previous'];
+    object.total = map['total'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of Paging.
+  static Paging fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of Paging to JSON string.
+  static String toJson(Paging object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
 /// Mapper for Artist
 abstract class ArtistMapper {
   /// Converts an instance of Artist to Map.
@@ -663,6 +707,38 @@ abstract class PlaylistSimpleMapper {
 
   /// Converts an instance of PlaylistSimple to JSON string.
   static String toJson(PlaylistSimple object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+/// Mapper for PlaylistsFeatured
+abstract class PlaylistsFeaturedMapper {
+  /// Converts an instance of PlaylistsFeatured to Map.
+  static Map<String, dynamic> map(PlaylistsFeatured object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('message', object.message))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of PlaylistsFeatured.
+  static PlaylistsFeatured parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final PlaylistsFeatured object = new PlaylistsFeatured();
+    object.message = map['message'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of PlaylistsFeatured.
+  static PlaylistsFeatured fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of PlaylistsFeatured to JSON string.
+  static String toJson(PlaylistsFeatured object) {
     if (object == null) return null;
     return JSON.encoder.convert(map(object));
   }
