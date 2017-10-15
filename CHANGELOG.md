@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.6
+
+- add pagination support
+
 ## 0.0.5
 
 - add user and playlist endpoints

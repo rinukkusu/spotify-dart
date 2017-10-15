@@ -9,7 +9,7 @@ A simple usage example:
 ```dart
 import 'package:spotify/spotify_io.dart';
 
-main() {
+main() async {
   var credentials = new SpotifyApiCredentials(clientId, clientSecret);
   var spotify = new SpotifyApi(credentials);
 
