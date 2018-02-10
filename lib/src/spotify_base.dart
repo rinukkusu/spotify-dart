@@ -54,6 +54,11 @@ abstract class SpotifyApiBase {
         path, (url, headers) => _postImpl(url, headers, body));
   }
 
+  Future<String> _put(String path, String body) {
+    return _requestWrapper(
+        path, (url, headers) => _putImpl(url, headers, body));
+  }
+
   Future<String> _requestWrapper(String path,
       Future<String> req(String url, Map<String, String> headers)) async {
     await _refreshToken();
@@ -65,5 +70,7 @@ abstract class SpotifyApiBase {
 
   Future<String> _getImpl(String url, Map<String, String> headers);
   Future<String> _postImpl(
+      String url, Map<String, String> headers, dynamic body);
+  Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body);
 }

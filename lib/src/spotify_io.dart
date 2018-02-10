@@ -21,6 +21,14 @@ class SpotifyApi extends SpotifyApiBase {
     return handleErrors(response);
   }
 
+  @override
+  Future<String> _putImpl(
+      String url, Map<String, String> headers, dynamic body) async {
+    var client = new http.Client();
+    var response = await client.post(url, headers: headers, body: body);
+    return handleErrors(response);
+  }
+
   String handleErrors(http.Response response) {
     var responseBody = UTF8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
