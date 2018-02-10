@@ -38,12 +38,21 @@ class TracksMe extends EndpointPaging {
     return _getPages(_path, TrackSavedMapper.parse);
   }
 
+  Future<bool> containsOne(String id) async {
+    var list = await contains([id]);
+    return list.first;
+  }
+
   Future<List<bool>> contains(List<String> ids) async {
     int limit = ids.length < 50 ? ids.length : 50;
     String idsParam = ids.sublist(0, limit).join(',');
     var json = await _api._get('$_path/contains?ids=$idsParam');
     List<bool> list = JSON.decode(json);
     return list;
+  }
+
+  Future<Null> saveOne(String id) {
+    return save([id]);
   }
 
   Future<Null> save(List<String> ids) async {
