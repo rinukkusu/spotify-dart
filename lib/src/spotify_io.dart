@@ -25,7 +25,7 @@ class SpotifyApi extends SpotifyApiBase {
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body) async {
     var client = new http.Client();
-    var response = await client.post(url, headers: headers, body: body);
+    var response = await client.put(url, headers: headers, body: body);
     return handleErrors(response);
   }
 
