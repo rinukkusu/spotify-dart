@@ -203,6 +203,17 @@ class TrackSimple {
   String uri;
 }
 
+/// A song saved in a Spotify user’s “Your Music” library
+@JsonClass()
+class TrackSaved {
+  /// The date and time the track was saved.
+  @JsonField(key: 'added_at')
+  DateTime addedAt;
+
+  /// Information about the track.
+  Track track;
+}
+
 @JsonClass()
 class TrackLink {
   // /// Known external URLs for this track.

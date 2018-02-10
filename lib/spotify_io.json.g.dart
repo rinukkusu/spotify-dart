@@ -557,6 +557,40 @@ abstract class TrackSimpleMapper {
   }
 }
 
+/// Mapper for TrackSaved
+abstract class TrackSavedMapper {
+  /// Converts an instance of TrackSaved to Map.
+  static Map<String, dynamic> map(TrackSaved object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('added_at', _owl_json.DateTimeMapper.map(object.addedAt))
+          ..put('track', TrackMapper.map(object.track)))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of TrackSaved.
+  static TrackSaved parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final TrackSaved object = new TrackSaved();
+    object.addedAt = _owl_json.DateTimeMapper.parse(map['added_at']);
+    object.track = TrackMapper.parse(map['track']);
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of TrackSaved.
+  static TrackSaved fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of TrackSaved to JSON string.
+  static String toJson(TrackSaved object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
 /// Mapper for TrackLink
 abstract class TrackLinkMapper {
   /// Converts an instance of TrackLink to Map.
