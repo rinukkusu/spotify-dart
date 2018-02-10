@@ -14,6 +14,84 @@ import 'dart:convert';
 // ignore: unused_import, library_prefixes
 import 'package:owl/util/json/core.dart' as _owl_json;
 
+/// Mapper for Paging
+abstract class PagingMapper {
+  /// Converts an instance of Paging to Map.
+  static Map<String, dynamic> map(Paging object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('href', object.href)
+          ..put('items', object.itemsNative)
+          ..put('limit', object.limit)
+          ..put('next', object.next)
+          ..put('offset', object.offset)
+          ..put('previous', object.previous)
+          ..put('total', object.total))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of Paging.
+  static Paging parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final Paging object = new Paging();
+    object.href = map['href'];
+    object.itemsNative = map['items'];
+    object.limit = map['limit'];
+    object.next = map['next'];
+    object.offset = map['offset'];
+    object.previous = map['previous'];
+    object.total = map['total'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of Paging.
+  static Paging fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of Paging to JSON string.
+  static String toJson(Paging object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
+/// Mapper for SpotifyError
+abstract class SpotifyErrorMapper {
+  /// Converts an instance of SpotifyError to Map.
+  static Map<String, dynamic> map(SpotifyError object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('status', object.status)
+          ..put('message', object.message))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of SpotifyError.
+  static SpotifyError parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final SpotifyError object = new SpotifyError();
+    object.status = map['status'];
+    object.message = map['message'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of SpotifyError.
+  static SpotifyError fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of SpotifyError to JSON string.
+  static String toJson(SpotifyError object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
 /// Mapper for Artist
 abstract class ArtistMapper {
   /// Converts an instance of Artist to Map.

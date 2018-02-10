@@ -58,6 +58,40 @@ abstract class PagingMapper {
   }
 }
 
+/// Mapper for SpotifyError
+abstract class SpotifyErrorMapper {
+  /// Converts an instance of SpotifyError to Map.
+  static Map<String, dynamic> map(SpotifyError object) {
+    if (object == null) return null;
+    return (new _owl_json.MapBuilder(ordered: false)
+          ..put('status', object.status)
+          ..put('message', object.message))
+        .toMap();
+  }
+
+  /// Converts a Map to an instance of SpotifyError.
+  static SpotifyError parse(Map<String, dynamic> map) {
+    if (map == null) return null;
+    final SpotifyError object = new SpotifyError();
+    object.status = map['status'];
+    object.message = map['message'];
+    return object;
+  }
+
+  /// Converts a JSON string to an instance of SpotifyError.
+  static SpotifyError fromJson(String json) {
+    if (json == null || json.isEmpty) return null;
+    final Map<String, dynamic> map = JSON.decoder.convert(json);
+    return parse(map);
+  }
+
+  /// Converts an instance of SpotifyError to JSON string.
+  static String toJson(SpotifyError object) {
+    if (object == null) return null;
+    return JSON.encoder.convert(map(object));
+  }
+}
+
 /// Mapper for Artist
 abstract class ArtistMapper {
   /// Converts an instance of Artist to Map.

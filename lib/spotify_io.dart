@@ -17,6 +17,7 @@ import 'src/models/token_request.dart';
 import 'src/models/token_request.json.g.dart';
 
 part 'src/models/paging.dart';
+part 'src/models/error.dart';
 part 'src/models/artist.dart';
 part 'src/models/followers.dart';
 part 'src/models/image.dart';
@@ -38,6 +39,7 @@ part 'src/endpoints/audio_features.dart';
 part 'src/spotify_credentials.dart';
 
 part 'src/spotify_base.dart';
+part 'src/spotify_exception.dart';
 part 'src/spotify_io.dart';
 
 part 'src/spotify_mock.dart';
