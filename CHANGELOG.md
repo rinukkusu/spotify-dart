@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.7
+
+- add user's saved tracks endpoints
+
 ## 0.0.6
 
 - add pagination support
