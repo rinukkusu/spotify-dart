@@ -18,6 +18,14 @@ class SpotifyApiMock extends SpotifyApiBase {
     var response = await client.post(url, headers: headers, body: body);
     return UTF8.decode(response.bodyBytes);
   }
+
+  @override
+  Future<String> _putImpl(
+      String url, Map<String, String> headers, dynamic body) async {
+    var client = new MockClient();
+    var response = await client.put(url, headers: headers, body: body);
+    return UTF8.decode(response.bodyBytes);
+  }
 }
 
 class MockClient implements http.BaseClient {
@@ -40,6 +48,7 @@ class MockClient implements http.BaseClient {
 
   @override
   Future<http.Response> delete(url, {Map<String, String> headers}) {
+    throw new UnimplementedError();
     // TODO: implement delete
   }
 
@@ -50,12 +59,14 @@ class MockClient implements http.BaseClient {
 
   @override
   Future<http.Response> head(url, {Map<String, String> headers}) {
+    throw new UnimplementedError();
     // TODO: implement head
   }
 
   @override
   Future<http.Response> patch(url,
       {Map<String, String> headers, body, Encoding encoding}) {
+    throw new UnimplementedError();
     // TODO: implement patch
   }
 
@@ -67,22 +78,25 @@ class MockClient implements http.BaseClient {
 
   @override
   Future<http.Response> put(url,
-      {Map<String, String> headers, body, Encoding encoding}) {
-    // TODO: implement put
+      {Map<String, String> headers, body, Encoding encoding}) async {
+    return new http.Response(_readPath(url), 200);
   }
 
   @override
   Future<String> read(url, {Map<String, String> headers}) {
+    throw new UnimplementedError();
     // TODO: implement read
   }
 
   @override
   Future<Uint8List> readBytes(url, {Map<String, String> headers}) {
+    throw new UnimplementedError();
     // TODO: implement readBytes
   }
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
+    throw new UnimplementedError();
     // TODO: implement send
   }
 }
