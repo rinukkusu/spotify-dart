@@ -13,17 +13,23 @@ abstract class SpotifyApiBase {
   Artists _artists;
   Albums _albums;
   Tracks _tracks;
+  Playlists _playlists;
+  Users _users;
   AudioFeatures _audioFeatures;
 
   Artists get artists => _artists;
   Albums get albums => _albums;
   Tracks get tracks => _tracks;
+  Playlists get playlists => _playlists;
+  Users get users => _users;
   AudioFeatures get audioFeatures => _audioFeatures;
 
   SpotifyApiBase(this._credentials) {
     _artists = new Artists(this);
     _albums = new Albums(this);
     _tracks = new Tracks(this);
+    _playlists = new Playlists(this);
+    _users = new Users(this);
     _audioFeatures = new AudioFeatures(this);
   }
 
@@ -49,6 +55,11 @@ abstract class SpotifyApiBase {
         path, (url, headers) => _postImpl(url, headers, body));
   }
 
+  Future<String> _put(String path, String body) {
+    return _requestWrapper(
+        path, (url, headers) => _putImpl(url, headers, body));
+  }
+
   Future<String> _requestWrapper(String path,
       Future<String> req(String url, Map<String, String> headers)) async {
     await _refreshToken();
@@ -60,5 +71,7 @@ abstract class SpotifyApiBase {
 
   Future<String> _getImpl(String url, Map<String, String> headers);
   Future<String> _postImpl(
+      String url, Map<String, String> headers, dynamic body);
+  Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body);
 }

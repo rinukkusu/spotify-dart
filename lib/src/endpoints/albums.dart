@@ -3,7 +3,7 @@
 
 part of spotify;
 
-class Albums extends EndpointBase {
+class Albums extends EndpointPaging {
   @override
   String get _path => 'v1/albums';
 
@@ -20,5 +20,9 @@ class Albums extends EndpointBase {
 
     var artistsMap = map['albums'] as Iterable<Map>;
     return artistsMap.map((m) => AlbumMapper.parse(m));
+  }
+
+  Pages<TrackSimple> getTracks(String albumId) {
+    return _getPages('$_path/$albumId/tracks', TrackSimpleMapper.parse);
   }
 }

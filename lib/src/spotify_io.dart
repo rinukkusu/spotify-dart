@@ -10,8 +10,7 @@ class SpotifyApi extends SpotifyApiBase {
   Future<String> _getImpl(String url, Map<String, String> headers) async {
     var client = new http.Client();
     var response = await client.get(url, headers: headers);
-
-    return UTF8.decode(response.bodyBytes);
+    return handleErrors(response);
   }
 
   @override
@@ -19,6 +18,24 @@ class SpotifyApi extends SpotifyApiBase {
       String url, Map<String, String> headers, dynamic body) async {
     var client = new http.Client();
     var response = await client.post(url, headers: headers, body: body);
-    return UTF8.decode(response.bodyBytes);
+    return handleErrors(response);
+  }
+
+  @override
+  Future<String> _putImpl(
+      String url, Map<String, String> headers, dynamic body) async {
+    var client = new http.Client();
+    var response = await client.put(url, headers: headers, body: body);
+    return handleErrors(response);
+  }
+
+  String handleErrors(http.Response response) {
+    var responseBody = UTF8.decode(response.bodyBytes);
+    if (response.statusCode >= 400) {
+      var json = JSON.decode(responseBody);
+      throw new SpotifyException.fromSpotify(
+          SpotifyErrorMapper.parse(json['error']));
+    }
+    return responseBody;
   }
 }
