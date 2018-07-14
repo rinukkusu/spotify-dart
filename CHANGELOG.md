@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.8
+
+- add missing _putImpl implementation to SpotifyMock
+
 ## 0.0.7
 
 - add user's saved tracks endpoints
