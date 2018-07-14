@@ -3,8 +3,11 @@
 
 part of spotify;
 
-@JsonClass()
-class SpotifyError {
+@JsonSerializable()
+class SpotifyError extends Object with _$SpotifyErrorSerializerMixin {
+  SpotifyError() {}
+  factory SpotifyError.fromJson(Map<String, dynamic> json) => _$SpotifyErrorFromJson(json);
+
   /// The HTTP status code (also returned in the response header; see Response
   /// Status Codes for more information).
   int status;

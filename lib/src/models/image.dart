@@ -3,8 +3,11 @@
 
 part of spotify;
 
-@JsonClass()
-class Image {
+@JsonSerializable()
+class Image extends Object with _$ImageSerializerMixin {
+  Image() {}
+  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+
   /// The image height in pixels. If unknown: null or not returned.
   int height;
 

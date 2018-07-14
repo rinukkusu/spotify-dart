@@ -3,8 +3,11 @@
 
 part of spotify;
 
-@JsonClass()
-class AudioFeature {
+@JsonSerializable()
+class AudioFeature extends Object with _$AudioFeatureSerializerMixin {
+  AudioFeature() {}
+  factory AudioFeature.fromJson(Map<String, dynamic> json) => _$AudioFeatureFromJson(json);
+
   /**
    * A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 
    * 1.0 represents high confidence the track is acoustic.
@@ -15,7 +18,7 @@ class AudioFeature {
    * An HTTP URL to access the full audio analysis of this track. An access 
    * token is required to access this data.
    */
-  @JsonField(key: 'analysis_url')
+  @JsonKey(name: 'analysis_url')
   String analysisUrl;
 
   /**
@@ -27,11 +30,11 @@ class AudioFeature {
   double danceability;
 
   /// The track length in milliseconds.
-  @JsonField(key: 'duration_ms')
+  @JsonKey(name: 'duration_ms')
   int durationMs;
 
   /// The track length
-  @Transient()
+  @JsonKey(ignore: true)
   Duration get duration => new Duration(milliseconds: durationMs);
 
   /**
@@ -109,11 +112,11 @@ class AudioFeature {
    * is a notational convention to specify how many beats are in each bar (or 
    * measure).
    */
-  @JsonField(key: 'time_signature')
+  @JsonKey(name: 'time_signature')
   int timeSignature;
 
   /// A link to the Web API endpoint providing full details of the track.
-  @JsonField(key: 'track_href')
+  @JsonKey(name: 'track_href')
   String trackHref;
 
   /// The object type: "audio_features"

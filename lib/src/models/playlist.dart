@@ -3,8 +3,11 @@
 
 part of spotify;
 
-@JsonClass()
-class Playlist implements PlaylistSimple {
+@JsonSerializable()
+class Playlist extends Object with _$PlaylistSerializerMixin implements PlaylistSimple {
+  Playlist() {}
+  factory Playlist.fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
+
   /// true if the owner allows other users to modify the playlist.
   bool collaborative;
 
@@ -13,7 +16,7 @@ class Playlist implements PlaylistSimple {
   String description;
 
   // /// Known external URLs for this playlist.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// Information about the followers of the playlist.
@@ -46,12 +49,12 @@ class Playlist implements PlaylistSimple {
 
   /// The version identifier for the current playlist. Can be supplied in other
   /// requests to target a specific playlist version
-  @JsonField(key: 'snapshot_id')
+  @JsonKey(name: 'snapshot_id')
   String snapshotId;
 
   /// Use [Playlist.tracks]
   @override
-  @Transient()
+  @JsonKey(ignore: true)
   TracksLink tracksLink;
 
   /// Information about the tracks of the playlist.
@@ -64,13 +67,16 @@ class Playlist implements PlaylistSimple {
   String uri;
 }
 
-@JsonClass()
-class PlaylistSimple {
+@JsonSerializable()
+class PlaylistSimple extends Object with _$PlaylistSimpleSerializerMixin {
+  PlaylistSimple() {}
+  factory PlaylistSimple.fromJson(Map<String, dynamic> json) => _$PlaylistSimpleFromJson(json);
+
   /// true if the owner allows other users to modify the playlist.
   bool collaborative;
 
   // /// Known external URLs for this playlist.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the playlist.
@@ -100,13 +106,13 @@ class PlaylistSimple {
 
   /// The version identifier for the current playlist. Can be supplied in other
   /// requests to target a specific playlist version
-  @JsonField(key: 'snapshot_id')
+  @JsonKey(name: 'snapshot_id')
   String snapshotId;
 
   /// A collection containing a link (href) to the Web API endpoint where full
   /// details of the playlist's tracks can be retrieved, along with the total
   /// number of tracks in the playlist.
-  @JsonField(key: 'tracks')
+  @JsonKey(name: 'tracks')
   TracksLink tracksLink;
 
   /// The object type: "playlist"
@@ -116,27 +122,32 @@ class PlaylistSimple {
   String uri;
 }
 
-@JsonClass()
-class PlaylistsFeatured {
+@JsonSerializable()
+class PlaylistsFeatured extends Object with _$PlaylistsFeaturedSerializerMixin {
+  PlaylistsFeatured() {}
+  factory PlaylistsFeatured.fromJson(Map<String, dynamic> json) => _$PlaylistsFeaturedFromJson(json);
+
   /// The message of the day for Spotify's featured playlists
   String message;
 }
 
-@JsonClass()
-class PlaylistTrack {
+@JsonSerializable()
+class PlaylistTrack extends Object with _$PlaylistTrackSerializerMixin {
+  PlaylistTrack() {}
+  factory PlaylistTrack.fromJson(Map<String, dynamic> json) => _$PlaylistTrackFromJson(json);
 
   /// The date and time the track was added.
   /// Note that some very old playlists may return [null] in this field.
-  @JsonField(key: 'added_at')
+  @JsonKey(name: 'added_at')
   DateTime addedAt;
 
   /// The Spotify user who added the track.
   /// Note that some very old playlists may return [null] in this field.
-  @JsonField(key: 'added_by')
+  @JsonKey(name: 'added_by')
   UserPublic addedBy;
 
   /// Whether this track is a local file or not.
-  @JsonField(key: 'is_local')
+  @JsonKey(name: 'is_local')
   bool isLocal;
 
   /// Information about the track

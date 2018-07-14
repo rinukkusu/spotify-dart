@@ -3,10 +3,16 @@
 
 part of spotify;
 
-typedef T ParserFunction<T>(Map<String, dynamic> object);
+typedef T ParserFunction<T>(dynamic object);
 
-@JsonClass()
-class Paging<T> {
+Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
+List<Map> itemsNativeToJson(Iterable<dynamic> items) => new List.from(items);
+
+@JsonSerializable()
+class Paging<T> extends Object with _$PagingSerializerMixin {
+  Paging() {}
+  factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
+
   /// A link to the Web API endpoint returning the full result of the request.
   String href;
 
@@ -14,8 +20,8 @@ class Paging<T> {
   ///
   /// Note this is the raw JSON value. Use a [Page]'s [Page.items] to get the
   /// requested data as a deserialized list.
-  @JsonField(key: 'items', native: true)
-  Iterable<Map> itemsNative;
+  @JsonKey(name: 'items', fromJson: itemsNativeFromJson, toJson: itemsNativeToJson)
+  Iterable<dynamic> itemsNative;
 
   /// The maximum number of items in the response (as set in the query or by
   /// default).

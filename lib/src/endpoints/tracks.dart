@@ -16,15 +16,17 @@ class Tracks extends EndpointBase {
 
   Future<Track> get(String trackId) async {
     var json = await _api._get('$_path/$trackId');
-    return TrackMapper.fromJson(json);
+    var map = JSON.decode(json);
+
+    return Track.fromJson(map);
   }
 
   Future<Iterable<Track>> list(Iterable<String> trackIds) async {
     var json = await _api._get('$_path?ids=${trackIds.join(',')}');
     var map = JSON.decode(json);
 
-    var artistsMap = map['tracks'] as Iterable<Map>;
-    return artistsMap.map((m) => TrackMapper.parse(m));
+    var artistsMap = map['tracks'] as Iterable<dynamic>;
+    return artistsMap.map((m) => Track.fromJson(m));
   }
 }
 
@@ -35,7 +37,7 @@ class TracksMe extends EndpointPaging {
   TracksMe(SpotifyApiBase api) : super(api);
 
   Pages<TrackSaved> get saved {
-    return _getPages(_path, TrackSavedMapper.parse);
+    return _getPages(_path, (json) => TrackSaved.fromJson(json));
   }
 
   Future<bool> containsOne(String id) async {

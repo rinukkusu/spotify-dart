@@ -3,10 +3,13 @@
 
 part of spotify;
 
-@JsonClass()
-class Artist implements ArtistSimple {
+@JsonSerializable()
+class Artist extends Object with _$ArtistSerializerMixin implements ArtistSimple {
+  Artist() {}
+  factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
+
   // /// Known external URLs for this artist.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the artist.
@@ -47,10 +50,13 @@ class Artist implements ArtistSimple {
   int popularity;
 }
 
-@JsonClass()
-class ArtistSimple {
+@JsonSerializable()
+class ArtistSimple extends Object with _$ArtistSimpleSerializerMixin {
+  ArtistSimple() {}
+  factory ArtistSimple.fromJson(Map<String, dynamic> json) => _$ArtistSimpleFromJson(json);
+
   // /// Known external URLs for this artist.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the artist.

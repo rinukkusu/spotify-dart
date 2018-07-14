@@ -16,7 +16,7 @@ abstract class EndpointPaging extends EndpointBase {
 }
 
 class Page<T> {
-  Paging<T> _paging;
+  Paging<dynamic> _paging;
   Iterable<T> _items;
   Object _container;
 
@@ -128,10 +128,10 @@ class Pages<T> {
     var map = JSON.decode(json);
 
     if (_pageContainerMapper == null) {
-      var paging = PagingMapper.parse(map);
+      var paging = Paging.fromJson(map);
       return new Page(paging, _pageMapper);
     } else {
-      var paging = PagingMapper.parse(map[_pageKey]);
+      var paging = Paging.fromJson(map[_pageKey]);
       var container = _pageContainerMapper(map);
       return new Page(paging, _pageMapper, container);
     }

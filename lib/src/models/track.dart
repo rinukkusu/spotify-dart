@@ -3,8 +3,11 @@
 
 part of spotify;
 
-@JsonClass()
-class Track implements TrackSimple {
+@JsonSerializable()
+class Track extends Object with _$TrackSerializerMixin implements TrackSimple {
+  Track() {}
+  factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
+
   /**
    * The album on which the track appears. The album object includes a link in
    * [href] to full information about the album. 
@@ -21,22 +24,22 @@ class Track implements TrackSimple {
    * A list of the countries in which the track can be played, identified by 
    * their ISO 3166-1 alpha-2 code.
    */
-  @JsonField(key: 'available_markets')
+  @JsonKey(name: 'available_markets')
   List<String> availableMarkets;
 
   /**
    * The disc number 
    * (usually [1] unless the album consists of more than one disc)
    */
-  @JsonField(key: 'disc_number')
+  @JsonKey(name: 'disc_number')
   int discNumber;
 
   /// The track length in milliseconds.
-  @JsonField(key: 'duration_ms')
+  @JsonKey(name: 'duration_ms')
   int durationMs;
 
   /// The track length
-  @Transient()
+  @JsonKey(ignore: true)
   Duration get duration => new Duration(milliseconds: durationMs);
 
   /**
@@ -46,11 +49,11 @@ class Track implements TrackSimple {
   bool explicit;
 
   // /// Known external IDs for this track.
-  //@JsonField(key: 'external_idss')
+  //@JsonKey(name: 'external_idss')
   //Map<String, String> externalIds;
 
   // /// Known external URLs for this track.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the track.
@@ -63,7 +66,7 @@ class Track implements TrackSimple {
    * Part of the response when Track Relinking is applied. If true, the track 
    * is playable in the given market. Otherwise false.
    */
-  @JsonField(key: 'is_playable')
+  @JsonKey(name: 'is_playable')
   bool isPlayable;
 
   /**
@@ -72,7 +75,7 @@ class Track implements TrackSimple {
    * has been replaced with a different track. The track in the linked_from 
    * object contains information about the originally requested track.
    */
-  @JsonField(key: 'linked_from')
+  @JsonKey(name: 'linked_from')
   TrackLink linkedFrom;
 
   /// The name of the track.
@@ -100,14 +103,14 @@ class Track implements TrackSimple {
    * A URL to a 30 second preview (MP3 format) of the track. [null] if not 
    * available.
    */
-  @JsonField(key: 'preview_url')
+  @JsonKey(name: 'preview_url')
   String previewUrl;
 
   /**
    * The number of the track. If an album has several discs, the track number 
    * is the number on the specified disc. 
    */
-  @JsonField(key: 'track_number')
+  @JsonKey(name: 'track_number')
   int trackNumber;
 
   /// The object type: "track".
@@ -117,8 +120,11 @@ class Track implements TrackSimple {
   String uri;
 }
 
-@JsonClass()
-class TrackSimple {
+@JsonSerializable()
+class TrackSimple extends Object with _$TrackSimpleSerializerMixin {
+  TrackSimple() {}
+  factory TrackSimple.fromJson(Map<String, dynamic> json) => _$TrackSimpleFromJson(json);
+
   /**
    * The artists who performed the track. Each artist object includes a link in
    * [href] to more detailed information about the artist. 
@@ -129,22 +135,22 @@ class TrackSimple {
    * A list of the countries in which the track can be played, identified by 
    * their ISO 3166-1 alpha-2 code.
    */
-  @JsonField(key: 'available_markets')
+  @JsonKey(name: 'available_markets')
   List<String> availableMarkets;
 
   /**
    * The disc number 
    * (usually [1] unless the album consists of more than one disc)
    */
-  @JsonField(key: 'disc_number')
+  @JsonKey(name: 'disc_number')
   int discNumber;
 
   /// The track length in milliseconds.
-  @JsonField(key: 'duration_ms')
+  @JsonKey(name: 'duration_ms')
   int durationMs;
 
   /// The track length
-  @Transient()
+  @JsonKey(ignore: true)
   Duration get duration => new Duration(milliseconds: durationMs);
 
   /**
@@ -154,7 +160,7 @@ class TrackSimple {
   bool explicit;
 
   // /// Known external URLs for this track.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the track.
@@ -167,7 +173,7 @@ class TrackSimple {
    * Part of the response when Track Relinking is applied. If true, the track 
    * is playable in the given market. Otherwise false.
    */
-  @JsonField(key: 'is_playable')
+  @JsonKey(name: 'is_playable')
   bool isPlayable;
 
   /**
@@ -176,7 +182,7 @@ class TrackSimple {
    * has been replaced with a different track. The track in the linked_from 
    * object contains information about the originally requested track.
    */
-  @JsonField(key: 'linked_from')
+  @JsonKey(name: 'linked_from')
   TrackLink linkedFrom;
 
   /// The name of the track.
@@ -186,14 +192,14 @@ class TrackSimple {
    * A URL to a 30 second preview (MP3 format) of the track. [null] if not 
    * available.
    */
-  @JsonField(key: 'preview_url')
+  @JsonKey(name: 'preview_url')
   String previewUrl;
 
   /**
    * The number of the track. If an album has several discs, the track number 
    * is the number on the specified disc. 
    */
-  @JsonField(key: 'track_number')
+  @JsonKey(name: 'track_number')
   int trackNumber;
 
   /// The object type: "track".
@@ -204,20 +210,26 @@ class TrackSimple {
 }
 
 /// A song saved in a Spotify user’s “Your Music” library
-@JsonClass()
-class TrackSaved {
+@JsonSerializable()
+class TrackSaved extends Object with _$TrackSavedSerializerMixin {
+  TrackSaved() {}
+  factory TrackSaved.fromJson(Map<String, dynamic> json) => _$TrackSavedFromJson(json);
+
   /// The date and time the track was saved.
-  @JsonField(key: 'added_at')
+  @JsonKey(name: 'added_at')
   DateTime addedAt;
 
   /// Information about the track.
   Track track;
 }
 
-@JsonClass()
-class TrackLink {
+@JsonSerializable()
+class TrackLink extends Object with _$TrackLinkSerializerMixin {
+  TrackLink() {}
+  factory TrackLink.fromJson(Map<String, dynamic> json) => _$TrackLinkFromJson(json);
+
   // /// Known external URLs for this track.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the track.
@@ -233,8 +245,11 @@ class TrackLink {
   String uri;
 }
 
-@JsonClass()
-class TracksLink {
+@JsonSerializable()
+class TracksLink extends Object with _$TracksLinkSerializerMixin {
+  TracksLink() {}
+  factory TracksLink.fromJson(Map<String, dynamic> json) => _$TracksLinkFromJson(json);
+
   /// A link to the Web API endpoint where full details of the playlist's
   /// tracks can be retrieved
   String href;

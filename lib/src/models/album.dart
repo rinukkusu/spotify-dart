@@ -3,10 +3,13 @@
 
 part of spotify;
 
-@JsonClass()
-class Album implements AlbumSimple {
+@JsonSerializable()
+class Album extends Object with _$AlbumSerializerMixin implements AlbumSimple {
+  Album() {}
+  factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
+
   /// The type of the album: one of "album", "single", or "compilation".
-  @JsonField(key: 'album_type')
+  @JsonKey(name: 'album_type')
   String albumType;
 
   /**
@@ -20,11 +23,11 @@ class Album implements AlbumSimple {
    * codes. Note that an album is considered available in a market when at least
    * 1 of its tracks is available in that market.
    */
-  @JsonField(key: 'available_markets')
+  @JsonKey(name: 'available_markets')
   List<String> availableMarkets;
 
   // /// Known external URLs for this album.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the album.
@@ -52,7 +55,7 @@ class Album implements AlbumSimple {
   List<Copyright> copyrights;
 
   // /// Known external IDs for the album.
-  //@JsonField(key: 'external_ids')
+  //@JsonKey(name: 'external_ids')
   //Map<String, String> externalIds;
 
   /**
@@ -78,21 +81,24 @@ class Album implements AlbumSimple {
    * The date the album was first released, for example "1981-12-15". 
    * Depending on the precision, it might be shown as "1981" or "1981-12".
    */
-  @JsonField(key: 'release_date')
+  @JsonKey(name: 'release_date')
   String releaseDate;
 
   /**
    * The precision with which release_date value is known: 
    *     "year", "month", or "day".
    */
-  @JsonField(key: 'release_date_precision')
+  @JsonKey(name: 'release_date_precision')
   String releaseDatePrecision;
 }
 
-@JsonClass()
-class AlbumSimple {
+@JsonSerializable()
+class AlbumSimple extends Object with _$AlbumSimpleSerializerMixin {
+  AlbumSimple() {}
+  factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
+
   /// The type of the album: one of "album", "single", or "compilation".
-  @JsonField(key: 'album_type')
+  @JsonKey(name: 'album_type')
   String albumType;
 
   /**
@@ -106,11 +112,11 @@ class AlbumSimple {
    * codes. Note that an album is considered available in a market when at least
    * 1 of its tracks is available in that market.
    */
-  @JsonField(key: 'available_markets')
+  @JsonKey(name: 'available_markets')
   List<String> availableMarkets;
 
   // /// Known external URLs for this album.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the album.
@@ -135,8 +141,11 @@ class AlbumSimple {
   String uri;
 }
 
-@JsonClass()
-class Copyright {
+@JsonSerializable()
+class Copyright extends Object with _$CopyrightSerializerMixin {
+  Copyright() {}
+  factory Copyright.fromJson(Map<String, dynamic> json) => _$CopyrightFromJson(json);
+
   /// The copyright text for this album.
   String text;
 

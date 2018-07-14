@@ -11,27 +11,33 @@ class Users extends EndpointPaging {
 
   Future<User> me() async {
     var json = await _api._get('v1/me');
-    return UserMapper.fromJson(json);
+    var map = JSON.decode(json);
+
+    return User.fromJson(map);
   }
 
   Future<UserPublic> get(String userId) async {
     var json = await _api._get('$_path/$userId');
-    return UserPublicMapper.fromJson(json);
+    var map = JSON.decode(json);
+
+    return UserPublic.fromJson(map);
   }
 
   Pages<PlaylistSimple> playlists(String userId) {
-    return _getPages('$_path/$userId/playlists', PlaylistSimpleMapper.parse);
+    return _getPages('$_path/$userId/playlists', (json) => PlaylistSimple.fromJson(json));
   }
 
   Future<Playlist> playlist(String userId, String playlistId) async {
     var json = await _api._get('$_path/$userId/playlists/$playlistId');
-    return PlaylistMapper.fromJson(json);
+    var map = JSON.decode(json);
+
+    return Playlist.fromJson(map);
   }
 
   Pages<PlaylistTrack> playlistTracks(String userId, String playlistId) {
     return _getPages(
         '$_path/$userId/playlists/$playlistId/tracks',
-        PlaylistTrackMapper.parse
+        (json) => PlaylistTrack.fromJson(json)
     );
   }
 }

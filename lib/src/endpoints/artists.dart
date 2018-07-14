@@ -11,14 +11,16 @@ class Artists extends EndpointBase {
 
   Future<Artist> get(String artistId) async {
     var json = await _api._get('$_path/$artistId');
-    return ArtistMapper.fromJson(json);
+    var map = JSON.decode(json);
+
+    return Artist.fromJson(map);
   }
 
   Future<Iterable<Artist>> list(Iterable<String> artistIds) async {
     var json = await _api._get('$_path?ids=${artistIds.join(',')}');
     var map = JSON.decode(json);
 
-    var artistsMap = map['artists'] as Iterable<Map>;
-    return artistsMap.map((m) => ArtistMapper.parse(m));
+    var artistsMap = map['artists'] as Iterable<dynamic>;
+    return artistsMap.map((m) => Artist.fromJson(m));
   }
 }
