@@ -11,12 +11,12 @@ class Playlists extends EndpointPaging {
 
    Pages<PlaylistSimple> get featured {
      return _getPages(
-         '$_path/featured-playlists', PlaylistSimpleMapper.parse,
-         'playlists', PlaylistsFeaturedMapper.parse
+         '$_path/featured-playlists', (json) => PlaylistSimple.fromJson(json),
+         'playlists', (json) => PlaylistsFeatured.fromJson(json)
      );
    }
 
   Pages<PlaylistSimple> get me {
-     return _getPages('v1/me/playlists', PlaylistSimpleMapper.parse);
+     return _getPages('v1/me/playlists', (json) => Playlist.fromJson(json));
   }
 }

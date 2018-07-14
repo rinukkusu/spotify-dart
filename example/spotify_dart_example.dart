@@ -16,19 +16,21 @@ main() async {
   var artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
   artists.forEach((x) => print(x.name));
 
-  print("Album:");
+  print("\nAlbum:");
   var album = await spotify.albums.get('2Hog1V8mdTWKhCYqI5paph');
   print(album.name);
 
-  print("Album Tracks:");
+  print("\nAlbum Tracks:");
   var tracks = await spotify.albums.getTracks(album.id).all();
   tracks.forEach((track) {
     print(track.name);
   });
 
-  print("Featured Playlists:");
+  print("\nFeatured Playlist:");
   var featuredPlaylists = await spotify.playlists.featured.all();
   featuredPlaylists.forEach((playlist) {
     print(playlist.name);
   });
+
+  exit(0);
 }

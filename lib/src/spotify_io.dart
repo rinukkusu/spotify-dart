@@ -34,7 +34,8 @@ class SpotifyApi extends SpotifyApiBase {
     if (response.statusCode >= 400) {
       var json = JSON.decode(responseBody);
       throw new SpotifyException.fromSpotify(
-          SpotifyErrorMapper.parse(json['error']));
+          SpotifyError.fromJson(json['error']),
+      );
     }
     return responseBody;
   }

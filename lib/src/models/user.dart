@@ -3,8 +3,11 @@
 
 part of spotify;
 
-@JsonClass()
-class User implements UserPublic {
+@JsonSerializable()
+class User extends Object with _$UserSerializerMixin implements UserPublic {
+  User() {}
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
   /// The user's date-of-birth.
   ///
   /// This field is only available when the current user has granted access to
@@ -17,7 +20,7 @@ class User implements UserPublic {
   String country;
 
   /// The name displayed on the user's profile. null if not available.
-  @JsonField(key: 'display_name')
+  @JsonKey(name: 'display_name')
   String displayName;
 
   /// The user's email address, as entered by the user when creating their
@@ -31,7 +34,7 @@ class User implements UserPublic {
   String email;
 
   // /// Known public external URLs for this user.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// Information about the followers of this user.
@@ -60,14 +63,17 @@ class User implements UserPublic {
   String uri;
 }
 
-@JsonClass()
-class UserPublic {
+@JsonSerializable()
+class UserPublic extends Object with _$UserPublicSerializerMixin {
+  UserPublic() {}
+  factory UserPublic.fromJson(Map<String, dynamic> json) => _$UserPublicFromJson(json);
+
   /// The name displayed on the user's profile. null if not available.
-  @JsonField(key: 'display_name')
+  @JsonKey(name: 'display_name')
   String displayName;
 
   // /// Known public external URLs for this user.
-  //@JsonField(key: 'external_urls')
+  //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// Information about the followers of this user.

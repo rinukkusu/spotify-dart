@@ -9,12 +9,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
-import 'package:owl/annotation/json.dart';
-
-import 'spotify_io.json.g.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'src/models/token_request.dart';
-import 'src/models/token_request.json.g.dart';
+
+part 'spotify_io.g.dart';
 
 part 'src/models/paging.dart';
 part 'src/models/error.dart';

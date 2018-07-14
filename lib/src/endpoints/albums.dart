@@ -11,18 +11,20 @@ class Albums extends EndpointPaging {
 
   Future<Album> get(String albumId) async {
     var json = await _get('$_path/$albumId');
-    return AlbumMapper.fromJson(json);
+    var map = JSON.decode(json);
+
+    return Album.fromJson(map);
   }
 
   Future<Iterable<Album>> list(Iterable<String> albumIds) async {
     var json = await _get('$_path?ids=${albumIds.join(',')}');
     var map = JSON.decode(json);
 
-    var artistsMap = map['albums'] as Iterable<Map>;
-    return artistsMap.map((m) => AlbumMapper.parse(m));
+    var artistsMap = map['albums'] as Iterable<dynamic>;
+    return artistsMap.map((m) => Album.fromJson(m));
   }
 
   Pages<TrackSimple> getTracks(String albumId) {
-    return _getPages('$_path/$albumId/tracks', TrackSimpleMapper.parse);
+    return _getPages('$_path/$albumId/tracks', (json) => TrackSimple.fromJson(json));
   }
 }

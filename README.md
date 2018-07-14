@@ -28,3 +28,11 @@ import 'package:spotify/spotify_browser.dart';
 Please file feature requests and bugs at the [issue tracker][tracker].
 
 [tracker]: https://github.com/rinukkusu/spotify-dart/issues
+
+## Development
+
+### Generating JSON Serializers
+
+Run `pub run build_runner build` to generate JSON serilizers via [json_serializable][json].
+
+[json]: https://pub.dartlang.org/packages/json_serializable

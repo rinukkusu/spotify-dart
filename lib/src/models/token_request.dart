@@ -3,26 +3,34 @@
 
 library spotify.token;
 
-import 'package:owl/annotation/json.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-@JsonClass()
-class TokenRequest {
-  @JsonField(key: 'grant_type')
+part 'token_request.g.dart';
+
+@JsonSerializable()
+class TokenRequest extends Object with _$TokenRequestSerializerMixin {
+  TokenRequest() {}
+  factory TokenRequest.fromJson(Map<String, dynamic> json) => _$TokenRequestFromJson(json);
+
+  @JsonKey(name: 'grant_type')
   String grantType = 'client_credentials';
 }
 
-@JsonClass()
-class ApiToken {
-  @JsonField(key: 'access_token')
+@JsonSerializable()
+class ApiToken extends Object with _$ApiTokenSerializerMixin {
+  ApiToken() {}
+  factory ApiToken.fromJson(Map<String, dynamic> json) => _$ApiTokenFromJson(json);
+
+  @JsonKey(name: 'access_token')
   String accessToken;
 
-  @JsonField(key: 'token_type')
+  @JsonKey(name: 'token_type')
   String tokenType;
 
-  @JsonField(key: 'expires_in')
+  @JsonKey(name: 'expires_in')
   int expiresIn;
 
-  @Transient()
+  @JsonKey(ignore: true)
   DateTime _createdOn = new DateTime.now();
   bool get isExpired =>
       _createdOn.difference(new DateTime.now()).inSeconds.abs() > expiresIn;
