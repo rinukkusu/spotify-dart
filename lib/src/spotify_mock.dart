@@ -18,6 +18,13 @@ class SpotifyApiMock extends SpotifyApiBase {
     var response = await client.post(url, headers: headers, body: body);
     return UTF8.decode(response.bodyBytes);
   }
+
+  @override
+  Future<String> _putImpl(String url, Map<String, String> headers, body) async {
+    var client = new MockClient();
+    var response = await client.put(url, headers: headers, body: body);
+    return UTF8.decode(response.bodyBytes);
+  }
 }
 
 class MockClient implements http.BaseClient {
