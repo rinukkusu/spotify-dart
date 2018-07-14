@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.9
+
+- support Dart 2 with switch to json_serializable
+
 ## 0.0.8
 
 - add missing _putImpl implementation to SpotifyMock
