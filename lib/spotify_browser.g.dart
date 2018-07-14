@@ -21,7 +21,7 @@ Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) {
 
 abstract class _$PagingSerializerMixin<T> {
   String get href;
-  Iterable<Map<String, dynamic>> get itemsNative;
+  Iterable<dynamic> get itemsNative;
   int get limit;
   String get next;
   int get offset;
