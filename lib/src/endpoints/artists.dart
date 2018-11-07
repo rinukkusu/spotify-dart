@@ -10,15 +10,15 @@ class Artists extends EndpointBase {
   Artists(SpotifyApiBase api) : super(api);
 
   Future<Artist> get(String artistId) async {
-    var json = await _api._get('$_path/$artistId');
-    var map = JSON.decode(json);
+    var jsonString = await _api._get('$_path/$artistId');
+    var map = json.decode(jsonString);
 
     return Artist.fromJson(map);
   }
 
   Future<Iterable<Artist>> list(Iterable<String> artistIds) async {
-    var json = await _api._get('$_path?ids=${artistIds.join(',')}');
-    var map = JSON.decode(json);
+    var jsonString = await _api._get('$_path?ids=${artistIds.join(',')}');
+    var map = json.decode(jsonString);
 
     var artistsMap = map['artists'] as Iterable<dynamic>;
     return artistsMap.map((m) => Artist.fromJson(m));

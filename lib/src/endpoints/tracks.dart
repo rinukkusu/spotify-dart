@@ -15,15 +15,15 @@ class Tracks extends EndpointBase {
   TracksMe get me => _me;
 
   Future<Track> get(String trackId) async {
-    var json = await _api._get('$_path/$trackId');
-    var map = JSON.decode(json);
+    var jsonString = await _api._get('$_path/$trackId');
+    var map = json.decode(jsonString);
 
     return Track.fromJson(map);
   }
 
   Future<Iterable<Track>> list(Iterable<String> trackIds) async {
-    var json = await _api._get('$_path?ids=${trackIds.join(',')}');
-    var map = JSON.decode(json);
+    var jsonString = await _api._get('$_path?ids=${trackIds.join(',')}');
+    var map = json.decode(jsonString);
 
     var artistsMap = map['tracks'] as Iterable<dynamic>;
     return artistsMap.map((m) => Track.fromJson(m));
@@ -48,8 +48,8 @@ class TracksMe extends EndpointPaging {
   Future<List<bool>> contains(List<String> ids) async {
     int limit = ids.length < 50 ? ids.length : 50;
     String idsParam = ids.sublist(0, limit).join(',');
-    var json = await _api._get('$_path/contains?ids=$idsParam');
-    List<bool> list = JSON.decode(json);
+    var jsonString = await _api._get('$_path/contains?ids=$idsParam');
+    List<bool> list = json.decode(jsonString);
     return list;
   }
 

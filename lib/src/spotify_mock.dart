@@ -8,7 +8,7 @@ class SpotifyApiMock extends SpotifyApiBase {
     var client = new MockClient();
     var response = await client.get(url, headers: headers);
 
-    return UTF8.decode(response.bodyBytes);
+    return utf8.decode(response.bodyBytes);
   }
 
   @override
@@ -16,14 +16,14 @@ class SpotifyApiMock extends SpotifyApiBase {
       String url, Map<String, String> headers, dynamic body) async {
     var client = new MockClient();
     var response = await client.post(url, headers: headers, body: body);
-    return UTF8.decode(response.bodyBytes);
+    return utf8.decode(response.bodyBytes);
   }
 
   @override
   Future<String> _putImpl(String url, Map<String, String> headers, body) async {
     var client = new MockClient();
     var response = await client.put(url, headers: headers, body: body);
-    return UTF8.decode(response.bodyBytes);
+    return utf8.decode(response.bodyBytes);
   }
 }
 

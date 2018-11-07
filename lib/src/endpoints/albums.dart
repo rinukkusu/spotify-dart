@@ -10,15 +10,15 @@ class Albums extends EndpointPaging {
   Albums(SpotifyApiBase api) : super(api);
 
   Future<Album> get(String albumId) async {
-    var json = await _get('$_path/$albumId');
-    var map = JSON.decode(json);
+    var jsonString = await _get('$_path/$albumId');
+    var map = json.decode(jsonString);
 
     return Album.fromJson(map);
   }
 
   Future<Iterable<Album>> list(Iterable<String> albumIds) async {
-    var json = await _get('$_path?ids=${albumIds.join(',')}');
-    var map = JSON.decode(json);
+    var jsonString = await _get('$_path?ids=${albumIds.join(',')}');
+    var map = json.decode(jsonString);
 
     var artistsMap = map['albums'] as Iterable<dynamic>;
     return artistsMap.map((m) => Album.fromJson(m));

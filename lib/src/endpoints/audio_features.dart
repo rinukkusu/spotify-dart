@@ -10,15 +10,15 @@ class AudioFeatures extends EndpointBase {
   AudioFeatures(SpotifyApiBase api) : super(api);
 
   Future<AudioFeature> get(String trackId) async {
-    var json = await _api._get('$_path/$trackId');
-    var map = JSON.decode(json);
+    var jsonString = await _api._get('$_path/$trackId');
+    var map = json.decode(jsonString);
 
     return AudioFeature.fromJson(map);
   }
 
   Future<Iterable<AudioFeature>> list(Iterable<String> trackIds) async {
-    var json = await _api._get('$_path?ids=${trackIds.join(',')}');
-    var map = JSON.decode(json);
+    var jsonString = await _api._get('$_path?ids=${trackIds.join(',')}');
+    var map = json.decode(jsonString);
 
     var artistsMap = map['audio-features'] as Iterable<dynamic>;
     return artistsMap.map((m) => AudioFeature.fromJson(m));

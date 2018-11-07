@@ -124,8 +124,8 @@ class Pages<T> {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
-    var json = await _api._get(path);
-    var map = JSON.decode(json);
+    var jsonString = await _api._get(path);
+    var map = json.decode(jsonString);
 
     if (_pageContainerMapper == null) {
       var paging = Paging.fromJson(map);

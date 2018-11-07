@@ -10,11 +10,11 @@ class SpotifyApi extends SpotifyApiBase {
   Future<String> _getImpl(String url, Map<String, String> headers) async {
     var client = new http.BrowserClient();
     var response = await client.get(url, headers: headers);
-    var responseBody = UTF8.decode(response.bodyBytes);
+    var responseBody = utf8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
-      var json = JSON.decode(responseBody);
+      var jsonMap = json.decode(responseBody);
       throw new SpotifyException.fromSpotify(
-          SpotifyError.fromJson(json['error']));
+          SpotifyError.fromJson(jsonMap['error']));
     }
     return responseBody;
   }
@@ -24,11 +24,11 @@ class SpotifyApi extends SpotifyApiBase {
       String url, Map<String, String> headers, dynamic body) async {
     var client = new http.BrowserClient();
     var response = await client.post(url, headers: headers, body: body);
-    var responseBody = UTF8.decode(response.bodyBytes);
+    var responseBody = utf8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
-      var json = JSON.decode(responseBody);
+      var jsonMap = json.decode(responseBody);
       throw new SpotifyException.fromSpotify(
-          SpotifyError.fromJson(json['error']));
+          SpotifyError.fromJson(jsonMap['error']));
     }
     return responseBody;
   }
@@ -38,11 +38,11 @@ class SpotifyApi extends SpotifyApiBase {
       String url, Map<String, String> headers, dynamic body) async {
     var client = new http.BrowserClient();
     var response = await client.put(url, headers: headers, body: body);
-    var responseBody = UTF8.decode(response.bodyBytes);
+    var responseBody = utf8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
-      var json = JSON.decode(responseBody);
+      var jsonMap = json.decode(responseBody);
       throw new SpotifyException.fromSpotify(
-          SpotifyError.fromJson(json['error']));
+          SpotifyError.fromJson(jsonMap['error']));
     }
     return responseBody;
   }

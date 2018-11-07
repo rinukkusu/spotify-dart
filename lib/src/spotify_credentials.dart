@@ -9,5 +9,5 @@ class SpotifyApiCredentials {
 
   SpotifyApiCredentials(this.clientId, this.clientSecret);
 
-  String get basicAuth => BASE64.encode('$clientId:$clientSecret'.codeUnits);
+  String get basicAuth => base64.encode('$clientId:$clientSecret'.codeUnits);
 }

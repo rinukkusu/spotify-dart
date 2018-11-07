@@ -7,7 +7,7 @@ import '../lib/spotify_io.dart';
 
 main() async {
   var keyJson = await new File('example/.apikeys').readAsString();
-  var keyMap = JSON.decode(keyJson);
+  var keyMap = json.decode(keyJson);
 
   var credentials = new SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   var spotify = new SpotifyApi(credentials);

@@ -40,7 +40,7 @@ abstract class SpotifyApiBase {
       var body = {'grant_type': 'client_credentials'};
 
       var responseJson = await _postImpl(_tokenRefreshUrl, headers, body);
-      var responseMap = JSON.decode(responseJson);
+      var responseMap = json.decode(responseJson);
 
       _apiToken = ApiToken.fromJson(responseMap);
     }
