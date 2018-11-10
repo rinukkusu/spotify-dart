@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class User extends Object with _$UserSerializerMixin implements UserPublic {
+class User extends Object implements UserPublic {
   User() {}
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -64,7 +64,7 @@ class User extends Object with _$UserSerializerMixin implements UserPublic {
 }
 
 @JsonSerializable()
-class UserPublic extends Object with _$UserPublicSerializerMixin {
+class UserPublic extends Object {
   UserPublic() {}
   factory UserPublic.fromJson(Map<String, dynamic> json) => _$UserPublicFromJson(json);
 

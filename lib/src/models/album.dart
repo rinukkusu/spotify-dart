@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class Album extends Object with _$AlbumSerializerMixin implements AlbumSimple {
+class Album extends Object implements AlbumSimple {
   Album() {}
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
 
@@ -93,7 +93,7 @@ class Album extends Object with _$AlbumSerializerMixin implements AlbumSimple {
 }
 
 @JsonSerializable()
-class AlbumSimple extends Object with _$AlbumSimpleSerializerMixin {
+class AlbumSimple extends Object {
   AlbumSimple() {}
   factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
 
@@ -142,7 +142,7 @@ class AlbumSimple extends Object with _$AlbumSimpleSerializerMixin {
 }
 
 @JsonSerializable()
-class Copyright extends Object with _$CopyrightSerializerMixin {
+class Copyright extends Object {
   Copyright() {}
   factory Copyright.fromJson(Map<String, dynamic> json) => _$CopyrightFromJson(json);
 

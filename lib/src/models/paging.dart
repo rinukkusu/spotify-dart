@@ -9,7 +9,7 @@ Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
 List<Map> itemsNativeToJson(Iterable<dynamic> items) => new List.from(items);
 
 @JsonSerializable()
-class Paging<T> extends Object with _$PagingSerializerMixin {
+class Paging<T> extends Object {
   Paging() {}
   factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
 

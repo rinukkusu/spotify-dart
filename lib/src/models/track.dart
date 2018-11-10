@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class Track extends Object with _$TrackSerializerMixin implements TrackSimple {
+class Track extends Object implements TrackSimple {
   Track() {}
   factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
 
@@ -121,7 +121,7 @@ class Track extends Object with _$TrackSerializerMixin implements TrackSimple {
 }
 
 @JsonSerializable()
-class TrackSimple extends Object with _$TrackSimpleSerializerMixin {
+class TrackSimple extends Object {
   TrackSimple() {}
   factory TrackSimple.fromJson(Map<String, dynamic> json) => _$TrackSimpleFromJson(json);
 
@@ -211,7 +211,7 @@ class TrackSimple extends Object with _$TrackSimpleSerializerMixin {
 
 /// A song saved in a Spotify user’s “Your Music” library
 @JsonSerializable()
-class TrackSaved extends Object with _$TrackSavedSerializerMixin {
+class TrackSaved extends Object {
   TrackSaved() {}
   factory TrackSaved.fromJson(Map<String, dynamic> json) => _$TrackSavedFromJson(json);
 
@@ -224,7 +224,7 @@ class TrackSaved extends Object with _$TrackSavedSerializerMixin {
 }
 
 @JsonSerializable()
-class TrackLink extends Object with _$TrackLinkSerializerMixin {
+class TrackLink extends Object {
   TrackLink() {}
   factory TrackLink.fromJson(Map<String, dynamic> json) => _$TrackLinkFromJson(json);
 
@@ -246,7 +246,7 @@ class TrackLink extends Object with _$TrackLinkSerializerMixin {
 }
 
 @JsonSerializable()
-class TracksLink extends Object with _$TracksLinkSerializerMixin {
+class TracksLink extends Object {
   TracksLink() {}
   factory TracksLink.fromJson(Map<String, dynamic> json) => _$TracksLinkFromJson(json);
 

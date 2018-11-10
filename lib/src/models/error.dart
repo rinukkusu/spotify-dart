@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class SpotifyError extends Object with _$SpotifyErrorSerializerMixin {
+class SpotifyError extends Object {
   SpotifyError() {}
   factory SpotifyError.fromJson(Map<String, dynamic> json) => _$SpotifyErrorFromJson(json);
 

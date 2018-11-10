@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class Image extends Object with _$ImageSerializerMixin {
+class Image extends Object {
   Image() {}
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
 

@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class AudioFeature extends Object with _$AudioFeatureSerializerMixin {
+class AudioFeature extends Object {
   AudioFeature() {}
   factory AudioFeature.fromJson(Map<String, dynamic> json) => _$AudioFeatureFromJson(json);
 

@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class Artist extends Object with _$ArtistSerializerMixin implements ArtistSimple {
+class Artist extends Object implements ArtistSimple {
   Artist() {}
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
 
@@ -51,7 +51,7 @@ class Artist extends Object with _$ArtistSerializerMixin implements ArtistSimple
 }
 
 @JsonSerializable()
-class ArtistSimple extends Object with _$ArtistSimpleSerializerMixin {
+class ArtistSimple extends Object {
   ArtistSimple() {}
   factory ArtistSimple.fromJson(Map<String, dynamic> json) => _$ArtistSimpleFromJson(json);
 

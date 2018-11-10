@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class Playlist extends Object with _$PlaylistSerializerMixin implements PlaylistSimple {
+class Playlist extends Object implements PlaylistSimple {
   Playlist() {}
   factory Playlist.fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
 
@@ -68,7 +68,7 @@ class Playlist extends Object with _$PlaylistSerializerMixin implements Playlist
 }
 
 @JsonSerializable()
-class PlaylistSimple extends Object with _$PlaylistSimpleSerializerMixin {
+class PlaylistSimple extends Object {
   PlaylistSimple() {}
   factory PlaylistSimple.fromJson(Map<String, dynamic> json) => _$PlaylistSimpleFromJson(json);
 
@@ -123,7 +123,7 @@ class PlaylistSimple extends Object with _$PlaylistSimpleSerializerMixin {
 }
 
 @JsonSerializable()
-class PlaylistsFeatured extends Object with _$PlaylistsFeaturedSerializerMixin {
+class PlaylistsFeatured extends Object {
   PlaylistsFeatured() {}
   factory PlaylistsFeatured.fromJson(Map<String, dynamic> json) => _$PlaylistsFeaturedFromJson(json);
 
@@ -132,7 +132,7 @@ class PlaylistsFeatured extends Object with _$PlaylistsFeaturedSerializerMixin {
 }
 
 @JsonSerializable()
-class PlaylistTrack extends Object with _$PlaylistTrackSerializerMixin {
+class PlaylistTrack extends Object {
   PlaylistTrack() {}
   factory PlaylistTrack.fromJson(Map<String, dynamic> json) => _$PlaylistTrackFromJson(json);
 

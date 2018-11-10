@@ -8,7 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'token_request.g.dart';
 
 @JsonSerializable()
-class TokenRequest extends Object with _$TokenRequestSerializerMixin {
+class TokenRequest extends Object {
   TokenRequest() {}
   factory TokenRequest.fromJson(Map<String, dynamic> json) => _$TokenRequestFromJson(json);
 
@@ -17,7 +17,7 @@ class TokenRequest extends Object with _$TokenRequestSerializerMixin {
 }
 
 @JsonSerializable()
-class ApiToken extends Object with _$ApiTokenSerializerMixin {
+class ApiToken extends Object {
   ApiToken() {}
   factory ApiToken.fromJson(Map<String, dynamic> json) => _$ApiTokenFromJson(json);
 

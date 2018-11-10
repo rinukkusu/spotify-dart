@@ -7,28 +7,21 @@ part of spotify.token;
 // **************************************************************************
 
 TokenRequest _$TokenRequestFromJson(Map<String, dynamic> json) {
-  return new TokenRequest()..grantType = json['grant_type'] as String;
+  return TokenRequest()..grantType = json['grant_type'] as String;
 }
 
-abstract class _$TokenRequestSerializerMixin {
-  String get grantType;
-  Map<String, dynamic> toJson() => <String, dynamic>{'grant_type': grantType};
-}
+Map<String, dynamic> _$TokenRequestToJson(TokenRequest instance) =>
+    <String, dynamic>{'grant_type': instance.grantType};
 
 ApiToken _$ApiTokenFromJson(Map<String, dynamic> json) {
-  return new ApiToken()
+  return ApiToken()
     ..accessToken = json['access_token'] as String
     ..tokenType = json['token_type'] as String
     ..expiresIn = json['expires_in'] as int;
 }
 
-abstract class _$ApiTokenSerializerMixin {
-  String get accessToken;
-  String get tokenType;
-  int get expiresIn;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'access_token': accessToken,
-        'token_type': tokenType,
-        'expires_in': expiresIn
-      };
-}
+Map<String, dynamic> _$ApiTokenToJson(ApiToken instance) => <String, dynamic>{
+      'access_token': instance.accessToken,
+      'token_type': instance.tokenType,
+      'expires_in': instance.expiresIn
+    };

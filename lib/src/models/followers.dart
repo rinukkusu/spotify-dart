@@ -4,7 +4,7 @@
 part of spotify;
 
 @JsonSerializable()
-class Followers extends Object with _$FollowersSerializerMixin {
+class Followers extends Object {
   Followers() {}
   factory Followers.fromJson(Map<String, dynamic> json) => _$FollowersFromJson(json);
 
