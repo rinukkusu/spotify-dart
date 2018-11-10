@@ -16,6 +16,7 @@ abstract class SpotifyApiBase {
   Tracks _tracks;
   Playlists _playlists;
   Users _users;
+  Search _search;
   AudioFeatures _audioFeatures;
 
   Artists get artists => _artists;
@@ -23,6 +24,7 @@ abstract class SpotifyApiBase {
   Tracks get tracks => _tracks;
   Playlists get playlists => _playlists;
   Users get users => _users;
+  Search get search => _search;
   AudioFeatures get audioFeatures => _audioFeatures;
 
   SpotifyApiBase(this._credentials) {
@@ -31,6 +33,7 @@ abstract class SpotifyApiBase {
     _tracks = new Tracks(this);
     _playlists = new Playlists(this);
     _users = new Users(this);
+    _search = new Search(this);
     _audioFeatures = new AudioFeatures(this);
   }
 
