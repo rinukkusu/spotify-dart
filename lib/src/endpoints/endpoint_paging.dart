@@ -6,13 +6,17 @@ part of spotify;
 abstract class EndpointPaging extends EndpointBase {
   EndpointPaging(SpotifyApiBase api) : super(api);
 
-  Pages<T> _getPages<T>(String path,
-      ParserFunction<T> pageItemParser,
-      [
-        String pageKey = null,
-        ParserFunction<Object> pageContainerParser = null
-      ]) =>
-      new Pages(_api, path, pageItemParser, pageKey, pageContainerParser);
+  Pages<T> _getPages<T>(String path, ParserFunction<T> pageItemParser,
+          [String pageKey = null,
+          ParserFunction<Object> pageContainerParser = null]) =>
+      new Pages(_api, path, {'default': pageItemParser}, pageKey,
+          pageContainerParser);
+
+  Pages<Object> _getBundledPages<T>(
+          String path, Map<String, ParserFunction<T>> pageItemParsers,
+          [String pageKey = null,
+          ParserFunction<Object> pageContainerParser = null]) =>
+      new Pages(_api, path, pageItemParsers, pageKey, pageContainerParser);
 }
 
 class Page<T> {
@@ -47,13 +51,13 @@ class Pages<T> {
 
   SpotifyApiBase _api;
   String _path;
-  ParserFunction<T> _pageMapper;
+  Map<String, ParserFunction<T>> _pageMappers;
   ParserFunction<Object> _pageContainerMapper;
   String _pageKey;
   List<Page<T>> _bufferedPages = [];
   bool _cancelled = false;
 
-  Pages(this._api, this._path, this._pageMapper,
+  Pages(this._api, this._path, this._pageMappers,
       [this._pageKey = null, this._pageContainerMapper = null]) {
     if (_pageKey != null && _pageContainerMapper == null) {
       throw new ArgumentError.notNull('_pageContainerMapper');
@@ -64,6 +68,10 @@ class Pages<T> {
 
   Future<Page<T>> first([int limit = defaultLimit]) {
     return _getPage(limit, 0);
+  }
+
+  Future<List<Page<T>>> firsts([int limit = defaultLimit]) {
+    return _getBundledPages(limit, 0);
   }
 
   Future<Iterable<T>> all([int limit = defaultLimit]) {
@@ -100,23 +108,19 @@ class Pages<T> {
       _getPage(limit, page.nextOffset).then(handlePageAndGetNext);
     }
 
-    stream = new StreamController<Page<T>>(
-      onListen: () {
-        var firstPage = first(limit);
-        firstPage.then(handlePageAndGetNext);
-      },
-      onCancel: () {
-        _cancelled = true;
-        return new Future.value(true);
-      },
-      onResume: () {
-        _bufferedPages.forEach(stream.add);
-        if (_bufferedPages.last.isLast) {
-          stream.close();
-        }
-        _bufferedPages.clear();
+    stream = new StreamController<Page<T>>(onListen: () {
+      var firstPage = first(limit);
+      firstPage.then(handlePageAndGetNext);
+    }, onCancel: () {
+      _cancelled = true;
+      return new Future.value(true);
+    }, onResume: () {
+      _bufferedPages.forEach(stream.add);
+      if (_bufferedPages.last.isLast) {
+        stream.close();
       }
-    );
+      _bufferedPages.clear();
+    });
     return stream.stream;
   }
 
@@ -129,11 +133,36 @@ class Pages<T> {
 
     if (_pageContainerMapper == null) {
       var paging = Paging.fromJson(map);
-      return new Page(paging, _pageMapper);
+      return new Page(paging, _pageMappers['default']);
     } else {
       var paging = Paging.fromJson(map[_pageKey]);
       var container = _pageContainerMapper(map);
-      return new Page(paging, _pageMapper, container);
+      return new Page(paging, _pageMappers['default'], container);
     }
+  }
+
+  Future<List<Page<T>>> _getBundledPages(int limit, int offset) async {
+    var pathDelimiter = _path.contains('?') ? '&' : '?';
+    var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
+
+    var jsonString = await _api._get(path);
+    // print(jsonString);
+    var map = json.decode(jsonString);
+
+    List<Page<T>> pages = [];
+    _pageMappers.forEach((key, value) {
+      if (map[key] != null) {
+        var paging = Paging.fromJson(map[key]);
+        var page;
+        if (_pageContainerMapper == null) {
+          page = new Page(paging, value);
+        } else {
+          var container = _pageContainerMapper(map[key]);
+          page = new Page(paging, value, container);
+        }
+        pages.add(page);
+      }
+    });
+    return pages;
   }
 }

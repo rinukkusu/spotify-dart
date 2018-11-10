@@ -32,5 +32,23 @@ main() async {
     print(playlist.name);
   });
 
+  print("\nSearching for \'Metallica\':");
+  var search = await spotify.search.get("metallica", SearchType.all).firsts();
+  search.forEach((pages) {
+    pages.items.forEach((item) {
+      if (item is PlaylistSimple) {
+        print("Playlist: ${item.name}");
+      }
+      if (item is ArtistSimple) {
+        print("Artist ${item.name}");
+      }
+      if (item is Track) {
+        print("Track ${item.name}");
+      }
+      if (item is Album) {
+        print("Album ${item.name}");
+      }
+    });
+  });
   exit(0);
 }

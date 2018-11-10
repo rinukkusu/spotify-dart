@@ -34,6 +34,7 @@ part 'src/endpoints/tracks.dart';
 part 'src/endpoints/playlists.dart';
 part 'src/endpoints/users.dart';
 part 'src/endpoints/audio_features.dart';
+part 'src/endpoints/search.dart';
 
 part 'src/spotify_credentials.dart';
 
