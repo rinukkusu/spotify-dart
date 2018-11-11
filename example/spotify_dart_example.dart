@@ -33,7 +33,10 @@ main() async {
   });
 
   print("\nSearching for \'Metallica\':");
-  var search = await spotify.search.get("metallica", SearchType.all).firsts();
+  var search = await spotify.search.get("metallica", [SearchType.playlist, SearchType.track]).firsts().catchError((err) => print((err as SpotifyException).message));
+  if (search == null) {
+    return;
+  }
   search.forEach((pages) {
     pages.items.forEach((item) {
       if (item is PlaylistSimple) {

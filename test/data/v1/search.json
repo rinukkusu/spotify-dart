@@ -1,0 +1,366 @@
+{
+  "playlists": {
+    "href": "https://api.spotify.com/v1/search?query=metallica&type=playlist&offset=0&limit=20",
+    "items": [
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/playlist/37i9dQZF1DXbj9Ksq4BAdj"
+        },
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXbj9Ksq4BAdj",
+        "id": "37i9dQZF1DXbj9Ksq4BAdj",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/42aa02794bde9b19e79035cacee4496f881697cd",
+            "width": 300
+          }
+        ],
+        "name": "This Is Metallica",
+        "owner": {
+          "display_name": "Spotify",
+          "external_urls": {
+            "spotify": "https://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "primary_color": null,
+        "public": null,
+        "snapshot_id": "MTU0MDE5NDk5MiwwMDAwMDAzNTAwMDAwMTY2OWFjNjgwNzIwMDAwMDE2NWEzNjM4ZjM2",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXbj9Ksq4BAdj/tracks",
+          "total": 73
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DXbj9Ksq4BAdj"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/playlist/1cJ6lPBYj2fscs0kqBHsVV"
+        },
+        "href": "https://api.spotify.com/v1/playlists/1cJ6lPBYj2fscs0kqBHsVV",
+        "id": "1cJ6lPBYj2fscs0kqBHsVV",
+        "images": [
+          {
+            "height": null,
+            "url": "https://pl.scdn.co/images/pl/default/b7ebde9549d492ee6eea09be3bc1083c45e21bbc",
+            "width": null
+          }
+        ],
+        "name": "Metallica: Essentials",
+        "owner": {
+          "display_name": "Metallica",
+          "external_urls": {
+            "spotify": "https://open.spotify.com/user/metallicaofficial"
+          },
+          "href": "https://api.spotify.com/v1/users/metallicaofficial",
+          "id": "metallicaofficial",
+          "type": "user",
+          "uri": "spotify:user:metallicaofficial"
+        },
+        "primary_color": null,
+        "public": null,
+        "snapshot_id": "NTQsOWI4ZWU1YzY1OGIxNjM2NmUxNWJiNjE4M2U3YzhjNWQwZDhlMDQ2Zg==",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/playlists/1cJ6lPBYj2fscs0kqBHsVV/tracks",
+          "total": 58
+        },
+        "type": "playlist",
+        "uri": "spotify:user:metallicaofficial:playlist:1cJ6lPBYj2fscs0kqBHsVV"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/playlist/20ipy1Ttzoc8uO6jsO8KeP"
+        },
+        "href": "https://api.spotify.com/v1/playlists/20ipy1Ttzoc8uO6jsO8KeP",
+        "id": "20ipy1Ttzoc8uO6jsO8KeP",
+        "images": [
+          {
+            "height": null,
+            "url": "https://pl.scdn.co/images/pl/default/295b8809e212e313d0c79497143c56d21f94aa1f",
+            "width": null
+          }
+        ],
+        "name": "Metallica: Complete",
+        "owner": {
+          "display_name": "Metallica",
+          "external_urls": {
+            "spotify": "https://open.spotify.com/user/metallicaofficial"
+          },
+          "href": "https://api.spotify.com/v1/users/metallicaofficial",
+          "id": "metallicaofficial",
+          "type": "user",
+          "uri": "spotify:user:metallicaofficial"
+        },
+        "primary_color": null,
+        "public": null,
+        "snapshot_id": "NDQsODk0ZGI1NGRjYTIzZGM2YzIwMWJiZjZjNWUzMjA5MmJlOGVlNjU0NA==",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/playlists/20ipy1Ttzoc8uO6jsO8KeP/tracks",
+          "total": 483
+        },
+        "type": "playlist",
+        "uri": "spotify:user:metallicaofficial:playlist:20ipy1Ttzoc8uO6jsO8KeP"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/playlist/37i9dQZF1DX2LTcinqsO68"
+        },
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DX2LTcinqsO68",
+        "id": "37i9dQZF1DX2LTcinqsO68",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/e818b0350b737c2276c65b30af592bfa39bdffe8",
+            "width": 300
+          }
+        ],
+        "name": "Old School Metal",
+        "owner": {
+          "display_name": "Spotify",
+          "external_urls": {
+            "spotify": "https://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "primary_color": null,
+        "public": null,
+        "snapshot_id": "MTU0MTM1MDI4NCwwMDAwMDAzYTAwMDAwMTY2ZGZhMmRjMzIwMDAwMDE2NThjYWJmZTI3",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DX2LTcinqsO68/tracks",
+          "total": 74
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX2LTcinqsO68"
+      }
+
+    ],
+    "limit": 3,
+    "next": "https://api.spotify.com/v1/search?query=metallica&type=playlist&offset=20&limit=20",
+    "offset": 0,
+    "previous": null,
+    "total": 43676
+  },
+  "tracks" : {
+    "href" : "https://api.spotify.com/v1/search?query=metallica&type=track&offset=0&limit=20",
+    "items" : [ {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/2ye2Wgw4gimLv2eAKyk1NB"
+          },
+          "href" : "https://api.spotify.com/v1/artists/2ye2Wgw4gimLv2eAKyk1NB",
+          "id" : "2ye2Wgw4gimLv2eAKyk1NB",
+          "name" : "Metallica",
+          "type" : "artist",
+          "uri" : "spotify:artist:2ye2Wgw4gimLv2eAKyk1NB"
+        } ],
+        "available_markets" : [ "CA", "US" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/6QdCohkHKNTVoaSx1ZzitH"
+        },
+        "href" : "https://api.spotify.com/v1/albums/6QdCohkHKNTVoaSx1ZzitH",
+        "id" : "6QdCohkHKNTVoaSx1ZzitH",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/deb44798f4a2fff65c62bf4ca2c9b0ebb4a7f5f2",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/fa1fa021a6ef74b433f8700660c212b51fc97b30",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/9eb491dfcd0f887ec034d551ecb9916e834a2678",
+          "width" : 64
+        } ],
+        "name" : "Metallica",
+        "release_date" : "1991-08-12",
+        "release_date_precision" : "day",
+        "total_tracks" : 12,
+        "type" : "album",
+        "uri" : "spotify:album:6QdCohkHKNTVoaSx1ZzitH"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/2ye2Wgw4gimLv2eAKyk1NB"
+        },
+        "href" : "https://api.spotify.com/v1/artists/2ye2Wgw4gimLv2eAKyk1NB",
+        "id" : "2ye2Wgw4gimLv2eAKyk1NB",
+        "name" : "Metallica",
+        "type" : "artist",
+        "uri" : "spotify:artist:2ye2Wgw4gimLv2eAKyk1NB"
+      } ],
+      "available_markets" : [ "CA", "US" ],
+      "disc_number" : 1,
+      "duration_ms" : 331573,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USEE10001992"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/5BIMPccDwShpXq784RJlJp"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/5BIMPccDwShpXq784RJlJp",
+      "id" : "5BIMPccDwShpXq784RJlJp",
+      "is_local" : false,
+      "name" : "Enter Sandman",
+      "popularity" : 72,
+      "preview_url" : "https://p.scdn.co/mp3-preview/1ee9f1b0c3e3b327dd49ebc6dd64266b01adb96a?cid=69433c5581524dd1a96bcdfed3b0a566",
+      "track_number" : 1,
+      "type" : "track",
+      "uri" : "spotify:track:5BIMPccDwShpXq784RJlJp"
+    }, {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/2ye2Wgw4gimLv2eAKyk1NB"
+          },
+          "href" : "https://api.spotify.com/v1/artists/2ye2Wgw4gimLv2eAKyk1NB",
+          "id" : "2ye2Wgw4gimLv2eAKyk1NB",
+          "name" : "Metallica",
+          "type" : "artist",
+          "uri" : "spotify:artist:2ye2Wgw4gimLv2eAKyk1NB"
+        } ],
+        "available_markets" : [ "CA", "US" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/6QdCohkHKNTVoaSx1ZzitH"
+        },
+        "href" : "https://api.spotify.com/v1/albums/6QdCohkHKNTVoaSx1ZzitH",
+        "id" : "6QdCohkHKNTVoaSx1ZzitH",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/deb44798f4a2fff65c62bf4ca2c9b0ebb4a7f5f2",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/fa1fa021a6ef74b433f8700660c212b51fc97b30",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/9eb491dfcd0f887ec034d551ecb9916e834a2678",
+          "width" : 64
+        } ],
+        "name" : "Metallica",
+        "release_date" : "1991-08-12",
+        "release_date_precision" : "day",
+        "total_tracks" : 12,
+        "type" : "album",
+        "uri" : "spotify:album:6QdCohkHKNTVoaSx1ZzitH"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/2ye2Wgw4gimLv2eAKyk1NB"
+        },
+        "href" : "https://api.spotify.com/v1/artists/2ye2Wgw4gimLv2eAKyk1NB",
+        "id" : "2ye2Wgw4gimLv2eAKyk1NB",
+        "name" : "Metallica",
+        "type" : "artist",
+        "uri" : "spotify:artist:2ye2Wgw4gimLv2eAKyk1NB"
+      } ],
+      "available_markets" : [ "CA", "US" ],
+      "disc_number" : 1,
+      "duration_ms" : 388733,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USEE10001999"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/10igKaIKsSB6ZnWxPxPvKO"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/10igKaIKsSB6ZnWxPxPvKO",
+      "id" : "10igKaIKsSB6ZnWxPxPvKO",
+      "is_local" : false,
+      "name" : "Nothing Else Matters",
+      "popularity" : 69,
+      "preview_url" : "https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba?cid=69433c5581524dd1a96bcdfed3b0a566",
+      "track_number" : 8,
+      "type" : "track",
+      "uri" : "spotify:track:10igKaIKsSB6ZnWxPxPvKO"
+    }, {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/2ye2Wgw4gimLv2eAKyk1NB"
+          },
+          "href" : "https://api.spotify.com/v1/artists/2ye2Wgw4gimLv2eAKyk1NB",
+          "id" : "2ye2Wgw4gimLv2eAKyk1NB",
+          "name" : "Metallica",
+          "type" : "artist",
+          "uri" : "spotify:artist:2ye2Wgw4gimLv2eAKyk1NB"
+        } ],
+        "available_markets" : [ "CA", "US" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/7CGhx630DIjdJqaBDVKc5j"
+        },
+        "href" : "https://api.spotify.com/v1/albums/7CGhx630DIjdJqaBDVKc5j",
+        "id" : "7CGhx630DIjdJqaBDVKc5j",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/358a2fb145a535539c39a9f317541248bd173ac4",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/fc467e99ba8aabdcc3a66a42c282ca618ae5290e",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/290d3f5fe52f64a65bf37ec13b83e08a53fd332d",
+          "width" : 64
+        } ],
+        "name" : "Master of Puppets (Remastered Deluxe Box Set)",
+        "release_date" : "1986-03-03",
+        "release_date_precision" : "day",
+        "total_tracks" : 137,
+        "type" : "album",
+        "uri" : "spotify:album:7CGhx630DIjdJqaBDVKc5j"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/2ye2Wgw4gimLv2eAKyk1NB"
+        },
+        "href" : "https://api.spotify.com/v1/artists/2ye2Wgw4gimLv2eAKyk1NB",
+        "id" : "2ye2Wgw4gimLv2eAKyk1NB",
+        "name" : "Metallica",
+        "type" : "artist",
+        "uri" : "spotify:artist:2ye2Wgw4gimLv2eAKyk1NB"
+      } ],
+      "available_markets" : [ "CA", "US" ],
+      "disc_number" : 1,
+      "duration_ms" : 515386,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "QMKHM1600219"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/54bm2e3tk8cliUz3VSdCPZ"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/54bm2e3tk8cliUz3VSdCPZ",
+      "id" : "54bm2e3tk8cliUz3VSdCPZ",
+      "is_local" : false,
+      "name" : "Master of Puppets (Remastered)",
+      "popularity" : 67,
+      "preview_url" : "https://p.scdn.co/mp3-preview/12d4140bb2d0b18aa26cf84c33e4f4efd97fe72b?cid=69433c5581524dd1a96bcdfed3b0a566",
+      "track_number" : 2,
+      "type" : "track",
+      "uri" : "spotify:track:54bm2e3tk8cliUz3VSdCPZ"
+    } ],
+    "limit" : 3,
+    "next" : "https://api.spotify.com/v1/search?query=metallica&type=track&offset=20&limit=20",
+    "offset" : 0,
+    "previous" : null,
+    "total" : 2347
+  }
+}
