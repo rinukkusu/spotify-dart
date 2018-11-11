@@ -51,9 +51,8 @@ class MockClient implements http.BaseClient {
   }
 
   @override
-  Future<http.Response> get(url, {Map<String, String> headers}) async {
-    return new http.Response(_readPath(url), 200);
-  }
+  Future<http.Response> get(url, {Map<String, String> headers}) async =>
+      createSuccessResponse(_readPath(url));
 
   @override
   Future<http.Response> head(url, {Map<String, String> headers}) {
@@ -68,9 +67,8 @@ class MockClient implements http.BaseClient {
 
   @override
   Future<http.Response> post(url,
-      {Map<String, String> headers, body, Encoding encoding}) async {
-    return new http.Response(_readPath(url), 200);
-  }
+          {Map<String, String> headers, body, Encoding encoding}) async =>
+      createSuccessResponse(_readPath(url));
 
   @override
   Future<http.Response> put(url,
@@ -91,5 +89,12 @@ class MockClient implements http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
     // TODO: implement send
+  }
+
+  http.Response createSuccessResponse(String body) {
+    /// necessary due to using Latin-1 encoding per default.
+    /// https://stackoverflow.com/questions/52990816/dart-json-encodedata-can-not-accept-other-language
+    return new http.Response(body, 200,
+        headers: {'Content-Type': 'application/json; charset=utf-8'});
   }
 }

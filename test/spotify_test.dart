@@ -37,4 +37,12 @@ Future main() async {
       expect(artists.length, 2);
     });
   });
+
+  group('Search', () {
+    test('get', () async {
+      var searchResult = await spotify.search.get('metallica', [SearchType.playlist, SearchType.track]).firsts();
+
+      expect(searchResult.length, 2);
+    });
+  });
 }

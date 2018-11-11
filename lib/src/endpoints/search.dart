@@ -9,33 +9,35 @@ class Search extends EndpointPaging {
 
   Search(SpotifyApiBase api) : super(api);
 
-   Pages<Object> get(String searchQuery, [SearchType searchType = SearchType.all]){
-     return _getBundledPages(
-         '$_path?q=$searchQuery&type=${searchType.key}', {
-           'playlists': (json) => PlaylistSimple.fromJson(json),
-           'albums': (json) => Album.fromJson(json),
-           'artists': (json) => ArtistSimple.fromJson(json),
-           'tracks': (json) => Track.fromJson(json)
-         }
-     );
-   }
-
-  Pages<PlaylistSimple> get me {
-     return _getPages('v1/me/playlists', (json) => Playlist.fromJson(json));
+  Pages<Object> get(String searchQuery, [Iterable<SearchType> types = null]) {
+    if (types == null) {
+      types = SearchType.all();
+    }
+    var type = types.map((type) => type.key).join(",");
+    return _getBundledPages('$_path?q=$searchQuery&type=${type}', {
+      'playlists': (json) => PlaylistSimple.fromJson(json),
+      'albums': (json) => Album.fromJson(json),
+      'artists': (json) => ArtistSimple.fromJson(json),
+      'tracks': (json) => Track.fromJson(json)
+    });
   }
 }
 
-
 class SearchType {
-
   final String _key;
 
   const SearchType(this._key);
   get key => _key;
 
-  static const all = SearchType("album,artist,playlist,track");
   static const album = SearchType("album");
   static const artist = SearchType("artist");
   static const playlist = SearchType("playlist");
   static const track = SearchType("track");
+
+  static all() => [
+        SearchType.album,
+        SearchType.artist,
+        SearchType.playlist,
+        SearchType.track
+      ];
 }
