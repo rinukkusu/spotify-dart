@@ -37,16 +37,64 @@ main() async {
   search.forEach((pages) {
     pages.items.forEach((item) {
       if (item is PlaylistSimple) {
-        print("Playlist: ${item.name}");
+        print('Playlist: \n'
+        'id: ${item.id}\n'
+        'name: ${item.name}:\n'
+        'collaborative: ${item.collaborative}\n'
+        'href: ${item.href}\n'
+        'trackslink: ${item.tracksLink}\n'
+        'owner: ${item.owner}\n'
+        'public: ${item.owner}\n'
+        'snapshotId: ${item.snapshotId}\n'
+        'type: ${item.type}\n'
+        'uri: ${item.uri}\n'
+        'images: ${item.images.length}\n'
+        '-------------------------------'
+        );
       }
       if (item is ArtistSimple) {
-        print("Artist ${item.name}");
+        print('Artist: \n'
+        'id: ${item.id}\n'
+        'name: ${item.name}\n'
+        'href: ${item.href}\n'
+        'type: ${item.type}\n'
+        'uri: ${item.uri}\n'
+        '-------------------------------'
+        );
       }
       if (item is Track) {
-        print("Track ${item.name}");
+        print('Track:\n'
+        'id: ${item.id}\n'
+        'name: ${item.name}\n'
+        'href: ${item.href}\n'
+        'type: ${item.type}\n'
+        'uri: ${item.uri}\n'
+        'isPlayable: ${item.isPlayable}\n'
+        'artists: ${item.artists.length}\n'
+        'availableMarkets: ${item.availableMarkets.length}\n'
+        'discNumber: ${item.discNumber}\n'
+        'trackNumber: ${item.trackNumber}\n'
+        'popuplarity: ${item.popularity}\n'
+        'explicit: ${item.explicit}\n'
+        '-------------------------------'
+        );
       }
       if (item is Album) {
-        print("Album ${item.name}");
+        print('Album:\n'
+        'id: ${item.id}\n'
+        'name: ${item.name}\n'
+        'href: ${item.href}\n'
+        'type: ${item.type}\n'
+        'uri: ${item.uri}\n'
+        'albumType: ${item.albumType}\n'
+        'artists: ${item.artists.length}\n'
+        'availableMarkets: ${item.availableMarkets.length}\n'
+        'images: ${item.images.length}\n'
+        'label: ${item.label}\n'
+        'popuplarity: ${item.popularity}\n'
+        'releaseDate: ${item.releaseDate}\n'
+        '-------------------------------'
+        );
       }
     });
   });
