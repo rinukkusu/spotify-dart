@@ -1,4 +1,4 @@
-// Copyright (c) 2017, chances. All rights reserved. Use of this source code
+// Copyright (c) 2017, 2018, hayribakici, chances. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 part of spotify;
@@ -70,7 +70,7 @@ class Pages<T> {
     return _getPage(limit, 0);
   }
 
-  Future<List<Page<T>>> firsts([int limit = defaultLimit]) {
+  Future<List<Page<T>>> bundled([int limit = defaultLimit]) {
     return _getBundledPages(limit, 0);
   }
 

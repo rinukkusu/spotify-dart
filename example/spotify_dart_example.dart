@@ -33,7 +33,7 @@ main() async {
   });
 
   print("\nSearching for \'Metallica\':");
-  var search = await spotify.search.get("metallica", [SearchType.playlist, SearchType.track]).firsts().catchError((err) => print((err as SpotifyException).message));
+  var search = await spotify.search.get("metallica", [SearchType.playlist, SearchType.track]).bundled().catchError((err) => print((err as SpotifyException).message));
   if (search == null) {
     return;
   }
@@ -55,7 +55,7 @@ main() async {
         '-------------------------------'
         );
       }
-      if (item is ArtistSimple) {
+      if (item is Artist) {
         print('Artist: \n'
         'id: ${item.id}\n'
         'name: ${item.name}\n'
@@ -65,7 +65,7 @@ main() async {
         '-------------------------------'
         );
       }
-      if (item is Track) {
+      if (item is TrackSimple) {
         print('Track:\n'
         'id: ${item.id}\n'
         'name: ${item.name}\n'
@@ -77,12 +77,11 @@ main() async {
         'availableMarkets: ${item.availableMarkets.length}\n'
         'discNumber: ${item.discNumber}\n'
         'trackNumber: ${item.trackNumber}\n'
-        'popuplarity: ${item.popularity}\n'
         'explicit: ${item.explicit}\n'
         '-------------------------------'
         );
       }
-      if (item is Album) {
+      if (item is AlbumSimple) {
         print('Album:\n'
         'id: ${item.id}\n'
         'name: ${item.name}\n'
@@ -93,9 +92,6 @@ main() async {
         'artists: ${item.artists.length}\n'
         'availableMarkets: ${item.availableMarkets.length}\n'
         'images: ${item.images.length}\n'
-        'label: ${item.label}\n'
-        'popuplarity: ${item.popularity}\n'
-        'releaseDate: ${item.releaseDate}\n'
         '-------------------------------'
         );
       }
