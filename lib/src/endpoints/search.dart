@@ -1,4 +1,4 @@
-// Copyright (c) 2017, chances. All rights reserved. Use of this source code
+// Copyright (c) 2018 hayribakici. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 part of spotify;
@@ -16,9 +16,9 @@ class Search extends EndpointPaging {
     var type = types.map((type) => type.key).join(",");
     return _getBundledPages('$_path?q=$searchQuery&type=${type}', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
-      'albums': (json) => Album.fromJson(json),
-      'artists': (json) => ArtistSimple.fromJson(json),
-      'tracks': (json) => Track.fromJson(json)
+      'albums': (json) => AlbumSimple.fromJson(json),
+      'artists': (json) => Artist.fromJson(json),
+      'tracks': (json) => TrackSimple.fromJson(json)
     });
   }
 }
