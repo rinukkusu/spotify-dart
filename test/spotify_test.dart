@@ -40,7 +40,7 @@ Future main() async {
 
   group('Search', () {
     test('get', () async {
-      var searchResult = await spotify.search.get('metallica', [SearchType.playlist, SearchType.artist]).bundled();
+      var searchResult = await spotify.search.get('metallica', [SearchType.playlist, SearchType.artist]).first();
 
       expect(searchResult.length, 2);
     });
