@@ -33,7 +33,7 @@ main() async {
   });
 
   print("\nSearching for \'Metallica\':");
-  var search = await spotify.search.get("metallica", [SearchType.playlist, SearchType.track]).bundled().catchError((err) => print((err as SpotifyException).message));
+  var search = await spotify.search.get("metallica").first(2).catchError((err) => print((err as SpotifyException).message));
   if (search == null) {
     return;
   }
@@ -45,7 +45,7 @@ main() async {
         'name: ${item.name}:\n'
         'collaborative: ${item.collaborative}\n'
         'href: ${item.href}\n'
-        'trackslink: ${item.tracksLink}\n'
+        'trackslink: ${item.tracksLink.href}\n'
         'owner: ${item.owner}\n'
         'public: ${item.owner}\n'
         'snapshotId: ${item.snapshotId}\n'

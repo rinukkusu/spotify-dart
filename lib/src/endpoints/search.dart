@@ -9,10 +9,8 @@ class Search extends EndpointPaging {
 
   Search(SpotifyApiBase api) : super(api);
 
-  Pages<Object> get(String searchQuery, [Iterable<SearchType> types = null]) {
-    if (types == null) {
-      types = SearchType.all();
-    }
+  BundledPages get(String searchQuery, [Iterable<SearchType> types = null]) {
+    types = types ?? SearchType.all();
     var type = types.map((type) => type.key).join(",");
     return _getBundledPages('$_path?q=$searchQuery&type=${type}', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
