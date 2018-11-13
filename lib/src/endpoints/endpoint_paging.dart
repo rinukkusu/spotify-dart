@@ -53,20 +53,17 @@ abstract class _Pages<T> {
   String _path;
   String _pageKey;
   ParserFunction<Object> _pageContainerParser;
-  
+
   _Pages(this._api, this._path,
-      [String pageKey = null,
-      ParserFunction<Object> pageContainerParser = null]) {
-    if (pageKey != null && pageContainerParser == null) {
+      [this._pageKey = null, this._pageContainerParser = null]) {
+    if (_pageKey != null && _pageContainerParser == null) {
       throw new ArgumentError.notNull('pageContainerParser');
-    } else if (pageKey == null && pageContainerParser != null) {
+    } else if (_pageKey == null && _pageContainerParser != null) {
       throw new ArgumentError.notNull('pageKey');
-    } else {
-      _pageKey = pageKey;
-      _pageContainerParser = pageContainerParser;
     }
   }
 
+  /// Abstract method that is used to do the api call and json serializing
   Future<T> call(int limit, int offset);
 
   Future<T> first([int limit = defaultLimit]) {
