@@ -64,10 +64,10 @@ abstract class _Pages<T> {
   }
 
   /// Abstract method that is used to do the api call and json serializing
-  Future<T> call(int limit, int offset);
+  Future<T> getPage(int limit, int offset);
 
   Future<T> first([int limit = defaultLimit]) {
-    return call(limit, 0);
+    return getPage(limit, 0);
   }
 }
 
@@ -112,7 +112,7 @@ class Pages<T> extends _Pages<Page<T>> {
       }
 
       // Otherwise get the next page
-      call(limit, page.nextOffset).then(handlePageAndGetNext);
+      getPage(limit, page.nextOffset).then(handlePageAndGetNext);
     }
 
     stream = new StreamController<Page<T>>(onListen: () {
@@ -131,7 +131,7 @@ class Pages<T> extends _Pages<Page<T>> {
     return stream.stream;
   }
 
-  Future<Page<T>> call(int limit, int offset) async {
+  Future<Page<T>> getPage(int limit, int offset) async {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var newPath = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
@@ -156,7 +156,7 @@ class BundledPages extends _Pages<List<Page<Object>>> {
       [String pageKey, ParserFunction<Object> pageContainerParser])
       : super(api, path, pageKey, pageContainerParser);
 
-  Future<List<Page<Object>>> call(int limit, int offset) async {
+  Future<List<Page<Object>>> getPage(int limit, int offset) async {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
