@@ -123,7 +123,8 @@ class Track extends Object implements TrackSimple {
 @JsonSerializable()
 class TrackSimple extends Object {
   TrackSimple() {}
-  factory TrackSimple.fromJson(Map<String, dynamic> json) => _$TrackSimpleFromJson(json);
+  factory TrackSimple.fromJson(Map<String, dynamic> json) =>
+      _$TrackSimpleFromJson(json);
 
   /**
    * The artists who performed the track. Each artist object includes a link in
@@ -213,7 +214,8 @@ class TrackSimple extends Object {
 @JsonSerializable()
 class TrackSaved extends Object {
   TrackSaved() {}
-  factory TrackSaved.fromJson(Map<String, dynamic> json) => _$TrackSavedFromJson(json);
+  factory TrackSaved.fromJson(Map<String, dynamic> json) =>
+      _$TrackSavedFromJson(json);
 
   /// The date and time the track was saved.
   @JsonKey(name: 'added_at')
@@ -226,7 +228,8 @@ class TrackSaved extends Object {
 @JsonSerializable()
 class TrackLink extends Object {
   TrackLink() {}
-  factory TrackLink.fromJson(Map<String, dynamic> json) => _$TrackLinkFromJson(json);
+  factory TrackLink.fromJson(Map<String, dynamic> json) =>
+      _$TrackLinkFromJson(json);
 
   // /// Known external URLs for this track.
   //@JsonKey(name: 'external_urls')
@@ -248,7 +251,8 @@ class TrackLink extends Object {
 @JsonSerializable()
 class TracksLink extends Object {
   TracksLink() {}
-  factory TracksLink.fromJson(Map<String, dynamic> json) => _$TracksLinkFromJson(json);
+  factory TracksLink.fromJson(Map<String, dynamic> json) =>
+      _$TracksLinkFromJson(json);
 
   /// A link to the Web API endpoint where full details of the playlist's
   /// tracks can be retrieved

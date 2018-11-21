@@ -42,12 +42,12 @@ class MockClient implements http.BaseClient {
 
   @override
   void close() {
-    // TODO: implement close
+    throw "Not implemented";
   }
 
   @override
   Future<http.Response> delete(url, {Map<String, String> headers}) {
-    // TODO: implement delete
+    throw "Not implemented";
   }
 
   @override
@@ -56,13 +56,13 @@ class MockClient implements http.BaseClient {
 
   @override
   Future<http.Response> head(url, {Map<String, String> headers}) {
-    // TODO: implement head
+    throw "Not implemented";
   }
 
   @override
   Future<http.Response> patch(url,
       {Map<String, String> headers, body, Encoding encoding}) {
-    // TODO: implement patch
+    throw "Not implemented";
   }
 
   @override
@@ -73,22 +73,22 @@ class MockClient implements http.BaseClient {
   @override
   Future<http.Response> put(url,
       {Map<String, String> headers, body, Encoding encoding}) {
-    // TODO: implement put
+    throw "Not implemented";
   }
 
   @override
   Future<String> read(url, {Map<String, String> headers}) {
-    // TODO: implement read
+    throw "Not implemented";
   }
 
   @override
   Future<Uint8List> readBytes(url, {Map<String, String> headers}) {
-    // TODO: implement readBytes
+    throw "Not implemented";
   }
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    // TODO: implement send
+    throw "Not implemented";
   }
 
   http.Response createSuccessResponse(String body) {

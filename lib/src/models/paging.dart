@@ -20,7 +20,8 @@ class Paging<T> extends Object {
   ///
   /// Note this is the raw JSON value. Use a [Page]'s [Page.items] to get the
   /// requested data as a deserialized list.
-  @JsonKey(name: 'items', fromJson: itemsNativeFromJson, toJson: itemsNativeToJson)
+  @JsonKey(
+      name: 'items', fromJson: itemsNativeFromJson, toJson: itemsNativeToJson)
   Iterable<dynamic> itemsNative;
 
   /// The maximum number of items in the response (as set in the query or by

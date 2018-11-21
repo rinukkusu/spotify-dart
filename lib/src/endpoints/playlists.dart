@@ -9,14 +9,15 @@ class Playlists extends EndpointPaging {
 
   Playlists(SpotifyApiBase api) : super(api);
 
-   Pages<PlaylistSimple> get featured {
-     return _getPages(
-         '$_path/featured-playlists', (json) => PlaylistSimple.fromJson(json),
-         'playlists', (json) => PlaylistsFeatured.fromJson(json)
-     );
-   }
+  Pages<PlaylistSimple> get featured {
+    return _getPages(
+        '$_path/featured-playlists',
+        (json) => PlaylistSimple.fromJson(json),
+        'playlists',
+        (json) => PlaylistsFeatured.fromJson(json));
+  }
 
   Pages<PlaylistSimple> get me {
-     return _getPages('v1/me/playlists', (json) => Playlist.fromJson(json));
+    return _getPages('v1/me/playlists', (json) => Playlist.fromJson(json));
   }
 }

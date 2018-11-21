@@ -19,26 +19,11 @@ Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) {
     ..total = json['total'] as int;
 }
 
-Map<String, dynamic> _$PagingToJson<T>(Paging<T> instance) => <String, dynamic>{
-      'href': instance.href,
-      'items': instance.itemsNative == null
-          ? null
-          : itemsNativeToJson(instance.itemsNative),
-      'limit': instance.limit,
-      'next': instance.next,
-      'offset': instance.offset,
-      'previous': instance.previous,
-      'total': instance.total
-    };
-
 SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) {
   return SpotifyError()
     ..status = json['status'] as int
     ..message = json['message'] as String;
 }
-
-Map<String, dynamic> _$SpotifyErrorToJson(SpotifyError instance) =>
-    <String, dynamic>{'status': instance.status, 'message': instance.message};
 
 Artist _$ArtistFromJson(Map<String, dynamic> json) {
   return Artist()
@@ -58,18 +43,6 @@ Artist _$ArtistFromJson(Map<String, dynamic> json) {
     ..popularity = json['popularity'] as int;
 }
 
-Map<String, dynamic> _$ArtistToJson(Artist instance) => <String, dynamic>{
-      'href': instance.href,
-      'id': instance.id,
-      'name': instance.name,
-      'type': instance.type,
-      'uri': instance.uri,
-      'followers': instance.followers,
-      'genres': instance.genres,
-      'images': instance.images,
-      'popularity': instance.popularity
-    };
-
 ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) {
   return ArtistSimple()
     ..href = json['href'] as String
@@ -79,23 +52,11 @@ ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$ArtistSimpleToJson(ArtistSimple instance) =>
-    <String, dynamic>{
-      'href': instance.href,
-      'id': instance.id,
-      'name': instance.name,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 Followers _$FollowersFromJson(Map<String, dynamic> json) {
   return Followers()
     ..href = json['href'] as String
     ..total = json['total'] as int;
 }
-
-Map<String, dynamic> _$FollowersToJson(Followers instance) =>
-    <String, dynamic>{'href': instance.href, 'total': instance.total};
 
 Image _$ImageFromJson(Map<String, dynamic> json) {
   return Image()
@@ -103,12 +64,6 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
     ..width = json['width'] as int
     ..url = json['url'] as String;
 }
-
-Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
-      'height': instance.height,
-      'width': instance.width,
-      'url': instance.url
-    };
 
 Album _$AlbumFromJson(Map<String, dynamic> json) {
   return Album()
@@ -139,24 +94,6 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
     ..releaseDatePrecision = json['release_date_precision'] as String;
 }
 
-Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
-      'album_type': instance.albumType,
-      'artists': instance.artists,
-      'available_markets': instance.availableMarkets,
-      'href': instance.href,
-      'id': instance.id,
-      'images': instance.images,
-      'name': instance.name,
-      'type': instance.type,
-      'uri': instance.uri,
-      'copyrights': instance.copyrights,
-      'genres': instance.genres,
-      'label': instance.label,
-      'popularity': instance.popularity,
-      'release_date': instance.releaseDate,
-      'release_date_precision': instance.releaseDatePrecision
-    };
-
 AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
   return AlbumSimple()
     ..albumType = json['album_type'] as String
@@ -177,27 +114,11 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$AlbumSimpleToJson(AlbumSimple instance) =>
-    <String, dynamic>{
-      'album_type': instance.albumType,
-      'artists': instance.artists,
-      'available_markets': instance.availableMarkets,
-      'href': instance.href,
-      'id': instance.id,
-      'images': instance.images,
-      'name': instance.name,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 Copyright _$CopyrightFromJson(Map<String, dynamic> json) {
   return Copyright()
     ..text = json['text'] as String
     ..type = json['type'] as String;
 }
-
-Map<String, dynamic> _$CopyrightToJson(Copyright instance) =>
-    <String, dynamic>{'text': instance.text, 'type': instance.type};
 
 Track _$TrackFromJson(Map<String, dynamic> json) {
   return Track()
@@ -227,25 +148,6 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
-      'album': instance.album,
-      'artists': instance.artists,
-      'available_markets': instance.availableMarkets,
-      'disc_number': instance.discNumber,
-      'duration_ms': instance.durationMs,
-      'explicit': instance.explicit,
-      'href': instance.href,
-      'id': instance.id,
-      'is_playable': instance.isPlayable,
-      'linked_from': instance.linkedFrom,
-      'name': instance.name,
-      'popularity': instance.popularity,
-      'preview_url': instance.previewUrl,
-      'track_number': instance.trackNumber,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) {
   return TrackSimple()
     ..artists = (json['artists'] as List)
@@ -270,24 +172,6 @@ TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$TrackSimpleToJson(TrackSimple instance) =>
-    <String, dynamic>{
-      'artists': instance.artists,
-      'available_markets': instance.availableMarkets,
-      'disc_number': instance.discNumber,
-      'duration_ms': instance.durationMs,
-      'explicit': instance.explicit,
-      'href': instance.href,
-      'id': instance.id,
-      'is_playable': instance.isPlayable,
-      'linked_from': instance.linkedFrom,
-      'name': instance.name,
-      'preview_url': instance.previewUrl,
-      'track_number': instance.trackNumber,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 TrackSaved _$TrackSavedFromJson(Map<String, dynamic> json) {
   return TrackSaved()
     ..addedAt = json['added_at'] == null
@@ -298,12 +182,6 @@ TrackSaved _$TrackSavedFromJson(Map<String, dynamic> json) {
         : Track.fromJson(json['track'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$TrackSavedToJson(TrackSaved instance) =>
-    <String, dynamic>{
-      'added_at': instance.addedAt?.toIso8601String(),
-      'track': instance.track
-    };
-
 TrackLink _$TrackLinkFromJson(Map<String, dynamic> json) {
   return TrackLink()
     ..href = json['href'] as String
@@ -312,21 +190,11 @@ TrackLink _$TrackLinkFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$TrackLinkToJson(TrackLink instance) => <String, dynamic>{
-      'href': instance.href,
-      'id': instance.id,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 TracksLink _$TracksLinkFromJson(Map<String, dynamic> json) {
   return TracksLink()
     ..href = json['href'] as String
     ..total = json['total'] as int;
 }
-
-Map<String, dynamic> _$TracksLinkToJson(TracksLink instance) =>
-    <String, dynamic>{'href': instance.href, 'total': instance.total};
 
 Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
   return Playlist()
@@ -355,22 +223,6 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
-      'collaborative': instance.collaborative,
-      'description': instance.description,
-      'followers': instance.followers,
-      'href': instance.href,
-      'id': instance.id,
-      'images': instance.images,
-      'name': instance.name,
-      'owner': instance.owner,
-      'public': instance.public,
-      'snapshot_id': instance.snapshotId,
-      'tracks': instance.tracks,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) {
   return PlaylistSimple()
     ..collaborative = json['collaborative'] as bool
@@ -393,27 +245,9 @@ PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$PlaylistSimpleToJson(PlaylistSimple instance) =>
-    <String, dynamic>{
-      'collaborative': instance.collaborative,
-      'href': instance.href,
-      'id': instance.id,
-      'images': instance.images,
-      'name': instance.name,
-      'owner': instance.owner,
-      'public': instance.public,
-      'snapshot_id': instance.snapshotId,
-      'tracks': instance.tracksLink,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 PlaylistsFeatured _$PlaylistsFeaturedFromJson(Map<String, dynamic> json) {
   return PlaylistsFeatured()..message = json['message'] as String;
 }
-
-Map<String, dynamic> _$PlaylistsFeaturedToJson(PlaylistsFeatured instance) =>
-    <String, dynamic>{'message': instance.message};
 
 PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) {
   return PlaylistTrack()
@@ -428,14 +262,6 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) {
         ? null
         : Track.fromJson(json['track'] as Map<String, dynamic>);
 }
-
-Map<String, dynamic> _$PlaylistTrackToJson(PlaylistTrack instance) =>
-    <String, dynamic>{
-      'added_at': instance.addedAt?.toIso8601String(),
-      'added_by': instance.addedBy,
-      'is_local': instance.isLocal,
-      'track': instance.track
-    };
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User()
@@ -457,20 +283,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
-      'birthdate': instance.birthdate,
-      'country': instance.country,
-      'display_name': instance.displayName,
-      'email': instance.email,
-      'followers': instance.followers,
-      'href': instance.href,
-      'id': instance.id,
-      'images': instance.images,
-      'product': instance.product,
-      'type': instance.type,
-      'uri': instance.uri
-    };
-
 UserPublic _$UserPublicFromJson(Map<String, dynamic> json) {
   return UserPublic()
     ..displayName = json['display_name'] as String
@@ -486,17 +298,6 @@ UserPublic _$UserPublicFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
 }
-
-Map<String, dynamic> _$UserPublicToJson(UserPublic instance) =>
-    <String, dynamic>{
-      'display_name': instance.displayName,
-      'followers': instance.followers,
-      'href': instance.href,
-      'id': instance.id,
-      'images': instance.images,
-      'type': instance.type,
-      'uri': instance.uri
-    };
 
 AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) {
   return AudioFeature()
@@ -519,25 +320,3 @@ AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String
     ..valence = (json['valence'] as num)?.toDouble();
 }
-
-Map<String, dynamic> _$AudioFeatureToJson(AudioFeature instance) =>
-    <String, dynamic>{
-      'acousticness': instance.acousticness,
-      'analysis_url': instance.analysisUrl,
-      'danceability': instance.danceability,
-      'duration_ms': instance.durationMs,
-      'energy': instance.energy,
-      'id': instance.id,
-      'instrumentalness': instance.instrumentalness,
-      'key': instance.key,
-      'liveness': instance.liveness,
-      'loudness': instance.loudness,
-      'mode': instance.mode,
-      'speechiness': instance.speechiness,
-      'tempo': instance.tempo,
-      'time_signature': instance.timeSignature,
-      'track_href': instance.trackHref,
-      'type': instance.type,
-      'uri': instance.uri,
-      'valence': instance.valence
-    };

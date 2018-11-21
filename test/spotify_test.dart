@@ -16,7 +16,8 @@ Future main() async {
     });
 
     test('list', () async {
-      var albums = await spotify.albums.list(['4aawyAB9vmqN3uQ7FjRGTy', '4aawyAB9vmqN3uQ7FjRGTy']);
+      var albums = await spotify.albums
+          .list(['4aawyAB9vmqN3uQ7FjRGTy', '4aawyAB9vmqN3uQ7FjRGTy']);
 
       expect(albums.length, 2);
     });
@@ -32,7 +33,8 @@ Future main() async {
     });
 
     test('list', () async {
-      var artists = await spotify.artists.list(['0TnOYISbd1XYRBk9myaseg', '0TnOYISbd1XYRBk9myaseg']);
+      var artists = await spotify.artists
+          .list(['0TnOYISbd1XYRBk9myaseg', '0TnOYISbd1XYRBk9myaseg']);
 
       expect(artists.length, 2);
     });

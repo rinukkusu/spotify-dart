@@ -6,7 +6,8 @@ part of spotify;
 @JsonSerializable()
 class Followers extends Object {
   Followers() {}
-  factory Followers.fromJson(Map<String, dynamic> json) => _$FollowersFromJson(json);
+  factory Followers.fromJson(Map<String, dynamic> json) =>
+      _$FollowersFromJson(json);
 
   /**
    * A link to the Web API endpoint providing full details of the followers; 

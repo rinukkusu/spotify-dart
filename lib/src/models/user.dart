@@ -66,7 +66,8 @@ class User extends Object implements UserPublic {
 @JsonSerializable()
 class UserPublic extends Object {
   UserPublic() {}
-  factory UserPublic.fromJson(Map<String, dynamic> json) => _$UserPublicFromJson(json);
+  factory UserPublic.fromJson(Map<String, dynamic> json) =>
+      _$UserPublicFromJson(json);
 
   /// The name displayed on the user's profile. null if not available.
   @JsonKey(name: 'display_name')

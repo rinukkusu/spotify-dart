@@ -53,7 +53,8 @@ class Artist extends Object implements ArtistSimple {
 @JsonSerializable()
 class ArtistSimple extends Object {
   ArtistSimple() {}
-  factory ArtistSimple.fromJson(Map<String, dynamic> json) => _$ArtistSimpleFromJson(json);
+  factory ArtistSimple.fromJson(Map<String, dynamic> json) =>
+      _$ArtistSimpleFromJson(json);
 
   // /// Known external URLs for this artist.
   //@JsonKey(name: 'external_urls')

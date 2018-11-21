@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- make pub analyzer happy
+
 ## 0.1.1
 
 - add search endpoint

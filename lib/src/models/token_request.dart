@@ -10,7 +10,8 @@ part 'token_request.g.dart';
 @JsonSerializable()
 class TokenRequest extends Object {
   TokenRequest() {}
-  factory TokenRequest.fromJson(Map<String, dynamic> json) => _$TokenRequestFromJson(json);
+  factory TokenRequest.fromJson(Map<String, dynamic> json) =>
+      _$TokenRequestFromJson(json);
 
   @JsonKey(name: 'grant_type')
   String grantType = 'client_credentials';
@@ -19,7 +20,8 @@ class TokenRequest extends Object {
 @JsonSerializable()
 class ApiToken extends Object {
   ApiToken() {}
-  factory ApiToken.fromJson(Map<String, dynamic> json) => _$ApiTokenFromJson(json);
+  factory ApiToken.fromJson(Map<String, dynamic> json) =>
+      _$ApiTokenFromJson(json);
 
   @JsonKey(name: 'access_token')
   String accessToken;

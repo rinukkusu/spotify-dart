@@ -95,7 +95,8 @@ class Album extends Object implements AlbumSimple {
 @JsonSerializable()
 class AlbumSimple extends Object {
   AlbumSimple() {}
-  factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
+  factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
+      _$AlbumSimpleFromJson(json);
 
   /// The type of the album: one of "album", "single", or "compilation".
   @JsonKey(name: 'album_type')
@@ -144,7 +145,8 @@ class AlbumSimple extends Object {
 @JsonSerializable()
 class Copyright extends Object {
   Copyright() {}
-  factory Copyright.fromJson(Map<String, dynamic> json) => _$CopyrightFromJson(json);
+  factory Copyright.fromJson(Map<String, dynamic> json) =>
+      _$CopyrightFromJson(json);
 
   /// The copyright text for this album.
   String text;

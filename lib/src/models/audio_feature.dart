@@ -6,7 +6,8 @@ part of spotify;
 @JsonSerializable()
 class AudioFeature extends Object {
   AudioFeature() {}
-  factory AudioFeature.fromJson(Map<String, dynamic> json) => _$AudioFeatureFromJson(json);
+  factory AudioFeature.fromJson(Map<String, dynamic> json) =>
+      _$AudioFeatureFromJson(json);
 
   /**
    * A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 
