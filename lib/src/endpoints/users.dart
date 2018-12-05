@@ -16,6 +16,13 @@ class Users extends EndpointPaging {
     return User.fromJson(map);
   }
 
+  Future<Player> currentlyPlaying() async {
+    var jsonString = await _api._get('v1/me/player/currently-playing');
+    var map = json.decode(jsonString);
+
+    return Player.fromJson(map);
+  }
+
   Future<UserPublic> get(String userId) async {
     var jsonString = await _api._get('$_path/$userId');
     var map = json.decode(jsonString);
