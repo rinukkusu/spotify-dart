@@ -47,4 +47,12 @@ Future main() async {
       expect(searchResult.length, 2);
     });
   });
+
+  group('User', () {
+    test('currentlyPlaying', () async {
+      var result = await spotify.users.currentlyPlaying();
+
+      expect(result.item.name, 'So Voce');
+    });
+  });
 }
