@@ -23,6 +23,7 @@ part 'src/models/image.dart';
 part 'src/models/album.dart';
 part 'src/models/track.dart';
 part 'src/models/playlist.dart';
+part 'src/models/player.dart';
 part 'src/models/user.dart';
 part 'src/models/audio_feature.dart';
 
