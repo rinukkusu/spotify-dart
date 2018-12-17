@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- add currently playing endpoint
+
 ## 0.1.2
 
 - make pub analyzer happy
