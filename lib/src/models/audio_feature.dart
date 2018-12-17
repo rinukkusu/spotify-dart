@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class AudioFeature extends Object {
   AudioFeature() {}
   factory AudioFeature.fromJson(Map<String, dynamic> json) =>

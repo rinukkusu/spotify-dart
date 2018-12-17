@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class User extends Object implements UserPublic {
   User() {}
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -63,7 +63,7 @@ class User extends Object implements UserPublic {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class UserPublic extends Object {
   UserPublic() {}
   factory UserPublic.fromJson(Map<String, dynamic> json) =>

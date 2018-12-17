@@ -263,6 +263,34 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) {
         : Track.fromJson(json['track'] as Map<String, dynamic>);
 }
 
+Player _$PlayerFromJson(Map<String, dynamic> json) {
+  return Player()
+    ..timestamp = json['timestamp'] as int
+    ..context = json['context'] == null
+        ? null
+        : PlayerContext.fromJson(json['context'] as Map<String, dynamic>)
+    ..progress_ms = json['progress_ms'] as int
+    ..item = json['item'] == null
+        ? null
+        : Track.fromJson(json['item'] as Map<String, dynamic>)
+    ..currently_playing_type = json['currently_playing_type'] as String
+    ..is_playing = json['is_playing'] as bool;
+}
+
+PlayerContext _$PlayerContextFromJson(Map<String, dynamic> json) {
+  return PlayerContext()
+    ..external_urls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
+    ..href = json['href'] as String
+    ..type = json['type'] as String
+    ..uri = json['uri'] as String;
+}
+
+ExternalUrls _$ExternalUrlsFromJson(Map<String, dynamic> json) {
+  return ExternalUrls()..spotify = json['spotify'] as String;
+}
+
 User _$UserFromJson(Map<String, dynamic> json) {
   return User()
     ..birthdate = json['birthdate'] as String

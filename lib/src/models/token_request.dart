@@ -7,7 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'token_request.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class TokenRequest extends Object {
   TokenRequest() {}
   factory TokenRequest.fromJson(Map<String, dynamic> json) =>
@@ -17,7 +17,7 @@ class TokenRequest extends Object {
   String grantType = 'client_credentials';
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class ApiToken extends Object {
   ApiToken() {}
   factory ApiToken.fromJson(Map<String, dynamic> json) =>

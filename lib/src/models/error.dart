@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class SpotifyError extends Object {
   SpotifyError() {}
   factory SpotifyError.fromJson(Map<String, dynamic> json) =>

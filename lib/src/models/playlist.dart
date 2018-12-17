@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Playlist extends Object implements PlaylistSimple {
   Playlist() {}
   factory Playlist.fromJson(Map<String, dynamic> json) =>
@@ -68,7 +68,7 @@ class Playlist extends Object implements PlaylistSimple {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class PlaylistSimple extends Object {
   PlaylistSimple() {}
   factory PlaylistSimple.fromJson(Map<String, dynamic> json) =>
@@ -124,7 +124,7 @@ class PlaylistSimple extends Object {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class PlaylistsFeatured extends Object {
   PlaylistsFeatured() {}
   factory PlaylistsFeatured.fromJson(Map<String, dynamic> json) =>
@@ -134,7 +134,7 @@ class PlaylistsFeatured extends Object {
   String message;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class PlaylistTrack extends Object {
   PlaylistTrack() {}
   factory PlaylistTrack.fromJson(Map<String, dynamic> json) =>

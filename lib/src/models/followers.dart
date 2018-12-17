@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Followers extends Object {
   Followers() {}
   factory Followers.fromJson(Map<String, dynamic> json) =>

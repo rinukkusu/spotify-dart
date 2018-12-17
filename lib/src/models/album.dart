@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Album extends Object implements AlbumSimple {
   Album() {}
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
@@ -92,7 +92,7 @@ class Album extends Object implements AlbumSimple {
   String releaseDatePrecision;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class AlbumSimple extends Object {
   AlbumSimple() {}
   factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
@@ -142,7 +142,7 @@ class AlbumSimple extends Object {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Copyright extends Object {
   Copyright() {}
   factory Copyright.fromJson(Map<String, dynamic> json) =>

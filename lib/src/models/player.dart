@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Player extends Object {
   Player() {}
   factory Player.fromJson(Map<String, dynamic> json) =>
@@ -28,7 +28,7 @@ class Player extends Object {
   bool is_playing;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class PlayerContext extends Object {
   PlayerContext() {}
   factory PlayerContext.fromJson(Map<String, dynamic> json) =>
@@ -47,7 +47,7 @@ class PlayerContext extends Object {
   String uri;  
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class ExternalUrls extends Object {
   ExternalUrls() {}
   factory ExternalUrls.fromJson(Map<String, dynamic> json) =>

@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Artist extends Object implements ArtistSimple {
   Artist() {}
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
@@ -50,7 +50,7 @@ class Artist extends Object implements ArtistSimple {
   int popularity;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class ArtistSimple extends Object {
   ArtistSimple() {}
   factory ArtistSimple.fromJson(Map<String, dynamic> json) =>

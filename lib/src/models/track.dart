@@ -3,7 +3,7 @@
 
 part of spotify;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Track extends Object implements TrackSimple {
   Track() {}
   factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
@@ -120,7 +120,7 @@ class Track extends Object implements TrackSimple {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class TrackSimple extends Object {
   TrackSimple() {}
   factory TrackSimple.fromJson(Map<String, dynamic> json) =>
@@ -211,7 +211,7 @@ class TrackSimple extends Object {
 }
 
 /// A song saved in a Spotify user’s “Your Music” library
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class TrackSaved extends Object {
   TrackSaved() {}
   factory TrackSaved.fromJson(Map<String, dynamic> json) =>
@@ -225,7 +225,7 @@ class TrackSaved extends Object {
   Track track;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class TrackLink extends Object {
   TrackLink() {}
   factory TrackLink.fromJson(Map<String, dynamic> json) =>
@@ -248,7 +248,7 @@ class TrackLink extends Object {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class TracksLink extends Object {
   TracksLink() {}
   factory TracksLink.fromJson(Map<String, dynamic> json) =>
