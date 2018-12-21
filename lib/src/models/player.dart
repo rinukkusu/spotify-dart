@@ -6,12 +6,12 @@ part of spotify.models;
 @JsonSerializable(createToJson: false)
 class Player extends Object {
   Player() {}
-  factory Player.fromJson(Map<String, dynamic> json) =>
-      _$PlayerFromJson(json);
+  factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
+
   /// Unix Millisecond Timestamp when data was fetched
   int timestamp;
 
-  /// A [PlayerContext] Object. Can be [null]. 
+  /// A [PlayerContext] Object. Can be [null].
   PlayerContext context;
 
   /// Progress into the currently playing track. Can be [null].
@@ -23,7 +23,7 @@ class Player extends Object {
   /// The object type of the currently playing item. Can be one of track,
   /// episode, ad or unknown.
   String currently_playing_type;
-  
+
   /// If something is currently playing.
   bool is_playing;
 }
@@ -33,7 +33,7 @@ class PlayerContext extends Object {
   PlayerContext() {}
   factory PlayerContext.fromJson(Map<String, dynamic> json) =>
       _$PlayerContextFromJson(json);
-  
+
   /// The external_urls of the context, or [null] if not available.
   ExternalUrls external_urls;
 
@@ -44,7 +44,7 @@ class PlayerContext extends Object {
   String type;
 
   /// The uri of the context.
-  String uri;  
+  String uri;
 }
 
 @JsonSerializable(createToJson: false)
@@ -55,5 +55,4 @@ class ExternalUrls extends Object {
 
   /// The Spotify URL for the object.
   String spotify;
-  
 }
