@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3+1
+
+- eliminate duplicate code (serializers)
+
 ## 0.1.3
 
 - add currently playing endpoint

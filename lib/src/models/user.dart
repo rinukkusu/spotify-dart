@@ -1,7 +1,7 @@
 // Copyright (c) 2017, chances. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+part of spotify.models;
 
 @JsonSerializable(createToJson: false)
 class User extends Object implements UserPublic {
