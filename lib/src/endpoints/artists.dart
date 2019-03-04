@@ -23,4 +23,12 @@ class Artists extends EndpointBase {
     var artistsMap = map['artists'] as Iterable<dynamic>;
     return artistsMap.map((m) => Artist.fromJson(m));
   }
+
+  Future<Iterable<Artist>> relatedArtists(String artistId) async {
+    var jsonString = await _api._get('$_path/$artistId/related-artists');
+    var map = json.decode(jsonString);
+
+    var artistsMap = map['artists'] as Iterable<dynamic>;
+    return artistsMap.map((m) => Artist.fromJson(m));
+  }
 }

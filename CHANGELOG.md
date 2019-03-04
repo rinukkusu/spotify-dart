@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- add related-artists to the artists endpoint
+
 ## 0.1.3+2
 
 - use full Track object in search endpoint
