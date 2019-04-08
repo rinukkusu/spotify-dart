@@ -26,9 +26,9 @@ class Album extends Object implements AlbumSimple {
   @JsonKey(name: 'available_markets')
   List<String> availableMarkets;
 
-  // /// Known external URLs for this album.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this album.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// A link to the Web API endpoint providing full details of the album.
   String href;
@@ -54,9 +54,9 @@ class Album extends Object implements AlbumSimple {
   /// The copyright statements of the album.
   List<Copyright> copyrights;
 
-  // /// Known external IDs for the album.
-  //@JsonKey(name: 'external_ids')
-  //Map<String, String> externalIds;
+  /// Known external IDs for the album.
+  @JsonKey(name: 'external_ids')
+  ExternalIds externalIds;
 
   /**
    * A list of the genres the artist is associated with. 
@@ -116,9 +116,9 @@ class AlbumSimple extends Object {
   @JsonKey(name: 'available_markets')
   List<String> availableMarkets;
 
-  // /// Known external URLs for this album.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this album.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// A link to the Web API endpoint providing full details of the album.
   String href;

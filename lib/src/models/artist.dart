@@ -8,9 +8,9 @@ class Artist extends Object implements ArtistSimple {
   Artist() {}
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
 
-  // /// Known external URLs for this artist.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this artist.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// A link to the Web API endpoint providing full details of the artist.
   String href;
@@ -56,9 +56,9 @@ class ArtistSimple extends Object {
   factory ArtistSimple.fromJson(Map<String, dynamic> json) =>
       _$ArtistSimpleFromJson(json);
 
-  // /// Known external URLs for this artist.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this artist.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// A link to the Web API endpoint providing full details of the artist.
   String href;

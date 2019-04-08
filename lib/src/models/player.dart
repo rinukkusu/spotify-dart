@@ -47,12 +47,3 @@ class PlayerContext extends Object {
   String uri;
 }
 
-@JsonSerializable(createToJson: false)
-class ExternalUrls extends Object {
-  ExternalUrls() {}
-  factory ExternalUrls.fromJson(Map<String, dynamic> json) =>
-      _$ExternalUrlsFromJson(json);
-
-  /// The Spotify URL for the object.
-  String spotify;
-}
