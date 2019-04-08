@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- add external_ids and external_urls
+
 ## 0.1.4
 
 - add related-artists to the artists endpoint
