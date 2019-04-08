@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.1.6+2
+## 0.1.6+3
 
 - fix typo in tracks object
+- move album model switch to model
 
 ## 0.1.5+1
 

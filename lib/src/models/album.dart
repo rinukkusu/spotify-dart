@@ -4,52 +4,9 @@
 part of spotify.models;
 
 @JsonSerializable(createToJson: false)
-class Album extends Object implements AlbumSimple {
+class Album extends AlbumSimple {
   Album() {}
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
-
-  /// The type of the album: one of "album", "single", or "compilation".
-  @JsonKey(name: 'album_type')
-  String albumType;
-
-  /**
-   * The artists of the album. Each artist object includes a link in href to 
-   * more detailed information about the artist.
-   */
-  List<ArtistSimple> artists;
-
-  /**
-   * The markets in which the album is available: ISO 3166-1 alpha-2 country 
-   * codes. Note that an album is considered available in a market when at least
-   * 1 of its tracks is available in that market.
-   */
-  @JsonKey(name: 'available_markets')
-  List<String> availableMarkets;
-
-  /// Known external URLs for this album.
-  @JsonKey(name: 'external_urls')
-  ExternalUrls externalUrls;
-
-  /// A link to the Web API endpoint providing full details of the album.
-  String href;
-
-  /// The Spotify ID for the album.
-  String id;
-
-  /// The cover art for the album in various sizes, widest first.
-  List<Image> images;
-
-  /**
-   * The name of the album. In case of an album takedown, the value may be an 
-   * empty string.
-   */
-  String name;
-
-  /// The object type: "album"
-  String type;
-
-  /// The Spotify URI for the album.
-  String uri;
 
   /// The copyright statements of the album.
   List<Copyright> copyrights;
@@ -95,8 +52,11 @@ class Album extends Object implements AlbumSimple {
 @JsonSerializable(createToJson: false)
 class AlbumSimple extends Object {
   AlbumSimple() {}
-  factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
-      _$AlbumSimpleFromJson(json);
+  factory AlbumSimple.fromJson(Map<String, dynamic> json) => 
+      // sometimes a richer version than AlbumSimple is returned - trying to catch that here
+      json.containsKey('release_date')
+          ? _$AlbumFromJson(json)
+          : _$AlbumSimpleFromJson(json);
 
   /// The type of the album: one of "album", "single", or "compilation".
   @JsonKey(name: 'album_type')

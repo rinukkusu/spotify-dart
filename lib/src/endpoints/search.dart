@@ -14,10 +14,7 @@ class Search extends EndpointPaging {
     var type = types.map((type) => type.key).join(",");
     return _getBundledPages('$_path?q=$searchQuery&type=${type}', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
-      // sometimes a richer version than AlbumSimple is returned - trying to catch that here
-      'albums': (json) => (json as Map<String, dynamic>).containsKey('release_date') 
-          ? Album.fromJson(json) 
-          : AlbumSimple.fromJson(json),
+      'albums': (json) => AlbumSimple.fromJson(json),
       'artists': (json) => Artist.fromJson(json),
       'tracks': (json) => Track.fromJson(json)
     });
