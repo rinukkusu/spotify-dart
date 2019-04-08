@@ -49,7 +49,7 @@ class Track extends Object implements TrackSimple {
   bool explicit;
 
   /// Known external IDs for this track.
-  @JsonKey(name: 'external_idss')
+  @JsonKey(name: 'external_ids')
   ExternalIds externalIds;
 
   /// Known external URLs for this track.
