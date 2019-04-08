@@ -279,9 +279,9 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
     ..discNumber = json['disc_number'] as int
     ..durationMs = json['duration_ms'] as int
     ..explicit = json['explicit'] as bool
-    ..externalIds = json['external_idss'] == null
+    ..externalIds = json['external_ids'] == null
         ? null
-        : ExternalIds.fromJson(json['external_idss'] as Map<String, dynamic>)
+        : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
     ..externalUrls = json['external_urls'] == null
         ? null
         : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)

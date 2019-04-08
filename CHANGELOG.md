@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.6+1
+## 0.1.6+2
 
 - fix typo in tracks object
 
