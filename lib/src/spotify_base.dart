@@ -20,12 +20,21 @@ abstract class SpotifyApiBase {
   AudioFeatures _audioFeatures;
 
   Artists get artists => _artists;
+
   Albums get albums => _albums;
+
   Tracks get tracks => _tracks;
+
   Playlists get playlists => _playlists;
+
   Users get users => _users;
+
   Search get search => _search;
+
   AudioFeatures get audioFeatures => _audioFeatures;
+
+  set apiToken(Map<String, dynamic> tokenJson) =>
+      {_apiToken = ApiToken.fromJson(tokenJson)};
 
   SpotifyApiBase(this._credentials) {
     _artists = new Artists(this);
@@ -73,8 +82,10 @@ abstract class SpotifyApiBase {
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers);
+
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body);
+
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body);
 }
