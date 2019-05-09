@@ -18,8 +18,12 @@ class Users extends EndpointPaging {
 
   Future<Player> currentlyPlaying() async {
     var jsonString = await _api._get('v1/me/player/currently-playing');
-    var map = json.decode(jsonString);
 
+    if (jsonString.isEmpty) {
+      return new Player();
+    }
+
+    var map = json.decode(jsonString);
     return Player.fromJson(map);
   }
 
