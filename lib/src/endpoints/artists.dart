@@ -21,6 +21,7 @@ class Artists extends EndpointBase {
     var jsonString =
         await _api._get('$_path/$artistId/top-tracks?country=$countryCode');
     var map = json.decode(jsonString);
+
     var topTracks = map['tracks'] as Iterable<dynamic>;
     return topTracks.map((m) => Track.fromJson(m));
   }
@@ -30,8 +31,9 @@ class Artists extends EndpointBase {
     var jsonString =
         await _api._get('$_path/$artistId/related-artists');
     var map = json.decode(jsonString);
-    var topTracks = map['artists'] as Iterable<dynamic>;
-    return topTracks.map((m) => Artist.fromJson(m));
+
+    var relatedArtists = map['artists'] as Iterable<dynamic>;
+    return relatedArtists.map((m) => Artist.fromJson(m));
   }
 
   Future<Iterable<Artist>> list(Iterable<String> artistIds) async {
