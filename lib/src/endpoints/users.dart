@@ -35,6 +35,14 @@ class Users extends EndpointPaging {
     return items.map((item) => Track.fromJson(item["track"]));
   }
 
+  Future<Iterable<Track>> topTracks() async {
+    var jsonString = await _api._get('v1/me/top/tracks');
+    var map = json.decode(jsonString);
+
+    var items = map["items"] as Iterable<dynamic>;
+    return items.map((item) => Track.fromJson(item));
+  }
+
   Future<UserPublic> get(String userId) async {
     var jsonString = await _api._get('$_path/$userId');
     var map = json.decode(jsonString);
