@@ -388,3 +388,14 @@ UserPublic _$UserPublicFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
 }
+
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return Category()
+    ..href = json['href'] as String
+    ..icons = (json['icons'] as List)
+        ?.map(
+            (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
