@@ -1,7 +1,5 @@
 part of spotify;
 
-/// Get a list of categories used to tag items in Spotify (on, for example,
-/// the Spotify player’s “Browse” tab).
 class Categories extends EndpointPaging {
   @override
   String get _path => 'v1/browse/categories';
@@ -24,8 +22,10 @@ class Categories extends EndpointPaging {
   /// country=SE&locale=de_DE will return a list of categories relevant to
   /// Sweden but as German language strings.
   Pages<Category> list({String country, String locale}) {
+    final String query = _buildQuery({'country': country, 'locale': locale});
+
     return _getPages(
-      _path,
+      '$_path?$query',
       (json) => Category.fromJson(json),
       'categories',
       (json) => Category.fromJson(json),
@@ -43,9 +43,12 @@ class Categories extends EndpointPaging {
   /// the category strings returned will be in the Spotify default language
   /// (American English).
   ///
-  /// [id] - the Spotify category ID for the category.
-  Future<Category> get(String id, {String country, String locale}) async {
-    var jsonString = await _api._get('$_path/$id');
+  /// [categoryId] - the Spotify category ID for the category.
+  Future<Category> get(String categoryId,
+      {String country, String locale}) async {
+    final String query = _buildQuery({'country': country, 'locale': locale});
+
+    var jsonString = await _api._get('$_path/$categoryId?$query');
     var map = json.decode(jsonString);
 
     return Category.fromJson(map);
