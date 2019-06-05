@@ -22,9 +22,9 @@ class Playlists extends EndpointPaging {
   }
 
   /// [playlistId] - the Spotify playlist ID
-  Pages<TrackSimple> getTracksByPlaylistId(playlistId) {
+  Pages<Track> getTracksByPlaylistId(playlistId) {
     return _getPages('v1/playlists/$playlistId/tracks',
-        (json) => TrackSimple.fromJson(json['track']));
+        (json) => Track.fromJson(json['track']));
   }
 
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
