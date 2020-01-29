@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0
+
+- add token setter method for implicit grant
+- add related artists
+- add recently played artists
+- add top tracks
+- add categories
+- add tracksByPlaylist
+- fix currently playing
+
+Please don't mind the weird commit history, I goofed and used rebase first and merge on the later pull requests.
+
 ## 0.1.6+3
 
 - fix typo in tracks object
