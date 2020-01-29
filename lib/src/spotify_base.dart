@@ -18,6 +18,7 @@ abstract class SpotifyApiBase {
   Users _users;
   Search _search;
   AudioFeatures _audioFeatures;
+  Categories _categories;
 
   Artists get artists => _artists;
 
@@ -32,6 +33,7 @@ abstract class SpotifyApiBase {
   Search get search => _search;
 
   AudioFeatures get audioFeatures => _audioFeatures;
+  Categories get categories => _categories;
 
   set apiToken(Map<String, dynamic> tokenJson) =>
       {_apiToken = ApiToken.fromJson(tokenJson)};
@@ -44,6 +46,7 @@ abstract class SpotifyApiBase {
     _users = new Users(this);
     _search = new Search(this);
     _audioFeatures = new AudioFeatures(this);
+    _categories = Categories(this);
   }
 
   Future<Null> _refreshToken() async {
