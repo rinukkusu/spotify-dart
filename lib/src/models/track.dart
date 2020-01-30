@@ -48,13 +48,13 @@ class Track extends Object implements TrackSimple {
    */
   bool explicit;
 
-  // /// Known external IDs for this track.
-  //@JsonKey(name: 'external_idss')
-  //Map<String, String> externalIds;
+  /// Known external IDs for this track.
+  @JsonKey(name: 'external_ids')
+  ExternalIds externalIds;
 
-  // /// Known external URLs for this track.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this track.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// A link to the Web API endpoint providing full details of the track.
   String href;
@@ -160,9 +160,9 @@ class TrackSimple extends Object {
    */
   bool explicit;
 
-  // /// Known external URLs for this track.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this track.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// A link to the Web API endpoint providing full details of the track.
   String href;
@@ -231,9 +231,9 @@ class TrackLink extends Object {
   factory TrackLink.fromJson(Map<String, dynamic> json) =>
       _$TrackLinkFromJson(json);
 
-  // /// Known external URLs for this track.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this track.
+  @JsonKey(name: 'external_urls')
+  Map<String, String> externalUrls;
 
   /// A link to the Web API endpoint providing full details of the track.
   String href;

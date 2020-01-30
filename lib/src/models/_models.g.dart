@@ -6,6 +6,17 @@ part of spotify.models;
 // JsonSerializableGenerator
 // **************************************************************************
 
+ExternalUrls _$ExternalUrlsFromJson(Map<String, dynamic> json) {
+  return ExternalUrls()..spotify = json['spotify'] as String;
+}
+
+ExternalIds _$ExternalIdsFromJson(Map<String, dynamic> json) {
+  return ExternalIds()
+    ..isrc = json['isrc'] as String
+    ..ean = json['ean'] as String
+    ..upc = json['upc'] as String;
+}
+
 Album _$AlbumFromJson(Map<String, dynamic> json) {
   return Album()
     ..albumType = json['album_type'] as String
@@ -15,6 +26,9 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..availableMarkets =
         (json['available_markets'] as List)?.map((e) => e as String)?.toList()
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..images = (json['images'] as List)
@@ -28,6 +42,9 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Copyright.fromJson(e as Map<String, dynamic>))
         ?.toList()
+    ..externalIds = json['external_ids'] == null
+        ? null
+        : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
     ..genres = (json['genres'] as List)?.map((e) => e as String)?.toList()
     ..label = json['label'] as String
     ..popularity = json['popularity'] as int
@@ -44,6 +61,9 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..availableMarkets =
         (json['available_markets'] as List)?.map((e) => e as String)?.toList()
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..images = (json['images'] as List)
@@ -63,6 +83,9 @@ Copyright _$CopyrightFromJson(Map<String, dynamic> json) {
 
 Artist _$ArtistFromJson(Map<String, dynamic> json) {
   return Artist()
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..name = json['name'] as String
@@ -81,6 +104,9 @@ Artist _$ArtistFromJson(Map<String, dynamic> json) {
 
 ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) {
   return ArtistSimple()
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..name = json['name'] as String
@@ -166,14 +192,13 @@ PlayerContext _$PlayerContextFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-ExternalUrls _$ExternalUrlsFromJson(Map<String, dynamic> json) {
-  return ExternalUrls()..spotify = json['spotify'] as String;
-}
-
 Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
   return Playlist()
     ..collaborative = json['collaborative'] as bool
     ..description = json['description'] as String
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..followers = json['followers'] == null
         ? null
         : Followers.fromJson(json['followers'] as Map<String, dynamic>)
@@ -200,6 +225,9 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
 PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) {
   return PlaylistSimple()
     ..collaborative = json['collaborative'] as bool
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..images = (json['images'] as List)
@@ -251,6 +279,12 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
     ..discNumber = json['disc_number'] as int
     ..durationMs = json['duration_ms'] as int
     ..explicit = json['explicit'] as bool
+    ..externalIds = json['external_ids'] == null
+        ? null
+        : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..isPlayable = json['is_playable'] as bool
@@ -276,6 +310,9 @@ TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) {
     ..discNumber = json['disc_number'] as int
     ..durationMs = json['duration_ms'] as int
     ..explicit = json['explicit'] as bool
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..isPlayable = json['is_playable'] as bool
@@ -301,6 +338,9 @@ TrackSaved _$TrackSavedFromJson(Map<String, dynamic> json) {
 
 TrackLink _$TrackLinkFromJson(Map<String, dynamic> json) {
   return TrackLink()
+    ..externalUrls = (json['external_urls'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(k, e as String),
+    )
     ..href = json['href'] as String
     ..id = json['id'] as String
     ..type = json['type'] as String
@@ -347,4 +387,15 @@ UserPublic _$UserPublicFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
+}
+
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return Category()
+    ..href = json['href'] as String
+    ..icons = (json['icons'] as List)
+        ?.map(
+            (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
 }

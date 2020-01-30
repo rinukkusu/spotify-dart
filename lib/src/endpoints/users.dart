@@ -18,9 +18,29 @@ class Users extends EndpointPaging {
 
   Future<Player> currentlyPlaying() async {
     var jsonString = await _api._get('v1/me/player/currently-playing');
+
+    if (jsonString.isEmpty) {
+      return new Player();
+    }
+
+    var map = json.decode(jsonString);
+    return Player.fromJson(map);
+  }
+
+  Future<Iterable<Track>> recentlyPlayed() async {
+    var jsonString = await _api._get('v1/me/player/recently-played');
     var map = json.decode(jsonString);
 
-    return Player.fromJson(map);
+    var items = map["items"] as Iterable<dynamic>;
+    return items.map((item) => Track.fromJson(item["track"]));
+  }
+
+  Future<Iterable<Track>> topTracks() async {
+    var jsonString = await _api._get('v1/me/top/tracks');
+    var map = json.decode(jsonString);
+
+    var items = map["items"] as Iterable<dynamic>;
+    return items.map((item) => Track.fromJson(item));
   }
 
   Future<UserPublic> get(String userId) async {

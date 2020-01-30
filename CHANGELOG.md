@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.2.0
+
+- add token setter method for implicit grant
+- add related artists
+- add recently played artists
+- add top tracks
+- add categories
+- add tracksByPlaylist
+- fix currently playing
+
+Please don't mind the weird commit history, I goofed and used rebase first and merge on the later pull requests.
+
+## 0.1.6+3
+
+- fix typo in tracks object
+- move album model switch to model
+
+## 0.1.5+1
+
+- add external_ids and external_urls
+
+## 0.1.4
+
+- add related-artists to the artists endpoint
+
+## 0.1.3+2
+
+- use full Track object in search endpoint
+
 ## 0.1.3+1
 
 - eliminate duplicate code (serializers)

@@ -16,9 +16,9 @@ class Playlist extends Object implements PlaylistSimple {
   /// otherwise [null].
   String description;
 
-  // /// Known external URLs for this playlist.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this playlist.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// Information about the followers of the playlist.
   Followers followers;
@@ -77,9 +77,9 @@ class PlaylistSimple extends Object {
   /// true if the owner allows other users to modify the playlist.
   bool collaborative;
 
-  // /// Known external URLs for this playlist.
-  //@JsonKey(name: 'external_urls')
-  //Map<String, String> externalUrls;
+  /// Known external URLs for this playlist.
+  @JsonKey(name: 'external_urls')
+  ExternalUrls externalUrls;
 
   /// A link to the Web API endpoint providing full details of the playlist.
   String href;
