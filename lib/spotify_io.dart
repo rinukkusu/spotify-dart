@@ -9,6 +9,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
+import 'package:oauth2/oauth2.dart';
 
 import 'src/models/_models.dart';
 import 'src/models/token_request.dart';

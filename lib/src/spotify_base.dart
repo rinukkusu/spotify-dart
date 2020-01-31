@@ -4,12 +4,9 @@
 part of spotify;
 
 abstract class SpotifyApiBase {
-  final SpotifyApiCredentials _credentials;
-  ApiToken _apiToken;
-
   static const String _baseUrl = 'https://api.spotify.com';
-  static const String _tokenRefreshUrl =
-      'https://accounts.spotify.com/api/token';
+  static const String _tokenUrl = 'https://accounts.spotify.com/api/token';
+  static const String _authorizationUrl = 'https://accounts.spotify.com/authorize';
 
   Artists _artists;
   Albums _albums;
@@ -35,10 +32,7 @@ abstract class SpotifyApiBase {
   AudioFeatures get audioFeatures => _audioFeatures;
   Categories get categories => _categories;
 
-  set apiToken(Map<String, dynamic> tokenJson) =>
-      {_apiToken = ApiToken.fromJson(tokenJson)};
-
-  SpotifyApiBase(this._credentials) {
+  SpotifyApiBase() {
     _artists = new Artists(this);
     _albums = new Albums(this);
     _tracks = new Tracks(this);
@@ -49,44 +43,37 @@ abstract class SpotifyApiBase {
     _categories = Categories(this);
   }
 
-  Future<Null> _refreshToken() async {
-    if (_apiToken == null || _apiToken.isExpired) {
-      var headers = {'Authorization': 'Basic ${_credentials.basicAuth}'};
-      var body = {'grant_type': 'client_credentials'};
-
-      var responseJson = await _postImpl(_tokenRefreshUrl, headers, body);
-      var responseMap = json.decode(responseJson);
-
-      _apiToken = ApiToken.fromJson(responseMap);
-    }
+  Future<String> _get(String path, Map<String, String> headers) {
+    return _requestWrapper(path, (url) => _getImpl(url, headers));
   }
 
-  Future<String> _get(String path) {
-    return _requestWrapper(path, (url, headers) => _getImpl(url, headers));
-  }
-
-  Future<String> _post(String path, String body) {
+  Future<String> _post(String path, String body, Map<String, String> headers) {
     return _requestWrapper(
-        path, (url, headers) => _postImpl(url, headers, body));
+        path, (url) => _postImpl(url, headers, body));
   }
 
-  Future<String> _put(String path, String body) {
+  Future<String> _delete(String path, String body, Map<String, String> headers) {
     return _requestWrapper(
-        path, (url, headers) => _putImpl(url, headers, body));
+        path, (url) => _deleteImpl(url, headers, body));
+  }
+
+  Future<String> _put(String path, String body, Map<String, String> headers) {
+    return _requestWrapper(
+        path, (url) => _putImpl(url, headers, body));
   }
 
   Future<String> _requestWrapper(String path,
-      Future<String> req(String url, Map<String, String> headers)) async {
-    await _refreshToken();
-    var headers = {'Authorization': 'Bearer ${_apiToken.accessToken}'};
+      Future<String> req(String url)) async {
     var url = '${_baseUrl}/$path';
-
-    return req(url, headers);
+    return req(url);
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers);
 
   Future<String> _postImpl(
+      String url, Map<String, String> headers, dynamic body);
+
+  Future<String> _deleteImpl(
       String url, Map<String, String> headers, dynamic body);
 
   Future<String> _putImpl(

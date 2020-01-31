@@ -3,8 +3,37 @@
 
 part of spotify;
 
+class SpotifyAuthorizationGrant extends AuthorizationCodeGrant{
+  SpotifyAuthorizationGrant(String identifier, {String secret}) : super(
+      identifier,
+      Uri.parse(SpotifyApiBase._authorizationUrl),
+      Uri.parse(SpotifyApiBase._tokenUrl),
+      secret: secret
+  );
+
+}
+
 class SpotifyApi extends SpotifyApiBase {
-  SpotifyApi(SpotifyApiCredentials credentials) : super(credentials);
+  final Client client;
+
+  SpotifyApi(this.client) : super();
+
+  static Future<SpotifyApi> fromCredentials(SpotifyApiCredentials credentials) async {
+
+    final client = await clientCredentialsGrant(
+      Uri.parse(SpotifyApiBase._authorizationUrl),
+      credentials.clientId, credentials.clientSecret);
+    return SpotifyApi(client);
+  }
+
+  static AuthorizationCodeGrant authorizationCodeGrant(
+      String clientId, {String secret}) {
+    return AuthorizationCodeGrant(
+        clientId,
+        Uri.parse(SpotifyApiBase._authorizationUrl),
+        Uri.parse(SpotifyApiBase._tokenUrl),
+        secret: secret);
+  }
 
   @override
   Future<String> _getImpl(String url, Map<String, String> headers) async {
@@ -38,5 +67,11 @@ class SpotifyApi extends SpotifyApiBase {
       );
     }
     return responseBody;
+  }
+
+  @override
+  Future<String> _deleteImpl(String url, Map<String, String> headers, body) {
+    // TODO: implement _deleteImpl
+    return null;
   }
 }
