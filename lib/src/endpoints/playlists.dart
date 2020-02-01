@@ -27,6 +27,12 @@ class Playlists extends EndpointPaging {
         (json) => Track.fromJson(json['track']));
   }
 
+  Future<Playlist> createPlaylist(String userId, String playlistName) async {
+    final url = "v1/users/$userId/playlists";
+    final playlistJson = await _api._post(url, jsonEncode({"name":playlistName}));
+    return await Playlist.fromJson(jsonDecode(playlistJson));
+  }
+
   Future<Null> addTrack(String trackUri, String playlistId) async {
     final url = "v1/playlists/$playlistId/tracks";
     await _api._post(url, jsonEncode({'uris': [trackUri]}));
