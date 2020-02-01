@@ -1,30 +1,12 @@
 part of spotify;
 
 class SpotifyApiMock extends SpotifyApiBase {
-  final Client client;
+  final MockClient client;
 
   SpotifyApiMock(this.client) : super();
 
-  static Future<SpotifyApi> fromCredentials(SpotifyApiCredentials credentials) async {
-
-    final client = await clientCredentialsGrant(
-        Uri.parse(SpotifyApiBase._authorizationUrl),
-        credentials.clientId, credentials.clientSecret);
-    return SpotifyApi(client);
-  }
-
-  static AuthorizationCodeGrant authorizationCodeGrant(
-      String clientId, {String secret}) {
-    return AuthorizationCodeGrant(
-        clientId,
-        Uri.parse(SpotifyApiBase._authorizationUrl),
-        Uri.parse(SpotifyApiBase._tokenUrl),
-        secret: secret);
-  }
-
   @override
   Future<String> _getImpl(String url, Map<String, String> headers) async {
-    var client = new MockClient();
     var response = await client.get(url, headers: headers);
 
     return utf8.decode(response.bodyBytes);
@@ -33,14 +15,12 @@ class SpotifyApiMock extends SpotifyApiBase {
   @override
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    var client = new MockClient();
     var response = await client.post(url, headers: headers, body: body);
     return utf8.decode(response.bodyBytes);
   }
 
   @override
   Future<String> _putImpl(String url, Map<String, String> headers, body) async {
-    var client = new MockClient();
     var response = await client.put(url, headers: headers, body: body);
     return utf8.decode(response.bodyBytes);
   }

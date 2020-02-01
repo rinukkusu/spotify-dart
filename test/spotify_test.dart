@@ -3,8 +3,7 @@ import 'package:test/test.dart';
 import 'package:spotify/spotify_io.dart';
 
 Future main() async {
-  var credentials = new SpotifyApiCredentials('id', 'secret');
-  var spotify = new SpotifyApiMock(credentials);
+  var spotify = await SpotifyApiMock(MockClient());
 
   group('Albums', () {
     test('get', () async {
@@ -26,7 +25,6 @@ Future main() async {
   group('Artists', () {
     test('get', () async {
       var artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
-
       expect(artist.type, 'artist');
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
       expect(artist.images.length, 3);
@@ -43,7 +41,6 @@ Future main() async {
   group('Search', () {
     test('get', () async {
       var searchResult = await spotify.search.get('metallica').first();
-
       expect(searchResult.length, 2);
     });
   });
