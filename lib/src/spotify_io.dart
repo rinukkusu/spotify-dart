@@ -3,16 +3,6 @@
 
 part of spotify;
 
-class SpotifyAuthorizationGrant extends AuthorizationCodeGrant{
-  SpotifyAuthorizationGrant(String identifier, {String secret}) : super(
-      identifier,
-      Uri.parse(SpotifyApiBase._authorizationUrl),
-      Uri.parse(SpotifyApiBase._tokenUrl),
-      secret: secret
-  );
-
-}
-
 class SpotifyApi extends SpotifyApiBase {
   final Client client;
 
@@ -37,7 +27,6 @@ class SpotifyApi extends SpotifyApiBase {
 
   @override
   Future<String> _getImpl(String url, Map<String, String> headers) async {
-    var client = new http.Client();
     var response = await client.get(url, headers: headers);
     return handleErrors(response);
   }
@@ -45,7 +34,6 @@ class SpotifyApi extends SpotifyApiBase {
   @override
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    var client = new http.Client();
     var response = await client.post(url, headers: headers, body: body);
     return handleErrors(response);
   }
@@ -53,7 +41,6 @@ class SpotifyApi extends SpotifyApiBase {
   @override
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    var client = new http.Client();
     var response = await client.put(url, headers: headers, body: body);
     return handleErrors(response);
   }

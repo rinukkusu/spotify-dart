@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/browser_client.dart' as http;
+import 'package:oauth2/oauth2.dart';
 
 import 'src/models/_models.dart';
 import 'src/models/token_request.dart';
