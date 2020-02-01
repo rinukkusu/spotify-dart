@@ -49,6 +49,15 @@ class Playlists extends EndpointPaging {
         }));
   }
 
+  Future<Null> removeTrack(String trackUri, String playlistId, [List<int> positions]) async {
+    final url = "v1/playlists/$playlistId/tracks";
+    final track = <String, dynamic>{"uri": trackUri};
+    if (positions != null)
+      track['positions'] = positions;
+    final body = jsonEncode({"tracks":[track]});
+    await _api._delete(url, body);
+  }
+
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
   /// parameter to ensure that the category exists for a particular country.
   ///
