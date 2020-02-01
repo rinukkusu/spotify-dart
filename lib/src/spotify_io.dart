@@ -11,7 +11,7 @@ class SpotifyApi extends SpotifyApiBase {
   static Future<SpotifyApi> fromCredentials(SpotifyApiCredentials credentials) async {
 
     final client = await clientCredentialsGrant(
-      Uri.parse(SpotifyApiBase._authorizationUrl),
+      Uri.parse(SpotifyApiBase._tokenUrl),
       credentials.clientId, credentials.clientSecret);
     return SpotifyApi(client);
   }
