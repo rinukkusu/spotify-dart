@@ -27,6 +27,11 @@ class Playlists extends EndpointPaging {
         (json) => Track.fromJson(json['track']));
   }
 
+  Future<Null> addTrack(String trackUri, String playlistId) async {
+    final url = "v1/playlists/$playlistId/tracks";
+    await _api._post(url, jsonEncode({'uris': [trackUri]}));
+  }
+
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
   /// parameter to ensure that the category exists for a particular country.
   ///
