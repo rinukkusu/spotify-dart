@@ -27,15 +27,26 @@ class Playlists extends EndpointPaging {
         (json) => Track.fromJson(json['track']));
   }
 
+  /// [userId] - the Spotify user ID
+  ///
+  /// [playlistName] - the name of the new playlist
   Future<Playlist> createPlaylist(String userId, String playlistName) async {
     final url = "v1/users/$userId/playlists";
-    final playlistJson = await _api._post(url, jsonEncode({"name":playlistName}));
+    final playlistJson =
+        await _api._post(url, jsonEncode({"name": playlistName}));
     return await Playlist.fromJson(jsonDecode(playlistJson));
   }
 
+  /// [trackUri] - the Spotify track uri (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
+  ///
+  /// [playlistId] - the playlist ID
   Future<Null> addTrack(String trackUri, String playlistId) async {
     final url = "v1/playlists/$playlistId/tracks";
-    await _api._post(url, jsonEncode({'uris': [trackUri]}));
+    await _api._post(
+        url,
+        jsonEncode({
+          'uris': [trackUri]
+        }));
   }
 
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
