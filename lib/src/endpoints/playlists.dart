@@ -18,7 +18,7 @@ class Playlists extends EndpointPaging {
   }
 
   Pages<PlaylistSimple> get me {
-    return _getPages('v1/me/playlists', (json) => Playlist.fromJson(json));
+    return _getPages('v1/me/playlists', (json) => PlaylistSimple.fromJson(json));
   }
 
   /// [playlistId] - the Spotify playlist ID
