@@ -11,8 +11,7 @@ import 'package:spotify/spotify_io.dart';
 
 main() async {
   var credentials = new SpotifyApiCredentials(clientId, clientSecret);
-  var spotify = new SpotifyApi(credentials);
-
+  var spotify = await SpotifyApi.fromCredentials(credentials);
   var artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
 }
 ```
