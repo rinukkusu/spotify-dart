@@ -140,8 +140,7 @@ class Pages<T> extends _Pages<Page<T>> {
 
     if (_pageContainerParser == null) {
       var paging = Paging<T>.fromJson(map);
-      final p = Page<T>(paging, _pageParser);
-      return p;
+      return Page<T>(paging, _pageParser);
     } else {
       var paging = Paging.fromJson(map[_pageKey]);
       var container = _pageContainerParser(map);
