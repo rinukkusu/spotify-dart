@@ -23,6 +23,30 @@ main() async {
 import 'package:spotify/spotify_browser.dart';
 ```
 
+### Client Credentials Flow
+```dart
+SpotifyApi getSpotifyApi() {
+  final credentials = new SpotifyApiCredentials(clientId, clientSecret);
+  return new SpotifyApi(credentials);
+}
+```
+
+### Authorization Code
+```dart
+SpotifyApi getSpotifyApi() async {
+  final credentials = new SpotifyApiCredentials(clientId, clientSecret);
+  grant = SpotifyApi.authorizationCodeGrant(credentials);
+  // *** from dart-lang/oauth2 package
+  // `redirect` is an imaginary function that redirects the resource
+  // owner's browser.
+  await redirect(grant.getAuthorizationUrl(redirectUrl));
+  // Another imaginary function that listens for a request to `redirectUrl`.
+  final requestUri = await listen(redirectUrl);
+  // ***
+  return SpotifyApi.fromAuthCodeGrant(WelcomeScreen.grant, requestUri);
+}
+```
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
