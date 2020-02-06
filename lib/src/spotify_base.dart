@@ -8,6 +8,8 @@ abstract class SpotifyApiBase {
   static const String _tokenUrl = 'https://accounts.spotify.com/api/token';
   static const String _authorizationUrl = 'https://accounts.spotify.com/authorize';
 
+
+  FutureOr<http_all.BaseClient> _client;
   Artists _artists;
   Albums _albums;
   Tracks _tracks;
@@ -16,6 +18,7 @@ abstract class SpotifyApiBase {
   Search _search;
   AudioFeatures _audioFeatures;
   Categories _categories;
+
 
   Artists get artists => _artists;
 
@@ -32,7 +35,8 @@ abstract class SpotifyApiBase {
   AudioFeatures get audioFeatures => _audioFeatures;
   Categories get categories => _categories;
 
-  SpotifyApiBase() {
+  SpotifyApiBase.fromClient(FutureOr<http_all.BaseClient> client) {
+    _client = client;
     _artists = new Artists(this);
     _albums = new Albums(this);
     _tracks = new Tracks(this);
@@ -43,6 +47,24 @@ abstract class SpotifyApiBase {
     _categories = Categories(this);
   }
 
+  SpotifyApiBase(SpotifyApiCredentials credentials,
+                 [http_all.Client httpClient]):
+        this.fromClient(clientCredentialsGrant(
+          Uri.parse(SpotifyApiBase._tokenUrl),
+          credentials.clientId, credentials.clientSecret, httpClient: httpClient));
+
+  SpotifyApiBase.fromAuthCodeGrant(AuthorizationCodeGrant grant, String responseUri) :
+      this.fromClient(grant.handleAuthorizationResponse(Uri.parse(responseUri).queryParameters));
+
+    static AuthorizationCodeGrant authorizationCodeGrant(
+      SpotifyApiCredentials credentials, http_all.BaseClient httpClient) {
+    return AuthorizationCodeGrant(
+        credentials.clientId,
+        Uri.parse(SpotifyApiBase._authorizationUrl),
+        Uri.parse(SpotifyApiBase._tokenUrl),
+        secret: credentials.clientSecret,
+        httpClient: httpClient);
+  }
 
   Future<String> _get(String path) {
     return _getImpl('${_baseUrl}/$path', const {});
@@ -60,14 +82,40 @@ abstract class SpotifyApiBase {
     return _putImpl('${_baseUrl}/$path', const {}, body);
   }
 
-  Future<String> _getImpl(String url, Map<String, String> headers);
+  Future<String> _getImpl(String url, Map<String, String> headers) async {
+      final response = await (await _client).get(url, headers: headers);
+      return handleErrors(response);
+  }
 
-  Future<String> _postImpl(
-      String url, Map<String, String> headers, String body);
+    Future<String> _postImpl(
+      String url, Map<String, String> headers, dynamic body) async {
+    var response = await (await _client).post(url, headers: headers, body: body);
+    return handleErrors(response);
+  }
 
-  Future<String> _deleteImpl(
-      String url, Map<String, String> headers, String body);
+    Future<String> _deleteImpl(String url, Map<String, String> headers, body) async {
+    final request = http_all.Request("DELETE", Uri.parse(url));
+    request.headers.addAll(headers);
+    request.body = body;
+    final response = await http_all.Response.fromStream(await (await _client).send(request));
+    return handleErrors(response);
+  }
 
   Future<String> _putImpl(
-      String url, Map<String, String> headers, String body);
+      String url, Map<String, String> headers, dynamic body) async {
+    var response = await (await _client).put(url, headers: headers, body: body);
+    return handleErrors(response);
+  }
+
+
+  String handleErrors(http_all.Response response) {
+    final responseBody = utf8.decode(response.bodyBytes);
+    if (response.statusCode >= 400) {
+      var jsonMap = json.decode(responseBody);
+      throw new SpotifyException.fromSpotify(
+        SpotifyError.fromJson(jsonMap['error']),
+      );
+    }
+    return responseBody;
+  }
 }

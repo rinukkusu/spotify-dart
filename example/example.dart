@@ -10,7 +10,7 @@ main() async {
   var keyMap = json.decode(keyJson);
 
   var credentials = new SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
-  var spotify = await SpotifyApi.fromCredentials(credentials);
+  var spotify = SpotifyApi(credentials);
 
   print("Artists:");
   var artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);

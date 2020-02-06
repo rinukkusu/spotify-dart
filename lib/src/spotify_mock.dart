@@ -1,35 +1,7 @@
 part of spotify;
 
-class SpotifyApiMock extends SpotifyApiBase {
-  final MockClient client;
-
-  SpotifyApiMock(this.client) : super();
-
-  @override
-  Future<String> _getImpl(String url, Map<String, String> headers) async {
-    var response = await client.get(url, headers: headers);
-
-    return utf8.decode(response.bodyBytes);
-  }
-
-  @override
-  Future<String> _postImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    var response = await client.post(url, headers: headers, body: body);
-    return utf8.decode(response.bodyBytes);
-  }
-
-  @override
-  Future<String> _putImpl(String url, Map<String, String> headers, body) async {
-    var response = await client.put(url, headers: headers, body: body);
-    return utf8.decode(response.bodyBytes);
-  }
-
-  @override
-  Future<String> _deleteImpl(String url, Map<String, String> headers, body) {
-    // TODO: implement _deleteImpl
-    return null;
-  }
+class SpotifyApiMock extends SpotifyApiBase{
+  SpotifyApiMock(SpotifyApiCredentials credentials) : super.fromClient(MockClient());
 }
 
 class MockClient implements http.BaseClient {

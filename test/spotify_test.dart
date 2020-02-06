@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'package:spotify/spotify_io.dart';
 
 Future main() async {
-  var spotify = await SpotifyApiMock(MockClient());
+  var spotify = SpotifyApiMock(SpotifyApiCredentials('', ''));
 
   group('Albums', () {
     test('get', () async {

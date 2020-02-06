@@ -3,62 +3,14 @@
 
 part of spotify;
 
-class SpotifyApi extends SpotifyApiBase {
-  final Client client;
+class SpotifyApi extends SpotifyApiBase{
+  SpotifyApi(SpotifyApiCredentials credentials) : super(credentials, http.Client());
 
-  SpotifyApi(this.client) : super();
+  SpotifyApi.fromClient(FutureOr<Client> client) : super.fromClient(client);
 
-  static Future<SpotifyApi> fromCredentials(SpotifyApiCredentials credentials) async {
+  SpotifyApi.fromAuthCodeGrant(AuthorizationCodeGrant grant, String responseUri) : super.fromAuthCodeGrant(grant, responseUri);
 
-    final client = await clientCredentialsGrant(
-      Uri.parse(SpotifyApiBase._tokenUrl),
-      credentials.clientId, credentials.clientSecret);
-    return SpotifyApi(client);
-  }
-
-  static AuthorizationCodeGrant authorizationCodeGrant(
-      String clientId, {String secret}) {
-    return AuthorizationCodeGrant(
-        clientId,
-        Uri.parse(SpotifyApiBase._authorizationUrl),
-        Uri.parse(SpotifyApiBase._tokenUrl),
-        secret: secret);
-  }
-
-  @override
-  Future<String> _getImpl(String url, Map<String, String> headers) async {
-    var response = await client.get(url, headers: headers);
-    return handleErrors(response);
-  }
-
-  @override
-  Future<String> _postImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    var response = await client.post(url, headers: headers, body: body);
-    return handleErrors(response);
-  }
-
-  @override
-  Future<String> _putImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    var response = await client.put(url, headers: headers, body: body);
-    return handleErrors(response);
-  }
-
-  String handleErrors(http.Response response) {
-    var responseBody = utf8.decode(response.bodyBytes);
-    if (response.statusCode >= 400) {
-      var jsonMap = json.decode(responseBody);
-      throw new SpotifyException.fromSpotify(
-        SpotifyError.fromJson(jsonMap['error']),
-      );
-    }
-    return responseBody;
-  }
-
-  @override
-  Future<String> _deleteImpl(String url, Map<String, String> headers, body) {
-    // TODO: implement _deleteImpl
-    return null;
+  static AuthorizationCodeGrant authorizationCodeGrant(SpotifyApiCredentials credentials) {
+    return SpotifyApiBase.authorizationCodeGrant(credentials, http.Client());
   }
 }
