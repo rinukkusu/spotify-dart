@@ -38,6 +38,19 @@ Future main() async {
 
       expect(artists.length, 2);
     });
+
+    test('get_error', () async {
+      spotify.mockHttpError =
+          MockHttpError(statusCode: 401, message: "Bad Request");
+      try {
+        await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
+      } catch (e) {
+        expect(e, isInstanceOf<SpotifyException>());
+        SpotifyException se = e as SpotifyException;
+        expect(se.status, 401);
+        expect(se.message, "Bad Request");
+      }
+    });
   });
 
   group('Search', () {
@@ -45,6 +58,19 @@ Future main() async {
       var searchResult = await spotify.search.get('metallica').first();
 
       expect(searchResult.length, 2);
+    });
+
+    test('get_error', () async {
+      spotify.mockHttpError =
+          new MockHttpError(statusCode: 401, message: "Bad Request");
+      try {
+        await spotify.search.get('metallica').first();
+      } catch (e) {
+        expect(e, new isInstanceOf<SpotifyException>());
+        SpotifyException se = e as SpotifyException;
+        expect(se.status, 401);
+        expect(se.message, "Bad Request");
+      }
     });
   });
 

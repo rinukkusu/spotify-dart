@@ -160,7 +160,10 @@ class BundledPages extends _Pages<List<Page<Object>>> {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
-    var jsonString = await _api._get(path);
+    return _api._get(path).then(_parseBundledPage);
+  }
+
+  List<Page<Object>> _parseBundledPage(String jsonString) {
     var map = json.decode(jsonString);
     List<Page<Object>> pages = [];
     _pageMappers.forEach((key, value) {
