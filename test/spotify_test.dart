@@ -46,6 +46,9 @@ Future main() async {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       } catch (e) {
         expect(e, isInstanceOf<SpotifyException>());
+        SpotifyException se = e as SpotifyException;
+        expect(se.status, 401);
+        expect(se.message, "Bad Request");
       }
     });
   });
@@ -64,6 +67,9 @@ Future main() async {
         await spotify.search.get('metallica').first();
       } catch (e) {
         expect(e, new isInstanceOf<SpotifyException>());
+        SpotifyException se = e as SpotifyException;
+        expect(se.status, 401);
+        expect(se.message, "Bad Request");
       }
     });
   });
