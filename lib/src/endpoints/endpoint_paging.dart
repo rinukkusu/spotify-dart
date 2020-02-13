@@ -20,7 +20,7 @@ abstract class EndpointPaging extends EndpointBase {
 }
 
 class Page<T> {
-  Paging<dynamic> _paging;
+  Paging<T> _paging;
   Iterable<T> _items;
   Object _container;
 
@@ -139,8 +139,8 @@ class Pages<T> extends _Pages<Page<T>> {
     var map = json.decode(jsonString);
 
     if (_pageContainerParser == null) {
-      var paging = Paging.fromJson(map);
-      return new Page(paging, _pageParser);
+      var paging = Paging<T>.fromJson(map);
+      return Page<T>(paging, _pageParser);
     } else {
       var paging = Paging.fromJson(map[_pageKey]);
       var container = _pageContainerParser(map);
@@ -160,7 +160,10 @@ class BundledPages extends _Pages<List<Page<Object>>> {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
-    var jsonString = await _api._get(path);
+    return _api._get(path).then(_parseBundledPage);
+  }
+
+  List<Page<Object>> _parseBundledPage(String jsonString) {
     var map = json.decode(jsonString);
     List<Page<Object>> pages = [];
     _pageMappers.forEach((key, value) {

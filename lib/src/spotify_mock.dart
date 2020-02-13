@@ -1,10 +1,21 @@
 part of spotify;
 
+
 class SpotifyApiMock extends SpotifyApiBase{
   SpotifyApiMock(SpotifyApiCredentials credentials) : super.fromClient(MockClient());
+
+  MockHttpError _mockHttpError;
+
+  MockHttpError get mockHttpError => _mockHttpError;
+
+  set mockHttpError(MockHttpError value) => _mockHttpError = value;
 }
 
 class MockClient implements http.BaseClient {
+  MockClient([MockHttpError mockHttpError]) : _mockHttpError = mockHttpError;
+
+  MockHttpError _mockHttpError;
+
   String _readPath(String url) {
     var regexString = url.contains('api.spotify.com')
         ? r'api.spotify.com\/([A-Za-z0-9/]+)\??'
@@ -28,8 +39,12 @@ class MockClient implements http.BaseClient {
   }
 
   @override
-  Future<http.Response> get(url, {Map<String, String> headers}) async =>
-      createSuccessResponse(_readPath(url));
+  Future<http.Response> get(url, {Map<String, String> headers}) async {
+    if (_mockHttpError != null) {
+      return createErrorResponse(_mockHttpError);
+    }
+    return createSuccessResponse(_readPath(url));
+  }
 
   @override
   Future<http.Response> head(url, {Map<String, String> headers}) {
@@ -44,8 +59,12 @@ class MockClient implements http.BaseClient {
 
   @override
   Future<http.Response> post(url,
-          {Map<String, String> headers, body, Encoding encoding}) async =>
-      createSuccessResponse(_readPath(url));
+      {Map<String, String> headers, body, Encoding encoding}) async {
+    if (_mockHttpError != null) {
+      return createErrorResponse(_mockHttpError);
+    }
+    return createSuccessResponse(_readPath(url));
+  }
 
   @override
   Future<http.Response> put(url,
@@ -74,4 +93,20 @@ class MockClient implements http.BaseClient {
     return new http.Response(body, 200,
         headers: {'Content-Type': 'application/json; charset=utf-8'});
   }
+
+  http.Response createErrorResponse(MockHttpError error) {
+    return new http.Response(
+        _wrapMessageToJson(error.statusCode, error.message), error.statusCode,
+        headers: {'Content-Type': 'application/json; charset=utf-8'});
+  }
+
+  String _wrapMessageToJson(int statusCode, String message) =>
+      "{ \"error\": {\"status\":$statusCode,\"message\": \"$message\"}}";
+}
+
+class MockHttpError {
+  int statusCode;
+  String message;
+
+  MockHttpError({this.statusCode, this.message});
 }
