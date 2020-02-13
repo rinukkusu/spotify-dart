@@ -6,8 +6,11 @@ part of spotify;
 class SpotifyApiCredentials {
   final String clientId;
   final String clientSecret;
+  final String refreshToken;
 
-  SpotifyApiCredentials(this.clientId, this.clientSecret);
+  SpotifyApiCredentials(this.clientId, this.clientSecret, [this.refreshToken = null]);
 
   String get basicAuth => base64.encode('$clientId:$clientSecret'.codeUnits);
+
+  bool get hasRefreshToken => refreshToken != null;
 }

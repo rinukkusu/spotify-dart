@@ -52,7 +52,15 @@ abstract class SpotifyApiBase {
   Future<Null> _refreshToken() async {
     if (_apiToken == null || _apiToken.isExpired) {
       var headers = {'Authorization': 'Basic ${_credentials.basicAuth}'};
-      var body = {'grant_type': 'client_credentials'};
+      var body;
+
+      if (_credentials.hasRefreshToken) {
+        body = {'grant_type': 'refresh_token', 'refresh_token': _credentials.refreshToken};
+      }
+
+      else {
+        body = {'grant_type': 'client_credentials'};
+      }
 
       var responseJson = await _postImpl(_tokenRefreshUrl, headers, body);
       var responseMap = json.decode(responseJson);

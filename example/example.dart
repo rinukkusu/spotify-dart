@@ -99,5 +99,27 @@ main() async {
 
   var relatedArtists = await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
   print('related Artists: ${relatedArtists.length}');
+
+  print('\nRefresh Token:');
+  credentials = new SpotifyApiCredentials(keyMap['id'], keyMap['secret'], keyMap['refreshToken'] ?? null);
+  spotify = new SpotifyApi(credentials);
+  var recent = await spotify.users.recentlyPlayed(limit: 5);
+  recent.forEach((history) {
+    print('Played At: ${history.playedAt}\n'
+        'Track:\n'
+        'id: ${history.track.id}\n'
+        'name: ${history.track.name}\n'
+        'href: ${history.track.href}\n'
+        'type: ${history.track.type}\n'
+        'uri: ${history.track.uri}\n'
+        'isPlayable: ${history.track.isPlayable}\n'
+        'artists: ${history.track.artists.length}\n'
+        'availableMarkets: ${history.track.availableMarkets.length}\n'
+        'discNumber: ${history.track.discNumber}\n'
+        'trackNumber: ${history.track.trackNumber}\n'
+        'explicit: ${history.track.explicit}\n'
+        '-------------------------------');
+  });
+
   exit(0);
 }

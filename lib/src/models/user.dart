@@ -95,3 +95,17 @@ class UserPublic extends Object {
   /// The Spotify URI for this user.
   String uri;
 }
+
+@JsonSerializable(createToJson: false)
+class PlayHistory extends Object {
+  PlayHistory() {}
+  factory PlayHistory.fromJson(Map<String, dynamic> json) =>
+      _$PlayHistoryFromJson(json);
+
+  /// The track that was played.
+  TrackSimple track;
+
+  /// When the track was played.
+  @JsonKey(name: 'played_at')
+  DateTime playedAt;
+}
