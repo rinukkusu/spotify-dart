@@ -9,7 +9,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart' as http_all;
+import 'package:http/src/base_client.dart';
+import 'package:http/src/request.dart';
+import 'package:http/src/response.dart';
 import 'package:oauth2/oauth2.dart';
 
 import 'src/models/_models.dart';

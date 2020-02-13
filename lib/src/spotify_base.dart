@@ -9,7 +9,7 @@ abstract class SpotifyApiBase {
   static const String _authorizationUrl = 'https://accounts.spotify.com/authorize';
 
 
-  FutureOr<http_all.BaseClient> _client;
+  FutureOr<BaseClient> _client;
   Artists _artists;
   Albums _albums;
   Tracks _tracks;
@@ -35,7 +35,7 @@ abstract class SpotifyApiBase {
   AudioFeatures get audioFeatures => _audioFeatures;
   Categories get categories => _categories;
 
-  SpotifyApiBase.fromClient(FutureOr<http_all.BaseClient> client) {
+  SpotifyApiBase.fromClient(FutureOr<BaseClient> client) {
     _client = client;
     _artists = new Artists(this);
     _albums = new Albums(this);
@@ -48,7 +48,7 @@ abstract class SpotifyApiBase {
   }
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
-                 [http_all.Client httpClient]):
+                 [BaseClient httpClient]):
         this.fromClient(clientCredentialsGrant(
           Uri.parse(SpotifyApiBase._tokenUrl),
           credentials.clientId, credentials.clientSecret, httpClient: httpClient));
@@ -57,7 +57,7 @@ abstract class SpotifyApiBase {
       this.fromClient(grant.handleAuthorizationResponse(Uri.parse(responseUri).queryParameters));
 
     static AuthorizationCodeGrant authorizationCodeGrant(
-      SpotifyApiCredentials credentials, http_all.BaseClient httpClient) {
+      SpotifyApiCredentials credentials, BaseClient httpClient) {
     return AuthorizationCodeGrant(
         credentials.clientId,
         Uri.parse(SpotifyApiBase._authorizationUrl),
@@ -94,10 +94,10 @@ abstract class SpotifyApiBase {
   }
 
     Future<String> _deleteImpl(String url, Map<String, String> headers, body) async {
-    final request = http_all.Request("DELETE", Uri.parse(url));
+    final request = Request("DELETE", Uri.parse(url));
     request.headers.addAll(headers);
     request.body = body;
-    final response = await http_all.Response.fromStream(await (await _client).send(request));
+    final response = await Response.fromStream(await (await _client).send(request));
     return handleErrors(response);
   }
 
@@ -108,7 +108,7 @@ abstract class SpotifyApiBase {
   }
 
 
-  String handleErrors(http_all.Response response) {
+  String handleErrors(Response response) {
     final responseBody = utf8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
       var jsonMap = json.decode(responseBody);
