@@ -3,47 +3,15 @@
 
 part of spotify;
 
-class SpotifyApi extends SpotifyApiBase {
-  SpotifyApi(SpotifyApiCredentials credentials) : super(credentials);
 
-  @override
-  Future<String> _getImpl(String url, Map<String, String> headers) async {
-    var client = new http.BrowserClient();
-    var response = await client.get(url, headers: headers);
-    var responseBody = utf8.decode(response.bodyBytes);
-    if (response.statusCode >= 400) {
-      var jsonMap = json.decode(responseBody);
-      throw new SpotifyException.fromSpotify(
-          SpotifyError.fromJson(jsonMap['error']));
-    }
-    return responseBody;
-  }
+class SpotifyApi extends SpotifyApiBase{
+  SpotifyApi(SpotifyApiCredentials credentials) : super(credentials, http.BrowserClient());
 
-  @override
-  Future<String> _postImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    var client = new http.BrowserClient();
-    var response = await client.post(url, headers: headers, body: body);
-    var responseBody = utf8.decode(response.bodyBytes);
-    if (response.statusCode >= 400) {
-      var jsonMap = json.decode(responseBody);
-      throw new SpotifyException.fromSpotify(
-          SpotifyError.fromJson(jsonMap['error']));
-    }
-    return responseBody;
-  }
+  SpotifyApi.fromClient(FutureOr<Client> client) : super.fromClient(client);
 
-  @override
-  Future<String> _putImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    var client = new http.BrowserClient();
-    var response = await client.put(url, headers: headers, body: body);
-    var responseBody = utf8.decode(response.bodyBytes);
-    if (response.statusCode >= 400) {
-      var jsonMap = json.decode(responseBody);
-      throw new SpotifyException.fromSpotify(
-          SpotifyError.fromJson(jsonMap['error']));
-    }
-    return responseBody;
+  SpotifyApi.fromAuthCodeGrant(AuthorizationCodeGrant grant, String responseUri) : super.fromAuthCodeGrant(grant, responseUri);
+
+  static AuthorizationCodeGrant authorizationCodeGrant(SpotifyApiCredentials credentials) {
+    return SpotifyApiBase.authorizationCodeGrant(credentials, http.BrowserClient());
   }
 }

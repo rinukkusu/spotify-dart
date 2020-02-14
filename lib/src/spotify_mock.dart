@@ -1,47 +1,14 @@
 part of spotify;
 
-class SpotifyApiMock extends SpotifyApiBase {
-  SpotifyApiMock(SpotifyApiCredentials credentials) : super(credentials);
+
+class SpotifyApiMock extends SpotifyApiBase{
+  SpotifyApiMock(SpotifyApiCredentials credentials) : super.fromClient(MockClient());
 
   MockHttpError _mockHttpError;
 
   MockHttpError get mockHttpError => _mockHttpError;
 
   set mockHttpError(MockHttpError value) => _mockHttpError = value;
-
-  @override
-  Future<String> _getImpl(String url, Map<String, String> headers) async {
-    var client = new MockClient();
-    var response = await client.get(url, headers: headers);
-
-    return utf8.decode(response.bodyBytes);
-  }
-
-  @override
-  Future<String> _postImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    var client = new MockClient(_mockHttpError);
-    var response = await client.post(url, headers: headers, body: body);
-    return handleErrors(response);
-  }
-
-  @override
-  Future<String> _putImpl(String url, Map<String, String> headers, body) async {
-    var client = new MockClient(_mockHttpError);
-    var response = await client.put(url, headers: headers, body: body);
-    return utf8.decode(response.bodyBytes);
-  }
-
-  String handleErrors(http.Response response) {
-    var responseBody = utf8.decode(response.bodyBytes);
-    if (response.statusCode >= 400) {
-      var jsonMap = json.decode(responseBody);
-      throw new SpotifyException.fromSpotify(
-        SpotifyError.fromJson(jsonMap['error']),
-      );
-    }
-    return responseBody;
-  }
 }
 
 class MockClient implements http.BaseClient {

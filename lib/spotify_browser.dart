@@ -5,11 +5,15 @@ library spotify;
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:http/browser_client.dart' as http;
+import 'package:http/src/base_client.dart';
+import 'package:http/src/request.dart';
+import 'package:http/src/response.dart';
+import 'package:oauth2/oauth2.dart';
 
 import 'src/models/_models.dart';
-import 'src/models/token_request.dart';
 
 export 'src/models/_models.dart';
 
