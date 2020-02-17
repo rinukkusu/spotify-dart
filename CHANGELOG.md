@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.1
+
+- add oauth2 package for refresh flow
+- fix pagination on several places
+- add playlists/removeTrack
+- add playlists/addTrack
+- add createPlaylist
+- fix my playlists
+- refactor SpotifyApi classes
+- upgrade json_serializable dependencies
+
 ## 0.2.0
 
 - add token setter method for implicit grant
