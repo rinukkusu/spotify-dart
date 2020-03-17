@@ -158,9 +158,7 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
 Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) {
   return Paging<T>()
     ..href = json['href'] as String
-    ..itemsNative = json['items'] == null
-        ? null
-        : itemsNativeFromJson(json['items'] as List)
+    ..itemsNative = itemsNativeFromJson(json['items'] as List)
     ..limit = json['limit'] as int
     ..next = json['next'] as String
     ..offset = json['offset'] as int
@@ -214,10 +212,9 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
         : User.fromJson(json['owner'] as Map<String, dynamic>)
     ..public = json['public'] as bool
     ..snapshotId = json['snapshot_id'] as String
-    ..tracks = (json['tracks'] as List)
-        ?.map(
-            (e) => e == null ? null : Track.fromJson(e as Map<String, dynamic>))
-        ?.toList()
+    ..tracks = json['tracks'] == null
+        ? null
+        : Paging.fromJson(json['tracks'] as Map<String, dynamic>)
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
 }
