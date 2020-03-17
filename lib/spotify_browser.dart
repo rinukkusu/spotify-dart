@@ -32,4 +32,5 @@ part 'src/spotify_credentials.dart';
 
 part 'src/spotify_base.dart';
 part 'src/spotify_exception.dart';
+part 'src/utils.dart';
 part 'src/spotify_browser.dart';
