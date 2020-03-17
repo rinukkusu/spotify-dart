@@ -9,6 +9,10 @@ class Playlists extends EndpointPaging {
 
   Playlists(SpotifyApiBase api) : super(api);
 
+  Future<Playlist> get(String playlistId) async {
+    return Playlist.fromJson(jsonDecode(await _api._get('v1/playlists/$playlistId')));
+  }
+
   Pages<PlaylistSimple> get featured {
     return _getPages(
         '$_path/featured-playlists',
