@@ -262,6 +262,29 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) {
         : Track.fromJson(json['track'] as Map<String, dynamic>);
 }
 
+Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) {
+  return Recommendations()
+    ..seeds = (json['seeds'] as List)
+        ?.map((e) => e == null
+            ? null
+            : RecommendationsSeed.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..tracks = (json['tracks'] as List)
+        ?.map((e) =>
+            e == null ? null : TrackSimple.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) {
+  return RecommendationsSeed()
+    ..afterFilteringSize = json['afterFilteringSize'] as int
+    ..afterRelinkingSize = json['afterRelinkingSize'] as int
+    ..href = json['href'] as String
+    ..id = json['id'] as String
+    ..initialPoolSize = json['initialPoolSize'] as int
+    ..type = json['type'] as String;
+}
+
 Track _$TrackFromJson(Map<String, dynamic> json) {
   return Track()
     ..album = json['album'] == null
