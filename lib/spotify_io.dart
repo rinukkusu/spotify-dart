@@ -24,16 +24,14 @@ part 'src/endpoints/artists.dart';
 part 'src/endpoints/albums.dart';
 part 'src/endpoints/tracks.dart';
 part 'src/endpoints/playlists.dart';
+part 'src/endpoints/recommendations.dart';
 part 'src/endpoints/users.dart';
 part 'src/endpoints/audio_features.dart';
 part 'src/endpoints/search.dart';
 part 'src/endpoints/categories.dart';
-
 part 'src/spotify_credentials.dart';
-
 part 'src/spotify_base.dart';
 part 'src/spotify_exception.dart';
 part 'src/utils.dart';
 part 'src/spotify_io.dart';
-
 part 'src/spotify_mock.dart';
