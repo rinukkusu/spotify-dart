@@ -161,7 +161,7 @@ class BundledPages extends _Pages<List<Page<Object>>> {
 
   List<Page<Object>> _parseBundledPage(String jsonString) {
     var map = json.decode(jsonString);
-    var pages = [];
+    var pages = <Page<Object>>[];
     _pageMappers.forEach((key, value) {
       if (map[key] != null) {
         var paging = Paging.fromJson(map[key]);
