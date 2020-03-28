@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-typedef T ParserFunction<T>(dynamic object);
+typedef ParserFunction<T> = T Function(dynamic object);
 
 Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
 List<Map> itemsNativeToJson(Iterable<dynamic> items) => List.from(items);

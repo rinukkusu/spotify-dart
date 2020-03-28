@@ -101,7 +101,7 @@ class MockClient implements http.BaseClient {
   }
 
   String _wrapMessageToJson(int statusCode, String message) =>
-      "{ \"error\": {\"status\":$statusCode,\"message\": \"$message\"}}";
+      '{ \"error\": {\"status\":$statusCode,\"message\": \"$message\"}}';
 }
 
 class MockHttpError {
