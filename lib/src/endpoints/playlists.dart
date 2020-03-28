@@ -18,7 +18,8 @@ class Playlists extends EndpointPaging {
   }
 
   Pages<PlaylistSimple> get me {
-    return _getPages('v1/me/playlists', (json) => PlaylistSimple.fromJson(json));
+    return _getPages(
+        'v1/me/playlists', (json) => PlaylistSimple.fromJson(json));
   }
 
   /// [playlistId] - the Spotify playlist ID
@@ -31,9 +32,9 @@ class Playlists extends EndpointPaging {
   ///
   /// [playlistName] - the name of the new playlist
   Future<Playlist> createPlaylist(String userId, String playlistName) async {
-    final url = "v1/users/$userId/playlists";
+    final url = 'v1/users/$userId/playlists';
     final playlistJson =
-        await _api._post(url, jsonEncode({"name": playlistName}));
+        await _api._post(url, jsonEncode({'name': playlistName}));
     return await Playlist.fromJson(jsonDecode(playlistJson));
   }
 
@@ -41,7 +42,7 @@ class Playlists extends EndpointPaging {
   ///
   /// [playlistId] - the playlist ID
   Future<Null> addTrack(String trackUri, String playlistId) async {
-    final url = "v1/playlists/$playlistId/tracks";
+    final url = 'v1/playlists/$playlistId/tracks';
     await _api._post(
         url,
         jsonEncode({
@@ -49,12 +50,17 @@ class Playlists extends EndpointPaging {
         }));
   }
 
-  Future<Null> removeTrack(String trackUri, String playlistId, [List<int> positions]) async {
-    final url = "v1/playlists/$playlistId/tracks";
-    final track = <String, dynamic>{"uri": trackUri};
-    if (positions != null)
+  Future<Null> removeTrack(String trackUri, String playlistId,
+      [List<int> positions]) async {
+    final url = 'v1/playlists/$playlistId/tracks';
+    final track = <String, dynamic>{'uri': trackUri};
+    if (positions != null) {
       track['positions'] = positions;
-    final body = jsonEncode({"tracks":[track]});
+    }
+
+    final body = jsonEncode({
+      'tracks': [track]
+    });
     await _api._delete(url, body);
   }
 
@@ -72,7 +78,7 @@ class Playlists extends EndpointPaging {
   /// [categoryId] - the Spotify category ID for the category.
   Pages<PlaylistSimple> getByCategoryId(String categoryId,
       {String country, String locale}) {
-    final String query = _buildQuery({'country': country, 'locale': locale});
+    final query = _buildQuery({'country': country, 'locale': locale});
 
     return _getPages(
         '$_path/categories/$categoryId/playlists?$query',
