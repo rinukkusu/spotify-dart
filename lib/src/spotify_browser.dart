@@ -3,15 +3,18 @@
 
 part of spotify;
 
-
-class SpotifyApi extends SpotifyApiBase{
-  SpotifyApi(SpotifyApiCredentials credentials) : super(credentials, http.BrowserClient());
+class SpotifyApi extends SpotifyApiBase {
+  SpotifyApi(SpotifyApiCredentials credentials)
+      : super(credentials, http.BrowserClient());
 
   SpotifyApi.fromClient(FutureOr<Client> client) : super.fromClient(client);
 
-  SpotifyApi.fromAuthCodeGrant(AuthorizationCodeGrant grant, String responseUri) : super.fromAuthCodeGrant(grant, responseUri);
+  SpotifyApi.fromAuthCodeGrant(AuthorizationCodeGrant grant, String responseUri)
+      : super.fromAuthCodeGrant(grant, responseUri);
 
-  static AuthorizationCodeGrant authorizationCodeGrant(SpotifyApiCredentials credentials) {
-    return SpotifyApiBase.authorizationCodeGrant(credentials, http.BrowserClient());
+  static AuthorizationCodeGrant authorizationCodeGrant(
+      SpotifyApiCredentials credentials) {
+    return SpotifyApiBase.authorizationCodeGrant(
+        credentials, http.BrowserClient());
   }
 }

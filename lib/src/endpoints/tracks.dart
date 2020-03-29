@@ -9,7 +9,7 @@ class Tracks extends EndpointBase {
   String get _path => 'v1/tracks';
 
   Tracks(SpotifyApiBase api) : super(api) {
-    _me = new TracksMe(api);
+    _me = TracksMe(api);
   }
 
   TracksMe get me => _me;
@@ -46,8 +46,8 @@ class TracksMe extends EndpointPaging {
   }
 
   Future<List<bool>> contains(List<String> ids) async {
-    int limit = ids.length < 50 ? ids.length : 50;
-    String idsParam = ids.sublist(0, limit).join(',');
+    var limit = ids.length < 50 ? ids.length : 50;
+    var idsParam = ids.sublist(0, limit).join(',');
     var jsonString = await _api._get('$_path/contains?ids=$idsParam');
     List<bool> list = json.decode(jsonString);
     return list;
@@ -58,8 +58,8 @@ class TracksMe extends EndpointPaging {
   }
 
   Future<Null> save(List<String> ids) async {
-    int limit = ids.length < 50 ? ids.length : 50;
-    String idsParam = ids.sublist(0, limit).join(',');
+    var limit = ids.length < 50 ? ids.length : 50;
+    var idsParam = ids.sublist(0, limit).join(',');
     await _api._put('$_path?ids=$idsParam', '');
   }
 }

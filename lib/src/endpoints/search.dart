@@ -11,7 +11,7 @@ class Search extends EndpointPaging {
 
   BundledPages get(String searchQuery,
       [Iterable<SearchType> types = SearchType.all]) {
-    var type = types.map((type) => type.key).join(",");
+    var type = types.map((type) => type.key).join(',');
     return _getBundledPages('$_path?q=$searchQuery&type=${type}', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
       'albums': (json) => AlbumSimple.fromJson(json),
@@ -25,12 +25,12 @@ class SearchType {
   final String _key;
 
   const SearchType(this._key);
-  get key => _key;
+  String get key => _key;
 
-  static const album = SearchType("album");
-  static const artist = SearchType("artist");
-  static const playlist = SearchType("playlist");
-  static const track = SearchType("track");
+  static const album = SearchType('album');
+  static const artist = SearchType('artist');
+  static const playlist = SearchType('playlist');
+  static const track = SearchType('track');
   static const all = [
     SearchType.album,
     SearchType.artist,
