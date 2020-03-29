@@ -3,14 +3,15 @@
 
 part of spotify.models;
 
-typedef T ParserFunction<T>(dynamic object);
+typedef ParserFunction<T> = T Function(dynamic object);
 
 Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
-List<Map> itemsNativeToJson(Iterable<dynamic> items) => new List.from(items);
+List<Map> itemsNativeToJson(Iterable<dynamic> items) => List.from(items);
 
 @JsonSerializable(createToJson: false)
 class Paging<T> extends Object {
-  Paging() {}
+  Paging();
+
   factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
 
   /// A link to the Web API endpoint returning the full result of the request.

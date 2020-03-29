@@ -39,14 +39,14 @@ Future main() async {
 
     test('get_error', () async {
       spotify.mockHttpError =
-          MockHttpError(statusCode: 401, message: "Bad Request");
+          MockHttpError(statusCode: 401, message: 'Bad Request');
       try {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       } catch (e) {
         expect(e, isA<SpotifyException>());
-        SpotifyException se = e as SpotifyException;
+        var se = e as SpotifyException;
         expect(se.status, 401);
-        expect(se.message, "Bad Request");
+        expect(se.message, 'Bad Request');
       }
     });
   });
@@ -59,14 +59,14 @@ Future main() async {
 
     test('get_error', () async {
       spotify.mockHttpError =
-          new MockHttpError(statusCode: 401, message: "Bad Request");
+          MockHttpError(statusCode: 401, message: 'Bad Request');
       try {
         await spotify.search.get('metallica').first();
       } catch (e) {
         expect(e, isA<SpotifyException>());
-        SpotifyException se = e as SpotifyException;
+        var se = e as SpotifyException;
         expect(se.status, 401);
-        expect(se.message, "Bad Request");
+        expect(se.message, 'Bad Request');
       }
     });
   });

@@ -36,13 +36,13 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
     _client = client;
-    _artists = new Artists(this);
-    _albums = new Albums(this);
-    _tracks = new Tracks(this);
-    _playlists = new Playlists(this);
-    _users = new Users(this);
-    _search = new Search(this);
-    _audioFeatures = new AudioFeatures(this);
+    _artists = Artists(this);
+    _albums = Albums(this);
+    _tracks = Tracks(this);
+    _playlists = Playlists(this);
+    _users = Users(this);
+    _search = Search(this);
+    _audioFeatures = AudioFeatures(this);
     _categories = Categories(this);
   }
 
@@ -99,7 +99,7 @@ abstract class SpotifyApiBase {
 
   Future<String> _deleteImpl(
       String url, Map<String, String> headers, body) async {
-    final request = http.Request("DELETE", Uri.parse(url));
+    final request = http.Request('DELETE', Uri.parse(url));
     request.headers.addAll(headers);
     request.body = body;
     final response =
@@ -117,7 +117,7 @@ abstract class SpotifyApiBase {
     final responseBody = utf8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
       var jsonMap = json.decode(responseBody);
-      throw new SpotifyException.fromSpotify(
+      throw SpotifyException.fromSpotify(
         SpotifyError.fromJson(jsonMap['error']),
       );
     }

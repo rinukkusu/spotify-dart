@@ -5,7 +5,7 @@ part of spotify.models;
 
 @JsonSerializable(createToJson: false)
 class User extends Object implements UserPublic {
-  User() {}
+  User();
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   /// The user's date-of-birth.
@@ -21,6 +21,7 @@ class User extends Object implements UserPublic {
 
   /// The name displayed on the user's profile. null if not available.
   @JsonKey(name: 'display_name')
+  @override
   String displayName;
 
   /// The user's email address, as entered by the user when creating their
@@ -38,15 +39,19 @@ class User extends Object implements UserPublic {
   //Map<String, String> externalUrls;
 
   /// Information about the followers of this user.
+  @override
   Followers followers;
 
   /// A link to the Web API endpoint for this user.
+  @override
   String href;
 
   /// The Spotify user ID for this user.
+  @override
   String id;
 
   /// The user's profile image.
+  @override
   List<Image> images;
 
   /// The user's Spotify subscription level: "premium", "free", etc. (The
@@ -57,15 +62,17 @@ class User extends Object implements UserPublic {
   String product;
 
   /// The object type: "user"
+  @override
   String type;
 
   /// The Spotify URI for this user.
+  @override
   String uri;
 }
 
 @JsonSerializable(createToJson: false)
 class UserPublic extends Object {
-  UserPublic() {}
+  UserPublic();
   factory UserPublic.fromJson(Map<String, dynamic> json) =>
       _$UserPublicFromJson(json);
 

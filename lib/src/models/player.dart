@@ -33,7 +33,7 @@ class Player extends Object {
 
 @JsonSerializable(createToJson: false)
 class PlayerContext extends Object {
-  PlayerContext() {}
+  PlayerContext();
 
   factory PlayerContext.fromJson(Map<String, dynamic> json) =>
       _$PlayerContextFromJson(json);
