@@ -5,13 +5,13 @@ library spotify;
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
+import 'dart:io' // Default
+    if (dart.library.io) 'dart:io'
+    if (dart.library.html) 'dart:html';
+
 import 'package:http/http.dart' as http;
-import 'package:http/src/base_client.dart';
-import 'package:http/src/request.dart';
-import 'package:http/src/response.dart';
 import 'package:oauth2/oauth2.dart';
 
 import 'src/models/_models.dart';
@@ -25,14 +25,12 @@ part 'src/endpoints/albums.dart';
 part 'src/endpoints/tracks.dart';
 part 'src/endpoints/playlists.dart';
 part 'src/endpoints/users.dart';
-part 'src/endpoints/audio_features.dart';
 part 'src/endpoints/search.dart';
+part 'src/endpoints/audio_features.dart';
 part 'src/endpoints/categories.dart';
 
 part 'src/spotify_credentials.dart';
-
 part 'src/spotify_base.dart';
 part 'src/spotify_exception.dart';
-part 'src/spotify_io.dart';
-
+part 'src/spotify.dart';
 part 'src/spotify_mock.dart';

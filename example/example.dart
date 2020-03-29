@@ -3,7 +3,7 @@
 
 import 'dart:io';
 import 'dart:convert';
-import '../lib/spotify_io.dart';
+import 'package:spotify/spotify.dart';
 
 main() async {
   var keyJson = await new File('example/.apikeys').readAsString();
@@ -97,7 +97,8 @@ main() async {
     });
   });
 
-  var relatedArtists = await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
+  var relatedArtists =
+      await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
   print('related Artists: ${relatedArtists.length}');
   exit(0);
 }
