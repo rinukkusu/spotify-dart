@@ -7,7 +7,7 @@ A dart library for interfacing with the Spotify API.
 A simple usage example:
 
 ```dart
-import 'package:spotify/spotify_io.dart';
+import 'package:spotify/spotify.dart';
 
 void main() async {
   var credentials = SpotifyApiCredentials(clientId, clientSecret);
@@ -15,12 +15,6 @@ void main() async {
 
   var artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
 }
-```
-
-### For usage in the browser use
-
-```dart
-import 'package:spotify/spotify_browser.dart';
 ```
 
 ### Client Credentials Flow
