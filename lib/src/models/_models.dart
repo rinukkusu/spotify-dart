@@ -1,7 +1,6 @@
 library spotify.models;
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:spotify/spotify.dart';
 
 part '_models.g.dart';
 
@@ -20,4 +19,3 @@ part 'player.dart';
 part 'playlist.dart';
 part 'track.dart';
 part 'user.dart';
-
