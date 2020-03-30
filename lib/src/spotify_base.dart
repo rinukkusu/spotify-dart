@@ -9,7 +9,7 @@ abstract class SpotifyApiBase {
   static const String _authorizationUrl =
       'https://accounts.spotify.com/authorize';
 
-  FutureOr<http.BaseClient> _client;
+  FutureOr<oauth2.Client> _client;
   Artists _artists;
   Albums _albums;
   Tracks _tracks;
