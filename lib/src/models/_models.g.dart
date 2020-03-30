@@ -158,16 +158,6 @@ Device _$DeviceFromJson(Map<String, dynamic> json) {
     ..volumePercent = json['volume_percent'] as int;
 }
 
-Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
-      'id': instance.id,
-      'is_active': instance.isActive,
-      'is_private_session': instance.isPrivateSession,
-      'is_restricted': instance.isRestricted,
-      'name': instance.name,
-      'type': _$DeviceTypeEnumMap[instance.type],
-      'volume_percent': instance.volumePercent,
-    };
-
 T _$enumDecode<T>(
   Map<T, dynamic> enumValues,
   dynamic source, {

@@ -1,6 +1,6 @@
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Device extends Object {
   Device();
 
