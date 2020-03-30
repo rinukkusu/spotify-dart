@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+- unify package's Browser and IO exports, fix invalid SDK error #34
+- improve static analysis health #33
+
 ## 0.2.1
 
 - add oauth2 package for refresh flow
