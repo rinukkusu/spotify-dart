@@ -114,7 +114,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async {
-    return await SpotifyApiCredentials.fromClient(await _client);
+    return await SpotifyApiCredentials._fromClient(await _client);
   }
 
   String handleErrors(http.Response response) {

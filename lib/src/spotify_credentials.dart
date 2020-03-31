@@ -4,39 +4,35 @@
 part of spotify;
 
 class SpotifyApiCredentials {
+  /// The client identifier for this Spotify client.
+  ///
+  /// Spotify issues each client a separate client identifier and secret,
+  /// which allows the server to tell which client is accessing it.
   String clientId;
+
+  /// The client secret for this Spotify client.
+  ///
+  /// Spotify issues each client a separate client identifier and secret,
+  /// which allows the server to tell which client is accessing it.
   String clientSecret;
 
-  /// The token that is sent to the resource server to prove the authorization
-  /// of a client.
+  /// The token that is sent to Spotify to prove the authorization of a client.
   String accessToken;
 
-  /// The token that is sent to the authorization server to refresh the
-  /// credentials.
+  /// The token that is sent to Spotify to refresh the credentials.
   ///
   /// This may be `null`, indicating that the credentials can't be refreshed.
   String refreshToken;
 
-  /// The token that is received from the authorization server to enable
-  /// End-Users to be Authenticated, contains Claims, represented as a
-  /// JSON Web Token (JWT).
-  ///
-  /// This may be `null`, indicating that the 'openid' scope was not
-  /// requested (or not supported).
-  ///
-  /// [spec]: https://openid.net/specs/openid-connect-core-1_0.html#IDToken
-  String idToken;
-
-  /// The URL of the authorization server endpoint that's used to refresh the
-  /// credentials.
+  /// The URL of the Spotify endpoint that's used to refresh the credentials.
   ///
   /// This may be `null`, indicating that the credentials can't be refreshed.
   Uri tokenEndpoint;
 
-  /// The specific permissions being requested from the authorization server.
+  /// The specific permissions being requested from Spotify.
   ///
-  /// The scope strings are specific to the authorization server and may be
-  /// found in its documentation.
+  /// See https://developer.spotify.com/documentation/general/guides/scopes/
+  /// for a full list of available scopes.
   List<String> scopes;
 
   /// The date at which these credentials will expire.
@@ -47,14 +43,13 @@ class SpotifyApiCredentials {
 
   SpotifyApiCredentials(this.clientId, this.clientSecret);
 
-  SpotifyApiCredentials.fromClient(oauth2.Client client) {
+  SpotifyApiCredentials._fromClient(oauth2.Client client) {
     clientId = client.identifier;
     clientSecret = client.secret;
 
     if (client.credentials != null) {
       accessToken = client.credentials.accessToken;
       refreshToken = client.credentials.refreshToken;
-      idToken = client.credentials.idToken;
       tokenEndpoint = client.credentials.tokenEndpoint;
       scopes = client.credentials.scopes;
       expiration = client.credentials.expiration;
