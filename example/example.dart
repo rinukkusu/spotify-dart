@@ -103,8 +103,8 @@ void main() async {
 
   credentials = await spotify.getCredentials();
   print('\nCredentials:');
+  print('Client Id: ${credentials.clientId}');
   print('Access Token: ${credentials.accessToken}');
-  print('Refresh Token: ${credentials.refreshToken}');
   print('Credentials Expired: ${credentials.isExpired}');
 
   exit(0);
