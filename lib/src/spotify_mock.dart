@@ -2,7 +2,7 @@ part of spotify;
 
 class SpotifyApiMock extends SpotifyApiBase {
   SpotifyApiMock(SpotifyApiCredentials credentials)
-      : super.fromClient(MockClient());
+      : super.fromClient(MockClient(credentials));
 
   MockHttpError _mockHttpError;
 
@@ -11,10 +11,20 @@ class SpotifyApiMock extends SpotifyApiBase {
   set mockHttpError(MockHttpError value) => _mockHttpError = value;
 }
 
-class MockClient implements http.BaseClient {
-  MockClient([MockHttpError mockHttpError]) : _mockHttpError = mockHttpError;
+class MockClient implements oauth2.Client {
+  MockClient(SpotifyApiCredentials credentials, {MockHttpError mockHttpError}) {
+    identifier = credentials.clientId;
+    secret = credentials.clientSecret;
+    _mockHttpError = mockHttpError;
+  }
 
-  final MockHttpError _mockHttpError;
+  @override
+  String identifier;
+
+  @override
+  String secret;
+
+  MockHttpError _mockHttpError;
 
   String _readPath(String url) {
     var regexString = url.contains('api.spotify.com')
@@ -84,6 +94,20 @@ class MockClient implements http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
+    throw 'Not implemented';
+  }
+
+  @override
+  oauth2.Credentials get credentials => oauth2.Credentials(
+        'accessToken',
+        refreshToken: 'refreshToken',
+        tokenEndpoint: Uri.parse('tokenEndpoint.com'),
+        scopes: ['scope1', 'scope2'],
+        expiration: DateTime.fromMillisecondsSinceEpoch(8000),
+      );
+
+  @override
+  Future<oauth2.Client> refreshCredentials([List<String> newScopes]) async {
     throw 'Not implemented';
   }
 
