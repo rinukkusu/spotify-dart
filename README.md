@@ -64,8 +64,8 @@ SpotifyApi getSpotifyApi() async {
   return SpotifyApi.fromAuthCodeGrant(grant, responseUri);
 }
 ```
-#### Implementation Approaches
-Unfortunately, there's no universal example for implementing the imaginary functions, `redirect` and `listen`, because different options exist for each platform.
+
+Unfortunately, there's not a universal example for implementing the imaginary functions, `redirect` and `listen`, because different options exist for each platform.
 
 For a Flutter app, there's two popular approaches:
 1. Launch a browser using [url_launcher][url_launcher] and listen for a deeplink redirect using [uni_links][uni_links]. The device running the Flutter app will function as the authorization server and handle the redirect. The redirect URI should look something like `com.app://auth`.
