@@ -69,9 +69,9 @@ Unfortunately, there's not a universal example for implementing the imaginary fu
 
 For a Flutter app, there's two popular approaches:
 1. Launch a browser using [url_launcher][url_launcher] and listen for a deeplink redirect using [uni_links][uni_links]. The device running the Flutter app will function as the authorization server and handle the redirect. The redirect URI should look something like `com.app://auth`.
-2. Launch a webview inside the app and listen for a redirect using [webview_flutter][webview_flutter]. This approach requires redirecting to an external authorization server, such as a backend service or serverless function. The redirect URI should be a normal URL, like `https://example.com/auth`, that points to the authorization server.
+2. Launch a WebView inside the app and listen for a redirect using [webview_flutter][webview_flutter]. This approach requires redirecting to an external authorization server, such as a backend service or serverless function. The redirect URI should be a normal URL, like `https://example.com/auth`, that points to the authorization server.
 
-For a Dart app, the approach completely depends on how it's able to access a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
+For a Dart app, the approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
 
 ## Features and bugs
 
