@@ -36,8 +36,10 @@ SpotifyApi getSpotifyApi() async {
   final credentials = SpotifyApiCredentials(clientId, clientSecret);
   final grant = SpotifyApi.authorizationCodeGrant(credentials);
 
-  // The URI to redirect to after the user grants or denies permission.
-  // This URI must be in your Spotify application's Redirect URI whitelist.
+  // The URI to redirect to after the user grants or denies permission. It must
+  // be in your Spotify application's Redirect URI whitelist. This URI can
+  // either be a web address pointing to an authorization server or a fabricated
+  // URI that allows the client device to function as an authorization server.
   final redirectUri = 'https://example.com/auth';
 
   // See https://developer.spotify.com/documentation/general/guides/scopes/
@@ -65,13 +67,48 @@ SpotifyApi getSpotifyApi() async {
 }
 ```
 
-Unfortunately, there's not a universal example for implementing the imaginary functions, `redirect` and `listen`, because different options exist for each platform.
+<details>
+  <summary>Click here to learn how to implement the imaginary functions mentioned above.</summary>
+  
+  -----
+  
+  Unfortunately, there's not a universal example for implementing the imaginary functions, `redirect` and `listen`, because different options exist for each platform.
+      
+  For Flutter apps, there's two popular approaches:
+  1. Launch a browser using [url_launcher][url_launcher] and listen for a redirect using [uni_links][uni_links].
+        ```
+        if (await canLaunch(authUri)) {
+          await launch(authUri);
+        }
 
-For a Flutter app, there's two popular approaches:
-1. Launch a browser using [url_launcher][url_launcher] and listen for a deeplink redirect using [uni_links][uni_links]. The device running the Flutter app will function as the authorization server and handle the redirect. The redirect URI should look something like `com.app://auth`.
-2. Launch a WebView inside the app and listen for a redirect using [webview_flutter][webview_flutter]. This approach requires redirecting to an external authorization server, such as a backend service or serverless function. The redirect URI should be a normal URL, like `https://example.com/auth`, that points to the authorization server.
+        ...
+    
+        final linksStream = getLinksStream().listen((String link) async {
+          if (link.startsWith(redirectUri) {
+            responseUri = link;
+          }
+        });
+        ```
 
-For a Dart app, the approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
+  2. Launch a WebView inside the app and listen for a redirect using [webview_flutter][webview_flutter].
+        ```
+        WebView(
+          javascriptMode: JavascriptMode.unrestricted,
+          initialUrl: authUri,
+          navigationDelegate: (navReq) {
+            if (navReq.url.startsWith(redirectUri)) {
+              responseUri = navReq.url;
+              return NavigationDecision.prevent;
+            }
+            
+            return NavigationDecision.navigate;
+          },
+          ...
+        );
+        ```
+   
+  For Dart apps, the approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
+</details>
 
 ## Features and bugs
 
