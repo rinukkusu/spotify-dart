@@ -99,7 +99,13 @@ void main() async {
 
   var relatedArtists =
       await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
-  print('related Artists: ${relatedArtists.length}\n');
+  print('\nRelated Artists: ${relatedArtists.length}');
+
+  credentials = await spotify.getCredentials();
+  print('\nCredentials:');
+  print('Client Id: ${credentials.clientId}');
+  print('Access Token: ${credentials.accessToken}');
+  print('Credentials Expired: ${credentials.isExpired}');
 
   print('Would you like to access user specific data? [y/n]');
   var yes = stdin.readLineSync();

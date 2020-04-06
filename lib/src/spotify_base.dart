@@ -9,7 +9,7 @@ abstract class SpotifyApiBase {
   static const String _authorizationUrl =
       'https://accounts.spotify.com/authorize';
 
-  FutureOr<http.BaseClient> _client;
+  FutureOr<oauth2.Client> _client;
   Artists _artists;
   Albums _albums;
   Tracks _tracks;
@@ -48,20 +48,20 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
       [http.BaseClient httpClient])
-      : this.fromClient(clientCredentialsGrant(
+      : this.fromClient(oauth2.clientCredentialsGrant(
             Uri.parse(SpotifyApiBase._tokenUrl),
             credentials.clientId,
             credentials.clientSecret,
             httpClient: httpClient));
 
   SpotifyApiBase.fromAuthCodeGrant(
-      AuthorizationCodeGrant grant, String responseUri)
+      oauth2.AuthorizationCodeGrant grant, String responseUri)
       : this.fromClient(grant.handleAuthorizationResponse(
             Uri.parse(responseUri).queryParameters));
 
-  static AuthorizationCodeGrant authorizationCodeGrant(
+  static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
       SpotifyApiCredentials credentials, http.BaseClient httpClient) {
-    return AuthorizationCodeGrant(
+    return oauth2.AuthorizationCodeGrant(
         credentials.clientId,
         Uri.parse(SpotifyApiBase._authorizationUrl),
         Uri.parse(SpotifyApiBase._tokenUrl),
@@ -111,6 +111,10 @@ abstract class SpotifyApiBase {
       String url, Map<String, String> headers, dynamic body) async {
     var response = await (await _client).put(url, headers: headers, body: body);
     return handleErrors(response);
+  }
+
+  Future<SpotifyApiCredentials> getCredentials() async {
+    return await SpotifyApiCredentials._fromClient(await _client);
   }
 
   String handleErrors(http.Response response) {
