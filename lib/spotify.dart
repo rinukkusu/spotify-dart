@@ -32,5 +32,6 @@ part 'src/endpoints/categories.dart';
 part 'src/spotify_credentials.dart';
 part 'src/spotify_base.dart';
 part 'src/spotify_exception.dart';
+part 'src/utils.dart';
 part 'src/spotify.dart';
 part 'src/spotify_mock.dart';
