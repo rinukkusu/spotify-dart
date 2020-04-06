@@ -20,7 +20,7 @@ class RecommendationsEndpoint extends EndpointBase {
       Map<String, num> min,
       Map<String, num> target}) async {
     assert(limit >= 1 && limit <= 100, "limit should be 1 <= limit <= 100");
-    final seedsNum = seedArtists?.length ?? 0 + seedGenres?.length ?? 0 + seedTracks?.length ?? 0;
+    final seedsNum = (seedArtists?.length ?? 0) + (seedGenres?.length ?? 0) + (seedTracks?.length ?? 0);
     assert(
         seedsNum >= 1 && seedsNum <= 5,
         "Up to 5 seed values may be provided in any combination of seed_artists,"
@@ -33,7 +33,7 @@ class RecommendationsEndpoint extends EndpointBase {
     }.forEach((key, list) => _addList(parameters, key, list));
     if (market != null) parameters['market'] = market;
     [min, max, target].forEach((map) => _addTunableTrackMap(parameters, map));
-    final pathQuery = Uri(path: _path, queryParameters: parameters).toString();
+    final pathQuery = Uri(path: _path, queryParameters: parameters).toString().replaceAll(RegExp(r'%2C'), ',');
     final result = jsonDecode(await _api._get(pathQuery));
     return Recommendations.fromJson(result);
   }
