@@ -5,7 +5,8 @@ part of spotify.models;
 
 @JsonSerializable(createToJson: false)
 class ExternalUrls extends Object {
-  ExternalUrls() {}
+  ExternalUrls();
+
   factory ExternalUrls.fromJson(Map<String, dynamic> json) =>
       _$ExternalUrlsFromJson(json);
 
@@ -15,7 +16,8 @@ class ExternalUrls extends Object {
 
 @JsonSerializable(createToJson: false)
 class ExternalIds extends Object {
-  ExternalIds() {}
+  ExternalIds();
+
   factory ExternalIds.fromJson(Map<String, dynamic> json) =>
       _$ExternalIdsFromJson(json);
 

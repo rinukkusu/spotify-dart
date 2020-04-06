@@ -2,7 +2,7 @@ part of spotify.models;
 
 @JsonSerializable(createToJson: false)
 class Category extends Object {
-  Category() {}
+  Category();
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
