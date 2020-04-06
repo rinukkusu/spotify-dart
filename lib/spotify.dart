@@ -12,7 +12,7 @@ import 'dart:io' // Default
     if (dart.library.html) 'dart:html';
 
 import 'package:http/http.dart' as http;
-import 'package:oauth2/oauth2.dart';
+import 'package:oauth2/oauth2.dart' as oauth2;
 
 import 'src/models/_models.dart';
 
