@@ -107,7 +107,7 @@ SpotifyApi getSpotifyApi() async {
         );
         ```
    
-  For Dart apps, the approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
+  For Dart apps, the best approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
 </details>
 
 ## Features and bugs
