@@ -3,30 +3,30 @@
 
 import 'dart:io';
 import 'dart:convert';
-import '../lib/spotify_io.dart';
+import 'package:spotify/spotify.dart';
 
-main() async {
-  var keyJson = await new File('example/.apikeys').readAsString();
+void main() async {
+  var keyJson = await File('example/.apikeys').readAsString();
   var keyMap = json.decode(keyJson);
 
-  var credentials = new SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
+  var credentials = SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   var spotify = SpotifyApi(credentials);
 
-  print("Artists:");
+  print('Artists:');
   var artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
   artists.forEach((x) => print(x.name));
 
-  print("\nAlbum:");
+  print('\nAlbum:');
   var album = await spotify.albums.get('2Hog1V8mdTWKhCYqI5paph');
   print(album.name);
 
-  print("\nAlbum Tracks:");
+  print('\nAlbum Tracks:');
   var tracks = await spotify.albums.getTracks(album.id).all();
   tracks.forEach((track) {
     print(track.name);
   });
 
-  print("\nFeatured Playlist:");
+  print('\nFeatured Playlist:');
   var featuredPlaylists = await spotify.playlists.featured.all();
   featuredPlaylists.forEach((playlist) {
     print(playlist.name);
@@ -34,7 +34,7 @@ main() async {
 
   print("\nSearching for \'Metallica\':");
   var search = await spotify.search
-      .get("metallica")
+      .get('metallica')
       .first(2)
       .catchError((err) => print((err as SpotifyException).message));
   if (search == null) {
@@ -97,7 +97,15 @@ main() async {
     });
   });
 
-  var relatedArtists = await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
-  print('related Artists: ${relatedArtists.length}');
+  var relatedArtists =
+      await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
+  print('\nRelated Artists: ${relatedArtists.length}');
+
+  credentials = await spotify.getCredentials();
+  print('\nCredentials:');
+  print('Client Id: ${credentials.clientId}');
+  print('Access Token: ${credentials.accessToken}');
+  print('Credentials Expired: ${credentials.isExpired}');
+
   exit(0);
 }

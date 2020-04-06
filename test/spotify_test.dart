@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:test/test.dart';
-import 'package:spotify/spotify_io.dart';
+import 'package:spotify/spotify.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock(SpotifyApiCredentials('', ''));
+  var spotify = SpotifyApiMock(SpotifyApiCredentials(
+    'clientId',
+    'clientSecret',
+  ));
 
   group('Albums', () {
     test('get', () async {
@@ -39,14 +42,14 @@ Future main() async {
 
     test('get_error', () async {
       spotify.mockHttpError =
-          MockHttpError(statusCode: 401, message: "Bad Request");
+          MockHttpError(statusCode: 401, message: 'Bad Request');
       try {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       } catch (e) {
         expect(e, isA<SpotifyException>());
-        SpotifyException se = e as SpotifyException;
+        var se = e as SpotifyException;
         expect(se.status, 401);
-        expect(se.message, "Bad Request");
+        expect(se.message, 'Bad Request');
       }
     });
   });
@@ -59,14 +62,14 @@ Future main() async {
 
     test('get_error', () async {
       spotify.mockHttpError =
-          new MockHttpError(statusCode: 401, message: "Bad Request");
+          MockHttpError(statusCode: 401, message: 'Bad Request');
       try {
         await spotify.search.get('metallica').first();
       } catch (e) {
         expect(e, isA<SpotifyException>());
-        SpotifyException se = e as SpotifyException;
+        var se = e as SpotifyException;
         expect(se.status, 401);
-        expect(se.message, "Bad Request");
+        expect(se.message, 'Bad Request');
       }
     });
   });
@@ -76,6 +79,22 @@ Future main() async {
       var result = await spotify.users.currentlyPlaying();
 
       expect(result.item.name, 'So Voce');
+    });
+  });
+
+  group('Auth', () {
+    test('getCredentials', () async {
+      var result = await spotify.getCredentials();
+
+      expect(result.clientId, 'clientId');
+      expect(result.clientSecret, 'clientSecret');
+      expect(result.accessToken, 'accessToken');
+      expect(result.refreshToken, 'refreshToken');
+      expect(result.tokenEndpoint.path, 'tokenEndpoint.com');
+      expect(result.scopes.length, 2);
+      expect(result.expiration.millisecondsSinceEpoch, 8000);
+      expect(result.canRefresh, true);
+      expect(result.isExpired, true);
     });
   });
 }

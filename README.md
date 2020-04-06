@@ -7,34 +7,28 @@ A dart library for interfacing with the Spotify API.
 A simple usage example:
 
 ```dart
-import 'package:spotify/spotify_io.dart';
+import 'package:spotify/spotify.dart';
 
-main() async {
-  var credentials = new SpotifyApiCredentials(clientId, clientSecret);
-  var spotify = new SpotifyApi(credentials);
+void main() async {
+  var credentials = SpotifyApiCredentials(clientId, clientSecret);
+  var spotify = SpotifyApi(credentials);
 
   var artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
 }
 ```
 
-### For usage in the browser use
-
-```dart
-import 'package:spotify/spotify_browser.dart';
-```
-
 ### Client Credentials Flow
 ```dart
 SpotifyApi getSpotifyApi() {
-  final credentials = new SpotifyApiCredentials(clientId, clientSecret);
-  return new SpotifyApi(credentials);
+  final credentials = SpotifyApiCredentials(clientId, clientSecret);
+  return SpotifyApi(credentials);
 }
 ```
 
 ### Authorization Code
 ```dart
 SpotifyApi getSpotifyApi() async {
-  final credentials = new SpotifyApiCredentials(clientId, clientSecret);
+  final credentials = SpotifyApiCredentials(clientId, clientSecret);
   grant = SpotifyApi.authorizationCodeGrant(credentials);
   // *** from dart-lang/oauth2 package
   // `redirect` is an imaginary function that redirects the resource
