@@ -122,8 +122,8 @@ Please file feature requests and bugs at the [issue tracker][tracker].
 Run `pub run build_runner build` to generate JSON serializers via [json_serializable][json_serializable].
 Run `pub run build_runner watch` to continuously rebuild serializers in the background when files are updated.
 
-### Running unit tests
-Run `pub run test` to run all of the unit tests in `test/spotify_test.dart`.
+### Running tests
+Run `pub run test` to run all of the tests in `test/spotify_test.dart`.
 
 ### Running example code
 Run `pub run example/example` to run the example code. You'll need to modify `example/example.dart` to use your Spotify client ID and secret.
