@@ -44,7 +44,10 @@ class Users extends EndpointPaging {
   }
 
   Future<Iterable<Device>> devices() async {
-    var jsonString = await _api._get('v1/me/player/devices');
+    return _api._get('v1/me/player/devices').then(_parseDeviceJson);
+  }
+
+  Iterable<Device> _parseDeviceJson(String jsonString) {
     var map = json.decode(jsonString);
 
     var items = map['devices'] as Iterable<dynamic>;
