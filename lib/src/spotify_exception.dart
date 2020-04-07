@@ -15,7 +15,7 @@ class SpotifyException implements Exception {
   }
 
   @override
-  String toString() => "Error Code: $status\r\n$message";
+  String toString() => 'Error Code: $status\r\n$message';
 
 
 }

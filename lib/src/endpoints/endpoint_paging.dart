@@ -75,8 +75,8 @@ class Pages<T> extends _Pages<Page<T>> {
       : super(api, path, pageKey, pageContainerMapper);
 
   Pages.fromPaging(SpotifyApi api, Paging<T> paging, this._pageParser,
-                 [String pageKey = null,
-                   ParserFunction<Object> pageContainerMapper = null]) : super(api, paging.href.split('?')[0], pageKey, pageContainerMapper){
+                 [String pageKey,
+                   ParserFunction<Object> pageContainerMapper]) : super(api, paging.href.split('?')[0], pageKey, pageContainerMapper){
     _bufferedPages.add(Page<T>(paging, _pageParser));
   }
 

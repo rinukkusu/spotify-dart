@@ -2,7 +2,7 @@ part of spotify.models;
 
 @JsonSerializable(createToJson: false)
 class Recommendations extends Object{
-  Recommendations(){}
+  Recommendations();
 
   factory Recommendations.fromJson(Map<String, dynamic> json) =>
       _$RecommendationsFromJson(json);
@@ -17,7 +17,7 @@ class Recommendations extends Object{
 
 @JsonSerializable(createToJson: false)
 class RecommendationsSeed extends Object{
-  RecommendationsSeed(){}
+  RecommendationsSeed();
 
   factory RecommendationsSeed.fromJson(Map<String, dynamic> json) =>
     _$RecommendationsSeedFromJson(json);

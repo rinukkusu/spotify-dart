@@ -2,7 +2,7 @@ part of spotify;
 
 class RecommendationsEndpoint extends EndpointBase {
   @override
-  String get _path => "v1/recommendations";
+  String get _path => 'v1/recommendations';
 
   RecommendationsEndpoint(SpotifyApiBase api) : super(api);
 
@@ -19,12 +19,12 @@ class RecommendationsEndpoint extends EndpointBase {
       Map<String, num> max,
       Map<String, num> min,
       Map<String, num> target}) async {
-    assert(limit >= 1 && limit <= 100, "limit should be 1 <= limit <= 100");
+    assert(limit >= 1 && limit <= 100, 'limit should be 1 <= limit <= 100');
     final seedsNum = (seedArtists?.length ?? 0) + (seedGenres?.length ?? 0) + (seedTracks?.length ?? 0);
     assert(
         seedsNum >= 1 && seedsNum <= 5,
-        "Up to 5 seed values may be provided in any combination of seed_artists,"
-        " seed_tracks and seed_genres.");
+        'Up to 5 seed values may be provided in any combination of seed_artists,'
+        ' seed_tracks and seed_genres.');
     final parameters = <String, String>{'limit': limit.toString()};
     final _ = {
       'seed_artists': seedArtists,
@@ -41,17 +41,20 @@ class RecommendationsEndpoint extends EndpointBase {
   /// gets [parameters], a map of the request's uri parameters,
   /// and [tunableTrackMap] a map of tunable Track Attributes.
   /// adds the attributes to [parameters]
-  _addTunableTrackMap(
+  void _addTunableTrackMap(
       Map<String, String> parameters, Map<String, num> tunableTrackMap) {
-    if (tunableTrackMap != null)
+    if (tunableTrackMap != null) {
       parameters.addAll(tunableTrackMap.map<String, String>((k, v) =>
           MapEntry(k, v is int ? v.toString() : v.toStringAsFixed(2))));
+    }
   }
 
   /// gets [parameters], a map of the request's uri parameters and
   /// adds an entry with [key] and value of [paramList] as comma separated list
-  _addList(
+  void _addList(
       Map<String, String> parameters, String key, Iterable<String> paramList) {
-    if ((paramList?.length ?? 0) > 0) parameters[key] = paramList.join(',');
+    if ((paramList?.length ?? 0) > 0){
+      parameters[key] = paramList.join(',');
+    }
   }
 }
