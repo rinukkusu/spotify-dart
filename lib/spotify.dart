@@ -5,11 +5,6 @@ library spotify;
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
-
-import 'dart:io' // Default
-    if (dart.library.io) 'dart:io'
-    if (dart.library.html) 'dart:html';
 
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
@@ -33,4 +28,3 @@ part 'src/spotify_credentials.dart';
 part 'src/spotify_base.dart';
 part 'src/spotify_exception.dart';
 part 'src/spotify.dart';
-part 'src/spotify_mock.dart';

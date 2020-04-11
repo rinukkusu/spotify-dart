@@ -1,4 +1,9 @@
-part of spotify;
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:spotify/spotify.dart';
+import 'package:http/http.dart' as http;
+import 'package:oauth2/oauth2.dart' as oauth2;
 
 class SpotifyApiMock extends SpotifyApiBase {
   SpotifyApiMock(SpotifyApiCredentials credentials)
