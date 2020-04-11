@@ -76,7 +76,7 @@ SpotifyApi getSpotifyApi() async {
       
   For Flutter apps, there's two popular approaches:
   1. Launch a browser using [url_launcher][url_launcher] and listen for a redirect using [uni_links][uni_links].
-        ```
+      ```dart
         if (await canLaunch(authUri)) {
           await launch(authUri);
         }
@@ -88,10 +88,10 @@ SpotifyApi getSpotifyApi() async {
             responseUri = link;
           }
         });
-        ```
+      ```
 
   2. Launch a WebView inside the app and listen for a redirect using [webview_flutter][webview_flutter].
-        ```
+      ```dart
         WebView(
           javascriptMode: JavascriptMode.unrestricted,
           initialUrl: authUri,
@@ -105,7 +105,7 @@ SpotifyApi getSpotifyApi() async {
           },
           ...
         );
-        ```
+      ```
    
   For Dart apps, the best approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
 </details>
