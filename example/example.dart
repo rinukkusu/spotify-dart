@@ -1,4 +1,4 @@
-// Copyright (c) 2017, rinukkusu. All rights reserved. Use of this source code
+// Copyright (c) 2017, 2020 rinukkusu, hayribakici. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:io';
@@ -106,6 +106,4 @@ void main() async {
   print('Client Id: ${credentials.clientId}');
   print('Access Token: ${credentials.accessToken}');
   print('Credentials Expired: ${credentials.isExpired}');
-
-  exit(0);
 }
