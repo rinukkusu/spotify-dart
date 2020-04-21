@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1
+
+- fix compilation issue with test client #44
+- improve recommendation, tracks and playlist endpoints #43
+- improve readme regarding authorization #41
+- add method to retrieve oauth2 credentials #38
+- add devices call #36
+
 ## 0.3.0
 
 - unify package's Browser and IO exports, fix invalid SDK error #34
