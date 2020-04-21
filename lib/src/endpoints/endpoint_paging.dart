@@ -70,10 +70,15 @@ class Pages<T> extends _Pages<Page<T>> {
   final ParserFunction<T> _pageParser;
   final List<Page<T>> _bufferedPages = [];
   bool _cancelled = false;
-
   Pages(SpotifyApi api, String path, this._pageParser,
       [String pageKey, ParserFunction<Object> pageContainerMapper])
       : super(api, path, pageKey, pageContainerMapper);
+
+  Pages.fromPaging(SpotifyApi api, Paging<T> paging, this._pageParser,
+                 [String pageKey,
+                   ParserFunction<Object> pageContainerMapper]) : super(api, Uri.parse(paging.href).path, pageKey, pageContainerMapper){
+    _bufferedPages.add(Page<T>(paging, _pageParser));
+  }
 
   Future<Iterable<T>> all([int limit = defaultLimit]) {
     return stream(limit)
@@ -110,7 +115,12 @@ class Pages<T> extends _Pages<Page<T>> {
     }
 
     stream = StreamController<Page<T>>(onListen: () {
-      var firstPage = first(limit);
+      Future<Page<T>> firstPage;
+      if (_bufferedPages.length == 1) {
+        firstPage = Future.value(_bufferedPages.removeAt(0));
+      } else {
+        firstPage = first(limit);
+      }
       firstPage.then(handlePageAndGetNext);
     }, onCancel: () {
       _cancelled = true;

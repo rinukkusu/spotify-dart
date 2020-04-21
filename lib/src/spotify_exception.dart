@@ -13,4 +13,9 @@ class SpotifyException implements Exception {
     status = error.status;
     message = error.message;
   }
+
+  @override
+  String toString() => 'Error Code: $status\r\n$message';
+
+
 }

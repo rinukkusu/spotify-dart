@@ -282,10 +282,9 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
         : User.fromJson(json['owner'] as Map<String, dynamic>)
     ..public = json['public'] as bool
     ..snapshotId = json['snapshot_id'] as String
-    ..tracks = (json['tracks'] as List)
-        ?.map(
-            (e) => e == null ? null : Track.fromJson(e as Map<String, dynamic>))
-        ?.toList()
+    ..tracks = json['tracks'] == null
+        ? null
+        : Paging.fromJson(json['tracks'] as Map<String, dynamic>)
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
 }
@@ -331,6 +330,29 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) {
     ..track = json['track'] == null
         ? null
         : Track.fromJson(json['track'] as Map<String, dynamic>);
+}
+
+Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) {
+  return Recommendations()
+    ..seeds = (json['seeds'] as List)
+        ?.map((e) => e == null
+            ? null
+            : RecommendationsSeed.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..tracks = (json['tracks'] as List)
+        ?.map((e) =>
+            e == null ? null : TrackSimple.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) {
+  return RecommendationsSeed()
+    ..afterFilteringSize = json['afterFilteringSize'] as int
+    ..afterRelinkingSize = json['afterRelinkingSize'] as int
+    ..href = json['href'] as String
+    ..id = json['id'] as String
+    ..initialPoolSize = json['initialPoolSize'] as int
+    ..type = json['type'] as String;
 }
 
 Track _$TrackFromJson(Map<String, dynamic> json) {
