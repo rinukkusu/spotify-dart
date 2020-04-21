@@ -128,6 +128,9 @@ Run `pub run test` to run all of the tests in `test/spotify_test.dart`.
 ### Running example code
 Run `pub run example/example` to run the example code. You'll need to modify `example/example.dart` to use your Spotify client ID and secret.
 
+If you would like to run the example that accesses your user data (such as currently playing song etc.), run `pub run example/example_auth.dart`. There, you are requested to
+enter your redirect url (see the comment above [`redirectUri`](#authorization-code-flow)). After that, you are requested to call a given url (or paste it into your browser). That url will do a redirect in your browser. You should copy and paste this redirected url into your console to see the currently playing song and your available devices.
+
 [json_serializable]: https://pub.dartlang.org/packages/json_serializable
 [spotify_auth]: https://developer.spotify.com/documentation/general/guides/authorization-guide/
 [webview_flutter]: https://pub.dev/packages/webview_flutter
