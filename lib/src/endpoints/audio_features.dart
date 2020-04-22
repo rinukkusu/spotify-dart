@@ -20,7 +20,7 @@ class AudioFeatures extends EndpointBase {
     var jsonString = await _api._get('$_path?ids=${trackIds.join(',')}');
     var map = json.decode(jsonString);
 
-    var artistsMap = map['audio-features'] as Iterable<dynamic>;
+    var artistsMap = map['audio_features'] as Iterable<dynamic>;
     return artistsMap.map((m) => AudioFeature.fromJson(m));
   }
 }
