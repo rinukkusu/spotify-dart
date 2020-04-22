@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1+1
+
+- fix audio-features parsing issue
+
 ## 0.3.1
 
 - fix compilation issue with test client #44
