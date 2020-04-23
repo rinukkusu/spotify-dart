@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1+2
+
+- fix minor bug introduced by #43
+
 ## 0.3.1+1
 
 - fix audio-features parsing issue
