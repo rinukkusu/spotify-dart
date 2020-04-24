@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1+3
+
+- album: remove object type detection hack
+
 ## 0.3.1+2
 
 - fix minor bug introduced by #43
