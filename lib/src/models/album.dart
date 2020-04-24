@@ -46,11 +46,7 @@ class Album extends AlbumSimple {
 class AlbumSimple extends Object {
   AlbumSimple();
 
-  factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
-      // sometimes a richer version than AlbumSimple is returned - trying to catch that here
-      json.containsKey('release_date')
-          ? _$AlbumFromJson(json)
-          : _$AlbumSimpleFromJson(json);
+  factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
 
   /// The type of the album: one of "album", "single", or "compilation".
   @JsonKey(name: 'album_type')
