@@ -84,7 +84,7 @@ SpotifyApi getSpotifyApi() async {
         ...
     
         final linksStream = getLinksStream().listen((String link) async {
-          if (link.startsWith(redirectUri) {
+          if (link.startsWith(redirectUri)) {
             responseUri = link;
           }
         });
