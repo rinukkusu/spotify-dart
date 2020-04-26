@@ -75,7 +75,7 @@ SpotifyApi getSpotifyApi() async {
   Unfortunately, there's not a universal example for implementing the imaginary functions, `redirect` and `listen`, because different options exist for each platform.
       
   For Flutter apps, there's two popular approaches:
-  1. Launch a browser using [url_launcher][url_launcher] and listen for a redirect using [uni_links][uni_links].
+  1. Launch a browser using [url_launcher][] and listen for a redirect using [uni_links][].
       ```dart
         if (await canLaunch(authUri)) {
           await launch(authUri);
@@ -90,7 +90,7 @@ SpotifyApi getSpotifyApi() async {
         });
       ```
 
-  2. Launch a WebView inside the app and listen for a redirect using [webview_flutter][webview_flutter].
+  2. Launch a WebView inside the app and listen for a redirect using [webview_flutter][].
       ```dart
         WebView(
           javascriptMode: JavascriptMode.unrestricted,
@@ -114,12 +114,10 @@ SpotifyApi getSpotifyApi() async {
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/rinukkusu/spotify-dart/issues
-
 ## Development
 
 ### Generating JSON Serializers
-Run `pub run build_runner build` to generate JSON serializers via [json_serializable][json_serializable].
+Run `pub run build_runner build` to generate JSON serializers via [json_serializable][].
 Run `pub run build_runner watch` to continuously rebuild serializers in the background when files are updated.
 
 ### Running tests
@@ -133,6 +131,7 @@ enter your redirect url (see the comment above [`redirectUri`](#authorization-co
 
 [json_serializable]: https://pub.dartlang.org/packages/json_serializable
 [spotify_auth]: https://developer.spotify.com/documentation/general/guides/authorization-guide/
-[webview_flutter]: https://pub.dev/packages/webview_flutter
+[tracker]: https://github.com/rinukkusu/spotify-dart/issues
 [uni_links]: https://pub.dev/packages/uni_links
 [url_launcher]: https://pub.dev/packages/url_launcher
+[webview_flutter]: https://pub.dev/packages/webview_flutter
