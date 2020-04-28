@@ -3,7 +3,7 @@
 
 part of spotify;
 
-class Artists extends EndpointBase {
+class Artists extends EndpointPaging {
   @override
   String get _path => 'v1/artists';
 
@@ -48,5 +48,9 @@ class Artists extends EndpointBase {
 
     var artistsMap = map['artists'] as Iterable<dynamic>;
     return artistsMap.map((m) => Artist.fromJson(m));
+  }
+
+  Pages<Album> albums(String artistId) {
+    return _getPages('$_path/$artistId/albums', (json) => Album.fromJson(json));
   }
 }
