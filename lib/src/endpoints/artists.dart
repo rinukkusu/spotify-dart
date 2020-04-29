@@ -3,7 +3,7 @@
 
 part of spotify;
 
-class Artists extends EndpointBase {
+class Artists extends EndpointPaging {
   @override
   String get _path => 'v1/artists';
 
@@ -48,5 +48,28 @@ class Artists extends EndpointBase {
 
     var artistsMap = map['artists'] as Iterable<dynamic>;
     return artistsMap.map((m) => Artist.fromJson(m));
+  }
+
+  /// [includeGroups] - A comma-separated list of keywords that will be used to
+  /// filter the response. If not supplied, all album types will be returned.
+  /// Valid values are: 'album', 'single', 'appears_on', 'compilation'
+  ///
+  /// [country] - An ISO 3166-1 alpha-2 country code or the string from_token.
+  /// Supply this parameter to limit the response to one particular geographical
+  /// market. For example, for albums available in Sweden: country=SE.
+  /// If not given, results will be returned for all countries and you are
+  /// likely to get duplicate results per album, one for each country in which
+  /// the album is available!
+  Pages<Album> albums(
+    String artistId, {
+    String country,
+    List<String> includeGroups,
+  }) {
+    final _includeGroups =
+        includeGroups == null ? null : includeGroups.join(',');
+    final query =
+        _buildQuery({'include_groups': _includeGroups, 'country': country});
+    return _getPages(
+        '$_path/$artistId/albums?$query', (json) => Album.fromJson(json));
   }
 }
