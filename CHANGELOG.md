@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+- users: move `me` calls to own endpoint class
+    - `me` calls in `users` endpoint class will be removed in the next releases
+- artists: add albums call
+
 ## 0.3.1+3
 
 - album: remove object type detection hack
