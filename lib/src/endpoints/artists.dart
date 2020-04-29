@@ -50,7 +50,7 @@ class Artists extends EndpointPaging {
     return artistsMap.map((m) => Artist.fromJson(m));
   }
 
-  /// [include_groups] - A comma-separated list of keywords that will be used to
+  /// [includeGroups] - A comma-separated list of keywords that will be used to
   /// filter the response. If not supplied, all album types will be returned.
   /// Valid values are: 'album', 'single', 'appears_on', 'compilation'
   ///
