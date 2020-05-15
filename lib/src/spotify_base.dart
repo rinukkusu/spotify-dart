@@ -123,7 +123,7 @@ abstract class SpotifyApiBase {
         .put(url, headers: headers, body: body));
   }
 
-  Future<String> _requestWrapper(Future<http.Response> Function() request, {retryLimit=20}) async {
+  Future<String> _requestWrapper(Future<http.Response> Function() request, {retryLimit=5}) async {
     for (var i = 0; i < retryLimit; i++){
       try {
         return handleErrors(await request());
