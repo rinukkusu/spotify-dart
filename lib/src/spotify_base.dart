@@ -12,34 +12,44 @@ abstract class SpotifyApiBase {
   FutureOr<oauth2.Client> _client;
 
   Artists _artists;
+
   Artists get artists => _artists;
 
   Albums _albums;
+
   Albums get albums => _albums;
 
   Tracks _tracks;
+
   Tracks get tracks => _tracks;
 
   Playlists _playlists;
+
   Playlists get playlists => _playlists;
 
   RecommendationsEndpoint _recommendations;
+
   RecommendationsEndpoint get recommendations => _recommendations;
 
   Users _users;
+
   Users get users => _users;
 
   Search _search;
+
   Search get search => _search;
 
   AudioFeatures _audioFeatures;
+
   AudioFeatures get audioFeatures => _audioFeatures;
 
   Categories _categories;
+
   Categories get categories => _categories;
 
   Me _me;
-  Me get me => _me; 
+
+  Me get me => _me;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
     _client = client;
@@ -96,14 +106,14 @@ abstract class SpotifyApiBase {
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
-    return await _requestWrapper(() async => await (await _client)
-        .get(url, headers: headers));
+    return await _requestWrapper(
+        () async => await (await _client).get(url, headers: headers));
   }
 
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await (await _client)
-        .post(url, headers: headers, body: body));
+    return await _requestWrapper(() async =>
+        await (await _client).post(url, headers: headers, body: body));
   }
 
   Future<String> _deleteImpl(
@@ -119,18 +129,19 @@ abstract class SpotifyApiBase {
 
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await (await _client)
-        .put(url, headers: headers, body: body));
+    return await _requestWrapper(() async =>
+        await (await _client).put(url, headers: headers, body: body));
   }
 
-  Future<String> _requestWrapper(Future<http.Response> Function() request, {retryLimit=5}) async {
-    for (var i = 0; i < retryLimit; i++){
+  Future<String> _requestWrapper(Future<http.Response> Function() request,
+      {retryLimit = 5}) async {
+    for (var i = 0; i < retryLimit; i++) {
       try {
         return handleErrors(await request());
-      }
-      on ApiRateException catch(ex){
+      } on ApiRateException catch (ex) {
         if (i == retryLimit - 1) rethrow;
-        print('Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds');
+        print(
+            'Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds');
         await Future.delayed(Duration(seconds: ex.retryAfter));
       }
     }
@@ -146,8 +157,9 @@ abstract class SpotifyApiBase {
     if (response.statusCode >= 400) {
       final jsonMap = json.decode(responseBody);
       final error = SpotifyError.fromJson(jsonMap['error']);
-      if (response.statusCode == 429){
-        throw ApiRateException.fromSpotify(error, num.parse(response.headers['retry-after']));
+      if (response.statusCode == 429) {
+        throw ApiRateException.fromSpotify(
+            error, num.parse(response.headers['retry-after']));
       }
       throw SpotifyException.fromSpotify(
         error,
