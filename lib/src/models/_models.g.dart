@@ -136,6 +136,76 @@ AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) {
     ..valence = (json['valence'] as num)?.toDouble();
 }
 
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return Category()
+    ..href = json['href'] as String
+    ..icons = (json['icons'] as List)
+        ?.map(
+            (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
+
+Device _$DeviceFromJson(Map<String, dynamic> json) {
+  return Device()
+    ..id = json['id'] as String
+    ..isActive = json['is_active'] as bool ?? false
+    ..isPrivateSession = json['is_private_session'] as bool ?? false
+    ..isRestricted = json['is_restricted'] as bool ?? false
+    ..name = json['name'] as String
+    ..type = _$enumDecodeNullable(_$DeviceTypeEnumMap, json['type'])
+    ..volumePercent = json['volume_percent'] as int;
+}
+
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$DeviceTypeEnumMap = {
+  DeviceType.Computer: 'Computer',
+  DeviceType.Tablet: 'Tablet',
+  DeviceType.Smartphone: 'Smartphone',
+  DeviceType.Speaker: 'Speaker',
+  DeviceType.TV: 'TV',
+  DeviceType.AVR: 'AVR',
+  DeviceType.STB: 'STB',
+  DeviceType.AudioDongle: 'AudioDongle',
+  DeviceType.GameConsole: 'GameConsole',
+  DeviceType.CastVideo: 'CastVideo',
+  DeviceType.CastAudio: 'CastAudio',
+  DeviceType.Automobile: 'Automobile',
+  DeviceType.Unknown: 'Unknown',
+};
+
 SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) {
   return SpotifyError()
     ..status = json['status'] as int
@@ -212,10 +282,9 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
         : User.fromJson(json['owner'] as Map<String, dynamic>)
     ..public = json['public'] as bool
     ..snapshotId = json['snapshot_id'] as String
-    ..tracks = (json['tracks'] as List)
-        ?.map(
-            (e) => e == null ? null : Track.fromJson(e as Map<String, dynamic>))
-        ?.toList()
+    ..tracks = json['tracks'] == null
+        ? null
+        : Paging.fromJson(json['tracks'] as Map<String, dynamic>)
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
 }
@@ -261,6 +330,29 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) {
     ..track = json['track'] == null
         ? null
         : Track.fromJson(json['track'] as Map<String, dynamic>);
+}
+
+Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) {
+  return Recommendations()
+    ..seeds = (json['seeds'] as List)
+        ?.map((e) => e == null
+            ? null
+            : RecommendationsSeed.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..tracks = (json['tracks'] as List)
+        ?.map((e) =>
+            e == null ? null : TrackSimple.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) {
+  return RecommendationsSeed()
+    ..afterFilteringSize = json['afterFilteringSize'] as int
+    ..afterRelinkingSize = json['afterRelinkingSize'] as int
+    ..href = json['href'] as String
+    ..id = json['id'] as String
+    ..initialPoolSize = json['initialPoolSize'] as int
+    ..type = json['type'] as String;
 }
 
 Track _$TrackFromJson(Map<String, dynamic> json) {
@@ -385,15 +477,4 @@ UserPublic _$UserPublicFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
-}
-
-Category _$CategoryFromJson(Map<String, dynamic> json) {
-  return Category()
-    ..href = json['href'] as String
-    ..icons = (json['icons'] as List)
-        ?.map(
-            (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..id = json['id'] as String
-    ..name = json['name'] as String;
 }

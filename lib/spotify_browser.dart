@@ -4,5 +4,4 @@
 @Deprecated('Please import \'package:spotify/spotify.dart\' instead')
 library spotify;
 
-
 export 'spotify.dart';
