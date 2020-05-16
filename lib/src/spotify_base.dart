@@ -9,46 +9,27 @@ abstract class SpotifyApiBase {
   static const String _authorizationUrl =
       'https://accounts.spotify.com/authorize';
 
+  bool _shouldWait = false;
   FutureOr<oauth2.Client> _client;
-
   Artists _artists;
-
   Artists get artists => _artists;
-
   Albums _albums;
-
   Albums get albums => _albums;
-
   Tracks _tracks;
-
   Tracks get tracks => _tracks;
-
   Playlists _playlists;
-
   Playlists get playlists => _playlists;
-
   RecommendationsEndpoint _recommendations;
-
   RecommendationsEndpoint get recommendations => _recommendations;
-
   Users _users;
-
   Users get users => _users;
-
   Search _search;
-
   Search get search => _search;
-
   AudioFeatures _audioFeatures;
-
   AudioFeatures get audioFeatures => _audioFeatures;
-
   Categories _categories;
-
   Categories get categories => _categories;
-
   Me _me;
-
   Me get me => _me;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
@@ -136,13 +117,17 @@ abstract class SpotifyApiBase {
   Future<String> _requestWrapper(Future<http.Response> Function() request,
       {retryLimit = 5}) async {
     for (var i = 0; i < retryLimit; i++) {
+      while (_shouldWait){
+        await Future.delayed(Duration(milliseconds: 500));
+      }
       try {
         return handleErrors(await request());
       } on ApiRateException catch (ex) {
         if (i == retryLimit - 1) rethrow;
         print(
             'Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds');
-        await Future.delayed(Duration(seconds: ex.retryAfter));
+        _shouldWait = true;
+        unawaited(Future.delayed(Duration(seconds: ex.retryAfter)).then((v)=>_shouldWait = false));
       }
     }
     throw SpotifyException('Could not complete request');
