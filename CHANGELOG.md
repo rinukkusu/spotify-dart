@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3
+
+- search: add market parameter
+
 ## 0.3.2
 
 - users: move `me` calls to own endpoint class
