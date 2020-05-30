@@ -3,6 +3,7 @@
 ## 0.3.3
 
 - search: add market parameter
+- add request rate handling with retries
 
 ## 0.3.2
 
