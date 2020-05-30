@@ -41,17 +41,19 @@ Future main() async {
       expect(artists.length, 2);
     });
 
-    test('get_error', () async {
-      spotify.mockHttpError =
-          MockHttpError(statusCode: 401, message: 'Bad Request');
+    test('getError', () async {
+      spotify.mockHttpErrors =
+          [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
+      SpotifyException ex;
       try {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       } catch (e) {
         expect(e, isA<SpotifyException>());
-        var se = e as SpotifyException;
-        expect(se.status, 401);
-        expect(se.message, 'Bad Request');
+        ex = e;
       }
+      expect(ex, isNotNull);
+      expect(ex.status, 401);
+      expect(ex.message, 'Bad Request');
     });
   });
 
@@ -61,17 +63,19 @@ Future main() async {
       expect(searchResult.length, 2);
     });
 
-    test('get_error', () async {
-      spotify.mockHttpError =
-          MockHttpError(statusCode: 401, message: 'Bad Request');
+    test('getError', () async {
+      spotify.mockHttpErrors =
+          [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
+      SpotifyException ex;
       try {
         await spotify.search.get('metallica').first();
       } catch (e) {
         expect(e, isA<SpotifyException>());
-        var se = e as SpotifyException;
-        expect(se.status, 401);
-        expect(se.message, 'Bad Request');
+        ex = e;
       }
+      expect(ex, isNotNull);
+      expect(ex.status, 401);
+      expect(ex.message, 'Bad Request');
     });
   });
 
@@ -108,6 +112,36 @@ Future main() async {
       expect(result.expiration.millisecondsSinceEpoch, 8000);
       expect(result.canRefresh, true);
       expect(result.isExpired, true);
+    });
+  });
+  group('Errors', (){
+    test('apiRateErrorSuccess', () async {
+      spotify.mockHttpErrors = List.generate(4,
+              (i)=>MockHttpError(
+                  statusCode: 429,
+                  message: 'API Rate exceeded',
+                  headers: {'retry-after': '1'})).iterator;
+      ApiRateException ex;
+      var artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
+      expect(artist.type, 'artist');
+      expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
+      expect(artist.images.length, 3);
+    });
+  test('apiRateErrorFail', () async {
+      spotify.mockHttpErrors = List.generate(10,
+              (i)=>MockHttpError(
+              statusCode: 429,
+              message: 'API Rate exceeded',
+              headers: {'retry-after': '1'})).iterator;
+      ApiRateException ex;
+      try {
+        await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
+      } catch (e) {
+        expect(e, isA<ApiRateException>());
+        ex = e;
+      }
+      expect(ex, isNotNull);
+      expect(ex.status, 429);
     });
   });
 }

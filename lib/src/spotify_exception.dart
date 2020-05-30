@@ -16,6 +16,11 @@ class SpotifyException implements Exception {
 
   @override
   String toString() => 'Error Code: $status\r\n$message';
+}
 
+class ApiRateException extends SpotifyException {
+  final num retryAfter;
 
+  ApiRateException.fromSpotify(SpotifyError error, this.retryAfter)
+      : super.fromSpotify(error);
 }

@@ -9,37 +9,29 @@ abstract class SpotifyApiBase {
   static const String _authorizationUrl =
       'https://accounts.spotify.com/authorize';
 
+  bool _shouldWait = false;
   FutureOr<oauth2.Client> _client;
-
   Artists _artists;
   Artists get artists => _artists;
-
   Albums _albums;
   Albums get albums => _albums;
-
   Tracks _tracks;
   Tracks get tracks => _tracks;
-
   Playlists _playlists;
   Playlists get playlists => _playlists;
-
   RecommendationsEndpoint _recommendations;
   RecommendationsEndpoint get recommendations => _recommendations;
-
   Users _users;
   Users get users => _users;
-
   Search _search;
   Search get search => _search;
-
   AudioFeatures _audioFeatures;
   AudioFeatures get audioFeatures => _audioFeatures;
-
   Categories _categories;
   Categories get categories => _categories;
-
   Me _me;
-  Me get me => _me; 
+  Me get me => _me;
+  oauth2.Client get client => _client;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
     _client = client;
@@ -96,31 +88,50 @@ abstract class SpotifyApiBase {
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
-    final response = await (await _client).get(url, headers: headers);
-    return handleErrors(response);
+    return await _requestWrapper(
+        () async => await (await _client).get(url, headers: headers));
   }
 
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    var response =
-        await (await _client).post(url, headers: headers, body: body);
-    return handleErrors(response);
+    return await _requestWrapper(() async =>
+        await (await _client).post(url, headers: headers, body: body));
   }
 
   Future<String> _deleteImpl(
       String url, Map<String, String> headers, body) async {
-    final request = http.Request('DELETE', Uri.parse(url));
-    request.headers.addAll(headers);
-    request.body = body;
-    final response =
-        await http.Response.fromStream(await (await _client).send(request));
-    return handleErrors(response);
+    return await _requestWrapper(() async {
+      final request = http.Request('DELETE', Uri.parse(url));
+      request.headers.addAll(headers);
+      request.body = body;
+      return await http.Response.fromStream(
+          await (await _client).send(request));
+    });
   }
 
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    var response = await (await _client).put(url, headers: headers, body: body);
-    return handleErrors(response);
+    return await _requestWrapper(() async =>
+        await (await _client).put(url, headers: headers, body: body));
+  }
+
+  Future<String> _requestWrapper(Future<http.Response> Function() request,
+      {retryLimit = 5}) async {
+    for (var i = 0; i < retryLimit; i++) {
+      while (_shouldWait){
+        await Future.delayed(Duration(milliseconds: 500));
+      }
+      try {
+        return handleErrors(await request());
+      } on ApiRateException catch (ex) {
+        if (i == retryLimit - 1) rethrow;
+        print(
+            'Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds');
+        _shouldWait = true;
+        unawaited(Future.delayed(Duration(seconds: ex.retryAfter)).then((v)=>_shouldWait = false));
+      }
+    }
+    throw SpotifyException('Could not complete request');
   }
 
   Future<SpotifyApiCredentials> getCredentials() async {
@@ -130,9 +141,14 @@ abstract class SpotifyApiBase {
   String handleErrors(http.Response response) {
     final responseBody = utf8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
-      var jsonMap = json.decode(responseBody);
+      final jsonMap = json.decode(responseBody);
+      final error = SpotifyError.fromJson(jsonMap['error']);
+      if (response.statusCode == 429) {
+        throw ApiRateException.fromSpotify(
+            error, num.parse(response.headers['retry-after']));
+      }
       throw SpotifyException.fromSpotify(
-        SpotifyError.fromJson(jsonMap['error']),
+        error,
       );
     }
     return responseBody;
