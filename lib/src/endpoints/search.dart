@@ -23,7 +23,7 @@ class Search extends EndpointPaging {
       'q': searchQuery,
       'type': type
     };
-    if (market?.isNotEmpty == true) {
+    if (market.isNotEmpty) {
       queryMap.addAll({'market': market});
     }
 
