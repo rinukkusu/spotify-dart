@@ -9,10 +9,27 @@ class Search extends EndpointPaging {
 
   Search(SpotifyApiBase api) : super(api);
 
+  /// Get Spotify Catalog information about albums, artists, playlists, 
+  /// tracks, shows or episodes that match a keyword string.
+  /// 
+  /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
+  /// If a country code is specified, only artists, albums, and tracks with 
+  /// content that is playable in that market is returned. 
   BundledPages get(String searchQuery,
-      [Iterable<SearchType> types = SearchType.all]) {
+      [Iterable<SearchType> types = SearchType.all, String market = '']) {
     var type = types.map((type) => type.key).join(',');
-    return _getBundledPages('$_path?q=$searchQuery&type=${type}', {
+
+    var queryMap = {
+      'q': searchQuery,
+      'type': type
+    };
+    if (market.isNotEmpty) {
+      queryMap.addAll({'market': market});
+    }
+
+    var query = _buildQuery(queryMap);
+
+    return _getBundledPages('$_path?$query', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
       'albums': (json) => AlbumSimple.fromJson(json),
       'artists': (json) => Artist.fromJson(json),
