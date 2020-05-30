@@ -31,6 +31,7 @@ abstract class SpotifyApiBase {
   Categories get categories => _categories;
   Me _me;
   Me get me => _me;
+  oauth2.Client get client => _client;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
     _client = client;

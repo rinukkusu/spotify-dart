@@ -9,18 +9,14 @@ class SpotifyApiMock extends SpotifyApiBase {
   SpotifyApiMock(SpotifyApiCredentials credentials)
       : super.fromClient(MockClient(credentials));
 
-  MockHttpError _mockHttpError;
-
-  MockHttpError get mockHttpError => _mockHttpError;
-
-  set mockHttpError(MockHttpError value) => _mockHttpError = value;
+  set mockHttpErrors(Iterator<MockHttpError> errors) => (client as MockClient)._mockHttpErrors = errors;
 }
 
 class MockClient implements oauth2.Client {
-  MockClient(SpotifyApiCredentials credentials, {MockHttpError mockHttpError}) {
+  MockClient(SpotifyApiCredentials credentials, {Iterator<MockHttpError> mockHttpErrors}) {
     identifier = credentials.clientId;
     secret = credentials.clientSecret;
-    _mockHttpError = mockHttpError;
+    _mockHttpErrors = mockHttpErrors;
   }
 
   @override
@@ -29,7 +25,16 @@ class MockClient implements oauth2.Client {
   @override
   String secret;
 
-  MockHttpError _mockHttpError;
+  Iterator<MockHttpError> _mockHttpErrors;
+
+  MockHttpError _getMockError(){
+    if (_mockHttpErrors != null && _mockHttpErrors.moveNext()) {
+      return _mockHttpErrors.current;
+    } else {
+      return null;
+    }
+  }
+
 
   String _readPath(String url) {
     var regexString = url.contains('api.spotify.com')
@@ -55,8 +60,9 @@ class MockClient implements oauth2.Client {
 
   @override
   Future<http.Response> get(url, {Map<String, String> headers}) async {
-    if (_mockHttpError != null) {
-      return createErrorResponse(_mockHttpError);
+    final err = _getMockError();
+    if (err != null) {
+      return createErrorResponse(err);
     }
     return createSuccessResponse(_readPath(url));
   }
@@ -75,8 +81,9 @@ class MockClient implements oauth2.Client {
   @override
   Future<http.Response> post(url,
       {Map<String, String> headers, body, Encoding encoding}) async {
-    if (_mockHttpError != null) {
-      return createErrorResponse(_mockHttpError);
+    final err = _getMockError();
+    if (err != null) {
+      return createErrorResponse(err);
     }
     return createSuccessResponse(_readPath(url));
   }
@@ -126,7 +133,7 @@ class MockClient implements oauth2.Client {
   http.Response createErrorResponse(MockHttpError error) {
     return http.Response(
         _wrapMessageToJson(error.statusCode, error.message), error.statusCode,
-        headers: {'Content-Type': 'application/json; charset=utf-8'});
+        headers: {'Content-Type': 'application/json; charset=utf-8'}..addAll(error.headers));
   }
 
   String _wrapMessageToJson(int statusCode, String message) =>
@@ -136,6 +143,9 @@ class MockClient implements oauth2.Client {
 class MockHttpError {
   int statusCode;
   String message;
+  Map<String, String> headers;
 
-  MockHttpError({this.statusCode, this.message});
+  MockHttpError({this.statusCode, this.message, this.headers}){
+    headers ??= {};
+  }
 }
