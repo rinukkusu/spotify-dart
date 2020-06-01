@@ -16,6 +16,31 @@ class Me extends EndpointPaging {
     return User.fromJson(map);
   }
 
+  /// Endpoint /v1/me/following only supports "artist" type at the moment.
+  /// Unknown what other types will be supported in the future.
+  Future<Iterable<Artist>> following({int limit = 20, String after}) async {
+    assert(limit >= 1 && limit <= 50, 'limit should be 1 <= limit <= 50');
+    var params = <String, String>{
+      'type': 'artist',
+      'limit': limit.toString(),
+    };
+    if (after != null) {
+      params['after'] = after;
+    }
+
+    var path =
+        Uri(path: '$_path/following', queryParameters: params).toString();
+    var map = json.decode(await _api._get(path));
+
+    var artistsMap = map['artists'] as Map<String, dynamic>;
+    if (!artistsMap.containsKey('items')) {
+      return [];
+    }
+
+    var itemsMap = artistsMap['items'] as Iterable<dynamic>;
+    return itemsMap.map((m) => Artist.fromJson(m));
+  }
+
   Future<Player> currentlyPlaying() async {
     var jsonString = await _api._get('$_path/player/currently-playing');
 
