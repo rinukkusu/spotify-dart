@@ -16,6 +16,13 @@ class Me extends EndpointPaging {
     return User.fromJson(map);
   }
 
+  /// Endpoint /v1/me/following only supports "artist" type at the moment.
+  BundledPages following(FollowingType type) {
+    return _getBundledPages('$_path/following?type=${type.key}', {
+      'artists': (json) => Artist.fromJson(json),
+    });
+  }
+
   Future<Player> currentlyPlaying() async {
     var jsonString = await _api._get('$_path/player/currently-playing');
 
@@ -53,4 +60,13 @@ class Me extends EndpointPaging {
     var items = map['devices'] as Iterable<dynamic>;
     return items.map((item) => Device.fromJson(item));
   }
+}
+
+class FollowingType {
+  final String _key;
+
+  const FollowingType(this._key);
+  String get key => _key;
+
+  static const artist = FollowingType('artist');
 }
