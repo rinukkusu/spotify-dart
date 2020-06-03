@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.4
+
+- add /me/following endpoint
+
 ## 0.3.3
 
 - search: add market parameter
