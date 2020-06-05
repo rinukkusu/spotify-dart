@@ -56,6 +56,15 @@ class Playlists extends EndpointPaging {
         }));
   }
 
+  /// [trackUris] - the Spotify track uris
+  /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
+  ///
+  /// [playlistId] - the playlist ID
+  Future<Null> addTracks(List<String> trackUris, String playlistId) async {
+    final url = 'v1/playlists/$playlistId/tracks';
+    await _api._post(url, jsonEncode({'uris': trackUris}));
+  }
+
   Future<Null> removeTrack(String trackUri, String playlistId,
       [List<int> positions]) async {
     final url = 'v1/playlists/$playlistId/tracks';
