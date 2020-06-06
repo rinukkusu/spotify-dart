@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.5
+
+- playlists: support adding multiple tracks to playlist
+
 ## 0.3.4
 
 - add /me/following endpoint
