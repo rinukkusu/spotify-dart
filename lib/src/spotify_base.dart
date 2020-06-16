@@ -50,11 +50,7 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
       [http.BaseClient httpClient])
-      : this.fromClient(oauth2.clientCredentialsGrant(
-            Uri.parse(SpotifyApiBase._tokenUrl),
-            credentials.clientId,
-            credentials.clientSecret,
-            httpClient: httpClient));
+      : this.fromClient(_getClient(credentials, httpClient));
 
   SpotifyApiBase.fromAuthCodeGrant(
       oauth2.AuthorizationCodeGrant grant, String responseUri)
@@ -68,6 +64,27 @@ abstract class SpotifyApiBase {
         Uri.parse(SpotifyApiBase._authorizationUrl),
         Uri.parse(SpotifyApiBase._tokenUrl),
         secret: credentials.clientSecret,
+        httpClient: httpClient);
+  }
+
+  static FutureOr<oauth2.Client> _getClient(
+      SpotifyApiCredentials credentials, http.BaseClient httpClient) {
+    if (credentials.fullyQualified) {
+      return oauth2.Client(
+        oauth2.Credentials(
+          credentials.accessToken,
+          refreshToken: credentials.refreshToken,
+          tokenEndpoint: credentials.tokenEndpoint,
+          scopes: credentials.scopes,
+          expiration: credentials.expiration,
+        ),
+        identifier: credentials.clientId,
+        secret: credentials.clientSecret,
+      );
+    }
+
+    return oauth2.clientCredentialsGrant(Uri.parse(SpotifyApiBase._tokenUrl),
+        credentials.clientId, credentials.clientSecret,
         httpClient: httpClient);
   }
 
@@ -118,7 +135,7 @@ abstract class SpotifyApiBase {
   Future<String> _requestWrapper(Future<http.Response> Function() request,
       {retryLimit = 5}) async {
     for (var i = 0; i < retryLimit; i++) {
-      while (_shouldWait){
+      while (_shouldWait) {
         await Future.delayed(Duration(milliseconds: 500));
       }
       try {
@@ -128,7 +145,8 @@ abstract class SpotifyApiBase {
         print(
             'Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds');
         _shouldWait = true;
-        unawaited(Future.delayed(Duration(seconds: ex.retryAfter)).then((v)=>_shouldWait = false));
+        unawaited(Future.delayed(Duration(seconds: ex.retryAfter))
+            .then((v) => _shouldWait = false));
       }
     }
     throw SpotifyException('Could not complete request');

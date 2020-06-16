@@ -81,13 +81,13 @@ Future main() async {
 
   group('User', () {
     test('currentlyPlaying', () async {
-      var result = await spotify.users.currentlyPlaying();
+      var result = await spotify.me.currentlyPlaying();
 
       expect(result.item.name, 'So Voce');
     });
 
     test('devices', () async {
-      var result = await spotify.users.devices();
+      var result = await spotify.me.devices();
       expect(result.length, 1);
       expect(result.first.id, '5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e');
       expect(result.first.isActive, true);
@@ -114,22 +114,23 @@ Future main() async {
       expect(result.isExpired, true);
     });
   });
-  group('Errors', (){
+  group('Errors', () {
     test('apiRateErrorSuccess', () async {
-      spotify.mockHttpErrors = List.generate(4,
-              (i)=>MockHttpError(
-                  statusCode: 429,
-                  message: 'API Rate exceeded',
-                  headers: {'retry-after': '1'})).iterator;
-      ApiRateException ex;
+      spotify.mockHttpErrors = List.generate(
+          4,
+          (i) => MockHttpError(
+              statusCode: 429,
+              message: 'API Rate exceeded',
+              headers: {'retry-after': '1'})).iterator;
       var artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       expect(artist.type, 'artist');
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
       expect(artist.images.length, 3);
     });
-  test('apiRateErrorFail', () async {
-      spotify.mockHttpErrors = List.generate(10,
-              (i)=>MockHttpError(
+    test('apiRateErrorFail', () async {
+      spotify.mockHttpErrors = List.generate(
+          10,
+          (i) => MockHttpError(
               statusCode: 429,
               message: 'API Rate exceeded',
               headers: {'retry-after': '1'})).iterator;
