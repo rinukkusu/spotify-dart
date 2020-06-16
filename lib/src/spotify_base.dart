@@ -68,16 +68,26 @@ abstract class SpotifyApiBase {
   }
 
   static FutureOr<oauth2.Client> _getClient(
-      SpotifyApiCredentials credentials, http.BaseClient httpClient) {
+      SpotifyApiCredentials credentials, http.BaseClient httpClient) async {
     if (credentials.fullyQualified) {
+      var oauthCredentials = oauth2.Credentials(
+        credentials.accessToken,
+        refreshToken: credentials.refreshToken,
+        tokenEndpoint: credentials.tokenEndpoint,
+        scopes: credentials.scopes,
+        expiration: credentials.expiration,
+      );
+
+      if (oauthCredentials.isExpired) {
+        oauthCredentials = await oauthCredentials.refresh(
+          identifier: credentials.clientId,
+          secret: credentials.clientSecret,
+          httpClient: httpClient,
+        );
+      }
+
       return oauth2.Client(
-        oauth2.Credentials(
-          credentials.accessToken,
-          refreshToken: credentials.refreshToken,
-          tokenEndpoint: credentials.tokenEndpoint,
-          scopes: credentials.scopes,
-          expiration: credentials.expiration,
-        ),
+        oauthCredentials,
         identifier: credentials.clientId,
         secret: credentials.clientSecret,
       );
