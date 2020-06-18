@@ -50,7 +50,7 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
       [http.BaseClient httpClient])
-      : this.fromClient(_getClient(credentials, httpClient));
+      : this.fromClient(_getOauth2Client(credentials, httpClient));
 
   SpotifyApiBase.fromAuthCodeGrant(
       oauth2.AuthorizationCodeGrant grant, String responseUri)
@@ -67,7 +67,7 @@ abstract class SpotifyApiBase {
         httpClient: httpClient);
   }
 
-  static FutureOr<oauth2.Client> _getClient(
+  static FutureOr<oauth2.Client> _getOauth2Client(
       SpotifyApiCredentials credentials, http.BaseClient httpClient) async {
     if (credentials.fullyQualified) {
       var oauthCredentials = credentials._toOauth2Credentials();
