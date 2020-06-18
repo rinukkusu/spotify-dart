@@ -87,9 +87,12 @@ abstract class SpotifyApiBase {
       );
     }
 
-    return oauth2.clientCredentialsGrant(Uri.parse(SpotifyApiBase._tokenUrl),
-        credentials.clientId, credentials.clientSecret,
-        httpClient: httpClient);
+    return oauth2.clientCredentialsGrant(
+      Uri.parse(SpotifyApiBase._tokenUrl),
+      credentials.clientId,
+      credentials.clientSecret,
+      httpClient: httpClient,
+    );
   }
 
   Future<String> _get(String path) {
