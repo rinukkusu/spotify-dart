@@ -78,7 +78,7 @@ class SpotifyApiCredentials {
   String get basicAuth => base64.encode('$clientId:$clientSecret'.codeUnits);
 
   /// Whether or not these credentials contain all of the required information
-  /// to generate a client with access to a user's private data.
+  /// to create a client with access to a user's private data.
   bool get fullyQualified =>
       clientId != null &&
       clientSecret != null &&
