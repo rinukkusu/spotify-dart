@@ -102,7 +102,7 @@ final spotify = SpotifyApi.fromAuthCodeGrant(grant, responseUri);
 </details>
 
 #### Saved Credentials Flow
-No one wants to redo the Authorization Code Flow for every login or app start. If you save your credentials somewhere while authenticated, you can reconnect to Spotify later by passing those credentials into the constructor. If the access token is expired at this point, the credentials will be automatically refreshed.
+No one wants to redo the Authorization Code Flow for every login or app start. If you save your credentials somewhere while authenticated, you can reconnect to Spotify later by passing those credentials into the constructor. If the access token is expired at this point, the credentials will be automatically refreshed. If the refresh token has been revoked for any reason, an exception will be thrown and you'll need to reauthenticate through another flow.
 
 ```dart
 // Connect to Spotify using the Authorization Code Flow
