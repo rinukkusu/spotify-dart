@@ -47,10 +47,9 @@ class SpotifyApiCredentials {
     this.clientSecret, {
     this.accessToken,
     this.refreshToken,
-    this.tokenEndpoint,
     this.scopes,
     this.expiration,
-  });
+  }) : tokenEndpoint = Uri.parse(SpotifyApiBase._tokenUrl);
 
   SpotifyApiCredentials._fromClient(oauth2.Client client) {
     clientId = client.identifier;
@@ -88,4 +87,12 @@ class SpotifyApiCredentials {
       tokenEndpoint != null &&
       scopes != null &&
       expiration != null;
+
+  oauth2.Credentials _toOauth2Credentials() => oauth2.Credentials(
+        accessToken,
+        refreshToken: refreshToken,
+        tokenEndpoint: tokenEndpoint,
+        scopes: scopes,
+        expiration: expiration,
+      );
 }

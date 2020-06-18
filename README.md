@@ -122,7 +122,6 @@ final spotifyCredentials = SpotifyApiCredentials(
     credentials.clientSecret,
     accessToken: credentials.accessToken,
     refreshToken: credentials.refreshToken,
-    tokenEndpoint: credentials.tokenEndpoint,
     scopes: credentials.scopes,
     expiration: credentials.expiration,
   );
