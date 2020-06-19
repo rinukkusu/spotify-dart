@@ -92,6 +92,8 @@ void main() async {
             'artists: ${item.artists.length}\n'
             'availableMarkets: ${item.availableMarkets.length}\n'
             'images: ${item.images.length}\n'
+            'releaseDate: ${item.releaseDate}\n'
+            'releaseDatePrecision: ${item.releaseDatePrecision}\n'
             '-------------------------------');
       }
     });
