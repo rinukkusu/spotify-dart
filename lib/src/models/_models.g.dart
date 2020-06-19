@@ -71,6 +71,8 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
             (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..name = json['name'] as String
+    ..releaseDate = json['release_date'] as String
+    ..releaseDatePrecision = json['release_date_precision'] as String
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
 }

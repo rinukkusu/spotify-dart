@@ -79,6 +79,16 @@ class AlbumSimple extends Object {
   /// empty string.
   String name;
 
+  /// The date the album was first released, for example "1981-12-15".
+  /// Depending on the precision, it might be shown as "1981" or "1981-12".
+  @JsonKey(name: 'release_date')
+  String releaseDate;
+
+  /// The precision with which release_date value is known:
+  ///     "year", "month", or "day".
+  @JsonKey(name: 'release_date_precision')
+  String releaseDatePrecision;
+
   /// The object type: "album"
   String type;
 
