@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.6
+
+- AlbumSimple: add release date properties
+- add authorization flow for saved credentials
+
 ## 0.3.5
 
 - playlists: support adding multiple tracks to playlist
