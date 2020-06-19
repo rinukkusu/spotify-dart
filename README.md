@@ -7,14 +7,9 @@ A dart library for interfacing with the Spotify API.
 ### Simple Example
 
 ```dart
-import 'package:spotify/spotify.dart';
-
-void main() async {
-  var credentials = SpotifyApiCredentials(clientId, clientSecret);
-  var spotify = SpotifyApi(credentials);
-
-  var artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
-}
+final credentials = SpotifyApiCredentials(clientId, clientSecret);
+final spotify = SpotifyApi(credentials);
+final artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
 ```
 
 ### Authorization
@@ -22,49 +17,45 @@ void main() async {
 This flow is recommended when you only need access to public Spotify data. It cannot be used to access or manage a user's private data.
 
 ```dart
-SpotifyApi getSpotifyApi() {
-  final credentials = SpotifyApiCredentials(clientId, clientSecret);
-  return SpotifyApi(credentials);
-}
+final credentials = SpotifyApiCredentials(clientId, clientSecret);
+final spotify = SpotifyApi(credentials);
 ```
 
 #### Authorization Code Flow
 This flow is suitable for long-running applications when you need to access or manage a user's private data. The Authorization Code Flow is a complex process, so it's highly recommended to read through [Spotify's Authorization Guide][spotify_auth] before attempting. Note that this package simplifies the creation of the authorization URI and the process of requesting tokens after receiving an authorization code.
 
 ```dart
-SpotifyApi getSpotifyApi() async {
-  final credentials = SpotifyApiCredentials(clientId, clientSecret);
-  final grant = SpotifyApi.authorizationCodeGrant(credentials);
+final credentials = SpotifyApiCredentials(clientId, clientSecret);
+final grant = SpotifyApi.authorizationCodeGrant(credentials);
 
-  // The URI to redirect to after the user grants or denies permission. It must
-  // be in your Spotify application's Redirect URI whitelist. This URI can
-  // either be a web address pointing to an authorization server or a fabricated
-  // URI that allows the client device to function as an authorization server.
-  final redirectUri = 'https://example.com/auth';
+// The URI to redirect to after the user grants or denies permission. It must
+// be in your Spotify application's Redirect URI whitelist. This URI can
+// either be a web address pointing to an authorization server or a fabricated
+// URI that allows the client device to function as an authorization server.
+final redirectUri = 'https://example.com/auth';
 
-  // See https://developer.spotify.com/documentation/general/guides/scopes/
-  // for a complete list of these Spotify authorization permissions. If no
-  // scopes are specified, only public Spotify information will be available.
-  final scopes = ['user-read-email', 'user-library-read'];
+// See https://developer.spotify.com/documentation/general/guides/scopes/
+// for a complete list of these Spotify authorization permissions. If no
+// scopes are specified, only public Spotify information will be available.
+final scopes = ['user-read-email', 'user-library-read'];
 
-  var authUri = grant.getAuthorizationUrl(
-    Uri.parse(redirectUri),
-    scopes: scopes, // scopes are optional
-  );
+final authUri = grant.getAuthorizationUrl(
+  Uri.parse(redirectUri),
+  scopes: scopes, // scopes are optional
+);
 
-  // `redirect` is an imaginary function that redirects the resource owner's
-  // browser to the `authUri` on the authorization server. Once the resource
-  // owner has authorized, they'll be redirected to the `redirectUri` with an
-  // authorization code. The exact implementation varies across platforms.
-  await redirect(authUri);
+// `redirect` is an imaginary function that redirects the resource owner's
+// browser to the `authUri` on the authorization server. Once the resource
+// owner has authorized, they'll be redirected to the `redirectUri` with an
+// authorization code. The exact implementation varies across platforms.
+await redirect(authUri);
 
-  // `listen` is another imaginary function that listens for a request to
-  // `redirectUri` after the user grants or denies permission. Again, the
-  // exact implementation varies across platforms.
-  final responseUri = await listen(redirectUri);
+// `listen` is another imaginary function that listens for a request to
+// `redirectUri` after the user grants or denies permission. Again, the
+// exact implementation varies across platforms.
+final responseUri = await listen(redirectUri);
 
-  return SpotifyApi.fromAuthCodeGrant(grant, responseUri);
-}
+final spotify = SpotifyApi.fromAuthCodeGrant(grant, responseUri);
 ```
 
 <details>
@@ -77,38 +68,66 @@ SpotifyApi getSpotifyApi() async {
   For Flutter apps, there's two popular approaches:
   1. Launch a browser using [url_launcher][] and listen for a redirect using [uni_links][].
       ```dart
-        if (await canLaunch(authUri)) {
-          await launch(authUri);
-        }
+      if (await canLaunch(authUri)) {
+        await launch(authUri);
+      }
 
-        ...
-    
-        final linksStream = getLinksStream().listen((String link) async {
-          if (link.startsWith(redirectUri)) {
-            responseUri = link;
-          }
-        });
+      ...
+  
+      final linksStream = getLinksStream().listen((String link) async {
+        if (link.startsWith(redirectUri)) {
+          responseUri = link;
+        }
+      });
       ```
 
   2. Launch a WebView inside the app and listen for a redirect using [webview_flutter][].
       ```dart
-        WebView(
-          javascriptMode: JavascriptMode.unrestricted,
-          initialUrl: authUri,
-          navigationDelegate: (navReq) {
-            if (navReq.url.startsWith(redirectUri)) {
-              responseUri = navReq.url;
-              return NavigationDecision.prevent;
-            }
-            
-            return NavigationDecision.navigate;
-          },
-          ...
-        );
+      WebView(
+        javascriptMode: JavascriptMode.unrestricted,
+        initialUrl: authUri,
+        navigationDelegate: (navReq) {
+          if (navReq.url.startsWith(redirectUri)) {
+            responseUri = navReq.url;
+            return NavigationDecision.prevent;
+          }
+          
+          return NavigationDecision.navigate;
+        },
+        ...
+      );
       ```
    
   For Dart apps, the best approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
 </details>
+
+#### Saved Credentials Flow
+No one wants to redo the Authorization Code Flow for every login or app start. If you save your credentials somewhere while authenticated, you can reconnect to Spotify later by passing those credentials into the constructor. If the access token is expired at this point, the credentials will be automatically refreshed. If the refresh token has been revoked for any reason, an exception will be thrown and you'll need to reauthenticate through another flow.
+
+```dart
+// Connect to Spotify using the Authorization Code Flow
+final spotify = SpotifyApi(...);
+
+// Save the credentials somewhere (local storage, database etc.)
+someService.saveCredentials(spotify.getCredentials());
+
+...
+
+// Retrieve the saved credentials and use them to connect to Spotify
+final credentials = someService.retrieveCredentials();
+
+// All of these fields are required for the Saved Credentials Flow
+final spotifyCredentials = SpotifyApiCredentials(
+    credentials.clientId,
+    credentials.clientSecret,
+    accessToken: credentials.accessToken,
+    refreshToken: credentials.refreshToken,
+    scopes: credentials.scopes,
+    expiration: credentials.expiration,
+  );
+
+final spotify = SpotifyApi(spotifyCredentials);
+```
 
 ## Features and bugs
 

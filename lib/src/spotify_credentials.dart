@@ -42,7 +42,14 @@ class SpotifyApiCredentials {
   /// expiration date.
   DateTime expiration;
 
-  SpotifyApiCredentials(this.clientId, this.clientSecret);
+  SpotifyApiCredentials(
+    this.clientId,
+    this.clientSecret, {
+    this.accessToken,
+    this.refreshToken,
+    this.scopes,
+    this.expiration,
+  }) : tokenEndpoint = Uri.parse(SpotifyApiBase._tokenUrl);
 
   SpotifyApiCredentials._fromClient(oauth2.Client client) {
     clientId = client.identifier;
@@ -69,4 +76,23 @@ class SpotifyApiCredentials {
   bool get canRefresh => refreshToken != null && tokenEndpoint != null;
 
   String get basicAuth => base64.encode('$clientId:$clientSecret'.codeUnits);
+
+  /// Whether or not these credentials contain all of the required information
+  /// to create a client with access to a user's private data.
+  bool get fullyQualified =>
+      clientId != null &&
+      clientSecret != null &&
+      accessToken != null &&
+      refreshToken != null &&
+      tokenEndpoint != null &&
+      scopes != null &&
+      expiration != null;
+
+  oauth2.Credentials _toOauth2Credentials() => oauth2.Credentials(
+        accessToken,
+        refreshToken: refreshToken,
+        tokenEndpoint: tokenEndpoint,
+        scopes: scopes,
+        expiration: expiration,
+      );
 }
