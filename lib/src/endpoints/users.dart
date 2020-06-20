@@ -20,7 +20,7 @@ class Users extends EndpointPaging {
   Future<Player> currentlyPlaying() => _me.currentlyPlaying();
 
   @Deprecated('Use "SpotifyApi.me.recentlyPlayed()"')
-  Future<Iterable<Track>> recentlyPlayed() => _me.recentlyPlayed();
+  Future<Iterable<PlayHistory>> recentlyPlayed() => _me.recentlyPlayed();
 
   @Deprecated('Use "SpotifyApi.me.topTracks()"')
   Future<Iterable<Track>> topTracks() => _me.topTracks();

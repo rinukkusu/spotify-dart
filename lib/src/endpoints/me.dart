@@ -34,12 +34,22 @@ class Me extends EndpointPaging {
     return Player.fromJson(map);
   }
 
-  Future<Iterable<Track>> recentlyPlayed() async {
-    var jsonString = await _api._get('$_path/player/recently-played');
+  Future<Iterable<PlayHistory>> recentlyPlayed(
+      {int limit, DateTime after, DateTime before}) async {
+    if (after != null && before != null) {
+      throw Exception('Cannot specify both after and before.');
+    }
+
+    var jsonString = await _api._get('$_path/player/recently-played?' +
+        _buildQuery({
+          'limit': limit,
+          'after': after?.millisecondsSinceEpoch,
+          'before': before?.millisecondsSinceEpoch
+        }));
     var map = json.decode(jsonString);
 
     var items = map['items'] as Iterable<dynamic>;
-    return items.map((item) => Track.fromJson(item['track']));
+    return items.map((item) => PlayHistory.fromJson(item));
   }
 
   Future<Iterable<Track>> topTracks() async {
