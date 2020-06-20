@@ -36,20 +36,17 @@ class Me extends EndpointPaging {
 
   Future<Iterable<PlayHistory>> recentlyPlayed(
       {int limit, DateTime after, DateTime before}) async {
-    if (after != null && before != null) {
-      throw Exception('Cannot specify both after and before.');
-    }
+    assert(after == null || before == null,
+        'Cannot specify both after and before.');
 
-    var jsonString = await _api._get('$_path/player/recently-played?' +
+    final jsonString = await _api._get('$_path/player/recently-played?' +
         _buildQuery({
           'limit': limit,
           'after': after?.millisecondsSinceEpoch,
           'before': before?.millisecondsSinceEpoch
         }));
-    var map = json.decode(jsonString);
-
-    var items = map['items'] as Iterable<dynamic>;
-    return items.map((item) => PlayHistory.fromJson(item));
+    final map = json.decode(jsonString);
+    return map['items'].map((item) => PlayHistory.fromJson(item));
   }
 
   Future<Iterable<Track>> topTracks() async {
@@ -76,6 +73,7 @@ class FollowingType {
   final String _key;
 
   const FollowingType(this._key);
+
   String get key => _key;
 
   static const artist = FollowingType('artist');
