@@ -11,8 +11,7 @@ class Playlists extends EndpointPaging {
 
   Future<Playlist> get(String playlistId) async {
     return Playlist.fromJson(
-        jsonDecode(await _api._get('v1/playlists/$playlistId'))
-    );
+        jsonDecode(await _api._get('v1/playlists/$playlistId')));
   }
 
   Pages<PlaylistSimple> get featured {
@@ -100,5 +99,21 @@ class Playlists extends EndpointPaging {
         (json) => PlaylistSimple.fromJson(json),
         'playlists',
         (json) => PlaylistsFeatured.fromJson(json));
+  }
+
+  /// [playlistId] - the playlist ID
+  ///
+  /// [public] - Defaults to `true`. If `true` the playlist will be included
+  /// in user’s public playlists, if `false` it will remain private.
+  Future<Null> followPlaylist(String playlistId, {bool public = true}) async {
+    final url = 'v1/playlists/$playlistId/followers';
+    final body = jsonEncode({'public': public});
+    await _api._put(url, body);
+  }
+
+  /// [playlistId] - the playlist ID
+  Future<Null> unfollowPlaylist(String playlistId) async {
+    final url = 'v1/playlists/$playlistId/followers';
+    await _api._delete(url);
   }
 }
