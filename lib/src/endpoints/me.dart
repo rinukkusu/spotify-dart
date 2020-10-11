@@ -50,6 +50,14 @@ class Me extends EndpointPaging {
     return items.map((item) => Track.fromJson(item));
   }
 
+  Future<Iterable<Track>> topArtists() async {
+    var jsonString = await _api._get('$_path/top/artists');
+    var map = json.decode(jsonString);
+
+    var items = map['items'] as Iterable<dynamic>;
+    return items.map((item) => Track.fromJson(item));
+  }
+
   Future<Iterable<Device>> devices() async {
     return _api._get('$_path/player/devices').then(_parseDeviceJson);
   }
