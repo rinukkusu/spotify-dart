@@ -4,7 +4,7 @@
 
 - add /me/top/artists endpoint
 - add following and unfollowing playlists
-- add offset paging to /me/recentlyPlayed
+- add date-based paging to /me/recentlyPlayed
 
 ## 0.3.6
 
