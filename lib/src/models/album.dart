@@ -34,11 +34,13 @@ class Album extends AlbumSimple {
   /// The date the album was first released, for example "1981-12-15".
   /// Depending on the precision, it might be shown as "1981" or "1981-12".
   @JsonKey(name: 'release_date')
+  @override
   String releaseDate;
 
   /// The precision with which release_date value is known:
   ///     "year", "month", or "day".
   @JsonKey(name: 'release_date_precision')
+  @override
   String releaseDatePrecision;
 }
 
@@ -46,7 +48,8 @@ class Album extends AlbumSimple {
 class AlbumSimple extends Object {
   AlbumSimple();
 
-  factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
+  factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
+      _$AlbumSimpleFromJson(json);
 
   /// The type of the album: one of "album", "single", or "compilation".
   @JsonKey(name: 'album_type')
