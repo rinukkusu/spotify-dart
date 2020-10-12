@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.7
+
+- add /me/top/artists endpoint
+- add following and unfollowing playlists
+- add offset paging to /me/recentlyPlayed
+
 ## 0.3.6
 
 - AlbumSimple: add release date properties
