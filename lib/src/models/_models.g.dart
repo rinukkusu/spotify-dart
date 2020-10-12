@@ -480,3 +480,16 @@ UserPublic _$UserPublicFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
 }
+
+PlayHistory _$PlayHistoryFromJson(Map<String, dynamic> json) {
+  return PlayHistory()
+    ..track = json['track'] == null
+        ? null
+        : TrackSimple.fromJson(json['track'] as Map<String, dynamic>)
+    ..playedAt = json['played_at'] == null
+        ? null
+        : DateTime.parse(json['played_at'] as String)
+    ..context = json['context'] == null
+        ? null
+        : PlayerContext.fromJson(json['context'] as Map<String, dynamic>);
+}
