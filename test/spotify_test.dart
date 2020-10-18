@@ -97,6 +97,26 @@ Future main() async {
       expect(result.first.type, DeviceType.Computer);
       expect(result.first.volumePercent, 100);
     });
+
+    test('recentlyPlayed', () async {
+      // the parameters don't do anything. They are just dummies
+      var result = await spotify.me.recentlyPlayed(limit: 3, before: DateTime.now());
+      expect(result.length, 2);
+      var first = result.first;
+      expect(first.track != null, true);
+      
+      // just testing some sample attributes
+      var firstTrack = first.track;
+      expect(firstTrack.durationMs, 108546);
+      expect(firstTrack.explicit, false);
+      expect(firstTrack.id, '2gNfxysfBRfl9Lvi9T3v6R');
+      expect(firstTrack.artists.length, 1);
+      expect(firstTrack.artists.first.name, 'Tame Impala');
+
+      var second = result.last;
+      expect(second.playedAt, DateTime.tryParse('2016-12-13T20:42:17.016Z'));
+      expect(second.context.uri, 'spotify:artist:5INjqkS1o8h1imAzPqGZBb');
+    });
   });
 
   group('Auth', () {

@@ -46,7 +46,7 @@ class Me extends EndpointPaging {
           'before': before?.millisecondsSinceEpoch
         }));
     final map = json.decode(jsonString);
-    return map['items'].map((item) => PlayHistory.fromJson(item));
+    return map['items'].map<PlayHistory>((item) => PlayHistory.fromJson(item));
   }
 
   Future<Iterable<Track>> topTracks() async {
