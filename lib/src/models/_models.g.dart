@@ -77,12 +77,6 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
-Copyright _$CopyrightFromJson(Map<String, dynamic> json) {
-  return Copyright()
-    ..text = json['text'] as String
-    ..type = json['type'] as String;
-}
-
 Artist _$ArtistFromJson(Map<String, dynamic> json) {
   return Artist()
     ..externalUrls = json['external_urls'] == null
@@ -147,6 +141,12 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..id = json['id'] as String
     ..name = json['name'] as String;
+}
+
+Copyright _$CopyrightFromJson(Map<String, dynamic> json) {
+  return Copyright()
+    ..text = json['text'] as String
+    ..type = json['type'] as String;
 }
 
 Device _$DeviceFromJson(Map<String, dynamic> json) {
@@ -355,6 +355,62 @@ RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) {
     ..id = json['id'] as String
     ..initialPoolSize = json['initialPoolSize'] as int
     ..type = json['type'] as String;
+}
+
+Show _$ShowFromJson(Map<String, dynamic> json) {
+  return Show()
+    ..availableMarkets =
+        (json['available_markets'] as List)?.map((e) => e as String)?.toList()
+    ..copyrights = (json['copyrights'] as List)
+        ?.map((e) =>
+            e == null ? null : Copyright.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..description = json['description'] as String
+    ..explicit = json['explicit'] as bool
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
+    ..href = json['href'] as String
+    ..id = json['id'] as String
+    ..images = (json['images'] as List)
+        ?.map(
+            (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..isExternallyHosted = json['is_externally_hosted'] as bool
+    ..languages = (json['languages'] as List)?.map((e) => e as String)?.toList()
+    ..mediaType = json['meida_type'] as String
+    ..name = json['name'] as String
+    ..publisher = json['publisher'] as String
+    ..type = json['type'] as String
+    ..uri = json['uri'] as String;
+}
+
+Episode _$EpisodeFromJson(Map<String, dynamic> json) {
+  return Episode()
+    ..audioPreviewUrl = json['audio_preview_url'] as String
+    ..description = json['description'] as String
+    ..durationMs = json['duration_ms'] as int
+    ..explicit = json['explicit'] as bool
+    ..externalUrls = json['external_urls'] == null
+        ? null
+        : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
+    ..href = json['href'] as String
+    ..id = json['id'] as String
+    ..images = (json['images'] as List)
+        ?.map(
+            (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..isExternallyHosted = json['is_externally_hosted'] as bool
+    ..isPlayable = json['is_playable'] as bool
+    ..language = json['language'] as String
+    ..languages = (json['languages'] as List)?.map((e) => e as String)?.toList()
+    ..name = json['name'] as String
+    ..releaseDate = json['release_date'] == null
+        ? null
+        : DateTime.parse(json['release_date'] as String)
+    ..releaseDatePrecision = json['release_date_precision'] as String
+    ..type = json['type'] as String
+    ..uri = json['uri'] as String;
 }
 
 Track _$TrackFromJson(Map<String, dynamic> json) {
