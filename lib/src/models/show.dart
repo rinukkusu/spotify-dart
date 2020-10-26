@@ -44,7 +44,7 @@ class Show {
   List<String> languages;
 
   /// The media type of the show.
-  @JsonKey(name: 'meida_type')
+  @JsonKey(name: 'media_type')
   String mediaType;
 
   /// The name of the show.

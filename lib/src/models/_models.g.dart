@@ -378,7 +378,7 @@ Show _$ShowFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..isExternallyHosted = json['is_externally_hosted'] as bool
     ..languages = (json['languages'] as List)?.map((e) => e as String)?.toList()
-    ..mediaType = json['meida_type'] as String
+    ..mediaType = json['media_type'] as String
     ..name = json['name'] as String
     ..publisher = json['publisher'] as String
     ..type = json['type'] as String
