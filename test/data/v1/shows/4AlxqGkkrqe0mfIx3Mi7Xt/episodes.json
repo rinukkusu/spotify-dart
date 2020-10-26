@@ -1,0 +1,225 @@
+{
+    "href": "https://api.spotify.com/v1/shows/4AlxqGkkrqe0mfIx3Mi7Xt/episodes?offset=0&limit=5",
+    "items": [
+      {
+        "audio_preview_url": "https://p.scdn.co/mp3-preview/7e8eb04005c7018b4d6eb921c7a9b1799dc8161a",
+        "description": "Noticias: Flutter community plus packages Widget: StreamBuilder Package: miniplayer Dica: Cascade notation Fonte de conhecimento: Curso de Flutter gratuito Bugs e debugs: DevTools - Memory view  ",
+        "duration_ms": 483362,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/episode/2GNGWtI5WLvgNzFziXEaW2"
+        },
+        "href": "https://api.spotify.com/v1/episodes/2GNGWtI5WLvgNzFziXEaW2",
+        "id": "2GNGWtI5WLvgNzFziXEaW2",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/b1e232fa710bcb21c25f05cb4d36d8344b313e37",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/c0217abe77a69f56372ff94032b1ffe6cc60523d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ef497dba1353e939d69b45b6cc6de163fc4a0d04",
+            "width": 64
+          }
+        ],
+        "is_externally_hosted": false,
+        "is_playable": true,
+        "language": "pt-BR",
+        "languages": [
+          "pt-BR"
+        ],
+        "name": "StreamBuilder, Curso de Flutter e outros | #25",
+        "release_date": "2020-10-21",
+        "release_date_precision": "day",
+        "resume_point": {
+          "fully_played": true,
+          "resume_position_ms": 0
+        },
+        "type": "episode",
+        "uri": "spotify:episode:2GNGWtI5WLvgNzFziXEaW2"
+      },
+      {
+        "audio_preview_url": "https://p.scdn.co/mp3-preview/04814b1807bc823cb1e15d5530f4866d843023fc",
+        "description": "Noticias: Hotfix versão estável Widget: FadeImage Package: camerawesome Dica: Grupo fechado e aberto de testes (Android) TestFlight Fonte de conhecimento: Artigo ciclo de vida  Article lifecycle Bugs e debugs: DevTools - Timeline  ",
+        "duration_ms": 451032,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/episode/22rROByymwOov4wCJOPWrN"
+        },
+        "href": "https://api.spotify.com/v1/episodes/22rROByymwOov4wCJOPWrN",
+        "id": "22rROByymwOov4wCJOPWrN",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/c9c6d7fe13ddbe1036b8cb7dc01f14af72f8eec2",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/18374c476d81c9009c41d6f43c48c70a1c6b2228",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/56f9574ea69fadb89b9c4f4a8ee69ebe408295be",
+            "width": 64
+          }
+        ],
+        "is_externally_hosted": false,
+        "is_playable": true,
+        "language": "pt-BR",
+        "languages": [
+          "pt-BR"
+        ],
+        "name": "Grupos de testes, ciclo de vida de widgets en Flutter e outros | #24",
+        "release_date": "2020-10-14",
+        "release_date_precision": "day",
+        "resume_point": {
+          "fully_played": false,
+          "resume_position_ms": 0
+        },
+        "type": "episode",
+        "uri": "spotify:episode:22rROByymwOov4wCJOPWrN"
+      },
+      {
+        "audio_preview_url": "https://p.scdn.co/mp3-preview/d125422d3aac0023d46bf71009d9cc4cd376f86b",
+        "description": "Noticias: Changelog 1.22.0 Dart 2.10 Changelog 2.10 Versão 1.22.0 Flutter Podcast no Awesome Flutter Widget: SliverList & SliverGrid Package: flutter_spinkit Dica: Bookmarks sobre Design Fonte de conhecimento: Grupo Flutteristas Bugs e debugs: DevTools - Inspector  ",
+        "duration_ms": 537402,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/episode/05mIywaNBi5RqkP4vzBJrw"
+        },
+        "href": "https://api.spotify.com/v1/episodes/05mIywaNBi5RqkP4vzBJrw",
+        "id": "05mIywaNBi5RqkP4vzBJrw",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/a6c3aa80f14dfff61a7d545afe46f6ee95498ff0",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/2c6e6b81a81c8f856ad66910090bfa821bd29ec7",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/d1c4442e83341366c56a1c970d1bd2846c867dd7",
+            "width": 64
+          }
+        ],
+        "is_externally_hosted": false,
+        "is_playable": true,
+        "language": "pt-BR",
+        "languages": [
+          "pt-BR"
+        ],
+        "name": "Versão 1.22.0 de Flutter, Flutteristas, DevTools e outros | #23",
+        "release_date": "2020-10-07",
+        "release_date_precision": "day",
+        "resume_point": {
+          "fully_played": true,
+          "resume_position_ms": -1000
+        },
+        "type": "episode",
+        "uri": "spotify:episode:05mIywaNBi5RqkP4vzBJrw"
+      },
+      {
+        "audio_preview_url": "https://p.scdn.co/mp3-preview/0abe24d2b50585ea1acdb6f2660e28e794661d65",
+        "description": "Noticias: Flutter para Windows em alfa Widget: SliverAppBar Package: flutter_linkify Dica: Extensão VS Code Dart Class Generator Fonte de conhecimento: Desktop inspiration #1 Desktop inspiration #2 Bugs e debugs: Introdução ao DevTools Repositório DevTools ",
+        "duration_ms": 402244,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/episode/6IbMawzLgJcQtD79YatbGD"
+        },
+        "href": "https://api.spotify.com/v1/episodes/6IbMawzLgJcQtD79YatbGD",
+        "id": "6IbMawzLgJcQtD79YatbGD",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/945a7ca85f1a1ebe2a1eaf2efa3fd4d7ec4f96a0",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/e2caba08dfb3622e797ad4cb1d5b2704c8cc30fb",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/d1632831622f071baa22076fba57cbad2bbb0eb7",
+            "width": 64
+          }
+        ],
+        "is_externally_hosted": false,
+        "is_playable": true,
+        "language": "pt-BR",
+        "languages": [
+          "pt-BR"
+        ],
+        "name": "Flutter Desktop, DevTools e outros | #22",
+        "release_date": "2020-09-30",
+        "release_date_precision": "day",
+        "resume_point": {
+          "fully_played": false,
+          "resume_position_ms": 0
+        },
+        "type": "episode",
+        "uri": "spotify:episode:6IbMawzLgJcQtD79YatbGD"
+      },
+      {
+        "audio_preview_url": "https://p.scdn.co/mp3-preview/9183a5fed773f556505c673c06249aa3168154cd",
+        "description": "Noticias: Mais de 2k reproduções e quase 70 membros no grupo Ausencia semana passada Soporte a iOS 14 e XCode 12 Nova versão estável em outubro App de eBay motors App GooglePay Widget: Table Package: shimmer Utilizando o shimmer no seu próximo aplicativo Dica: Mock API Fonte de conhecimento: Canal no Youtube do Rodrigo Rahman Bugs e debugs: Medir o tempo de inicio da app  ",
+        "duration_ms": 569408,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/episode/1Curt9cuN6GFG7uZKV3t95"
+        },
+        "href": "https://api.spotify.com/v1/episodes/1Curt9cuN6GFG7uZKV3t95",
+        "id": "1Curt9cuN6GFG7uZKV3t95",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/e56a2d38666367e4d031b5d6d7a81cb368318aa9",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/1469bf3dc6df5234e746cfebc289d54393874111",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/a22b85ab3f921129c46de37e0bad1c4d5083c96a",
+            "width": 64
+          }
+        ],
+        "is_externally_hosted": false,
+        "is_playable": true,
+        "language": "pt-BR",
+        "languages": [
+          "pt-BR"
+        ],
+        "name": "Varias noticias de Flutter, Canal Rodrigo Rahman e outros | #21",
+        "release_date": "2020-09-23",
+        "release_date_precision": "day",
+        "resume_point": {
+          "fully_played": true,
+          "resume_position_ms": 0
+        },
+        "type": "episode",
+        "uri": "spotify:episode:1Curt9cuN6GFG7uZKV3t95"
+      }
+    ],
+    "limit": 5,
+    "next": "https://api.spotify.com/v1/shows/4AlxqGkkrqe0mfIx3Mi7Xt/episodes?offset=5&limit=5",
+    "offset": 0,
+    "previous": null,
+    "total": 26
+  }

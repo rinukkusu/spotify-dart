@@ -57,6 +57,33 @@ Future main() async {
     });
   });
 
+  group('Shows', () {
+    test('get', () async {
+      var show = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
+
+      expect(show.type, 'show');
+      expect(show.id, '4AlxqGkkrqe0mfIx3Mi7Xt');
+      expect(show.name, 'Universo Flutter');
+    });
+
+    test('list', () async {
+      var shows = await spotify.shows
+          .list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
+
+      expect(shows.length, 2);
+    });
+  });
+
+  group('Show episodes', () {
+    test('list', () async {
+      var episodes = await spotify.showEpisodes.list('4AlxqGkkrqe0mfIx3Mi7Xt');
+
+      expect(episodes.last.type, 'episode');
+      expect(episodes.isNotEmpty, true);
+      expect(episodes.last.explicit, false);
+    });
+  });
+
   group('Search', () {
     test('get', () async {
       var searchResult = await spotify.search.get('metallica').first();
@@ -100,11 +127,12 @@ Future main() async {
 
     test('recentlyPlayed', () async {
       // the parameters don't do anything. They are just dummies
-      var result = await spotify.me.recentlyPlayed(limit: 3, before: DateTime.now());
+      var result =
+          await spotify.me.recentlyPlayed(limit: 3, before: DateTime.now());
       expect(result.length, 2);
       var first = result.first;
       expect(first.track != null, true);
-      
+
       // just testing some sample attributes
       var firstTrack = first.track;
       expect(firstTrack.durationMs, 108546);
