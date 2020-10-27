@@ -14,7 +14,6 @@ void main() async {
   var spotify = await _getUserAuthenticatedSpotifyApi(credentials);
   if (spotify == null) {
     exit(0);
-    return;
   }
   await _currentlyPlaying(spotify);
   await _devices(spotify);

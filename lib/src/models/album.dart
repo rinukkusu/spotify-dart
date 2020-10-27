@@ -98,18 +98,3 @@ class AlbumSimple extends Object {
   /// The Spotify URI for the album.
   String uri;
 }
-
-@JsonSerializable(createToJson: false)
-class Copyright extends Object {
-  Copyright();
-  factory Copyright.fromJson(Map<String, dynamic> json) =>
-      _$CopyrightFromJson(json);
-
-  /// The copyright text for this album.
-  String text;
-
-  /// The type of copyright:
-  ///     C = the copyright
-  ///     P = the sound recording (performance) copyright.
-  String type;
-}

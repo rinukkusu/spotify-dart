@@ -31,6 +31,10 @@ abstract class SpotifyApiBase {
   Categories get categories => _categories;
   Me _me;
   Me get me => _me;
+  ShowEpisodes _showEpisodes;
+  ShowEpisodes get showEpisodes => _showEpisodes;
+  Shows _shows;
+  Shows get shows => _shows;
   oauth2.Client get client => _client;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
@@ -46,6 +50,8 @@ abstract class SpotifyApiBase {
     _search = Search(this);
     _audioFeatures = AudioFeatures(this);
     _categories = Categories(this);
+    _showEpisodes = ShowEpisodes(this);
+    _shows = Shows(this);
   }
 
   SpotifyApiBase(SpotifyApiCredentials credentials,

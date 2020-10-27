@@ -12,6 +12,15 @@ void main() async {
   var credentials = SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   var spotify = SpotifyApi(credentials);
 
+  print('\nPodcast:');
+  var podcast = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
+  print(podcast.name);
+
+  print('\nPodcast episode:');
+  var episodes = await spotify.showEpisodes.list('4AlxqGkkrqe0mfIx3Mi7Xt');
+  var firstEpisode = (await episodes.first()).items.first;
+  print(firstEpisode.name);
+
   print('Artists:');
   var artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
   artists.forEach((x) => print(x.name));
