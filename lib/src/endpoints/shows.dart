@@ -1,4 +1,4 @@
-// Copyright (c) 2017, chances. All rights reserved. Use of this source code
+// Copyright (c) 2020, deandreamatias, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 part of spotify;
@@ -29,12 +29,25 @@ class Shows extends EndpointPaging {
     return Show.fromJson(map);
   }
 
-  /// Get a several shows. Can get only one too
+  /// Get one or several shows
   Future<Iterable<Show>> list(List<String> showsId) async {
     final jsonString = await _get('$_path?ids=${showsId.join(',')}');
     final map = json.decode(jsonString);
 
     final showsMap = map['shows'] as Iterable<dynamic>;
     return showsMap.map((m) => Show.fromJson(m));
+  }
+
+  /// Get a Show's Episodes
+  ///
+  /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
+  /// If a country code is specified, only artists, albums, and tracks with
+  /// content that is playable in that market is returned.
+  Pages<Episode> episodes(String showId, {String market = ''}) {
+    var query = _buildQuery({'market': market});
+    var queryString = query.isNotEmpty ? '?$query' : '';
+
+    return _getPages('$_path/$showId/episodes$queryString',
+        (json) => Episode.fromJson(json));
   }
 }
