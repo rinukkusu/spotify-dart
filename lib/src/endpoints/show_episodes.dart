@@ -20,21 +20,21 @@ class ShowEpisodes extends EndpointPaging {
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
-  Future<Iterable<Episode>> list(
+  Pages<Episode> list(
     String showId, {
     String market = '',
     int offset = 0,
     int limit = 20,
-  }) async {
-    var queryMap = {'offset': offset.toString(), 'limit': limit.toString()};
-    if (market.isNotEmpty) {
-      queryMap.addAll({'market': market});
-    }
+  }) {
+    var queryMap = {
+      'market': market,
+      'offset': offset.toString(),
+      'limit': limit.toString()
+    };
     var query = _buildQuery(queryMap);
-    var response = await _api._get('$_path/$showId/episodes?$query');
-    var map = json.decode(response);
-    var episodesMap = map['items'] as Iterable<dynamic>;
+    var queryString = query.isNotEmpty ? '?$query' : '';
 
-    return episodesMap.map((m) => Episode.fromJson(m));
+    return _getPages('$_path/$showId/episodes$queryString',
+        (json) => Episode.fromJson(json));
   }
 }

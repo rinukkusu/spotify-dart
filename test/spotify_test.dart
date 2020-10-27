@@ -77,10 +77,10 @@ Future main() async {
   group('Show episodes', () {
     test('list', () async {
       var episodes = await spotify.showEpisodes.list('4AlxqGkkrqe0mfIx3Mi7Xt');
+      var firstEpisode = (await episodes.first()).items.first;
 
-      expect(episodes.last.type, 'episode');
-      expect(episodes.isNotEmpty, true);
-      expect(episodes.last.explicit, false);
+      expect(firstEpisode.type, 'episode');
+      expect(firstEpisode.explicit, false);
     });
   });
 
