@@ -18,6 +18,41 @@ Future main() async {
       expect(album.images.length, 3);
     });
 
+    test('album tracks', () async {
+      var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
+      var tracksPage = album.tracksPage;
+      expect(tracksPage.href,
+          'https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy/tracks?offset=0&limit=50&market=ES');
+      expect(tracksPage.total, 18);
+
+      var items = tracksPage.itemsNative;
+      expect(items.length, 3);
+      var tracks = album.tracksNative;
+
+      var trackOne = tracks.first;
+      expect(trackOne.discNumber, 1);
+      expect(trackOne.durationMs, 85400);
+      expect(trackOne.id, '6OmhkSOpvYBokMKQxpIGx2');
+      expect(trackOne.isPlayable, true);
+      expect(trackOne.type, 'track');
+      expect(trackOne.uri, 'spotify:track:6OmhkSOpvYBokMKQxpIGx2');
+      expect(trackOne.explicit, true);
+      expect(trackOne.href,
+          'https://api.spotify.com/v1/tracks/6OmhkSOpvYBokMKQxpIGx2');
+      expect(trackOne.previewUrl,
+          'https://p.scdn.co/mp3-preview/bf9e33b1bb53c281c5eea0da6c317f2cd7c3eb58?cid=8897482848704f2a8f8d7c79726a70d4');
+      expect(trackOne.name, 'Global Warming');
+
+      expect(trackOne.externalUrls != null, true);
+      expect(trackOne.externalUrls.spotify,
+          'https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2');
+
+      var artists = trackOne.artists;
+      expect(artists.length, 2);
+      expect(artists[0].name, 'Pitbull');
+      expect(artists[1].name, 'Sensato');
+    });
+
     test('list', () async {
       var albums = await spotify.albums
           .list(['4aawyAB9vmqN3uQ7FjRGTy', '4aawyAB9vmqN3uQ7FjRGTy']);
