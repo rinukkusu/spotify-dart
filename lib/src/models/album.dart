@@ -98,10 +98,11 @@ class AlbumSimple extends Object {
   /// The Spotify URI for the album.
   String uri;
 
-  /// The tracks of this album
+  /// The tracks of this album wrapped in a page object.
   @JsonKey(name: 'tracks')
   Paging<TrackSimple> tracksPage;
 
   Iterable<TrackSimple> get tracksNative =>
-      tracksPage.itemsNative.map((e) => TrackSimple.fromJson(e)).toList();
+      tracksPage?.itemsNative?.map((e) => TrackSimple.fromJson(e))?.toList() ??
+      [];
 }
