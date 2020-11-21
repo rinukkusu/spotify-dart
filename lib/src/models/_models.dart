@@ -9,6 +9,7 @@ part 'external_objects.dart';
 
 part 'album.dart';
 part 'artist.dart';
+part 'audio_analysis.dart';
 part 'audio_feature.dart';
 part 'category.dart';
 part 'copyright.dart';
@@ -20,7 +21,10 @@ part 'paging.dart';
 part 'player.dart';
 part 'playlist.dart';
 part 'recommendations.dart';
+part 'section.dart';
+part 'segment.dart';
 part 'show.dart';
 part 'episode.dart';
+part 'time_interval.dart';
 part 'track.dart';
 part 'user.dart';
