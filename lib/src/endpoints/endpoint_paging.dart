@@ -42,6 +42,13 @@ class Page<T> {
   int get nextOffset => _paging.offset + _paging.limit;
 }
 
+class CursorPage<T> extends Page<T> {
+  final CursorPaging<T> _paging;
+  
+  CursorPage(this._paging, ParserFunction<T> pageItemParser,
+      [Object pageContainer]) : 
+}
+
 const defaultLimit = 20;
 
 abstract class _Pages<T> {
