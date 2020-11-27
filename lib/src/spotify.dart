@@ -7,6 +7,9 @@ class SpotifyApi extends SpotifyApiBase {
   SpotifyApi(SpotifyApiCredentials credentials)
       : super(credentials, http.Client());
 
+  SpotifyApi.withRefreshCallback(SpotifyApiCredentials credentials, Function(SpotifyApiCredentials) callback)
+      : super(credentials, http.Client(), callback);
+
   SpotifyApi.fromClient(FutureOr<oauth2.Client> client)
       : super.fromClient(client);
 
@@ -17,5 +20,10 @@ class SpotifyApi extends SpotifyApiBase {
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
       SpotifyApiCredentials credentials) {
     return SpotifyApiBase.authorizationCodeGrant(credentials, http.Client());
+  }
+
+  static oauth2.AuthorizationCodeGrant authorizationCodeGrantWithRefreshCallback(
+      SpotifyApiCredentials credentials, Function(SpotifyApiCredentials) callback) {
+    return SpotifyApiBase.authorizationCodeGrant(credentials, http.Client(), callback);
   }
 }

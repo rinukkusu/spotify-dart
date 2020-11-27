@@ -129,6 +129,16 @@ final spotifyCredentials = SpotifyApiCredentials(
 final spotify = SpotifyApi(spotifyCredentials);
 ```
 
+If, for any reason, you are planning to leave the app open in the background for a very long time and access Spotify's API with variable intervals, spotify-dart will automatically refresh the token if it's expired and updates you with the new credentials (in particular you need the new refresh token) by using the following methods.
+
+```dart
+final spotify = SpotifyApi.withCallback(spotifyCredentials, (SpotifyApiCredentials newCredentials) async {
+    await _saveCredentials(newCredentials); 
+); 
+```
+
+Where _saveCredentials is a method of your choice to save the credentials locally.
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
