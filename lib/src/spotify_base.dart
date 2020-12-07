@@ -50,12 +50,14 @@ abstract class SpotifyApiBase {
     _shows = Shows(this);
   }
 
-  SpotifyApiBase(SpotifyApiCredentials credentials, [http.BaseClient httpClient, Function(SpotifyApiCredentials) callBack]) : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
- 
+  SpotifyApiBase(SpotifyApiCredentials credentials, [http.BaseClient httpClient, Function(SpotifyApiCredentials) callBack])
+      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
+
   SpotifyApiBase.fromAuthCodeGrant(oauth2.AuthorizationCodeGrant grant, String responseUri)
       : this.fromClient(grant.handleAuthorizationResponse(Uri.parse(responseUri).queryParameters));
 
-  static oauth2.AuthorizationCodeGrant authorizationCodeGrant(SpotifyApiCredentials credentials, http.BaseClient httpClient, [Function(SpotifyApiCredentials) callBack]) {
+  static oauth2.AuthorizationCodeGrant authorizationCodeGrant(SpotifyApiCredentials credentials, http.BaseClient httpClient,
+      [Function(SpotifyApiCredentials) callBack]) {
     if (callBack == null)
       return oauth2.AuthorizationCodeGrant(credentials.clientId, Uri.parse(SpotifyApiBase._authorizationUrl), Uri.parse(SpotifyApiBase._tokenUrl),
           secret: credentials.clientSecret, httpClient: httpClient);
@@ -81,23 +83,19 @@ abstract class SpotifyApiBase {
         );
       }
 
-      if (callBack != null)
-        return oauth2.Client(
-          oauthCredentials,
-          identifier: credentials.clientId,
-          onCredentialsRefreshed: (oauth2.Credentials cred) {
-            SpotifyApiCredentials newCredentials = SpotifyApiCredentials(credentials.clientId, credentials.clientSecret,
-                accessToken: cred.accessToken, expiration: cred.expiration, refreshToken: cred.refreshToken, scopes: cred.scopes);
-            callBack(newCredentials);
-          },
-          secret: credentials.clientSecret,
-        );
-
       return oauth2.Client(
         oauthCredentials,
         identifier: credentials.clientId,
+        onCredentialsRefreshed: callBack == null
+            ? null
+            : (oauth2.Credentials cred) {
+                SpotifyApiCredentials newCredentials = SpotifyApiCredentials(credentials.clientId, credentials.clientSecret,
+                    accessToken: cred.accessToken, expiration: cred.expiration, refreshToken: cred.refreshToken, scopes: cred.scopes);
+                callBack(newCredentials);
+              },
         secret: credentials.clientSecret,
       );
+ 
     }
 
     return oauth2.clientCredentialsGrant(
