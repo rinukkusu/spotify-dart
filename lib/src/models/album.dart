@@ -53,10 +53,16 @@ class AlbumSimple extends Object {
 
   /// Helper function that unwraps the items from the paging object.
   static Iterable<TrackSimple> _extractTracksFromPage(
-          Map<String, dynamic> json) =>
-      Paging.fromJson(json)
-          .itemsNative
-          ?.map((trackJson) => TrackSimple.fromJson(trackJson));
+      Map<String, dynamic> json) {
+    if (json == null) {
+      return [];
+    }
+    return json.isEmpty
+        ? []
+        : Paging.fromJson(json)
+            .itemsNative
+            ?.map((trackJson) => TrackSimple.fromJson(trackJson));
+  }
 
   /// The type of the album: one of "album", "single", or "compilation".
   @JsonKey(name: 'album_type')
