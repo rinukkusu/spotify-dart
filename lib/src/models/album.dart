@@ -52,16 +52,15 @@ class AlbumSimple extends Object {
       _$AlbumSimpleFromJson(json);
 
   /// Helper function that unwraps the items from the paging object.
-  static Iterable<TrackSimple> _extractTracksFromPage(
-      Map<String, dynamic> json) {
+  static Iterable<TrackSimple> _extractTracksFromPage(Map<String, dynamic> json) {
     if (json == null) {
       return [];
     }
     return json.isEmpty
         ? []
-        : Paging.fromJson(json)
-            .itemsNative
-            ?.map((trackJson) => TrackSimple.fromJson(trackJson));
+        : Paging.fromJson(json).itemsNative?.map(
+            (trackJson) => TrackSimple.fromJson(trackJson)
+          );
   }
 
   /// The type of the album: one of "album", "single", or "compilation".
@@ -112,6 +111,6 @@ class AlbumSimple extends Object {
   String uri;
 
   /// The tracks of this album.
-  @JsonKey(name: 'tracks', fromJson: _extractTracksFromPage)
+  @JsonKey(fromJson: _extractTracksFromPage)
   Iterable<TrackSimple> tracks;
 }
