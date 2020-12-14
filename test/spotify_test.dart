@@ -20,14 +20,10 @@ Future main() async {
 
     test('album tracks', () async {
       var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
-      var tracksPage = album.tracksPage;
-      expect(tracksPage.href,
-          'https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy/tracks?offset=0&limit=50&market=ES');
-      expect(tracksPage.total, 18);
-
-      var items = tracksPage.itemsNative;
+      var items = album.tracks;
+      
       expect(items.length, 3);
-      var tracks = album.tracksNative;
+      var tracks = album.tracks;
 
       var trackOne = tracks.first;
       expect(trackOne.discNumber, 1);

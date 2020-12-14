@@ -51,6 +51,13 @@ class AlbumSimple extends Object {
   factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
       _$AlbumSimpleFromJson(json);
 
+  /// Helper function that unwraps the items from the paging object.
+  static Iterable<TrackSimple> _extractTracksFromPage(
+          Map<String, dynamic> json) =>
+      Paging.fromJson(json)
+          .itemsNative
+          ?.map((trackJson) => TrackSimple.fromJson(trackJson));
+
   /// The type of the album: one of "album", "single", or "compilation".
   @JsonKey(name: 'album_type')
   String albumType;
@@ -98,11 +105,7 @@ class AlbumSimple extends Object {
   /// The Spotify URI for the album.
   String uri;
 
-  /// The tracks of this album wrapped in a page object.
-  @JsonKey(name: 'tracks')
-  Paging<TrackSimple> tracksPage;
-
-  Iterable<TrackSimple> get tracksNative =>
-      tracksPage?.itemsNative?.map((e) => TrackSimple.fromJson(e))?.toList() ??
-      [];
+  /// The tracks of this album.
+  @JsonKey(name: 'tracks', fromJson: _extractTracksFromPage)
+  Iterable<TrackSimple> tracks;
 }
