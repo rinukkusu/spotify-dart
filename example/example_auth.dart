@@ -17,6 +17,7 @@ void main() async {
   }
   await _currentlyPlaying(spotify);
   await _devices(spotify);
+  //await _createPrivatePlaylist(spotify);
 
   exit(0);
 }
@@ -29,7 +30,7 @@ Future<SpotifyApi> _getUserAuthenticatedSpotifyApi(
 
   var grant = SpotifyApi.authorizationCodeGrant(credentials);
   var authUri = grant.getAuthorizationUrl(Uri.parse(redirect),
-      scopes: ['user-read-playback-state']);
+      scopes: ['user-read-playback-state', 'playlist-modify-private']);
 
   print(
       'Please paste this url \n\n$authUri\n\nto your browser and enter the redirected url:');
@@ -51,7 +52,7 @@ void _currentlyPlaying(SpotifyApi spotify) async =>
         print('Nothing currently playing.');
         return;
       }
-      print('Currently playing: ${a.item.name}');
+      print('Currently playing: ${a.item?.name}');
     }).catchError(_prettyPrintError);
 
 void _devices(SpotifyApi spotify) async =>
@@ -64,7 +65,21 @@ void _devices(SpotifyApi spotify) async =>
       print(devices.map((device) => device.name).join(', '));
     }).catchError(_prettyPrintError);
 
-void _prettyPrintError(Exception error) {
+void _createPrivatePlaylist(SpotifyApi spotify) async {
+  var user = await spotify.me.get();
+  await spotify.playlists
+      .createPlaylist(
+    user.id,
+    'Cool New Playlist 2',
+    description: 'Songs to test by',
+    public: false,
+  )
+      .then((playlist) {
+    print('Private playlist created!');
+  }).catchError(_prettyPrintError);
+}
+
+dynamic _prettyPrintError(Object error) {
   if (error is SpotifyException) {
     print('${error.status} : ${error.message}');
   } else {

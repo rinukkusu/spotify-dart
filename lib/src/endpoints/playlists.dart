@@ -36,10 +36,16 @@ class Playlists extends EndpointPaging {
   /// [userId] - the Spotify user ID
   ///
   /// [playlistName] - the name of the new playlist
-  Future<Playlist> createPlaylist(String userId, String playlistName) async {
+  Future<Playlist> createPlaylist(String userId, String playlistName,
+      {bool public, bool collaborative, String description}) async {
     final url = 'v1/users/$userId/playlists';
-    final playlistJson =
-        await _api._post(url, jsonEncode({'name': playlistName}));
+    final json = <String, dynamic>{'name': playlistName};
+
+    if (public != null) json['public'] = public;
+    if (collaborative != null) json['collaborative'] = collaborative;
+    if (description != null) json['description'] = description;
+
+    final playlistJson = await _api._post(url, jsonEncode(json));
     return await Playlist.fromJson(jsonDecode(playlistJson));
   }
 
