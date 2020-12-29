@@ -61,8 +61,8 @@ abstract class SpotifyApiBase {
     if (callBack == null)
       return oauth2.AuthorizationCodeGrant(credentials.clientId, Uri.parse(SpotifyApiBase._authorizationUrl), Uri.parse(SpotifyApiBase._tokenUrl),
           secret: credentials.clientSecret, httpClient: httpClient);
-    else
-      return oauth2.AuthorizationCodeGrant(credentials.clientId, Uri.parse(SpotifyApiBase._authorizationUrl), Uri.parse(SpotifyApiBase._tokenUrl),
+ 
+    return oauth2.AuthorizationCodeGrant(credentials.clientId, Uri.parse(SpotifyApiBase._authorizationUrl), Uri.parse(SpotifyApiBase._tokenUrl),
           secret: credentials.clientSecret, httpClient: httpClient, onCredentialsRefreshed: (oauth2.Credentials cred) {
         SpotifyApiCredentials newCredentials = SpotifyApiCredentials(credentials.clientId, credentials.clientSecret,
             accessToken: cred.accessToken, expiration: cred.expiration, refreshToken: cred.refreshToken, scopes: cred.scopes);
