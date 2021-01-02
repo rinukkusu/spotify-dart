@@ -79,7 +79,7 @@ void _createPrivatePlaylist(SpotifyApi spotify) async {
   }).catchError(_prettyPrintError);
 }
 
-dynamic _prettyPrintError(Object error) {
+void _prettyPrintError(Object error) {
   if (error is SpotifyException) {
     print('${error.status} : ${error.message}');
   } else {
