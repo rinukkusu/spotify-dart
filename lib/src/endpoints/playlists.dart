@@ -36,6 +36,14 @@ class Playlists extends EndpointPaging {
   /// [userId] - the Spotify user ID
   ///
   /// [playlistName] - the name of the new playlist
+  ///
+  /// [public] - Defaults to `true`. If `true` the playlist will be public,
+  /// if `false` it will be private.
+  ///
+  /// [collaborative] - Defaults to `false`. If `true` the playlist will
+  /// be collaborative.
+  ///
+  /// [description] - the description of the new playlist
   Future<Playlist> createPlaylist(String userId, String playlistName,
       {bool public, bool collaborative, String description}) async {
     final url = 'v1/users/$userId/playlists';
