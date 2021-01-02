@@ -38,6 +38,8 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
     ..name = json['name'] as String
     ..type = json['type'] as String
     ..uri = json['uri'] as String
+    ..tracks = AlbumSimple._extractTracksFromPage(
+        json['tracks'] as Map<String, dynamic>)
     ..copyrights = (json['copyrights'] as List)
         ?.map((e) =>
             e == null ? null : Copyright.fromJson(e as Map<String, dynamic>))
@@ -74,7 +76,9 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
     ..releaseDate = json['release_date'] as String
     ..releaseDatePrecision = json['release_date_precision'] as String
     ..type = json['type'] as String
-    ..uri = json['uri'] as String;
+    ..uri = json['uri'] as String
+    ..tracks = AlbumSimple._extractTracksFromPage(
+        json['tracks'] as Map<String, dynamic>);
 }
 
 Artist _$ArtistFromJson(Map<String, dynamic> json) {
