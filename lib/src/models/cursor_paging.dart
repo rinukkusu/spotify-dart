@@ -3,10 +3,10 @@
 
 part of spotify.models;
 
-typedef ParserFunction<T> = T Function(dynamic object);
+// typedef ParserFunction<T> = T Function(dynamic object);
 
-Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
-List<Map> itemsNativeToJson(Iterable<dynamic> items) => List.from(items);
+// Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
+// List<Map> itemsNativeToJson(Iterable<dynamic> items) => List.from(items);
 
 @JsonSerializable(createToJson: false)
 class CursorPaging<T> extends Paging<T> {
@@ -15,11 +15,16 @@ class CursorPaging<T> extends Paging<T> {
   factory CursorPaging.fromJson(Map<String, dynamic> json) =>
       _$CursorPagingFromJson(json);
 
-  
   Cursor cursors;
 }
 
+
+
+@JsonSerializable(createToJson: false)
 class Cursor extends Object {
+
+  factory Cursor.fromJson(Map<String, dynamic> json) => _$CursorFromJson(json);
+
   Cursor();
   String after;
 }
