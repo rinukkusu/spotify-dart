@@ -114,6 +114,30 @@ ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String;
 }
 
+AudioAnalysis _$AudioAnalysisFromJson(Map<String, dynamic> json) {
+  return AudioAnalysis()
+    ..bars = (json['bars'] as List)
+        ?.map((e) =>
+            e == null ? null : TimeInterval.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..beats = (json['beats'] as List)
+        ?.map((e) =>
+            e == null ? null : TimeInterval.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..sections = (json['sections'] as List)
+        ?.map((e) =>
+            e == null ? null : Section.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..segments = (json['segments'] as List)
+        ?.map((e) =>
+            e == null ? null : Segment.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..tatums = (json['tatums'] as List)
+        ?.map((e) =>
+            e == null ? null : TimeInterval.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
 AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) {
   return AudioFeature()
     ..acousticness = (json['acousticness'] as num)?.toDouble()
@@ -135,6 +159,28 @@ AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) {
     ..uri = json['uri'] as String
     ..valence = (json['valence'] as num)?.toDouble();
 }
+
+Map<String, dynamic> _$AudioFeatureToJson(AudioFeature instance) =>
+    <String, dynamic>{
+      'acousticness': instance.acousticness,
+      'analysis_url': instance.analysisUrl,
+      'danceability': instance.danceability,
+      'duration_ms': instance.durationMs,
+      'energy': instance.energy,
+      'id': instance.id,
+      'instrumentalness': instance.instrumentalness,
+      'key': instance.key,
+      'liveness': instance.liveness,
+      'loudness': instance.loudness,
+      'mode': instance.mode,
+      'speechiness': instance.speechiness,
+      'tempo': instance.tempo,
+      'time_signature': instance.timeSignature,
+      'track_href': instance.trackHref,
+      'type': instance.type,
+      'uri': instance.uri,
+      'valence': instance.valence,
+    };
 
 Category _$CategoryFromJson(Map<String, dynamic> json) {
   return Category()
@@ -361,6 +407,38 @@ RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String;
 }
 
+Section _$SectionFromJson(Map<String, dynamic> json) {
+  return Section()
+    ..start = (json['start'] as num)?.toDouble()
+    ..duration = (json['duration'] as num)?.toDouble()
+    ..confidence = (json['confidence'] as num)?.toDouble()
+    ..loudness = (json['loudness'] as num)?.toDouble()
+    ..tempo = (json['tempo'] as num)?.toDouble()
+    ..tempo_confidence = (json['tempo_confidence'] as num)?.toDouble()
+    ..key = json['key'] as int
+    ..key_confidence = (json['key_confidence'] as num)?.toDouble()
+    ..mode = json['mode'] as int
+    ..mode_confidence = (json['mode_confidence'] as num)?.toDouble()
+    ..time_signature = json['time_signature'] as int
+    ..time_signature_confidence =
+        (json['time_signature_confidence'] as num)?.toDouble();
+}
+
+Segment _$SegmentFromJson(Map<String, dynamic> json) {
+  return Segment()
+    ..start = (json['start'] as num)?.toDouble()
+    ..duration = (json['duration'] as num)?.toDouble()
+    ..confidence = (json['confidence'] as num)?.toDouble()
+    ..loudness_start = (json['loudness_start'] as num)?.toDouble()
+    ..loudness_max = (json['loudness_max'] as num)?.toDouble()
+    ..loudness_max_time = (json['loudness_max_time'] as num)?.toDouble()
+    ..loudness_end = (json['loudness_end'] as num)?.toDouble()
+    ..pitches =
+        (json['pitches'] as List)?.map((e) => (e as num)?.toDouble())?.toList()
+    ..timbre =
+        (json['timbre'] as List)?.map((e) => (e as num)?.toDouble())?.toList();
+}
+
 Show _$ShowFromJson(Map<String, dynamic> json) {
   return Show()
     ..availableMarkets =
@@ -415,6 +493,13 @@ Episode _$EpisodeFromJson(Map<String, dynamic> json) {
     ..releaseDatePrecision = json['release_date_precision'] as String
     ..type = json['type'] as String
     ..uri = json['uri'] as String;
+}
+
+TimeInterval _$TimeIntervalFromJson(Map<String, dynamic> json) {
+  return TimeInterval()
+    ..confidence = (json['confidence'] as num)?.toDouble()
+    ..duration = (json['duration'] as num)?.toDouble()
+    ..start = (json['start'] as num)?.toDouble();
 }
 
 Track _$TrackFromJson(Map<String, dynamic> json) {
