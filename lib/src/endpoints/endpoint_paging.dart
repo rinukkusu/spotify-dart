@@ -52,11 +52,9 @@ class Page<T> {
 const defaultLimit = 20;
 
 class CursorPage<T> extends Page<T> {
-
   CursorPage(CursorPaging<T> _paging, ParserFunction<T> pageItemParser,
       [Object pageContainer])
-      : super(_paging, pageItemParser, pageContainer) {
-  }
+      : super(_paging, pageItemParser, pageContainer);
 
   String get after => (_paging as CursorPaging).cursors?.after ?? '';
 }
@@ -189,7 +187,10 @@ class CursorPages<T> extends _Pages with CursorStrategy<CursorPage<T>> {
   @override
   Future<CursorPage<T>> getPage(int limit, [String after = '']) async {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
-    var newPath = '$_path${pathDelimiter}limit=$limit&after=$after';
+    var newPath = '$_path${pathDelimiter}limit=$limit';
+    if (after.isNotEmpty) {
+      newPath += '&after=$after';
+    }
 
     var jsonString = await _api._get(newPath);
     var map = json.decode(jsonString);

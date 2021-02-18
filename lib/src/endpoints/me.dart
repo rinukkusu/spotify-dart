@@ -17,10 +17,13 @@ class Me extends EndpointPaging {
   }
 
   /// Endpoint /v1/me/following only supports "artist" type at the moment.
+  /// needs 'user-follow-read' scope
   CursorPages<Artist> following(FollowingType type, [String after = '']) {
-    return _getCursorPages(
-        '$_path/following?type=${type.key}', (json) => Artist.fromJson(json), 'artists', 
-        (json) => Artist.fromJson(json));
+    // since 'artists' is the container, there is no
+    // containerParse necessary. Adding json to make the
+    // CursorPages-Object happy.
+    return _getCursorPages('$_path/following?type=${type.key}',
+        (json) => Artist.fromJson(json), 'artists', (json) => json);
   }
 
   Future<Player> currentlyPlaying() async {
