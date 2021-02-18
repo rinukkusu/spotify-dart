@@ -6,7 +6,11 @@ import 'dart:io';
 
 import 'package:spotify/spotify.dart';
 
-const _scopes = ['user-read-playback-state', 'user-follow-read'];
+const _scopes = [
+  'user-read-playback-state',
+  'user-follow-read',
+  'playlist-modify-private'
+];
 
 void main() async {
   var keyJson = await File('example/.apikeys').readAsString();
@@ -20,6 +24,7 @@ void main() async {
   await _currentlyPlaying(spotify);
   await _devices(spotify);
   await _followingArtists(spotify);
+  //await _createPrivatePlaylist(spotify);
 
   exit(0);
 }
@@ -53,7 +58,7 @@ void _currentlyPlaying(SpotifyApi spotify) async =>
         print('Nothing currently playing.');
         return;
       }
-      print('Currently playing: ${a.item.name}');
+      print('Currently playing: ${a.item?.name}');
     }).catchError(_prettyPrintError);
 
 void _devices(SpotifyApi spotify) async =>
@@ -73,7 +78,21 @@ void _followingArtists(SpotifyApi spotify) async {
   }).catchError((ex) => _prettyPrintError(ex));
 }
 
-void _prettyPrintError(Exception error) {
+void _createPrivatePlaylist(SpotifyApi spotify) async {
+  var user = await spotify.me.get();
+  await spotify.playlists
+      .createPlaylist(
+    user.id,
+    'Cool New Playlist 2',
+    description: 'Songs to test by',
+    public: false,
+  )
+      .then((playlist) {
+    print('Private playlist created!');
+  }).catchError(_prettyPrintError);
+}
+
+void _prettyPrintError(Object error) {
   if (error is SpotifyException) {
     print('${error.status} : ${error.message}');
   } else {
