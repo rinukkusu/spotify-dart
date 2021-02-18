@@ -6,6 +6,12 @@ import 'dart:io';
 
 import 'package:spotify/spotify.dart';
 
+const _scopes = [
+  'user-read-playback-state',
+  'user-follow-read',
+  'playlist-modify-private'
+];
+
 void main() async {
   var keyJson = await File('example/.apikeys').readAsString();
   var keyMap = json.decode(keyJson);
@@ -17,6 +23,7 @@ void main() async {
   }
   await _currentlyPlaying(spotify);
   await _devices(spotify);
+  await _followingArtists(spotify);
   //await _createPrivatePlaylist(spotify);
 
   exit(0);
@@ -29,8 +36,7 @@ Future<SpotifyApi> _getUserAuthenticatedSpotifyApi(
   var redirect = stdin.readLineSync();
 
   var grant = SpotifyApi.authorizationCodeGrant(credentials);
-  var authUri = grant.getAuthorizationUrl(Uri.parse(redirect),
-      scopes: ['user-read-playback-state', 'playlist-modify-private']);
+  var authUri = grant.getAuthorizationUrl(Uri.parse(redirect), scopes: _scopes);
 
   print(
       'Please paste this url \n\n$authUri\n\nto your browser and enter the redirected url:');
@@ -64,6 +70,13 @@ void _devices(SpotifyApi spotify) async =>
       print('Listing ${devices.length} available devices:');
       print(devices.map((device) => device.name).join(', '));
     }).catchError(_prettyPrintError);
+
+void _followingArtists(SpotifyApi spotify) async {
+  var cursorPage = spotify.me.following(FollowingType.artist);
+  await cursorPage.first().then((cursorPage) {
+    print(cursorPage.items.map((artist) => artist.name).join(', '));
+  }).catchError((ex) => _prettyPrintError(ex));
+}
 
 void _createPrivatePlaylist(SpotifyApi spotify) async {
   var user = await spotify.me.get();

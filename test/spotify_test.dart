@@ -176,6 +176,19 @@ Future main() async {
       expect(second.playedAt, DateTime.tryParse('2016-12-13T20:42:17.016Z'));
       expect(second.context.uri, 'spotify:artist:5INjqkS1o8h1imAzPqGZBb');
     });
+
+    test('following', () async {
+      var result = await spotify.me.following(FollowingType.artist);
+      expect(result == null, false);
+
+      var first = await result.first();
+      expect(first.items.length, 1);
+
+      var firstArtist = first.items.first;
+      expect(firstArtist.name, 'Afasi & Filthy');
+      expect(firstArtist.popularity, 54);
+      expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
+    });
   });
 
   group('Auth', () {
