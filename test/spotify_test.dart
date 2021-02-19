@@ -21,7 +21,7 @@ Future main() async {
     test('album tracks', () async {
       var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
       var items = album.tracks;
-      
+
       expect(items.length, 3);
       var tracks = album.tracks;
 
@@ -188,6 +188,17 @@ Future main() async {
       expect(firstArtist.name, 'Afasi & Filthy');
       expect(firstArtist.popularity, 54);
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
+    });
+  });
+
+  group('Player', () {
+    test('player', () async {
+      var result = await spotify.me.player();
+      expect(result == null, false);
+      expect(result.isShuffling, true);
+      expect(result.isPlaying, true);
+      expect(result.currentlyPlayingType, CurrentlyPlayingType.track);
+      expect(result.repeatState, RepeatState.off);
     });
   });
 
