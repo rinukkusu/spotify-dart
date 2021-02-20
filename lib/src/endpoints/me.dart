@@ -72,6 +72,10 @@ class Me extends EndpointPaging {
     return _api._get('$_path/player/devices').then(_parseDeviceJson);
   }
 
+  Pages<Show> savedShows() {
+    return _getPages('$_path/shows', (json) => Show.fromJson(json['show']));
+  }
+
   Iterable<Device> _parseDeviceJson(String jsonString) {
     var map = json.decode(jsonString);
 
