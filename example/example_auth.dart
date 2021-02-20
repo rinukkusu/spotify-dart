@@ -9,7 +9,8 @@ import 'package:spotify/spotify.dart';
 const _scopes = [
   'user-read-playback-state',
   'user-follow-read',
-  'playlist-modify-private'
+  'playlist-modify-private',
+  'user-modify-playback-state'
 ];
 
 void main() async {
@@ -24,6 +25,8 @@ void main() async {
   await _currentlyPlaying(spotify);
   await _devices(spotify);
   await _followingArtists(spotify);
+  await _shuffle(true, spotify);
+  await _shuffle(false, spotify);
   //await _createPrivatePlaylist(spotify);
 
   exit(0);
@@ -75,6 +78,12 @@ void _followingArtists(SpotifyApi spotify) async {
   var cursorPage = spotify.me.following(FollowingType.artist);
   await cursorPage.first().then((cursorPage) {
     print(cursorPage.items.map((artist) => artist.name).join(', '));
+  }).catchError((ex) => _prettyPrintError(ex));
+}
+
+void _shuffle(bool state, SpotifyApi spotify) async {
+  await spotify.me.shuffle(state).then((player) {
+    print('Shuffle: ${player.isShuffling}');
   }).catchError((ex) => _prettyPrintError(ex));
 }
 

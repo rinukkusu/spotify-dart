@@ -21,7 +21,7 @@ Future main() async {
     test('album tracks', () async {
       var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
       var items = album.tracks;
-      
+
       expect(items.length, 3);
       var tracks = album.tracks;
 
@@ -200,6 +200,17 @@ Future main() async {
       expect(firstShow.type, 'show');
       expect(firstShow.name != null, true);
       expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
+    });
+  });
+
+  group('Player', () {
+    test('player', () async {
+      var result = await spotify.me.player();
+      expect(result == null, false);
+      expect(result.isShuffling, true);
+      expect(result.isPlaying, true);
+      expect(result.currentlyPlayingType, CurrentlyPlayingType.track);
+      expect(result.repeatState, RepeatState.off);
     });
   });
 
