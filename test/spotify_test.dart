@@ -189,6 +189,18 @@ Future main() async {
       expect(firstArtist.popularity, 54);
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
     });
+
+    test('savedShows', () async {
+      var pages = await spotify.me.savedShows();
+      var result = await pages.first(2);
+      expect(result == null, false);
+      expect(result.items.length, 2);
+
+      var firstShow = result.items.first;
+      expect(firstShow.type, 'show');
+      expect(firstShow.name != null, true);
+      expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
+    });
   });
 
   group('Auth', () {
