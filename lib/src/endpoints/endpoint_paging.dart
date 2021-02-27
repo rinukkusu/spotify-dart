@@ -143,8 +143,6 @@ abstract class SinglePages<T> extends _Pages
   final ParserFunction<T> _pageParser;
   final List<BasePage<T>> _bufferedPages = [];
 
-  // Future<Page<T>> Function(int, dynamic) nextFunction(a, b);
-
   SinglePages(SpotifyApiBase api, String path, this._pageParser,
       [String pageKey, ParserFunction<Object> pageContainerMapper])
       : super(api, path, pageKey, pageContainerMapper);
