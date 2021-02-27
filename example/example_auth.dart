@@ -24,7 +24,7 @@ void main() async {
   await _currentlyPlaying(spotify);
   await _devices(spotify);
   await _followingArtists(spotify);
-  await _playlistsAll(spotify);
+  await _playlists(spotify);
   //await _createPrivatePlaylist(spotify);
 
   exit(0);
@@ -81,14 +81,7 @@ void _followingArtists(SpotifyApi spotify) async {
   }).catchError((ex) => _prettyPrintError(ex));
 }
 
-void _playlistsAll(SpotifyApi spotify) async {
-  await spotify.playlists.me.all(1).then((playlists) {
-    var lists = playlists.map((playlist) => playlist.name).join(', ');
-    print('Playlists: $lists');
-  }).catchError(_prettyPrintError);
-}
-
-void _playlistsStream(SpotifyApi spotify) async {
+void _playlists(SpotifyApi spotify) async {
   await spotify.playlists.me.all(1).then((playlists) {
     var lists = playlists.map((playlist) => playlist.name).join(', ');
     print('Playlists: $lists');
