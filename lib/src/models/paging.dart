@@ -8,11 +8,16 @@ typedef ParserFunction<T> = T Function(dynamic object);
 Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
 List<Map> itemsNativeToJson(Iterable<dynamic> items) => List.from(items);
 
-@JsonSerializable(createToJson: false)
-class Paging<T> extends Object {
-  Paging();
+mixin OffsetPaging {
+  /// The offset of the items returned (as set in the query or by default).
+  int offset;
 
-  factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
+  /// URL to the previous page of items. (null if none)
+  String previous;
+}
+
+class BasePaging<T> extends Object {
+  BasePaging();
 
   /// A link to the Web API endpoint returning the full result of the request.
   String href;
@@ -32,12 +37,31 @@ class Paging<T> extends Object {
   /// URL to the next page of items. ([null] if none)
   String next;
 
-  /// The offset of the items returned (as set in the query or by default).
-  int offset;
-
-  /// URL to the previous page of items. (null if none)
-  String previous;
-
   /// The total number of items available to return.
   int total;
+}
+
+@JsonSerializable(createToJson: false)
+class Paging<T> extends BasePaging<T> with OffsetPaging {
+  Paging();
+
+  factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
+}
+
+@JsonSerializable(createToJson: false)
+class CursorPaging<T> extends BasePaging<T> {
+  CursorPaging();
+
+  factory CursorPaging.fromJson(Map<String, dynamic> json) =>
+      _$CursorPagingFromJson(json);
+
+  Cursor cursors;
+}
+
+@JsonSerializable(createToJson: false)
+class Cursor extends Object {
+  factory Cursor.fromJson(Map<String, dynamic> json) => _$CursorFromJson(json);
+
+  Cursor();
+  String after;
 }

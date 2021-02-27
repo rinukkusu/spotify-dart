@@ -24,6 +24,7 @@ void main() async {
   await _currentlyPlaying(spotify);
   await _devices(spotify);
   await _followingArtists(spotify);
+  await _playlistsAll(spotify);
   //await _createPrivatePlaylist(spotify);
 
   exit(0);
@@ -54,7 +55,7 @@ Future<SpotifyApi> _getUserAuthenticatedSpotifyApi(
 
 void _currentlyPlaying(SpotifyApi spotify) async =>
     await spotify.me.currentlyPlaying().then((a) {
-      if (a == null) {
+      if (a == null || a.item == null) {
         print('Nothing currently playing.');
         return;
       }
@@ -63,7 +64,7 @@ void _currentlyPlaying(SpotifyApi spotify) async =>
 
 void _devices(SpotifyApi spotify) async =>
     await spotify.me.devices().then((devices) {
-      if (devices == null) {
+      if (devices == null || devices.isEmpty) {
         print('No devices currently playing.');
         return;
       }
@@ -74,8 +75,24 @@ void _devices(SpotifyApi spotify) async =>
 void _followingArtists(SpotifyApi spotify) async {
   var cursorPage = spotify.me.following(FollowingType.artist);
   await cursorPage.first().then((cursorPage) {
-    print(cursorPage.items.map((artist) => artist.name).join(', '));
+    var followingArtists =
+        cursorPage.items.map((artist) => artist.name).join(', ');
+    print('Following artists: $followingArtists');
   }).catchError((ex) => _prettyPrintError(ex));
+}
+
+void _playlistsAll(SpotifyApi spotify) async {
+  await spotify.playlists.me.all(1).then((playlists) {
+    var lists = playlists.map((playlist) => playlist.name).join(', ');
+    print('Playlists: $lists');
+  }).catchError(_prettyPrintError);
+}
+
+void _playlistsStream(SpotifyApi spotify) async {
+  await spotify.playlists.me.all(1).then((playlists) {
+    var lists = playlists.map((playlist) => playlist.name).join(', ');
+    print('Playlists: $lists');
+  }).catchError(_prettyPrintError);
 }
 
 void _createPrivatePlaylist(SpotifyApi spotify) async {
