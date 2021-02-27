@@ -21,6 +21,8 @@ abstract class EndpointPaging extends EndpointBase {
       BundledPages(_api, path, pageItemParsers, pageKey, pageContainerParser);
 }
 
+const defaultLimit = 20;
+
 abstract class BasePage<T> {
   final BasePaging<T> _paging;
   Iterable<T> _items;
@@ -78,8 +80,6 @@ class Page<T> extends BasePage<T> {
   int get nextOffset => _next as int;
 }
 
-const defaultLimit = 20;
-
 class CursorPage<T> extends BasePage<T> {
   CursorPage(CursorPaging<T> _paging, ParserFunction<T> pageItemParser,
       [Object pageContainer])
@@ -94,12 +94,14 @@ class CursorPage<T> extends BasePage<T> {
   bool get isLast => after == null;
 }
 
+/// Generic strategy to first and next
 class NextStrategy<T> {
   Future<T> first([int limit = defaultLimit]) => null;
 
   Future<T> _getPage(int limit, dynamic next) => null;
 }
 
+/// Strategy to get the next set of elements from an offset
 mixin OffsetStrategy<T> implements NextStrategy<T> {
   @override
   Future<T> first([int limit = defaultLimit]) => _getPage(limit, 0);
@@ -111,6 +113,7 @@ mixin OffsetStrategy<T> implements NextStrategy<T> {
   Future<T> getPage(int limit, int offset);
 }
 
+/// Strategy to get the next set of elements from a cursor
 abstract class CursorStrategy<T> implements NextStrategy<T> {
   @override
   Future<T> first([int limit = defaultLimit]) => _getPage(limit, '');
@@ -137,8 +140,8 @@ abstract class _Pages {
   }
 }
 
-abstract class SinglePages<T> extends _Pages
-    implements NextStrategy<BasePage<T>> {
+abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
+    implements NextStrategy<V> {
   bool _cancelled = false;
   final ParserFunction<T> _pageParser;
   final List<BasePage<T>> _bufferedPages = [];
@@ -154,7 +157,7 @@ abstract class SinglePages<T> extends _Pages
         .then((pages) => pages.expand((page) => page));
   }
 
-  Stream<BasePage<T>> stream([limit = defaultLimit]) {
+  Stream<V> stream([limit = defaultLimit]) {
     StreamController<BasePage<T>> stream;
 
     void handlePageAndGetNext(BasePage<T> page) {
@@ -203,7 +206,7 @@ abstract class SinglePages<T> extends _Pages
   }
 }
 
-class Pages<T> extends SinglePages<T> with OffsetStrategy<BasePage<T>> {
+class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
   Pages(SpotifyApiBase api, String path, ParserFunction<T> pageParser,
       [String pageKey, ParserFunction<Object> pageContainerMapper])
       : super(api, path, pageParser, pageKey, pageContainerMapper);
@@ -235,7 +238,8 @@ class Pages<T> extends SinglePages<T> with OffsetStrategy<BasePage<T>> {
   }
 }
 
-class CursorPages<T> extends SinglePages<T> with CursorStrategy<BasePage<T>> {
+class CursorPages<T> extends SinglePages<T, CursorPage<T>>
+    with CursorStrategy<CursorPage<T>> {
   CursorPages(SpotifyApiBase api, String path, ParserFunction<T> pageParser,
       [String pageKey, ParserFunction<Object> pageContainerMapper])
       : super(api, path, pageParser, pageKey, pageContainerMapper);
