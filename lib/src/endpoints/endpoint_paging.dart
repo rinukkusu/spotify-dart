@@ -91,7 +91,7 @@ class CursorPage<T> extends BasePage<T> {
   String get after => _next as String;
 
   @override
-  bool get isLast => after == null;
+  bool get isLast => after == null || after.isEmpty;
 }
 
 /// Generic strategy to first and next
@@ -144,7 +144,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
     implements NextStrategy<V> {
   bool _cancelled = false;
   final ParserFunction<T> _pageParser;
-  final List<BasePage<T>> _bufferedPages = [];
+  final List<V> _bufferedPages = [];
 
   SinglePages(SpotifyApiBase api, String path, this._pageParser,
       [String pageKey, ParserFunction<Object> pageContainerMapper])
@@ -158,9 +158,9 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
   }
 
   Stream<V> stream([limit = defaultLimit]) {
-    StreamController<BasePage<T>> stream;
+    StreamController<V> stream;
 
-    void handlePageAndGetNext(BasePage<T> page) {
+    void handlePageAndGetNext(V page) {
       if (_cancelled) {
         stream.close();
         return;
@@ -184,8 +184,8 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
       _getPage(limit, page._next).then(handlePageAndGetNext);
     }
 
-    stream = StreamController<BasePage<T>>(onListen: () {
-      Future<BasePage<T>> firstPage;
+    stream = StreamController<V>(onListen: () {
+      Future<V> firstPage;
       if (_bufferedPages.length == 1) {
         firstPage = Future.value(_bufferedPages.removeAt(0));
       } else {

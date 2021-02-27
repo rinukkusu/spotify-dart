@@ -74,9 +74,8 @@ void _devices(SpotifyApi spotify) async =>
 
 void _followingArtists(SpotifyApi spotify) async {
   var cursorPage = spotify.me.following(FollowingType.artist);
-  await cursorPage.first().then((cursorPage) {
-    var followingArtists =
-        cursorPage.items.map((artist) => artist.name).join(', ');
+  await cursorPage.all().then((cursorPage) {
+    var followingArtists = cursorPage.map((artist) => artist.name).join(', ');
     print('Following artists: $followingArtists');
   }).catchError((ex) => _prettyPrintError(ex));
 }
