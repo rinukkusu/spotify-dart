@@ -8,14 +8,6 @@ typedef ParserFunction<T> = T Function(dynamic object);
 Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
 List<Map> itemsNativeToJson(Iterable<dynamic> items) => List.from(items);
 
-mixin OffsetPaging {
-  /// The offset of the items returned (as set in the query or by default).
-  int offset;
-
-  /// URL to the previous page of items. (null if none)
-  String previous;
-}
-
 class BasePaging<T> extends Object {
   BasePaging();
 
@@ -42,10 +34,16 @@ class BasePaging<T> extends Object {
 }
 
 @JsonSerializable(createToJson: false)
-class Paging<T> extends BasePaging<T> with OffsetPaging {
+class Paging<T> extends BasePaging<T> {
   Paging();
 
   factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
+
+  /// The offset of the items returned (as set in the query or by default).
+  int offset;
+
+  /// URL to the previous page of items. (null if none)
+  String previous;
 }
 
 @JsonSerializable(createToJson: false)
