@@ -60,6 +60,7 @@ abstract class BasePage<T> {
   Object get container => _container;
 }
 
+/// A page with an offset
 class Page<T> extends BasePage<T> {
   Page(Paging<T> _paging, ParserFunction<T> pageItemParser,
       [Object pageContainer])
@@ -80,6 +81,7 @@ class Page<T> extends BasePage<T> {
   int get nextOffset => _next as int;
 }
 
+/// A page with a cursor
 class CursorPage<T> extends BasePage<T> {
   CursorPage(CursorPaging<T> _paging, ParserFunction<T> pageItemParser,
       [Object pageContainer])
@@ -114,7 +116,7 @@ mixin OffsetStrategy<T> implements NextStrategy<T> {
 }
 
 /// Strategy to get the next set of elements from a cursor
-abstract class CursorStrategy<T> implements NextStrategy<T> {
+mixin CursorStrategy<T> implements NextStrategy<T> {
   @override
   Future<T> first([int limit = defaultLimit]) => _getPage(limit, '');
 
@@ -140,6 +142,8 @@ abstract class _Pages {
   }
 }
 
+/// Base class that handles retrieval of pages with one type
+/// (e.g. [Artist], [Playlist] etc.)
 abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
     implements NextStrategy<V> {
   bool _cancelled = false;
@@ -206,6 +210,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
   }
 }
 
+/// Handles retrieval of a page through an offset
 class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
   Pages(SpotifyApiBase api, String path, ParserFunction<T> pageParser,
       [String pageKey, ParserFunction<Object> pageContainerMapper])
@@ -238,11 +243,20 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
   }
 }
 
+/// Handles retrieval of a page through a cursor
 class CursorPages<T> extends SinglePages<T, CursorPage<T>>
     with CursorStrategy<CursorPage<T>> {
   CursorPages(SpotifyApiBase api, String path, ParserFunction<T> pageParser,
       [String pageKey, ParserFunction<Object> pageContainerMapper])
       : super(api, path, pageParser, pageKey, pageContainerMapper);
+
+  CursorPages.fromCurosrPaging(
+      SpotifyApiBase api, CursorPaging<T> paging, ParserFunction<T> pageParser,
+      [String pageKey, ParserFunction<Object> pageContainerMapper])
+      : super(api, Uri.parse(paging.href).path.substring(1), pageParser,
+            pageKey, pageContainerMapper) {
+    _bufferedPages.add(CursorPage<T>(paging, _pageParser));
+  }
 
   @override
   Future<CursorPage<T>> getPage(int limit, [String after = '']) async {
@@ -266,6 +280,7 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
   }
 }
 
+/// Page that allows multiple types together
 class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
   final Map<String, ParserFunction<dynamic>> _pageMappers;
 
