@@ -16,12 +16,14 @@ Future main() async {
       expect(album.albumType, 'album');
       expect(album.id, '4aawyAB9vmqN3uQ7FjRGTy');
       expect(album.images.length, 3);
+      expect(album.releaseDatePrecision, DatePrecision.day);
+      expect(album.releaseDate, '2012-11-13');
     });
 
     test('album tracks', () async {
       var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
       var items = album.tracks;
-      
+
       expect(items.length, 3);
       var tracks = album.tracks;
 

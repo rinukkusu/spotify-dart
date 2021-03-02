@@ -36,6 +36,9 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
             (e) => e == null ? null : Image.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..name = json['name'] as String
+    ..releaseDate = json['release_date'] as String
+    ..releaseDatePrecision = _$enumDecodeNullable(
+        _$DatePrecisionEnumMap, json['release_date_precision'])
     ..type = json['type'] as String
     ..uri = json['uri'] as String
     ..tracks = AlbumSimple._extractTracksFromPage(
@@ -49,10 +52,46 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
         : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
     ..genres = (json['genres'] as List)?.map((e) => e as String)?.toList()
     ..label = json['label'] as String
-    ..popularity = json['popularity'] as int
-    ..releaseDate = json['release_date'] as String
-    ..releaseDatePrecision = json['release_date_precision'] as String;
+    ..popularity = json['popularity'] as int;
 }
+
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$DatePrecisionEnumMap = {
+  DatePrecision.day: 'day',
+  DatePrecision.month: 'month',
+  DatePrecision.year: 'year',
+};
 
 AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
   return AlbumSimple()
@@ -74,7 +113,8 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..name = json['name'] as String
     ..releaseDate = json['release_date'] as String
-    ..releaseDatePrecision = json['release_date_precision'] as String
+    ..releaseDatePrecision = _$enumDecodeNullable(
+        _$DatePrecisionEnumMap, json['release_date_precision'])
     ..type = json['type'] as String
     ..uri = json['uri'] as String
     ..tracks = AlbumSimple._extractTracksFromPage(
@@ -180,38 +220,6 @@ Device _$DeviceFromJson(Map<String, dynamic> json) {
     ..name = json['name'] as String
     ..type = _$enumDecodeNullable(_$DeviceTypeEnumMap, json['type'])
     ..volumePercent = json['volume_percent'] as int;
-}
-
-T _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
-}
-
-T _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$DeviceTypeEnumMap = {
