@@ -30,18 +30,6 @@ class Album extends AlbumSimple {
   /// being the most popular. The artist's popularity is calculated from the
   /// popularity of all the artist's tracks.
   int popularity;
-
-  /// The date the album was first released, for example "1981-12-15".
-  /// Depending on the precision, it might be shown as "1981" or "1981-12".
-  @JsonKey(name: 'release_date')
-  @override
-  String releaseDate;
-
-  /// The precision with which release_date value is known:
-  ///     "year", "month", or "day".
-  @JsonKey(name: 'release_date_precision')
-  @override
-  String releaseDatePrecision;
 }
 
 @JsonSerializable(createToJson: false)
@@ -52,15 +40,16 @@ class AlbumSimple extends Object {
       _$AlbumSimpleFromJson(json);
 
   /// Helper function that unwraps the items from the paging object.
-  static Iterable<TrackSimple> _extractTracksFromPage(Map<String, dynamic> json) {
+  static Iterable<TrackSimple> _extractTracksFromPage(
+      Map<String, dynamic> json) {
     if (json == null) {
       return [];
     }
     return json.isEmpty
         ? []
-        : Paging.fromJson(json).itemsNative?.map(
-            (trackJson) => TrackSimple.fromJson(trackJson)
-          );
+        : Paging.fromJson(json)
+            .itemsNative
+            ?.map((trackJson) => TrackSimple.fromJson(trackJson));
   }
 
   /// The type of the album: one of "album", "single", or "compilation".
@@ -100,9 +89,9 @@ class AlbumSimple extends Object {
   String releaseDate;
 
   /// The precision with which release_date value is known:
-  ///     "year", "month", or "day".
+  /// "year", "month", or "day".
   @JsonKey(name: 'release_date_precision')
-  String releaseDatePrecision;
+  DatePrecision releaseDatePrecision;
 
   /// The object type: "album"
   String type;
@@ -114,3 +103,5 @@ class AlbumSimple extends Object {
   @JsonKey(fromJson: _extractTracksFromPage)
   Iterable<TrackSimple> tracks;
 }
+
+enum DatePrecision { day, month, year }
