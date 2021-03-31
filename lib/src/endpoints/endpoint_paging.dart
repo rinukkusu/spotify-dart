@@ -23,6 +23,7 @@ abstract class EndpointPaging extends EndpointBase {
 
 const defaultLimit = 20;
 
+/// Base class that represents a generic response page.
 abstract class BasePage<T> {
   final BasePaging<T> _paging;
   Iterable<T> _items;
@@ -45,6 +46,7 @@ abstract class BasePage<T> {
   /// The requested data
   Iterable<T> get items => _items;
 
+  /// [true] if this page is the last page. [false] otherwise.
   bool get isLast;
 
   /// Generic next for multiple purposes for internal use only.
@@ -60,7 +62,7 @@ abstract class BasePage<T> {
   Object get container => _container;
 }
 
-/// A page with an offset
+/// A page that uses an [offset] to get to the next page.
 class Page<T> extends BasePage<T> {
   Page(Paging<T> _paging, ParserFunction<T> pageItemParser,
       [Object pageContainer])
@@ -78,10 +80,11 @@ class Page<T> extends BasePage<T> {
     return paging.offset + paging.limit;
   }
 
+  /// Returns the [offset] for the next page.
   int get nextOffset => _next as int;
 }
 
-/// A page with a cursor
+/// A page that uses a [cursor] to get to the next page
 class CursorPage<T> extends BasePage<T> {
   CursorPage(CursorPaging<T> _paging, ParserFunction<T> pageItemParser,
       [Object pageContainer])
@@ -90,6 +93,8 @@ class CursorPage<T> extends BasePage<T> {
   @override
   dynamic get _next => (_paging as CursorPaging).cursors?.after ?? '';
 
+  /// The [cursor] pointing to the next page.
+  /// Is empty, when it's the last page.
   String get after => _next as String;
 
   @override
@@ -97,10 +102,10 @@ class CursorPage<T> extends BasePage<T> {
 }
 
 /// Generic strategy to first and next
-class NextStrategy<T> {
-  Future<T> first([int limit = defaultLimit]) => null;
+abstract class NextStrategy<T> {
+  Future<T> first([int limit = defaultLimit]);
 
-  Future<T> _getPage(int limit, dynamic next) => null;
+  Future<T> _getPage(int limit, dynamic next);
 }
 
 /// Strategy to get the next set of elements from an offset
