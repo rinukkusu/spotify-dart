@@ -3,11 +3,13 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Album extends AlbumSimple {
   Album();
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AlbumToJson(this);
 
   /// The copyright statements of the album.
   List<Copyright> copyrights;
@@ -32,12 +34,13 @@ class Album extends AlbumSimple {
   int popularity;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class AlbumSimple extends Object {
   AlbumSimple();
 
   factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
       _$AlbumSimpleFromJson(json);
+  Map<String, dynamic> toJson() => _$AlbumSimpleToJson(this);
 
   /// Helper function that unwraps the items from the paging object.
   static Iterable<TrackSimple> _extractTracksFromPage(

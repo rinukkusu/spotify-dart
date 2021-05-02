@@ -3,11 +3,13 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Image extends Object {
   Image();
 
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ImageToJson(this);
 
   /// The image height in pixels. If unknown: null or not returned.
   int height;

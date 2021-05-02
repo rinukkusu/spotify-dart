@@ -3,11 +3,13 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Copyright extends Object {
   Copyright();
   factory Copyright.fromJson(Map<String, dynamic> json) =>
       _$CopyrightFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CopyrightToJson(this);
 
   /// The copyright text for this album.
   String text;

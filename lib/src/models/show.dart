@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Show {
   Show();
 
@@ -60,4 +60,6 @@ class Show {
   String uri;
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ShowToJson(this);
 }

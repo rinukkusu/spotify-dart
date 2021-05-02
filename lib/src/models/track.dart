@@ -3,11 +3,13 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Track extends Object implements TrackSimple {
   Track();
 
   factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TrackToJson(this);
 
   /// The album on which the track appears. The album object includes a link
   /// in [href] to full information about the album.
@@ -117,12 +119,14 @@ class Track extends Object implements TrackSimple {
   String uri;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class TrackSimple extends Object {
   TrackSimple();
 
   factory TrackSimple.fromJson(Map<String, dynamic> json) =>
       _$TrackSimpleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TrackSimpleToJson(this);
 
   /// The artists who performed the track. Each artist object includes a link
   /// in [href] to more detailed information about the artist.
@@ -193,11 +197,13 @@ class TrackSimple extends Object {
 }
 
 /// A song saved in a Spotify user’s “Your Music” library
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class TrackSaved extends Object {
   TrackSaved();
   factory TrackSaved.fromJson(Map<String, dynamic> json) =>
       _$TrackSavedFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TrackSavedToJson(this);
 
   /// The date and time the track was saved.
   @JsonKey(name: 'added_at')
@@ -207,11 +213,13 @@ class TrackSaved extends Object {
   Track track;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class TrackLink extends Object {
   TrackLink();
   factory TrackLink.fromJson(Map<String, dynamic> json) =>
       _$TrackLinkFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TrackLinkToJson(this);
 
   /// Known external URLs for this track.
   @JsonKey(name: 'external_urls')
@@ -230,11 +238,13 @@ class TrackLink extends Object {
   String uri;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class TracksLink extends Object {
   TracksLink();
   factory TracksLink.fromJson(Map<String, dynamic> json) =>
       _$TracksLinkFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TracksLinkToJson(this);
 
   /// A link to the Web API endpoint where full details of the playlist's
   /// tracks can be retrieved

@@ -3,12 +3,14 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Followers extends Object {
   Followers();
 
   factory Followers.fromJson(Map<String, dynamic> json) =>
       _$FollowersFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FollowersToJson(this);
 
   /// A link to the Web API endpoint providing full details of the followers;
   /// null if not available.

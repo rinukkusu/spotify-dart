@@ -3,10 +3,13 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class User extends Object implements UserPublic {
   User();
+
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   /// The user's date-of-birth.
   ///
@@ -70,11 +73,14 @@ class User extends Object implements UserPublic {
   String uri;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class UserPublic extends Object {
   UserPublic();
+
   factory UserPublic.fromJson(Map<String, dynamic> json) =>
       _$UserPublicFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserPublicToJson(this);
 
   /// The name displayed on the user's profile. null if not available.
   @JsonKey(name: 'display_name')
@@ -103,11 +109,14 @@ class UserPublic extends Object {
   String uri;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class PlayHistory extends Object {
   PlayHistory();
+
   factory PlayHistory.fromJson(Map<String, dynamic> json) =>
       _$PlayHistoryFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlayHistoryToJson(this);
 
   /// The track the user listened to.
   TrackSimple track;

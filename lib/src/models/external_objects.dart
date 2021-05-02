@@ -3,23 +3,27 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class ExternalUrls extends Object {
   ExternalUrls();
 
   factory ExternalUrls.fromJson(Map<String, dynamic> json) =>
       _$ExternalUrlsFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ExternalUrlsToJson(this);
+
   /// The Spotify URL for the object.
   String spotify;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class ExternalIds extends Object {
   ExternalIds();
 
   factory ExternalIds.fromJson(Map<String, dynamic> json) =>
       _$ExternalIdsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ExternalIdsToJson(this);
 
   /// International Standard Recording Code
   String isrc;

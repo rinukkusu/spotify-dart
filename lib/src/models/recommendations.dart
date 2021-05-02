@@ -1,11 +1,13 @@
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
-class Recommendations extends Object{
+@JsonSerializable()
+class Recommendations extends Object {
   Recommendations();
 
   factory Recommendations.fromJson(Map<String, dynamic> json) =>
       _$RecommendationsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RecommendationsToJson(this);
 
   /// A List of [RecommendationSeed] objects.
   List<RecommendationsSeed> seeds;
@@ -15,12 +17,14 @@ class Recommendations extends Object{
   List<TrackSimple> tracks;
 }
 
-@JsonSerializable(createToJson: false)
-class RecommendationsSeed extends Object{
+@JsonSerializable()
+class RecommendationsSeed extends Object {
   RecommendationsSeed();
 
   factory RecommendationsSeed.fromJson(Map<String, dynamic> json) =>
-    _$RecommendationsSeedFromJson(json);
+      _$RecommendationsSeedFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RecommendationsSeedToJson(this);
 
   /// The number of tracks available after min_* and max_* filters
   /// have been applied.

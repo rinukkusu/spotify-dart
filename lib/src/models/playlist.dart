@@ -3,12 +3,14 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Playlist extends Object implements PlaylistSimple {
   Playlist();
 
   factory Playlist.fromJson(Map<String, dynamic> json) =>
       _$PlaylistFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlaylistToJson(this);
 
   /// true if the owner allows other users to modify the playlist.
   @override
@@ -80,11 +82,13 @@ class Playlist extends Object implements PlaylistSimple {
   String uri;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class PlaylistSimple extends Object {
   PlaylistSimple();
   factory PlaylistSimple.fromJson(Map<String, dynamic> json) =>
       _$PlaylistSimpleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlaylistSimpleToJson(this);
 
   /// true if the owner allows other users to modify the playlist.
   bool collaborative;
@@ -136,21 +140,25 @@ class PlaylistSimple extends Object {
   String uri;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class PlaylistsFeatured extends Object {
   PlaylistsFeatured();
   factory PlaylistsFeatured.fromJson(Map<String, dynamic> json) =>
       _$PlaylistsFeaturedFromJson(json);
 
+  Map<String, dynamic> toJson() => _$PlaylistsFeaturedToJson(this);
+
   /// The message of the day for Spotify's featured playlists
   String message;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class PlaylistTrack extends Object {
   PlaylistTrack();
   factory PlaylistTrack.fromJson(Map<String, dynamic> json) =>
       _$PlaylistTrackFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlaylistTrackToJson(this);
 
   /// The date and time the track was added.
   /// Note that some very old playlists may return [null] in this field.

@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Episode extends Object {
   Episode();
 
@@ -74,4 +74,6 @@ class Episode extends Object {
 
   factory Episode.fromJson(Map<String, dynamic> json) =>
       _$EpisodeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EpisodeToJson(this);
 }

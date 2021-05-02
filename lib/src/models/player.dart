@@ -3,13 +3,15 @@
 
 part of spotify.models;
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Player extends Object {
   Player() {
     is_playing = false;
   }
 
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlayerToJson(this);
 
   /// Unix Millisecond Timestamp when data was fetched
   int timestamp;
@@ -31,12 +33,14 @@ class Player extends Object {
   bool is_playing;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class PlayerContext extends Object {
   PlayerContext();
 
   factory PlayerContext.fromJson(Map<String, dynamic> json) =>
       _$PlayerContextFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlayerContextToJson(this);
 
   /// The external_urls of the context, or [null] if not available.
   ExternalUrls external_urls;
