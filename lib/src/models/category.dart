@@ -1,6 +1,6 @@
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Category extends Object {
   Category();
 

@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class CursorPaging<T> extends Paging<T> {
   CursorPaging();
 
@@ -15,7 +15,7 @@ class CursorPaging<T> extends Paging<T> {
   Cursor cursors;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Cursor extends Object {
   factory Cursor.fromJson(Map<String, dynamic> json) => _$CursorFromJson(json);
 

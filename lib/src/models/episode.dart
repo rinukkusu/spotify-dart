@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Episode extends Object {
   Episode();
 

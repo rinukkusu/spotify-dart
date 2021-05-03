@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ExternalUrls extends Object {
   ExternalUrls();
 
@@ -16,7 +16,7 @@ class ExternalUrls extends Object {
   String spotify;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ExternalIds extends Object {
   ExternalIds();
 

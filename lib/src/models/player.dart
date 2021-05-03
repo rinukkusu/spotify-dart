@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Player extends Object {
   Player() {
     is_playing = false;
@@ -33,7 +33,7 @@ class Player extends Object {
   bool is_playing;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class PlayerContext extends Object {
   PlayerContext();
 

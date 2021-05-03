@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Track extends Object implements TrackSimple {
   Track();
 
@@ -119,7 +119,7 @@ class Track extends Object implements TrackSimple {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class TrackSimple extends Object {
   TrackSimple();
 
@@ -197,7 +197,7 @@ class TrackSimple extends Object {
 }
 
 /// A song saved in a Spotify user’s “Your Music” library
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class TrackSaved extends Object {
   TrackSaved();
   factory TrackSaved.fromJson(Map<String, dynamic> json) =>
@@ -213,7 +213,7 @@ class TrackSaved extends Object {
   Track track;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class TrackLink extends Object {
   TrackLink();
   factory TrackLink.fromJson(Map<String, dynamic> json) =>
@@ -238,7 +238,7 @@ class TrackLink extends Object {
   String uri;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class TracksLink extends Object {
   TracksLink();
   factory TracksLink.fromJson(Map<String, dynamic> json) =>

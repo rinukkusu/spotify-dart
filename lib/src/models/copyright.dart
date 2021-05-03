@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Copyright extends Object {
   Copyright();
   factory Copyright.fromJson(Map<String, dynamic> json) =>

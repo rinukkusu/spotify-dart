@@ -8,7 +8,7 @@ typedef ParserFunction<T> = T Function(dynamic object);
 Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
 List<Map> itemsNativeToJson(Iterable<dynamic> items) => List.from(items);
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Paging<T> extends Object {
   Paging();
 

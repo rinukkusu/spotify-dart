@@ -3,7 +3,7 @@
 
 part of spotify.models;
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Artist extends Object implements ArtistSimple {
   Artist();
 
@@ -55,7 +55,7 @@ class Artist extends Object implements ArtistSimple {
   int popularity;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ArtistSimple extends Object {
   ArtistSimple();
 
