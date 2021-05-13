@@ -136,7 +136,7 @@ class MockClient implements oauth2.Client {
     return http.Response(_wrapMessageToJson(error.statusCode!, error.message!),
         error.statusCode!,
         headers: {'Content-Type': 'application/json; charset=utf-8'}
-          ..addAll(error.headers!));
+          ..addAll(error.headers ?? {}));
   }
 
   String _wrapMessageToJson(int statusCode, String message) =>

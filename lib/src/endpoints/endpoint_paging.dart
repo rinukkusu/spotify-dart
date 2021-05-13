@@ -210,7 +210,7 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
 
   BundledPages(SpotifyApiBase api, String path, this._pageMappers,
       [String? pageKey, ParserFunction<dynamic>? pageContainerParser])
-      : super(api, path, pageKey, pageContainerParser!);
+      : super(api, path, pageKey, pageContainerParser);
 
   @override
   Future<List<Page<dynamic>>> getPage(int limit, int offset) async {
@@ -222,7 +222,7 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
 
   List<Page<dynamic>> _parseBundledPage(String jsonString) {
     var map = json.decode(jsonString);
-    var pages = <Page<Object>>[];
+    var pages = <Page<dynamic>>[];
     _pageMappers.forEach((key, value) {
       if (map[key] != null) {
         var paging = Paging.fromJson(map[key]);
