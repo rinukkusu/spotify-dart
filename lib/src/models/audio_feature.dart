@@ -12,26 +12,26 @@ class AudioFeature extends Object {
 
   /// A confidence measure from 0.0 to 1.0 of whether the track is acoustic.
   /// 1.0 represents high confidence the track is acoustic.
-  double acousticness;
+  double? acousticness;
 
   /// An HTTP URL to access the full audio analysis of this track. An access
   /// token is required to access this data.
   @JsonKey(name: 'analysis_url')
-  String analysisUrl;
+  String? analysisUrl;
 
   /// Danceability describes how suitable a track is for dancing based on a
   /// combination of musical elements including tempo, rhythm stability, beat
   /// strength, and overall regularity. A value of 0.0 is least danceable and
   /// 1.0 is most danceable.
-  double danceability;
+  double? danceability;
 
   /// The track length in milliseconds.
   @JsonKey(name: 'duration_ms')
-  int durationMs;
+  int? durationMs;
 
   /// The track length
   @JsonKey(ignore: true)
-  Duration get duration => Duration(milliseconds: durationMs);
+  Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
   /// Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of
   /// intensity and activity. Typically, energetic tracks feel fast, loud, and
@@ -39,10 +39,10 @@ class AudioFeature extends Object {
   /// scores low on the scale. Perceptual features contributing to this
   /// attribute include dynamic range, perceived loudness, timbre, onset rate,
   /// and general entropy.
-  double energy;
+  double? energy;
 
   /// The Spotify ID for the track.
-  String id;
+  String? id;
 
   /// Predicts whether a track contains no vocals. "Ooh" and "aah" sounds are
   /// treated as instrumental in this context. Rap or spoken word tracks are
@@ -50,28 +50,28 @@ class AudioFeature extends Object {
   /// greater likelihood the track contains no vocal content. Values above 0.5
   /// are intended to represent instrumental tracks, but confidence is higher as
   /// the value approaches 1.0.
-  double instrumentalness;
+  double? instrumentalness;
 
   /// The key the track is in. Integers map to pitches using standard Pitch
   /// Class notation. E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on.
-  int key;
+  int? key;
 
   /// Detects the presence of an audience in the recording. Higher liveness
   /// values represent an increased probability that the track was performed
   /// live. A value above 0.8 provides strong likelihood that the track is live.
-  double liveness;
+  double? liveness;
 
   /// The overall loudness of a track in decibels (dB). Loudness values are
   /// averaged across the entire track and are useful for comparing relative
   /// loudness of tracks. Loudness is the quality of a sound that is the primary
   /// psychological correlate of physical strength (amplitude). Values typical
   /// range between -60 and 0 db.
-  double loudness;
+  double? loudness;
 
   /// Mode indicates the modality (major or minor) of a track, the type of scale
   /// from which its melodic content is derived. Major is represented by 1 and
   /// minor is 0.
-  int mode;
+  int? mode;
 
   /// Speechiness detects the presence of spoken words in a track. The more
   /// exclusively speech-like the recording (e.g. talk show, audio book, poetry),
@@ -80,32 +80,32 @@ class AudioFeature extends Object {
   /// 0.66 describe tracks that may contain both music and speech, either in
   /// sections or layered, including such cases as rap music. Values below 0.33
   /// most likely represent music and other non-speech-like tracks.
-  double speechiness;
+  double? speechiness;
 
   /// The overall estimated tempo of a track in beats per minute (BPM). In
   /// musical terminology, tempo is the speed or pace of a given piece and
   /// derives directly from the average beat duration.
-  double tempo;
+  double? tempo;
 
   /// An estimated overall time signature of a track. The time signature (meter)
   /// is a notational convention to specify how many beats are in each bar (or
   /// measure).
   @JsonKey(name: 'time_signature')
-  int timeSignature;
+  int? timeSignature;
 
   /// A link to the Web API endpoint providing full details of the track.
   @JsonKey(name: 'track_href')
-  String trackHref;
+  String? trackHref;
 
   /// The object type: "audio_features"
-  String type;
+  String? type;
 
   /// The Spotify URI for the track.
-  String uri;
+  String? uri;
 
   /// A measure from 0.0 to 1.0 describing the musical positiveness conveyed by
   /// a track. Tracks with high valence sound more positive (e.g. happy,
   /// cheerful, euphoric), while tracks with low valence sound more negative
   /// (e.g. sad, depressed, angry).
-  double valence;
+  double? valence;
 }

@@ -11,53 +11,53 @@ class Show {
   /// codes. Note that an album is considered available in a market when at least
   /// 1 of its tracks is available in that market.
   @JsonKey(name: 'available_markets', nullable: true)
-  List<String> availableMarkets;
+  List<String>? availableMarkets;
 
   /// The copyright statements of the show.
-  List<Copyright> copyrights;
+  List<Copyright>? copyrights;
 
   /// A description of the show.
-  String description;
+  String? description;
 
   /// Whether or not the episode has explicit content
   /// (true = yes it does; false = no it does not OR unknown).
-  bool explicit;
+  bool? explicit;
 
   /// Known external URLs for this show.
   @JsonKey(name: 'external_urls')
-  ExternalUrls externalUrls;
+  ExternalUrls? externalUrls;
 
   /// A link to the Web API endpoint providing full details of the show.
-  String href;
+  String? href;
 
   /// The Spotify ID for the show.
-  String id;
+  String? id;
 
   /// The cover art for the show in various sizes, widest first.
-  List<Image> images;
+  List<Image>? images;
 
   /// True if the show is hosted outside of Spotify’s CDN.
   @JsonKey(name: 'is_externally_hosted')
-  bool isExternallyHosted;
+  bool? isExternallyHosted;
 
   /// A list of the languages used in the show, identified by their ISO 639 code.
-  List<String> languages;
+  List<String>? languages;
 
   /// The media type of the show.
   @JsonKey(name: 'media_type')
-  String mediaType;
+  String? mediaType;
 
   /// The name of the show.
-  String name;
+  String? name;
 
   /// The publisher of the show.
-  String publisher;
+  String? publisher;
 
   /// The object type: "show"
-  String type;
+  String? type;
 
   /// The Spotify URI for the show.
-  String uri;
+  String? uri;
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);
 }

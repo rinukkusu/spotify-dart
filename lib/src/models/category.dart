@@ -8,14 +8,14 @@ class Category extends Object {
       _$CategoryFromJson(json);
 
   /// A link to the Web API endpoint returning full details of the category.
-  String href;
+  String? href;
 
   /// The category icon, in various sizes.
-  List<Image> icons;
+  List<Image>? icons;
 
   /// The Spotify category ID of the category.
-  String id;
+  String? id;
 
   /// The name of the category.
-  String name;
+  String? name;
 }
