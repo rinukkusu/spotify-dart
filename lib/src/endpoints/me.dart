@@ -25,7 +25,7 @@ class Me extends EndpointPaging {
     return _getCursorPages('$_path/following?type=${type.key}',
         (json) => Artist.fromJson(json), 'artists', (json) => json);
   }
-  
+
   /// Get the object currently being played on the user’s Spotify account.
   Future<Player> currentlyPlaying() async {
     var jsonString = await _api._get('$_path/player/currently-playing');
@@ -38,10 +38,10 @@ class Me extends EndpointPaging {
     return Player.fromJson(map);
   }
 
-  /// Get tracks from the current user’s recently played tracks. 
+  /// Get tracks from the current user’s recently played tracks.
   /// Note: Currently doesn’t support podcast episodes.
   Future<Iterable<PlayHistory>> recentlyPlayed(
-      {int limit, DateTime after, DateTime before}) async {
+      {int? limit, DateTime? after, DateTime? before}) async {
     assert(after == null || before == null,
         'Cannot specify both after and before.');
 
@@ -77,7 +77,7 @@ class Me extends EndpointPaging {
   Future<Iterable<Device>> devices() async {
     return _api._get('$_path/player/devices').then(_parseDeviceJson);
   }
-  
+
   /// Get a list of shows saved in the current Spotify user’s library.
   Pages<Show> savedShows() {
     return _getPages('$_path/shows', (json) => Show.fromJson(json['show']));

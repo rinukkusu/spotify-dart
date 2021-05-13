@@ -15,8 +15,8 @@ class Followers extends Object {
   ///
   /// Please note that this will always be set to null, as the Web API does not
   /// support it at the moment.
-  String href;
+  String? href;
 
   /// The total number of followers.
-  int total;
+  int? total;
 }

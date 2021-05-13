@@ -6,23 +6,24 @@ part of spotify.models;
 @JsonSerializable(createToJson: false)
 class User extends Object implements UserPublic {
   User();
+
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   /// The user's date-of-birth.
   ///
   /// This field is only available when the current user has granted access to
   /// the user-read-birthdate scope.
-  String birthdate;
+  String? birthdate;
 
   /// The country of the user, as set in the user's account profile. An
   /// ISO 3166-1 alpha-2 country code. This field is only available when the
   /// current user has granted access to the user-read-private scope.
-  String country;
+  String? country;
 
   /// The name displayed on the user's profile. null if not available.
   @JsonKey(name: 'display_name')
   @override
-  String displayName;
+  String? displayName;
 
   /// The user's email address, as entered by the user when creating their
   /// account.
@@ -32,7 +33,7 @@ class User extends Object implements UserPublic {
   ///
   /// This field is only available when the current user has granted access to
   /// the user-read-email scope.
-  String email;
+  String? email;
 
   // /// Known public external URLs for this user.
   //@JsonKey(name: 'external_urls')
@@ -40,82 +41,84 @@ class User extends Object implements UserPublic {
 
   /// Information about the followers of this user.
   @override
-  Followers followers;
+  Followers? followers;
 
   /// A link to the Web API endpoint for this user.
   @override
-  String href;
+  String? href;
 
   /// The Spotify user ID for this user.
   @override
-  String id;
+  String? id;
 
   /// The user's profile image.
   @override
-  List<Image> images;
+  List<Image>? images;
 
   /// The user's Spotify subscription level: "premium", "free", etc. (The
   /// subscription level "open" can be considered the same as "free".)
   ///
   /// This field is only available when the current user has granted access to
   /// the user-read-private scope.
-  String product;
+  String? product;
 
   /// The object type: "user"
   @override
-  String type;
+  String? type;
 
   /// The Spotify URI for this user.
   @override
-  String uri;
+  String? uri;
 }
 
 @JsonSerializable(createToJson: false)
 class UserPublic extends Object {
   UserPublic();
+
   factory UserPublic.fromJson(Map<String, dynamic> json) =>
       _$UserPublicFromJson(json);
 
   /// The name displayed on the user's profile. null if not available.
   @JsonKey(name: 'display_name')
-  String displayName;
+  String? displayName;
 
   // /// Known public external URLs for this user.
   //@JsonKey(name: 'external_urls')
   //Map<String, String> externalUrls;
 
   /// Information about the followers of this user.
-  Followers followers;
+  Followers? followers;
 
   /// A link to the Web API endpoint for this user.
-  String href;
+  String? href;
 
   /// The Spotify user ID for this user.
-  String id;
+  String? id;
 
   /// The user's profile image.
-  List<Image> images;
+  List<Image>? images;
 
   /// The object type: "user"
-  String type;
+  String? type;
 
   /// The Spotify URI for this user.
-  String uri;
+  String? uri;
 }
 
 @JsonSerializable(createToJson: false)
 class PlayHistory extends Object {
   PlayHistory();
+
   factory PlayHistory.fromJson(Map<String, dynamic> json) =>
       _$PlayHistoryFromJson(json);
 
   /// The track the user listened to.
-  TrackSimple track;
+  TrackSimple? track;
 
   /// The date and time the track was played.
   @JsonKey(name: 'played_at')
-  DateTime playedAt;
+  DateTime? playedAt;
 
   /// The context the track was played from.
-  PlayerContext context;
+  PlayerContext? context;
 }

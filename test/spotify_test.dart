@@ -15,7 +15,7 @@ Future main() async {
 
       expect(album.albumType, 'album');
       expect(album.id, '4aawyAB9vmqN3uQ7FjRGTy');
-      expect(album.images.length, 3);
+      expect(album.images!.length, 3);
       expect(album.releaseDatePrecision, DatePrecision.day);
       expect(album.releaseDate, '2012-11-13');
     });
@@ -24,10 +24,10 @@ Future main() async {
       var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
       var items = album.tracks;
 
-      expect(items.length, 3);
+      expect(items!.length, 3);
       var tracks = album.tracks;
 
-      var trackOne = tracks.first;
+      var trackOne = tracks!.first;
       expect(trackOne.discNumber, 1);
       expect(trackOne.durationMs, 85400);
       expect(trackOne.id, '6OmhkSOpvYBokMKQxpIGx2');
@@ -42,11 +42,11 @@ Future main() async {
       expect(trackOne.name, 'Global Warming');
 
       expect(trackOne.externalUrls != null, true);
-      expect(trackOne.externalUrls.spotify,
+      expect(trackOne.externalUrls!.spotify,
           'https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2');
 
       var artists = trackOne.artists;
-      expect(artists.length, 2);
+      expect(artists!.length, 2);
       expect(artists[0].name, 'Pitbull');
       expect(artists[1].name, 'Sensato');
     });
@@ -64,7 +64,7 @@ Future main() async {
       var artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       expect(artist.type, 'artist');
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
-      expect(artist.images.length, 3);
+      expect(artist.images!.length, 3);
     });
 
     test('list', () async {
@@ -77,10 +77,10 @@ Future main() async {
     test('getError', () async {
       spotify.mockHttpErrors =
           [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
-      SpotifyException ex;
+      late SpotifyException ex;
       try {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
-      } catch (e) {
+      } on SpotifyException catch (e) {
         expect(e, isA<SpotifyException>());
         ex = e;
       }
@@ -110,7 +110,7 @@ Future main() async {
   group('Show episodes', () {
     test('list', () async {
       var episodes = await spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
-      var firstEpisode = (await episodes.first()).items.first;
+      var firstEpisode = (await episodes.first()).items!.first;
 
       expect(firstEpisode.type, 'episode');
       expect(firstEpisode.explicit, false);
@@ -126,10 +126,10 @@ Future main() async {
     test('getError', () async {
       spotify.mockHttpErrors =
           [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
-      SpotifyException ex;
+      late SpotifyException ex;
       try {
         await spotify.search.get('metallica').first();
-      } catch (e) {
+      } on SpotifyException catch (e) {
         expect(e, isA<SpotifyException>());
         ex = e;
       }
@@ -143,7 +143,7 @@ Future main() async {
     test('currentlyPlaying', () async {
       var result = await spotify.me.currentlyPlaying();
 
-      expect(result.item.name, 'So Voce');
+      expect(result.item!.name, 'So Voce');
     });
 
     test('devices', () async {
@@ -168,15 +168,15 @@ Future main() async {
 
       // just testing some sample attributes
       var firstTrack = first.track;
-      expect(firstTrack.durationMs, 108546);
+      expect(firstTrack!.durationMs, 108546);
       expect(firstTrack.explicit, false);
       expect(firstTrack.id, '2gNfxysfBRfl9Lvi9T3v6R');
-      expect(firstTrack.artists.length, 1);
-      expect(firstTrack.artists.first.name, 'Tame Impala');
+      expect(firstTrack.artists!.length, 1);
+      expect(firstTrack.artists!.first.name, 'Tame Impala');
 
       var second = result.last;
       expect(second.playedAt, DateTime.tryParse('2016-12-13T20:42:17.016Z'));
-      expect(second.context.uri, 'spotify:artist:5INjqkS1o8h1imAzPqGZBb');
+      expect(second.context!.uri, 'spotify:artist:5INjqkS1o8h1imAzPqGZBb');
     });
 
     test('following', () async {
@@ -184,9 +184,9 @@ Future main() async {
       expect(result == null, false);
 
       var first = await result.first();
-      expect(first.items.length, 1);
+      expect(first.items!.length, 1);
 
-      var firstArtist = first.items.first;
+      var firstArtist = first.items!.first;
       expect(firstArtist.name, 'Afasi & Filthy');
       expect(firstArtist.popularity, 54);
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
@@ -196,9 +196,9 @@ Future main() async {
       var pages = await spotify.me.savedShows();
       var result = await pages.first(2);
       expect(result == null, false);
-      expect(result.items.length, 2);
+      expect(result.items!.length, 2);
 
-      var firstShow = result.items.first;
+      var firstShow = result.items!.first;
       expect(firstShow.type, 'show');
       expect(firstShow.name != null, true);
       expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
@@ -213,9 +213,9 @@ Future main() async {
       expect(result.clientSecret, 'clientSecret');
       expect(result.accessToken, 'accessToken');
       expect(result.refreshToken, 'refreshToken');
-      expect(result.tokenEndpoint.path, 'tokenEndpoint.com');
-      expect(result.scopes.length, 2);
-      expect(result.expiration.millisecondsSinceEpoch, 8000);
+      expect(result.tokenEndpoint!.path, 'tokenEndpoint.com');
+      expect(result.scopes!.length, 2);
+      expect(result.expiration!.millisecondsSinceEpoch, 8000);
       expect(result.canRefresh, true);
       expect(result.isExpired, true);
     });
@@ -231,7 +231,7 @@ Future main() async {
       var artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       expect(artist.type, 'artist');
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
-      expect(artist.images.length, 3);
+      expect(artist.images!.length, 3);
     });
     test('apiRateErrorFail', () async {
       spotify.mockHttpErrors = List.generate(
@@ -240,10 +240,10 @@ Future main() async {
               statusCode: 429,
               message: 'API Rate exceeded',
               headers: {'retry-after': '1'})).iterator;
-      ApiRateException ex;
+      late ApiRateException ex;
       try {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
-      } catch (e) {
+      } on ApiRateException catch (e) {
         expect(e, isA<ApiRateException>());
         ex = e;
       }

@@ -10,33 +10,33 @@ abstract class SpotifyApiBase {
       'https://accounts.spotify.com/authorize';
 
   bool _shouldWait = false;
-  FutureOr<oauth2.Client> _client;
-  Artists _artists;
+  late FutureOr<oauth2.Client> _client;
+  late Artists _artists;
   Artists get artists => _artists;
-  Albums _albums;
+  late Albums _albums;
   Albums get albums => _albums;
-  Tracks _tracks;
+  late Tracks _tracks;
   Tracks get tracks => _tracks;
-  Playlists _playlists;
+  late Playlists _playlists;
   Playlists get playlists => _playlists;
-  RecommendationsEndpoint _recommendations;
+  late RecommendationsEndpoint _recommendations;
   RecommendationsEndpoint get recommendations => _recommendations;
-  Users _users;
+  late Users _users;
   Users get users => _users;
-  Search _search;
+  late Search _search;
   Search get search => _search;
-  AudioFeatures _audioFeatures;
+  late AudioFeatures _audioFeatures;
   AudioFeatures get audioFeatures => _audioFeatures;
-  Categories _categories;
+  late Categories _categories;
   Categories get categories => _categories;
-  Me _me;
+  late Me _me;
   Me get me => _me;
-  Shows _shows;
+  late Shows _shows;
   Shows get shows => _shows;
-  oauth2.Client get client => _client;
+  FutureOr<oauth2.Client> get client => _client;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
-    _client = client;
+    _client = client as FutureOr<oauth2.Client>;
 
     _artists = Artists(this);
     _albums = Albums(this);
@@ -52,7 +52,7 @@ abstract class SpotifyApiBase {
   }
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
-      [http.BaseClient httpClient, Function(SpotifyApiCredentials) callBack])
+      [http.Client? httpClient, Function(SpotifyApiCredentials)? callBack])
       : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
 
   SpotifyApiBase.fromAuthCodeGrant(
@@ -61,18 +61,18 @@ abstract class SpotifyApiBase {
             Uri.parse(responseUri).queryParameters));
 
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
-      SpotifyApiCredentials credentials, http.BaseClient httpClient,
-      [Function(SpotifyApiCredentials) callBack]) {
+      SpotifyApiCredentials credentials, http.Client httpClient,
+      [Function(SpotifyApiCredentials)? callBack]) {
     if (callBack == null)
       return oauth2.AuthorizationCodeGrant(
-          credentials.clientId,
+          credentials.clientId!,
           Uri.parse(SpotifyApiBase._authorizationUrl),
           Uri.parse(SpotifyApiBase._tokenUrl),
           secret: credentials.clientSecret,
           httpClient: httpClient);
 
     return oauth2.AuthorizationCodeGrant(
-        credentials.clientId,
+        credentials.clientId!,
         Uri.parse(SpotifyApiBase._authorizationUrl),
         Uri.parse(SpotifyApiBase._tokenUrl),
         secret: credentials.clientSecret,
@@ -89,8 +89,8 @@ abstract class SpotifyApiBase {
   }
 
   static FutureOr<oauth2.Client> _getOauth2Client(
-      SpotifyApiCredentials credentials, http.BaseClient httpClient,
-      [Function(SpotifyApiCredentials) callBack]) async {
+      SpotifyApiCredentials credentials, http.Client? httpClient,
+      [Function(SpotifyApiCredentials)? callBack]) async {
     if (credentials.fullyQualified) {
       var oauthCredentials = credentials._toOauth2Credentials();
 
@@ -185,7 +185,7 @@ abstract class SpotifyApiBase {
         print(
             'Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds');
         _shouldWait = true;
-        unawaited(Future.delayed(Duration(seconds: ex.retryAfter))
+        unawaited(Future.delayed(Duration(seconds: ex.retryAfter.toInt()))
             .then((v) => _shouldWait = false));
       }
     }
@@ -203,7 +203,7 @@ abstract class SpotifyApiBase {
       final error = SpotifyError.fromJson(jsonMap['error']);
       if (response.statusCode == 429) {
         throw ApiRateException.fromSpotify(
-            error, num.parse(response.headers['retry-after']));
+            error, num.parse(response.headers['retry-after']!));
       }
       throw SpotifyException.fromSpotify(
         error,

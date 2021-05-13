@@ -18,7 +18,7 @@ void main() async {
 
   print('\nPodcast episode:');
   var episodes = await spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
-  var firstEpisode = (await episodes.first()).items.first;
+  var firstEpisode = (await episodes.first()).items!.first;
   print(firstEpisode.name);
 
   print('Artists:');
@@ -30,7 +30,7 @@ void main() async {
   print(album.name);
 
   print('\nAlbum Tracks:');
-  var tracks = await spotify.albums.getTracks(album.id).all();
+  var tracks = await spotify.albums.getTracks(album.id!).all();
   tracks.forEach((track) {
     print(track.name);
   });
@@ -50,20 +50,20 @@ void main() async {
     return;
   }
   search.forEach((pages) {
-    pages.items.forEach((item) {
+    pages.items!.forEach((item) {
       if (item is PlaylistSimple) {
         print('Playlist: \n'
             'id: ${item.id}\n'
             'name: ${item.name}:\n'
             'collaborative: ${item.collaborative}\n'
             'href: ${item.href}\n'
-            'trackslink: ${item.tracksLink.href}\n'
+            'trackslink: ${item.tracksLink!.href}\n'
             'owner: ${item.owner}\n'
             'public: ${item.owner}\n'
             'snapshotId: ${item.snapshotId}\n'
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
-            'images: ${item.images.length}\n'
+            'images: ${item.images!.length}\n'
             '-------------------------------');
       }
       if (item is Artist) {
@@ -83,8 +83,8 @@ void main() async {
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
             'isPlayable: ${item.isPlayable}\n'
-            'artists: ${item.artists.length}\n'
-            'availableMarkets: ${item.availableMarkets.length}\n'
+            'artists: ${item.artists!.length}\n'
+            'availableMarkets: ${item.availableMarkets!.length}\n'
             'discNumber: ${item.discNumber}\n'
             'trackNumber: ${item.trackNumber}\n'
             'explicit: ${item.explicit}\n'
@@ -98,9 +98,9 @@ void main() async {
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
             'albumType: ${item.albumType}\n'
-            'artists: ${item.artists.length}\n'
-            'availableMarkets: ${item.availableMarkets.length}\n'
-            'images: ${item.images.length}\n'
+            'artists: ${item.artists!.length}\n'
+            'availableMarkets: ${item.availableMarkets!.length}\n'
+            'images: ${item.images!.length}\n'
             'releaseDate: ${item.releaseDate}\n'
             'releaseDatePrecision: ${item.releaseDatePrecision}\n'
             '-------------------------------');

@@ -7,9 +7,9 @@ class Users extends EndpointPaging {
   @override
   String get _path => 'v1/users';
 
-  Me _me;
+  late Me _me;
 
-  Users(SpotifyApiBase api, Me me) : super(api){ 
+  Users(SpotifyApiBase api, Me me) : super(api) {
     _me = me;
   }
 

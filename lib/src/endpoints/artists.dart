@@ -62,8 +62,8 @@ class Artists extends EndpointPaging {
   /// the album is available!
   Pages<Album> albums(
     String artistId, {
-    String country,
-    List<String> includeGroups,
+    String? country,
+    List<String>? includeGroups,
   }) {
     final _includeGroups =
         includeGroups == null ? null : includeGroups.join(',');
