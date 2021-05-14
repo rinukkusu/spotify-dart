@@ -40,8 +40,7 @@ class AlbumSimple extends Object {
       _$AlbumSimpleFromJson(json);
 
   /// Helper function that unwraps the items from the paging object.
-  static Iterable<TrackSimple> _extractTracksFromPage(
-      Map<String, dynamic>? json) {
+  static Iterable<TrackSimple> _extractTracksFromPage(dynamic? json) {
     if (json == null) {
       return [];
     }
@@ -101,7 +100,7 @@ class AlbumSimple extends Object {
 
   /// The tracks of this album.
   @JsonKey(fromJson: _extractTracksFromPage)
-  Iterable<TrackSimple>? tracks;
+  Iterable<TrackSimple>? tracks = [];
 }
 
 enum DatePrecision { day, month, year }
