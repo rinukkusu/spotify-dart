@@ -20,6 +20,7 @@ This flow is recommended when you only need access to public Spotify data. It ca
 final credentials = SpotifyApiCredentials(clientId, clientSecret);
 final spotify = SpotifyApi(credentials);
 ```
+See the [wiki](https://github.com/rinukkusu/spotify-dart/wiki) for a list of implemented API endpoints.
 
 #### Authorization Code Flow
 This flow is suitable for long-running applications when you need to access or manage a user's private data. The Authorization Code Flow is a complex process, so it's highly recommended to read through [Spotify's Authorization Guide][spotify_auth] before attempting. Note that this package simplifies the creation of the authorization URI and the process of requesting tokens after receiving an authorization code.
