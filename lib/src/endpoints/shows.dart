@@ -43,7 +43,7 @@ class Shows extends EndpointPaging {
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
-  Pages<Episode> episodes(String showId, {String market = ''}) {
+  Pages<Episode> episodes(String showId, {String market}) {
     var query = _buildQuery({'market': market});
     var queryString = query.isNotEmpty ? '?$query' : '';
 
