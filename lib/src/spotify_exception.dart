@@ -4,8 +4,8 @@
 part of spotify;
 
 class SpotifyException implements Exception {
-  int status;
-  String message;
+  int? status;
+  String? message;
 
   SpotifyException([this.message]);
 

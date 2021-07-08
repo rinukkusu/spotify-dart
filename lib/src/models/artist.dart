@@ -12,45 +12,45 @@ class Artist extends Object implements ArtistSimple {
   /// Known external URLs for this artist.
   @JsonKey(name: 'external_urls')
   @override
-  ExternalUrls externalUrls;
+  ExternalUrls? externalUrls;
 
   /// A link to the Web API endpoint providing full details of the artist.
   @override
-  String href;
+  String? href;
 
   /// The Spotify ID for the artist.
   @override
-  String id;
+  String? id;
 
   /// The name of the artist
   @override
-  String name;
+  String? name;
 
   /// The object type: "artist"
   @override
-  String type;
+  String? type;
 
   /// The Spotify URI for the artist.
   @override
-  String uri;
+  String? uri;
 
   /// Information about the followers of the artist.
-  Followers followers;
+  Followers? followers;
 
   /// A list of the genres the artist is associated with.
   /// For example:
   ///    "Prog Rock", "Post-Grunge".
   ///
   /// (If not yet classified, the array is empty.)
-  List<String> genres;
+  List<String>? genres;
 
   /// Images of the artist in various sizes, widest first.
-  List<Image> images;
+  List<Image>? images;
 
   /// The popularity of the artist. The value will be between 0 and 100, with 100
   /// being the most popular. The artist's popularity is calculated from the
   /// popularity of all the artist's tracks.
-  int popularity;
+  int? popularity;
 }
 
 @JsonSerializable(createToJson: false)
@@ -62,20 +62,20 @@ class ArtistSimple extends Object {
 
   /// Known external URLs for this artist.
   @JsonKey(name: 'external_urls')
-  ExternalUrls externalUrls;
+  ExternalUrls? externalUrls;
 
   /// A link to the Web API endpoint providing full details of the artist.
-  String href;
+  String? href;
 
   /// The Spotify ID for the artist.
-  String id;
+  String? id;
 
   /// The name of the artist
-  String name;
+  String? name;
 
   /// The object type: "artist"
-  String type;
+  String? type;
 
   /// The Spotify URI for the artist.
-  String uri;
+  String? uri;
 }

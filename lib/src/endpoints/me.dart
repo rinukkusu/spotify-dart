@@ -17,10 +17,13 @@ class Me extends EndpointPaging {
   }
 
   /// Endpoint /v1/me/following only supports "artist" type at the moment.
-  BundledPages following(FollowingType type) {
-    return _getBundledPages('$_path/following?type=${type.key}', {
-      'artists': (json) => Artist.fromJson(json),
-    });
+  /// needs 'user-follow-read' scope
+  CursorPages<Artist> following(FollowingType type, [String after = '']) {
+    // since 'artists' is the container, there is no
+    // containerParse necessary. Adding json to make the
+    // CursorPages-Object happy.
+    return _getCursorPages('$_path/following?type=${type.key}',
+        (json) => Artist.fromJson(json), 'artists', (json) => json);
   }
 
   Future<Player> play() async {
@@ -40,6 +43,7 @@ class Me extends EndpointPaging {
     return Player.fromJson(map);
   }
 
+  /// Get the object currently being played on the user’s Spotify account.
   Future<Player> currentlyPlaying() async {
     var jsonString = await _api._get('$_path/player/currently-playing');
 
@@ -51,8 +55,10 @@ class Me extends EndpointPaging {
     return Player.fromJson(map);
   }
 
+  /// Get tracks from the current user’s recently played tracks.
+  /// Note: Currently doesn’t support podcast episodes.
   Future<Iterable<PlayHistory>> recentlyPlayed(
-      {int limit, DateTime after, DateTime before}) async {
+      {int? limit, DateTime? after, DateTime? before}) async {
     assert(after == null || before == null,
         'Cannot specify both after and before.');
 
@@ -66,6 +72,7 @@ class Me extends EndpointPaging {
     return map['items'].map<PlayHistory>((item) => PlayHistory.fromJson(item));
   }
 
+  /// Get the current user's top tracks.
   Future<Iterable<Track>> topTracks() async {
     var jsonString = await _api._get('$_path/top/tracks');
     var map = json.decode(jsonString);
@@ -74,6 +81,7 @@ class Me extends EndpointPaging {
     return items.map((item) => Track.fromJson(item));
   }
 
+  /// Get the current user's top artists.
   Future<Iterable<Artist>> topArtists() async {
     var jsonString = await _api._get('$_path/top/artists');
     var map = json.decode(jsonString);
@@ -82,8 +90,14 @@ class Me extends EndpointPaging {
     return items.map((item) => Artist.fromJson(item));
   }
 
+  /// Get information about a user’s available devices.
   Future<Iterable<Device>> devices() async {
     return _api._get('$_path/player/devices').then(_parseDeviceJson);
+  }
+
+  /// Get a list of shows saved in the current Spotify user’s library.
+  Pages<Show> savedShows() {
+    return _getPages('$_path/shows', (json) => Show.fromJson(json['show']));
   }
 
   Iterable<Device> _parseDeviceJson(String jsonString) {

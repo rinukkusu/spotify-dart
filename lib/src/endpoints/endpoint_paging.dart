@@ -7,22 +7,28 @@ abstract class EndpointPaging extends EndpointBase {
   EndpointPaging(SpotifyApiBase api) : super(api);
 
   Pages<T> _getPages<T>(String path, ParserFunction<T> pageItemParser,
-          [String pageKey, ParserFunction<Object> pageContainerParser]) =>
+          [String? pageKey, ParserFunction<Object>? pageContainerParser]) =>
       Pages(_api, path, pageItemParser, pageKey, pageContainerParser);
+
+  CursorPages<T> _getCursorPages<T>(
+          String path, ParserFunction<T> pageItemParser,
+          [String? pageKey, ParserFunction<Object>? pageContainerParser]) =>
+      CursorPages(_api, path, pageItemParser, pageKey, pageContainerParser);
 
   BundledPages _getBundledPages<T>(
           String path, Map<String, ParserFunction<T>> pageItemParsers,
-          [String pageKey, ParserFunction<Object> pageContainerParser]) =>
+          [String? pageKey, ParserFunction<Object>? pageContainerParser]) =>
       BundledPages(_api, path, pageItemParsers, pageKey, pageContainerParser);
 }
 
 class Page<T> {
   final Paging<T> _paging;
-  Iterable<T> _items;
-  Object _container;
+  Iterable<T>? _items;
+  Object? _container;
 
-  Page(this._paging, ParserFunction<T> pageItemParser, [Object pageContainer]) {
-    _items = _paging.itemsNative.map(pageItemParser);
+  Page(this._paging, ParserFunction<T> pageItemParser,
+      [Object? pageContainer]) {
+    _items = _paging.itemsNative!.map(pageItemParser);
     _container = pageContainer;
   }
 
@@ -33,22 +39,44 @@ class Page<T> {
   Paging<T> get metadata => _paging;
 
   /// The requested data
-  Iterable<T> get items => _items;
+  Iterable<T>? get items => _items;
 
   /// The object containing this page, if applicable
-  Object get container => _container;
+  Object? get container => _container;
 
-  bool get isLast => _paging.offset + _paging.limit >= _paging.total;
-  int get nextOffset => _paging.offset + _paging.limit;
+  bool get isLast => _paging.offset! + _paging.limit! >= _paging.total!;
+  int get nextOffset => _paging.offset! + _paging.limit!;
 }
 
 const defaultLimit = 20;
 
-abstract class _Pages<T> {
+class CursorPage<T> extends Page<T> {
+  CursorPage(CursorPaging<T> _paging, ParserFunction<T> pageItemParser,
+      [Object? pageContainer])
+      : super(_paging, pageItemParser, pageContainer);
+
+  String get after => (_paging as CursorPaging).cursors?.after ?? '';
+}
+
+mixin OffsetStrategy<T> {
+  Future<T> first([int limit = defaultLimit]) => getPage(limit, 0);
+
+  /// Abstract method that is used to do the api call and json serializing
+  Future<T> getPage(int limit, int offset);
+}
+
+mixin CursorStrategy<T> {
+  Future<T> first([int limit = defaultLimit]) => getPage(limit);
+
+  /// Abstract method that is used to do the api call and json serializing
+  Future<T> getPage(int limit, [String after = '']);
+}
+
+abstract class _Pages {
   final SpotifyApiBase _api;
   final String _path;
-  final String _pageKey;
-  final ParserFunction<Object> _pageContainerParser;
+  final String? _pageKey;
+  final ParserFunction<dynamic>? _pageContainerParser;
 
   _Pages(this._api, this._path, [this._pageKey, this._pageContainerParser]) {
     if (_pageKey != null && _pageContainerParser == null) {
@@ -57,26 +85,19 @@ abstract class _Pages<T> {
       throw ArgumentError.notNull('pageKey');
     }
   }
-
-  /// Abstract method that is used to do the api call and json serializing
-  Future<T> getPage(int limit, int offset);
-
-  Future<T> first([int limit = defaultLimit]) {
-    return getPage(limit, 0);
-  }
 }
 
-class Pages<T> extends _Pages<Page<T>> {
+class Pages<T> extends _Pages with OffsetStrategy<Page<T>> {
   final ParserFunction<T> _pageParser;
   final List<Page<T>> _bufferedPages = [];
   bool _cancelled = false;
   Pages(SpotifyApiBase api, String path, this._pageParser,
-      [String pageKey, ParserFunction<Object> pageContainerMapper])
+      [String? pageKey, ParserFunction<Object>? pageContainerMapper])
       : super(api, path, pageKey, pageContainerMapper);
 
   Pages.fromPaging(SpotifyApiBase api, Paging<T> paging, this._pageParser,
-      [String pageKey, ParserFunction<Object> pageContainerMapper])
-      : super(api, Uri.parse(paging.href).path.substring(1), pageKey,
+      [String? pageKey, ParserFunction<Object>? pageContainerMapper])
+      : super(api, Uri.parse(paging.href!).path.substring(1), pageKey,
             pageContainerMapper) {
     _bufferedPages.add(Page<T>(paging, _pageParser));
   }
@@ -85,11 +106,11 @@ class Pages<T> extends _Pages<Page<T>> {
     return stream(limit)
         .map((page) => page.items)
         .toList()
-        .then((pages) => pages.expand((page) => page));
+        .then((pages) => pages.expand((page) => page!));
   }
 
   Stream<Page<T>> stream([int limit = defaultLimit]) {
-    StreamController<Page<T>> stream;
+    late StreamController<Page<T>> stream;
 
     void handlePageAndGetNext(Page<T> page) {
       if (_cancelled) {
@@ -149,30 +170,59 @@ class Pages<T> extends _Pages<Page<T>> {
       return Page<T>(paging, _pageParser);
     } else {
       var paging = Paging<T>.fromJson(map[_pageKey]);
-      var container = _pageContainerParser(map);
+      var container = _pageContainerParser!(map);
       return Page<T>(paging, _pageParser, container);
     }
   }
 }
 
-class BundledPages extends _Pages<List<Page<Object>>> {
-  final Map<String, ParserFunction<Object>> _pageMappers;
+class CursorPages<T> extends _Pages with CursorStrategy<CursorPage<T>> {
+  final ParserFunction<T> _cursorPageParser;
+
+  CursorPages(SpotifyApiBase api, String path, this._cursorPageParser,
+      [String? pageKey, ParserFunction<Object>? pageContainerMapper])
+      : super(api, path, pageKey, pageContainerMapper);
+
+  @override
+  Future<CursorPage<T>> getPage(int limit, [String after = '']) async {
+    var pathDelimiter = _path.contains('?') ? '&' : '?';
+    var newPath = '$_path${pathDelimiter}limit=$limit';
+    if (after.isNotEmpty) {
+      newPath += '&after=$after';
+    }
+
+    var jsonString = await _api._get(newPath);
+    var map = json.decode(jsonString);
+
+    if (_pageContainerParser == null) {
+      var paging = CursorPaging<T>.fromJson(map);
+      return CursorPage<T>(paging, _cursorPageParser);
+    } else {
+      var paging = CursorPaging<T>.fromJson(map[_pageKey]);
+      var container = _pageContainerParser!(map);
+      return CursorPage<T>(paging, _cursorPageParser, container);
+    }
+  }
+}
+
+class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
+  final Map<String, ParserFunction<dynamic>> _pageMappers;
 
   BundledPages(SpotifyApiBase api, String path, this._pageMappers,
-      [String pageKey, ParserFunction<Object> pageContainerParser])
+      [String? pageKey, ParserFunction<dynamic>? pageContainerParser])
       : super(api, path, pageKey, pageContainerParser);
 
   @override
-  Future<List<Page<Object>>> getPage(int limit, int offset) async {
+  Future<List<Page<dynamic>>> getPage(int limit, int offset) async {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
     return _api._get(path).then(_parseBundledPage);
   }
 
-  List<Page<Object>> _parseBundledPage(String jsonString) {
+  List<Page<dynamic>> _parseBundledPage(String jsonString) {
     var map = json.decode(jsonString);
-    var pages = <Page<Object>>[];
+    var pages = <Page<dynamic>>[];
     _pageMappers.forEach((key, value) {
       if (map[key] != null) {
         var paging = Paging.fromJson(map[key]);
@@ -180,7 +230,7 @@ class BundledPages extends _Pages<List<Page<Object>>> {
         if (_pageContainerParser == null) {
           page = Page(paging, value);
         } else {
-          var container = _pageContainerParser(map[key]);
+          var container = _pageContainerParser!(map[key]);
           page = Page(paging, value, container);
         }
         pages.add(page);

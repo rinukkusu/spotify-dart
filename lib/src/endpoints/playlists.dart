@@ -45,7 +45,7 @@ class Playlists extends EndpointPaging {
   ///
   /// [description] - the description of the new playlist
   Future<Playlist> createPlaylist(String userId, String playlistName,
-      {bool public, bool collaborative, String description}) async {
+      {bool? public, bool? collaborative, String? description}) async {
     final url = 'v1/users/$userId/playlists';
     final json = <String, dynamic>{'name': playlistName};
 
@@ -79,7 +79,7 @@ class Playlists extends EndpointPaging {
   }
 
   Future<Null> removeTrack(String trackUri, String playlistId,
-      [List<int> positions]) async {
+      [List<int>? positions]) async {
     final url = 'v1/playlists/$playlistId/tracks';
     final track = <String, dynamic>{'uri': trackUri};
     if (positions != null) {
@@ -105,7 +105,7 @@ class Playlists extends EndpointPaging {
   ///
   /// [categoryId] - the Spotify category ID for the category.
   Pages<PlaylistSimple> getByCategoryId(String categoryId,
-      {String country, String locale}) {
+      {String? country, String? locale}) {
     final query = _buildQuery({'country': country, 'locale': locale});
 
     return _getPages(

@@ -12,8 +12,8 @@ class SpotifyError extends Object {
 
   /// The HTTP status code (also returned in the response header; see Response
   /// Status Codes for more information).
-  int status;
+  int? status;
 
   /// A short description of the cause of the error.
-  String message;
+  String? message;
 }
