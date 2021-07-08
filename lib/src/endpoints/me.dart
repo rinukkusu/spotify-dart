@@ -26,6 +26,23 @@ class Me extends EndpointPaging {
         (json) => Artist.fromJson(json), 'artists', (json) => json);
   }
 
+  Future<Player> play() async {
+    var jsonString = await _api._put('$_path/player/play');
+
+    var map = json.decode(jsonString);
+    return Player.fromJson(map);
+  }
+
+  Future<Player> pause({String deviceId}) async {
+    var jsonString = await _api._put('$_path/player/pause?' +
+        _buildQuery({
+          'deviceId': deviceId,
+        }));
+
+    var map = json.decode(jsonString);
+    return Player.fromJson(map);
+  }
+
   /// Get the object currently being played on the user’s Spotify account.
   Future<Player> currentlyPlaying() async {
     var jsonString = await _api._get('$_path/player/currently-playing');
