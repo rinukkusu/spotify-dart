@@ -11,7 +11,7 @@ class ExternalUrls extends Object {
       _$ExternalUrlsFromJson(json);
 
   /// The Spotify URL for the object.
-  String spotify;
+  String? spotify;
 }
 
 @JsonSerializable(createToJson: false)
@@ -22,11 +22,11 @@ class ExternalIds extends Object {
       _$ExternalIdsFromJson(json);
 
   /// International Standard Recording Code
-  String isrc;
+  String? isrc;
 
   /// International Article Number
-  String ean;
+  String? ean;
 
   /// Universal Product Code
-  String upc;
+  String? upc;
 }
