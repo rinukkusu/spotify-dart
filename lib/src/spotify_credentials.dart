@@ -51,6 +51,8 @@ class SpotifyApiCredentials {
     this.expiration,
   }) : tokenEndpoint = Uri.parse(SpotifyApiBase._tokenUrl);
 
+  SpotifyApiCredentials.withAccessToken(this.accessToken);
+
   SpotifyApiCredentials._fromClient(oauth2.Client client) {
     clientId = client.identifier;
     clientSecret = client.secret;

@@ -142,6 +142,15 @@ SpotifyApi api = SpotifyApi(spotifyCredentials, onCredentialsRefreshed: (Spotify
         });
 ``` 
 
+#### Access Token authentication
+In case you already have a valid access token and you don't need to complete any of the above flows you can use this constructor.
+
+```dart
+var spotify = SpotifyApi.withAccessToken(accessToken);
+```
+
+In that case, you are responsible of refreshing and updating the token accordingly.
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
