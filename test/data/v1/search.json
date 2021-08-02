@@ -4,6 +4,7 @@
     "items": [
       {
         "collaborative": false,
+        "description": "This Is Metallica playlist description",
         "external_urls": {
           "spotify": "https://open.spotify.com/playlist/37i9dQZF1DXbj9Ksq4BAdj"
         },
