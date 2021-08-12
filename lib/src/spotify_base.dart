@@ -55,6 +55,9 @@ abstract class SpotifyApiBase {
       [http.BaseClient httpClient])
       : this.fromClient(_getOauth2Client(credentials, httpClient));
 
+  SpotifyApiBase._withAccessToken(String accessToken)
+      : this.fromClient(oauth2.Client(oauth2.Credentials(accessToken)));
+
   SpotifyApiBase.fromAuthCodeGrant(
       oauth2.AuthorizationCodeGrant grant, String responseUri)
       : this.fromClient(grant.handleAuthorizationResponse(
