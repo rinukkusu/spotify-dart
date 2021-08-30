@@ -323,6 +323,7 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
 PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) {
   return PlaylistSimple()
     ..collaborative = json['collaborative'] as bool?
+    ..description = json['description'] as String?
     ..externalUrls = json['external_urls'] == null
         ? null
         : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
