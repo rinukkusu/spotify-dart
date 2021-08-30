@@ -1,7 +1,5 @@
 # Changelog
 
-## 0.5.2
-- add access-token only SpotifyApi constructor 
 ## 0.5.1
 
 - add createPlaylist optional parameters
