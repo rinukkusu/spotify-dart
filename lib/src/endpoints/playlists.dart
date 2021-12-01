@@ -92,6 +92,21 @@ class Playlists extends EndpointPaging {
     await _api._delete(url, body);
   }
 
+  /// [trackUris] - the Spotify track uris
+  /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
+  ///
+  /// [playlistId] - the playlist ID
+  Future<Null> removeTracks(List<String> trackUris, String playlistId) async {
+    final url = 'v1/playlists/$playlistId/tracks';
+    final tracks =
+        trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
+
+    final body = jsonEncode({
+      'tracks': tracks,
+    });
+    await _api._delete(url, body);
+  }
+
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
   /// parameter to ensure that the category exists for a particular country.
   ///
