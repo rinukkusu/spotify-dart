@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0
+
+- create client with access token only
+- add description field to playlist model
+
 ## 0.6.0
 
 - fix following artist
