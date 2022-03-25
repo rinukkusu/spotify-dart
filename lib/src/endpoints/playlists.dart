@@ -60,8 +60,14 @@ class Playlists extends EndpointPaging {
   /// [trackUri] - the Spotify track uri (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
   ///
   /// [playlistId] - the playlist ID
-  Future<Null> addTrack(String trackUri, String playlistId) async {
-    final url = 'v1/playlists/$playlistId/tracks';
+  Future<Null> addTrack(String trackUri, String playlistId,
+      {int position = -1}) async {
+    String url = 'v1/playlists/$playlistId/tracks';
+
+    if (position >= 0) {
+      url = url + "?position=" + position.toString();
+    }
+
     await _api._post(
         url,
         jsonEncode({
