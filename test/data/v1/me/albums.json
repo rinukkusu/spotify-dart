@@ -1,0 +1,645 @@
+{
+  "href" : "https://api.spotify.com/v1/me/albums?offset=0&limit=10&market=US",
+  "items" : [ {
+    "added_at" : "2021-03-14T12:52:42Z",
+    "album" : {
+      "album_type" : "album",
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+        },
+        "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+        "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+        "name" : "Charlie Puth",
+        "type" : "artist",
+        "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+      } ],
+      "copyrights" : [ {
+        "text" : "© 2016 Artist Partners for the United States and WEA International Inc. for the world outside of the United States. A Warner Music Group Company.",
+        "type" : "C"
+      }, {
+        "text" : "℗ 2016 Artist Partners for the United States and WEA International Inc. for the world outside of the United States. A Warner Music Group Company.",
+        "type" : "P"
+      } ],
+      "external_ids" : {
+        "upc" : "075679917850"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/5Nwsra93UQYJ6xxcjcE10x"
+      },
+      "genres" : [ ],
+      "href" : "https://api.spotify.com/v1/albums/5Nwsra93UQYJ6xxcjcE10x",
+      "id" : "5Nwsra93UQYJ6xxcjcE10x",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://i.scdn.co/image/ab67616d0000b273633a2d775747bccfbcb17a45",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://i.scdn.co/image/ab67616d00004851633a2d775747bccfbcb17a45",
+        "width" : 64
+      } ],
+      "label" : "Artist Partner",
+      "name" : "Nine Track Mind",
+      "popularity" : 81,
+      "release_date" : "2016-01-29",
+      "release_date_precision" : "day",
+      "total_tracks" : 13,
+      "tracks" : {
+        "href" : "https://api.spotify.com/v1/albums/5Nwsra93UQYJ6xxcjcE10x/tracks?offset=0&limit=50&market=US",
+        "items" : [ {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 194453,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/7soJgKhQTO8hLP2JPRkL5O"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/7soJgKhQTO8hLP2JPRkL5O",
+          "id" : "7soJgKhQTO8hLP2JPRkL5O",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/37R0bQOQj5a7DOqh1TGzvB"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/37R0bQOQj5a7DOqh1TGzvB",
+            "id" : "37R0bQOQj5a7DOqh1TGzvB",
+            "type" : "track",
+            "uri" : "spotify:track:37R0bQOQj5a7DOqh1TGzvB"
+          },
+          "name" : "One Call Away",
+          "preview_url" : "https://p.scdn.co/mp3-preview/8e6aa8f4eeef389ece3f0a173f7c2aad4d21e84d?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 1,
+          "type" : "track",
+          "uri" : "spotify:track:7soJgKhQTO8hLP2JPRkL5O"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 199133,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/6GBMbvX7sqyOxT5wWK4hgN"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/6GBMbvX7sqyOxT5wWK4hgN",
+          "id" : "6GBMbvX7sqyOxT5wWK4hgN",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/3qonjOrhFCfTnaaMruHzxW"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/3qonjOrhFCfTnaaMruHzxW",
+            "id" : "3qonjOrhFCfTnaaMruHzxW",
+            "type" : "track",
+            "uri" : "spotify:track:3qonjOrhFCfTnaaMruHzxW"
+          },
+          "name" : "Dangerously",
+          "preview_url" : "https://p.scdn.co/mp3-preview/b39780ce76a7580e98bcdbf999b18029d03287b5?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 2,
+          "type" : "track",
+          "uri" : "spotify:track:6GBMbvX7sqyOxT5wWK4hgN"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          }, {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6JL8zeS1NmiOftqZTRgdTz"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6JL8zeS1NmiOftqZTRgdTz",
+            "id" : "6JL8zeS1NmiOftqZTRgdTz",
+            "name" : "Meghan Trainor",
+            "type" : "artist",
+            "uri" : "spotify:artist:6JL8zeS1NmiOftqZTRgdTz"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 190453,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/7rl1z4j7MurMDnn9rHh4M2"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/7rl1z4j7MurMDnn9rHh4M2",
+          "id" : "7rl1z4j7MurMDnn9rHh4M2",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/3rKYiySCDMUKTw5kGVVhaa"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/3rKYiySCDMUKTw5kGVVhaa",
+            "id" : "3rKYiySCDMUKTw5kGVVhaa",
+            "type" : "track",
+            "uri" : "spotify:track:3rKYiySCDMUKTw5kGVVhaa"
+          },
+          "name" : "Marvin Gaye (feat. Meghan Trainor)",
+          "preview_url" : "https://p.scdn.co/mp3-preview/40a13ee49941d463c8155fce3a0ff15c8080991d?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 3,
+          "type" : "track",
+          "uri" : "spotify:track:7rl1z4j7MurMDnn9rHh4M2"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 212213,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/6qHPJleQOdQDEZvbxjY7jR"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/6qHPJleQOdQDEZvbxjY7jR",
+          "id" : "6qHPJleQOdQDEZvbxjY7jR",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/5QTYKyXxIJaLupn1J6W9QU"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/5QTYKyXxIJaLupn1J6W9QU",
+            "id" : "5QTYKyXxIJaLupn1J6W9QU",
+            "type" : "track",
+            "uri" : "spotify:track:5QTYKyXxIJaLupn1J6W9QU"
+          },
+          "name" : "Losing My Mind",
+          "preview_url" : "https://p.scdn.co/mp3-preview/4d02656d809c39025a41bf2372e65efaabb670a9?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 4,
+          "type" : "track",
+          "uri" : "spotify:track:6qHPJleQOdQDEZvbxjY7jR"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          }, {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/0C8ZW7ezQVs4URX5aX7Kqx"
+            },
+            "href" : "https://api.spotify.com/v1/artists/0C8ZW7ezQVs4URX5aX7Kqx",
+            "id" : "0C8ZW7ezQVs4URX5aX7Kqx",
+            "name" : "Selena Gomez",
+            "type" : "artist",
+            "uri" : "spotify:artist:0C8ZW7ezQVs4URX5aX7Kqx"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 217706,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/37FXw5QGFN7uwwsLy8uAc0"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/37FXw5QGFN7uwwsLy8uAc0",
+          "id" : "37FXw5QGFN7uwwsLy8uAc0",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/06KyNuuMOX1ROXRhj787tj"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/06KyNuuMOX1ROXRhj787tj",
+            "id" : "06KyNuuMOX1ROXRhj787tj",
+            "type" : "track",
+            "uri" : "spotify:track:06KyNuuMOX1ROXRhj787tj"
+          },
+          "name" : "We Don't Talk Anymore (feat. Selena Gomez)",
+          "preview_url" : "https://p.scdn.co/mp3-preview/0b61b7c36bd426086481769a4bb2e08cc417a01b?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 5,
+          "type" : "track",
+          "uri" : "spotify:track:37FXw5QGFN7uwwsLy8uAc0"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 210866,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/1RdykyqZss4snJH9e58CQJ"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/1RdykyqZss4snJH9e58CQJ",
+          "id" : "1RdykyqZss4snJH9e58CQJ",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/2o5YDkVrId7JeumduZJ6NL"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/2o5YDkVrId7JeumduZJ6NL",
+            "id" : "2o5YDkVrId7JeumduZJ6NL",
+            "type" : "track",
+            "uri" : "spotify:track:2o5YDkVrId7JeumduZJ6NL"
+          },
+          "name" : "My Gospel",
+          "preview_url" : "https://p.scdn.co/mp3-preview/24845d66bf8589d53a370d9b649902f06a11dbaa?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 6,
+          "type" : "track",
+          "uri" : "spotify:track:1RdykyqZss4snJH9e58CQJ"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 190106,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/2Y1LWNrO3Ls6tK9LZVehXk"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/2Y1LWNrO3Ls6tK9LZVehXk",
+          "id" : "2Y1LWNrO3Ls6tK9LZVehXk",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/51cJFmn6j0LUaxef2lQ3dz"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/51cJFmn6j0LUaxef2lQ3dz",
+            "id" : "51cJFmn6j0LUaxef2lQ3dz",
+            "type" : "track",
+            "uri" : "spotify:track:51cJFmn6j0LUaxef2lQ3dz"
+          },
+          "name" : "Up All Night",
+          "preview_url" : "https://p.scdn.co/mp3-preview/5ac5a4ded0202ece0ed396dddd5c2d1372175c09?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 7,
+          "type" : "track",
+          "uri" : "spotify:track:2Y1LWNrO3Ls6tK9LZVehXk"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 206466,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/4KVzPTFZXByIdBBH9dXiLT"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/4KVzPTFZXByIdBBH9dXiLT",
+          "id" : "4KVzPTFZXByIdBBH9dXiLT",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/197CUwGpX84IMI7aWB1Cjk"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/197CUwGpX84IMI7aWB1Cjk",
+            "id" : "197CUwGpX84IMI7aWB1Cjk",
+            "type" : "track",
+            "uri" : "spotify:track:197CUwGpX84IMI7aWB1Cjk"
+          },
+          "name" : "Left Right Left",
+          "preview_url" : "https://p.scdn.co/mp3-preview/8846537423114c803da25ef6d4701c9fb210f868?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 8,
+          "type" : "track",
+          "uri" : "spotify:track:4KVzPTFZXByIdBBH9dXiLT"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 214413,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/73E8dgeUdDu8iaZbQv1Fmk"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/73E8dgeUdDu8iaZbQv1Fmk",
+          "id" : "73E8dgeUdDu8iaZbQv1Fmk",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/1hlFygofCSO8PfIrAougLY"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/1hlFygofCSO8PfIrAougLY",
+            "id" : "1hlFygofCSO8PfIrAougLY",
+            "type" : "track",
+            "uri" : "spotify:track:1hlFygofCSO8PfIrAougLY"
+          },
+          "name" : "Then There's You",
+          "preview_url" : "https://p.scdn.co/mp3-preview/a737aafc4fc7c9f3935fa9014754dd1866020e08?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 9,
+          "type" : "track",
+          "uri" : "spotify:track:73E8dgeUdDu8iaZbQv1Fmk"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 210680,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/5uAeahijdsH6Pu4es1OVCt"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/5uAeahijdsH6Pu4es1OVCt",
+          "id" : "5uAeahijdsH6Pu4es1OVCt",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/60wzbPwV6EHfBTAf95rb9n"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/60wzbPwV6EHfBTAf95rb9n",
+            "id" : "60wzbPwV6EHfBTAf95rb9n",
+            "type" : "track",
+            "uri" : "spotify:track:60wzbPwV6EHfBTAf95rb9n"
+          },
+          "name" : "Suffer",
+          "preview_url" : "https://p.scdn.co/mp3-preview/f829202f3ee8ebb1ce978ca76e0d9dee55b62fe6?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 10,
+          "type" : "track",
+          "uri" : "spotify:track:5uAeahijdsH6Pu4es1OVCt"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          }, {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/7JZafQsN8syJ9agEtcyP4V"
+            },
+            "href" : "https://api.spotify.com/v1/artists/7JZafQsN8syJ9agEtcyP4V",
+            "id" : "7JZafQsN8syJ9agEtcyP4V",
+            "name" : "Shy Carter",
+            "type" : "artist",
+            "uri" : "spotify:artist:7JZafQsN8syJ9agEtcyP4V"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 235920,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/5T5X1awq0Tzg0NgQ4bSVAE"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/5T5X1awq0Tzg0NgQ4bSVAE",
+          "id" : "5T5X1awq0Tzg0NgQ4bSVAE",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/2LGgnbDYSeeMhuZGWwLQPL"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/2LGgnbDYSeeMhuZGWwLQPL",
+            "id" : "2LGgnbDYSeeMhuZGWwLQPL",
+            "type" : "track",
+            "uri" : "spotify:track:2LGgnbDYSeeMhuZGWwLQPL"
+          },
+          "name" : "As You Are (feat. Shy Carter)",
+          "preview_url" : "https://p.scdn.co/mp3-preview/d7bf68ca971e18238587b8b5e60e4425e5a4f04e?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 11,
+          "type" : "track",
+          "uri" : "spotify:track:5T5X1awq0Tzg0NgQ4bSVAE"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 187906,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/1KoSVcMX0QEQSvqxTemRnR"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/1KoSVcMX0QEQSvqxTemRnR",
+          "id" : "1KoSVcMX0QEQSvqxTemRnR",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/6wFwJpXsdvOrPzNwg8HfDj"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/6wFwJpXsdvOrPzNwg8HfDj",
+            "id" : "6wFwJpXsdvOrPzNwg8HfDj",
+            "type" : "track",
+            "uri" : "spotify:track:6wFwJpXsdvOrPzNwg8HfDj"
+          },
+          "name" : "Some Type of Love",
+          "preview_url" : "https://p.scdn.co/mp3-preview/86b1414fb5841e0c5570af874fbe92898f1b4aaa?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 12,
+          "type" : "track",
+          "uri" : "spotify:track:1KoSVcMX0QEQSvqxTemRnR"
+        }, {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/137W8MRPWKqSmrBGDBFSop"
+            },
+            "href" : "https://api.spotify.com/v1/artists/137W8MRPWKqSmrBGDBFSop",
+            "id" : "137W8MRPWKqSmrBGDBFSop",
+            "name" : "Wiz Khalifa",
+            "type" : "artist",
+            "uri" : "spotify:artist:137W8MRPWKqSmrBGDBFSop"
+          }, {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6VuMaDnrHyPL1p4EHjYLi7"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6VuMaDnrHyPL1p4EHjYLi7",
+            "id" : "6VuMaDnrHyPL1p4EHjYLi7",
+            "name" : "Charlie Puth",
+            "type" : "artist",
+            "uri" : "spotify:artist:6VuMaDnrHyPL1p4EHjYLi7"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 229525,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/2JzZzZUQj3Qff7wapcbKjc"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/2JzZzZUQj3Qff7wapcbKjc",
+          "id" : "2JzZzZUQj3Qff7wapcbKjc",
+          "is_local" : false,
+          "is_playable" : true,
+          "linked_from" : {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/track/66CFbqJScx6zRieGllITcs"
+            },
+            "href" : "https://api.spotify.com/v1/tracks/66CFbqJScx6zRieGllITcs",
+            "id" : "66CFbqJScx6zRieGllITcs",
+            "type" : "track",
+            "uri" : "spotify:track:66CFbqJScx6zRieGllITcs"
+          },
+          "name" : "See You Again (feat. Charlie Puth)",
+          "preview_url" : "https://p.scdn.co/mp3-preview/5e12e18dbe096e7168a73675fd4e9892029fafe5?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 1,
+          "type" : "track",
+          "uri" : "spotify:track:2JzZzZUQj3Qff7wapcbKjc"
+        } ],
+        "limit" : 50,
+        "next" : null,
+        "offset" : 0,
+        "previous" : null,
+        "total" : 13
+      },
+      "type" : "album",
+      "uri" : "spotify:album:5Nwsra93UQYJ6xxcjcE10x"
+    }
+  }, {
+    "added_at" : "2020-11-15T12:48:41Z",
+    "album" : {
+      "album_type" : "single",
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/6WY7D3jk8zTrHtmkqqo5GI"
+        },
+        "href" : "https://api.spotify.com/v1/artists/6WY7D3jk8zTrHtmkqqo5GI",
+        "id" : "6WY7D3jk8zTrHtmkqqo5GI",
+        "name" : "Maren Morris",
+        "type" : "artist",
+        "uri" : "spotify:artist:6WY7D3jk8zTrHtmkqqo5GI"
+      } ],
+      "copyrights" : [ {
+        "text" : "(P) 2020 Sony Music Entertainment. All rights reserved.",
+        "type" : "P"
+      } ],
+      "external_ids" : {
+        "upc" : "886448780366"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/4DI81D0NrKjNh88p7qusbC"
+      },
+      "genres" : [ ],
+      "href" : "https://api.spotify.com/v1/albums/4DI81D0NrKjNh88p7qusbC",
+      "id" : "4DI81D0NrKjNh88p7qusbC",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://i.scdn.co/image/ab67616d0000b27318811e162d90d9a5bd96d00c",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://i.scdn.co/image/ab67616d00001e0218811e162d90d9a5bd96d00c",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://i.scdn.co/image/ab67616d0000485118811e162d90d9a5bd96d00c",
+        "width" : 64
+      } ],
+      "label" : "Columbia Nashville",
+      "name" : "Better Than We Found It",
+      "popularity" : 50,
+      "release_date" : "2020-10-02",
+      "release_date_precision" : "day",
+      "total_tracks" : 1,
+      "tracks" : {
+        "href" : "https://api.spotify.com/v1/albums/4DI81D0NrKjNh88p7qusbC/tracks?offset=0&limit=50&market=US",
+        "items" : [ {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6WY7D3jk8zTrHtmkqqo5GI"
+            },
+            "href" : "https://api.spotify.com/v1/artists/6WY7D3jk8zTrHtmkqqo5GI",
+            "id" : "6WY7D3jk8zTrHtmkqqo5GI",
+            "name" : "Maren Morris",
+            "type" : "artist",
+            "uri" : "spotify:artist:6WY7D3jk8zTrHtmkqqo5GI"
+          } ],
+          "disc_number" : 1,
+          "duration_ms" : 197215,
+          "explicit" : false,
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/track/6IVLDX1miNBy1BOWebnMP2"
+          },
+          "href" : "https://api.spotify.com/v1/tracks/6IVLDX1miNBy1BOWebnMP2",
+          "id" : "6IVLDX1miNBy1BOWebnMP2",
+          "is_local" : false,
+          "is_playable" : true,
+          "name" : "Better Than We Found It",
+          "preview_url" : "https://p.scdn.co/mp3-preview/32b47deb258468564c243cef6b32fe7738b9bf22?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number" : 1,
+          "type" : "track",
+          "uri" : "spotify:track:6IVLDX1miNBy1BOWebnMP2"
+        } ],
+        "limit" : 50,
+        "next" : null,
+        "offset" : 0,
+        "previous" : null,
+        "total" : 1
+      },
+      "type" : "album",
+      "uri" : "spotify:album:4DI81D0NrKjNh88p7qusbC"
+    }
+  } ],
+  "limit" : 10,
+  "next" : null,
+  "offset" : 0,
+  "previous" : null,
+  "total" : 2
+}

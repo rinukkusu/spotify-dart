@@ -60,12 +60,12 @@ class Playlists extends EndpointPaging {
   /// [trackUri] - the Spotify track uri (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
   ///
   /// [playlistId] - the playlist ID
-  Future<Null> addTrack(String trackUri, String playlistId,
+  Future<void> addTrack(String trackUri, String playlistId,
       {int position = -1}) async {
     String url = 'v1/playlists/$playlistId/tracks';
 
     if (position >= 0) {
-      url = url + "?position=" + position.toString();
+      url = '$url?position=$position';
     }
 
     await _api._post(
@@ -79,12 +79,12 @@ class Playlists extends EndpointPaging {
   /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
   ///
   /// [playlistId] - the playlist ID
-  Future<Null> addTracks(List<String> trackUris, String playlistId) async {
+  Future<void> addTracks(List<String> trackUris, String playlistId) async {
     final url = 'v1/playlists/$playlistId/tracks';
     await _api._post(url, jsonEncode({'uris': trackUris}));
   }
 
-  Future<Null> removeTrack(String trackUri, String playlistId,
+  Future<void> removeTrack(String trackUri, String playlistId,
       [List<int>? positions]) async {
     final url = 'v1/playlists/$playlistId/tracks';
     final track = <String, dynamic>{'uri': trackUri};
@@ -102,7 +102,7 @@ class Playlists extends EndpointPaging {
   /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
   ///
   /// [playlistId] - the playlist ID
-  Future<Null> removeTracks(List<String> trackUris, String playlistId) async {
+  Future<void> removeTracks(List<String> trackUris, String playlistId) async {
     final url = 'v1/playlists/$playlistId/tracks';
     final tracks =
         trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
@@ -140,15 +140,28 @@ class Playlists extends EndpointPaging {
   ///
   /// [public] - Defaults to `true`. If `true` the playlist will be included
   /// in user’s public playlists, if `false` it will remain private.
-  Future<Null> followPlaylist(String playlistId, {bool public = true}) async {
+  Future<void> followPlaylist(String playlistId, {bool public = true}) async {
     final url = 'v1/playlists/$playlistId/followers';
     final body = jsonEncode({'public': public});
     await _api._put(url, body);
   }
 
   /// [playlistId] - the playlist ID
-  Future<Null> unfollowPlaylist(String playlistId) async {
+  Future<void> unfollowPlaylist(String playlistId) async {
     final url = 'v1/playlists/$playlistId/followers';
     await _api._delete(url);
+  }
+
+  /// check if a playlist is followed by provided users
+  /// [playlistId] - the playlist ID
+  /// [userIds] - the ids of the users
+  /// The output List of boolean maps to the order of provided userIds list
+  Future<List<bool>> followedBy(String playlistId, List<String> userIds) async {
+    assert(userIds.isNotEmpty, 'No user id was provided for checking');
+    final jsonString = await _api._get(
+      '/v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',
+    );
+    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
+    return list;
   }
 }
