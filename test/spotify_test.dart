@@ -192,6 +192,18 @@ Future main() async {
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
     });
 
+    test('isFollowing', () async {
+      final result = await spotify.me.isFollowing(FollowingType.artist, [
+        '2CIMQHirSU0MQqyYHq0eOx',
+        '57dN52uHvrHOxijzpIgu3E',
+        '1vCWHaC5f2uS3yhpwWbIA6'
+      ]);
+      expect(result.isNotEmpty, isTrue);
+      expect(result.first, isTrue);
+      expect(result[1], isFalse);
+      expect(result.last, isTrue);
+    });
+
     test('savedShows', () async {
       var pages = await spotify.me.savedShows();
       var result = await pages.first(2);
@@ -202,6 +214,25 @@ Future main() async {
       expect(firstShow.type, 'show');
       expect(firstShow.name != null, true);
       expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
+    });
+
+    test('savedAlbums', () async {
+      final albums = await spotify.me.savedAlbums().getPage(10, 0);
+      expect(albums.items?.length, 2);
+      expect(albums.isLast, true);
+      expect(albums.items?.every((item) => item is Album), isTrue);
+    });
+
+    test('isSavedAlbums', () async {
+      final list = await spotify.me.isSavedAlbums([
+        '382ObEPsp2rxGrESizN5TX',
+        '1A2GTWGtFfWp7KSQTwWOyo',
+        '2noRn2Aes5aoNVsU6iWThc'
+      ]);
+      expect(list.length, 3);
+      expect(list.first, isTrue);
+      expect(list[1], isFalse);
+      expect(list.last, isTrue);
     });
   });
 

@@ -128,15 +128,17 @@ class MockClient implements oauth2.Client {
   http.Response createSuccessResponse(String body) {
     /// necessary due to using Latin-1 encoding per default.
     /// https://stackoverflow.com/questions/52990816/dart-json-encodedata-can-not-accept-other-language
-    return http.Response(body, 200,
-        headers: {'Content-Type': 'application/json; charset=utf-8'});
+    return http.Response(body, 200, headers: {
+      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
+    });
   }
 
   http.Response createErrorResponse(MockHttpError error) {
     return http.Response(_wrapMessageToJson(error.statusCode!, error.message!),
         error.statusCode!,
-        headers: {'Content-Type': 'application/json; charset=utf-8'}
-          ..addAll(error.headers ?? {}));
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
+        }..addAll(error.headers ?? {}));
   }
 
   String _wrapMessageToJson(int statusCode, String message) =>
