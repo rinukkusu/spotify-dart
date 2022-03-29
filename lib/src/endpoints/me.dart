@@ -112,7 +112,7 @@ class Me extends EndpointPaging {
 
   /// gets current user's saved albums in pages
   Pages<AlbumSimple> savedAlbums() {
-    return _getPages('v1/me/albums', (json) => Album.fromJson(json));
+    return _getPages('v1/me/albums', (json) => Album.fromJson(json['album']));
   }
 
   /// Save albums for the current-user. It requires the

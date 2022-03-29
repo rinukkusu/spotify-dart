@@ -146,6 +146,11 @@ class Playlists extends EndpointPaging {
     await _api._put(url, body);
   }
 
+  /// unfollow a certain private/public playlist
+  ///
+  /// it requires `playlist-modify-public` & `playlist-modify-private`
+  /// scopes
+  ///
   /// [playlistId] - the playlist ID
   Future<void> unfollowPlaylist(String playlistId) async {
     final url = 'v1/playlists/$playlistId/followers';
@@ -159,7 +164,7 @@ class Playlists extends EndpointPaging {
   Future<List<bool>> followedBy(String playlistId, List<String> userIds) async {
     assert(userIds.isNotEmpty, 'No user id was provided for checking');
     final jsonString = await _api._get(
-      '/v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',
+      'v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',
     );
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
     return list;

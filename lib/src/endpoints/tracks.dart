@@ -66,7 +66,7 @@ class TracksMe extends EndpointPaging {
     final limit = ids.length < 50 ? ids.length : 50;
     final idsParam = ids.sublist(0, limit).join(',');
     final jsonString = await _api._get('$_path/contains?ids=$idsParam');
-    List<bool> list = json.decode(jsonString);
+    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
     return list;
   }
 
