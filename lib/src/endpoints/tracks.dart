@@ -78,4 +78,14 @@ class TracksMe extends EndpointPaging {
     var idsParam = ids.sublist(0, limit).join(',');
     await _api._put('$_path?ids=$idsParam', '');
   }
+
+  Future<Null> removeOne(String id) {
+    return remove([id]);
+  }
+
+  Future<Null> remove(List<String> ids) async {
+    var limit = ids.length < 50 ? ids.length : 50;
+    var idsParam = ids.sublist(0, limit).join(',');
+    await _api._delete('$_path?ids=$idsParam', '');
+  }
 }

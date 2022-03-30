@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1
+
+- add removeOne and remove to TracksMe
+
 ## 0.7.0
 
 - create client with access token only
