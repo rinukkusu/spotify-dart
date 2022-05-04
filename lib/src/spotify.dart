@@ -18,6 +18,17 @@ class SpotifyApi extends SpotifyApiBase {
   SpotifyApi.withAccessToken(String accessToken)
       : super._withAccessToken(accessToken);
 
+  static Future<SpotifyApi> asyncFromCredentials(
+    SpotifyApiCredentials credentials, {
+    Function(SpotifyApiCredentials)? onCredentialsRefreshed,
+  }) {
+    return SpotifyApiBase._asyncFromCredentials(
+      credentials,
+      http.Client(),
+      onCredentialsRefreshed,
+    );
+  }
+
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
       SpotifyApiCredentials credentials,
       {Function(SpotifyApiCredentials)? onCredentialsRefreshed}) {
