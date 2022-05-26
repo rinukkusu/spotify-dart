@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1
+
+- several bug fixes
+- add async factory for `SpotifyApi`
+- add follow/unfollow artists and users endpoints
+- add inserting track in playlist endpoint
+- add remove tracks endpoint
+
 ## 0.7.0
 
 - create client with access token only
