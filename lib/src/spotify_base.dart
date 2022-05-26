@@ -66,29 +66,23 @@ abstract class SpotifyApiBase {
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
       SpotifyApiCredentials credentials, http.Client httpClient,
       [Function(SpotifyApiCredentials)? callBack]) {
-    if (callBack == null)
-      return oauth2.AuthorizationCodeGrant(
-          credentials.clientId!,
-          Uri.parse(SpotifyApiBase._authorizationUrl),
-          Uri.parse(SpotifyApiBase._tokenUrl),
-          secret: credentials.clientSecret,
-          httpClient: httpClient);
-
     return oauth2.AuthorizationCodeGrant(
         credentials.clientId!,
         Uri.parse(SpotifyApiBase._authorizationUrl),
         Uri.parse(SpotifyApiBase._tokenUrl),
         secret: credentials.clientSecret,
         httpClient: httpClient,
-        onCredentialsRefreshed: (oauth2.Credentials cred) {
-      SpotifyApiCredentials newCredentials = SpotifyApiCredentials(
-          credentials.clientId, credentials.clientSecret,
-          accessToken: cred.accessToken,
-          expiration: cred.expiration,
-          refreshToken: cred.refreshToken,
-          scopes: cred.scopes);
-      callBack(newCredentials);
-    });
+        onCredentialsRefreshed: callBack != null
+            ? (oauth2.Credentials cred) {
+                final newCredentials = SpotifyApiCredentials(
+                    credentials.clientId, credentials.clientSecret,
+                    accessToken: cred.accessToken,
+                    expiration: cred.expiration,
+                    refreshToken: cred.refreshToken,
+                    scopes: cred.scopes);
+                callBack(newCredentials);
+              }
+            : null);
   }
 
   static FutureOr<oauth2.Client> _getOauth2Client(
@@ -97,28 +91,32 @@ abstract class SpotifyApiBase {
     if (credentials.fullyQualified) {
       var oauthCredentials = credentials._toOauth2Credentials();
 
+      void credentialRefreshedWrapperCallback(oauth2.Credentials cred) {
+        callBack?.call(
+          SpotifyApiCredentials(
+            credentials.clientId,
+            credentials.clientSecret,
+            accessToken: cred.accessToken,
+            expiration: cred.expiration,
+            refreshToken: cred.refreshToken,
+            scopes: cred.scopes,
+          ),
+        );
+      }
+
       if (oauthCredentials.isExpired) {
         oauthCredentials = await oauthCredentials.refresh(
           identifier: credentials.clientId,
           secret: credentials.clientSecret,
           httpClient: httpClient,
         );
+        credentialRefreshedWrapperCallback(oauthCredentials);
       }
 
       return oauth2.Client(
         oauthCredentials,
         identifier: credentials.clientId,
-        onCredentialsRefreshed: callBack == null
-            ? null
-            : (oauth2.Credentials cred) {
-                SpotifyApiCredentials newCredentials = SpotifyApiCredentials(
-                    credentials.clientId, credentials.clientSecret,
-                    accessToken: cred.accessToken,
-                    expiration: cred.expiration,
-                    refreshToken: cred.refreshToken,
-                    scopes: cred.scopes);
-                callBack(newCredentials);
-              },
+        onCredentialsRefreshed: credentialRefreshedWrapperCallback,
         secret: credentials.clientSecret,
       );
     }
