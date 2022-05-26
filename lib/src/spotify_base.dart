@@ -63,6 +63,20 @@ abstract class SpotifyApiBase {
   SpotifyApiBase._withAccessToken(String accessToken)
       : this.fromClient(oauth2.Client(oauth2.Credentials(accessToken)));
 
+  static Future<SpotifyApi> _asyncFromCredentials(
+    SpotifyApiCredentials credentials, [
+    http.Client? httpClient,
+    Function(SpotifyApiCredentials)? callBack,
+  ]) async {
+    final client = await _getOauth2Client(
+      credentials,
+      httpClient,
+      callBack,
+    );
+
+    return SpotifyApi.fromClient(client);
+  }
+
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
       SpotifyApiCredentials credentials, http.Client httpClient,
       [Function(SpotifyApiCredentials)? callBack]) {
@@ -130,19 +144,19 @@ abstract class SpotifyApiBase {
   }
 
   Future<String> _get(String path) {
-    return _getImpl('${_baseUrl}/$path', const {});
+    return _getImpl('$_baseUrl/$path', const {});
   }
 
   Future<String> _post(String path, [String body = '']) {
-    return _postImpl('${_baseUrl}/$path', const {}, body);
+    return _postImpl('$_baseUrl/$path', const {}, body);
   }
 
   Future<String> _delete(String path, [String body = '']) {
-    return _deleteImpl('${_baseUrl}/$path', const {}, body);
+    return _deleteImpl('$_baseUrl/$path', const {}, body);
   }
 
   Future<String> _put(String path, [String body = '']) {
-    return _putImpl('${_baseUrl}/$path', const {}, body);
+    return _putImpl('$_baseUrl/$path', const {}, body);
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
@@ -194,7 +208,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async {
-    return await SpotifyApiCredentials._fromClient(await _client);
+    return SpotifyApiCredentials._fromClient(await _client);
   }
 
   String handleErrors(http.Response response) {
