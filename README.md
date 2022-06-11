@@ -102,7 +102,7 @@ final spotify = SpotifyApi.fromAuthCodeGrant(grant, responseUri);
   For Dart apps, the best approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
 </details>
 
-## Refreshing Using Serverside Code Flow
+#### Refreshing Using Serverside Code Flow
 When using the Authorization Code Flow where the client requests a code and is exchanged on the server for the access token and refresh token, a custom client needs to be instantiated to handle the refreshing (as there is no client secret present within the application).
 
 In this flow, you will have to manually save the user's access token and refresh token somewhere (secure storage on device or serverside).
