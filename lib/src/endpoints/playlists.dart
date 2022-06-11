@@ -57,9 +57,9 @@ class Playlists extends EndpointPaging {
     return Playlist.fromJson(jsonDecode(playlistJson));
   }
 
-  /// [userId] - the Spotify user ID
+  /// [playlistId] - the ID of the playlist to update
   ///
-  /// [playlistName] - the name of the new playlist
+  /// [playlistName] - the new name of the playlist
   ///
   /// [public] - Defaults to `true`. If `true` the playlist will be public,
   /// if `false` it will be private.
@@ -67,7 +67,7 @@ class Playlists extends EndpointPaging {
   /// [collaborative] - Defaults to `false`. If `true` the playlist will
   /// be collaborative.
   ///
-  /// [description] - the description of the new playlist
+  /// [description] - the new description of the playlist
   Future<void> updatePlaylist(
     String playlistId,
     String playlistName, {
@@ -83,6 +83,25 @@ class Playlists extends EndpointPaging {
     if (description != null) json['description'] = description;
 
     await _api._put(url, jsonEncode(json));
+  }
+
+  /// [playlistId] - the ID of the playlist to update
+  ///
+  /// [playlistName] - the new name of the playlist
+  ///
+  /// [public] - Defaults to `true`. If `true` the playlist will be public,
+  /// if `false` it will be private.
+  ///
+  /// [collaborative] - Defaults to `false`. If `true` the playlist will
+  /// be collaborative.
+  ///
+  /// [description] - the new description of the playlist
+  Future<void> updatePlaylistImage(
+    String playlistId,
+    String imageData,
+  ) async {
+    final url = 'v1/playlists/$playlistId/images';
+    await _api._put(url, imageData);
   }
 
   /// [trackUri] - the Spotify track uri (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
