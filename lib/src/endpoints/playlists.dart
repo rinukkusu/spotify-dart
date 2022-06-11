@@ -87,15 +87,8 @@ class Playlists extends EndpointPaging {
 
   /// [playlistId] - the ID of the playlist to update
   ///
-  /// [playlistName] - the new name of the playlist
+  /// [imageData] - BASE64 encoded image data
   ///
-  /// [public] - Defaults to `true`. If `true` the playlist will be public,
-  /// if `false` it will be private.
-  ///
-  /// [collaborative] - Defaults to `false`. If `true` the playlist will
-  /// be collaborative.
-  ///
-  /// [description] - the new description of the playlist
   Future<void> updatePlaylistImage(
     String playlistId,
     String imageData,
