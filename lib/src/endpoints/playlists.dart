@@ -87,7 +87,7 @@ class Playlists extends EndpointPaging {
 
   /// [playlistId] - the ID of the playlist to update
   ///
-  /// [imageData] - BASE64 encoded image data
+  /// [imageData] - BASE64 encoded JPEG image data
   ///
   Future<void> updatePlaylistImage(
     String playlistId,
