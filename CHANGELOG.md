@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.2
+
+- add update playlist endpoint
+- add docs for serverside auth token refresh
+
 ## 0.7.1
 
 - several bug fixes
