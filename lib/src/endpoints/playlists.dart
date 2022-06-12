@@ -54,7 +54,47 @@ class Playlists extends EndpointPaging {
     if (description != null) json['description'] = description;
 
     final playlistJson = await _api._post(url, jsonEncode(json));
-    return await Playlist.fromJson(jsonDecode(playlistJson));
+    return Playlist.fromJson(jsonDecode(playlistJson));
+  }
+
+  /// [playlistId] - the ID of the playlist to update
+  ///
+  /// [playlistName] - the new name of the playlist
+  ///
+  /// [public] - Defaults to `true`. If `true` the playlist will be public,
+  /// if `false` it will be private.
+  ///
+  /// [collaborative] - Defaults to `false`. If `true` the playlist will
+  /// be collaborative.
+  ///
+  /// [description] - the new description of the playlist
+  Future<void> updatePlaylist(
+    String playlistId,
+    String playlistName, {
+    bool? public,
+    bool? collaborative,
+    String? description,
+  }) async {
+    final url = 'v1/playlists/$playlistId';
+    final json = <String, dynamic>{'name': playlistName};
+
+    if (public != null) json['public'] = public;
+    if (collaborative != null) json['collaborative'] = collaborative;
+    if (description != null) json['description'] = description;
+
+    await _api._put(url, jsonEncode(json));
+  }
+
+  /// [playlistId] - the ID of the playlist to update
+  ///
+  /// [imageData] - BASE64 encoded JPEG image data
+  ///
+  Future<void> updatePlaylistImage(
+    String playlistId,
+    String imageData,
+  ) async {
+    final url = 'v1/playlists/$playlistId/images';
+    await _api._put(url, imageData);
   }
 
   /// [trackUri] - the Spotify track uri (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
@@ -62,7 +102,7 @@ class Playlists extends EndpointPaging {
   /// [playlistId] - the playlist ID
   Future<void> addTrack(String trackUri, String playlistId,
       {int position = -1}) async {
-    String url = 'v1/playlists/$playlistId/tracks';
+    var url = 'v1/playlists/$playlistId/tracks';
 
     if (position >= 0) {
       url = '$url?position=$position';

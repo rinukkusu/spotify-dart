@@ -102,6 +102,32 @@ final spotify = SpotifyApi.fromAuthCodeGrant(grant, responseUri);
   For Dart apps, the best approach depends on the available options for accessing a browser. In general, you'll need to launch the authorization URI through the client's browser and listen for the redirect URI.
 </details>
 
+#### Refreshing Using Serverside Code Flow
+When using the Authorization Code Flow where the client requests a code and is exchanged on the server for the access token and refresh token, a custom client needs to be instantiated to handle the refreshing (as there is no client secret present within the application).
+
+In this flow, you will have to manually save the user's access token and refresh token somewhere (secure storage on device or serverside).
+
+```dart
+import 'package:oauth2/oauth2.dart' as oauth2;
+
+// starting with an accesstoken and/or refresh token
+var credentials = new oauth2.Credentials(YOUR_ACCESS_TOKEN, 
+    refreshToken: YOUR_REFRESH_TOKEN,
+    tokenEndpoint: Uri.parse('https://accounts.spotify.com/api/token')
+);
+
+var client = new oauth2.Client(credentials,
+    identifier: YOUR_SPOTIFY_CLIENT_ID,
+);
+
+var spotify = new SpotifyApi.fromClient(client);
+```
+
+Where you replace:
+  * `YOUR_ACCESS_TOKEN`: The User's saved access token (even if expired)
+  * `YOUR_REFRESH_TOKEN`: Cached refresh token 
+  * `YOUR_SPOTIFY_CLIENT_ID`: The client identifier of your application
+
 #### Saved Credentials Flow
 No one wants to redo the Authorization Code Flow for every login or app start. If you save your credentials somewhere while authenticated, you can reconnect to Spotify later by passing those credentials into the constructor. If the access token is expired at this point, the credentials will be automatically refreshed. If the refresh token has been revoked for any reason, an exception will be thrown and you'll need to reauthenticate through another flow.
 
