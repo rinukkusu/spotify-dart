@@ -34,7 +34,7 @@ class Paging<T> extends Object {
   String? next;
 
   /// The offset of the items returned (as set in the query or by default).
-  int? offset;
+  int? offset = 0;
 
   /// URL to the previous page of items. (null if none)
   String? previous;
