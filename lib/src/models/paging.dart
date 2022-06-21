@@ -28,17 +28,17 @@ class Paging<T> extends Object {
 
   /// The maximum number of items in the response (as set in the query or by
   /// default).
-  int? limit;
+  int limit = 20;
 
   /// URL to the next page of items. ([null] if none)
   String? next;
 
   /// The offset of the items returned (as set in the query or by default).
-  int? offset;
+  int? offset = 0;
 
   /// URL to the previous page of items. (null if none)
   String? previous;
 
   /// The total number of items available to return.
-  int? total;
+  int total = 0;
 }
