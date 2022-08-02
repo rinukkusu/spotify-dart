@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.3
+
+- fix `isLast` in paging endpoint
+
 ## 0.7.2
 
 - add update playlist endpoint
