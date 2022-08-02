@@ -44,8 +44,8 @@ class Page<T> {
   /// The object containing this page, if applicable
   Object? get container => _container;
 
-  bool get isLast => _paging.offset! + _paging.limit! >= _paging.total!;
-  int get nextOffset => _paging.offset! + _paging.limit!;
+  bool get isLast => (_paging.offset ?? 0) + _paging.limit >= _paging.total;
+  int get nextOffset => (_paging.offset ?? 0) + _paging.limit;
 }
 
 const defaultLimit = 20;
