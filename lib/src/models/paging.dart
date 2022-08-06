@@ -54,7 +54,7 @@ class CursorPaging<T> extends BasePaging<T> {
   factory CursorPaging.fromJson(Map<String, dynamic> json) =>
       _$CursorPagingFromJson(json);
 
-  Cursor cursors;
+  Cursor? cursors;
 }
 
 @JsonSerializable(createToJson: false)
@@ -62,5 +62,5 @@ class Cursor extends Object {
   factory Cursor.fromJson(Map<String, dynamic> json) => _$CursorFromJson(json);
 
   Cursor();
-  String after;
+  String? after;
 }

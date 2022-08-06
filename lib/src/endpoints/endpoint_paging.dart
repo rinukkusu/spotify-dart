@@ -39,7 +39,7 @@ abstract class BasePage<T> {
   /// contains a key called items (whose value is an array of the requested
   /// objects) along with other keys like previous, next and limit that can be
   /// useful in future calls.
-  Paging<T> get metadata => _paging;
+  Paging<T> get metadata => _paging as Paging<T>;
 
   /// The requested data
   Iterable<T>? get items => _items;
@@ -63,19 +63,19 @@ abstract class BasePage<T> {
 /// A page that uses an [offset] to get to the next page.
 class Page<T> extends BasePage<T> {
   Page(Paging<T> _paging, ParserFunction<T> pageItemParser,
-      [Object pageContainer])
+      [Object? pageContainer])
       : super(_paging, pageItemParser, pageContainer);
 
   @override
   bool get isLast {
-    var paging = _paging as Paging;
-    return (_paging.offset ?? 0) + _paging.limit >= _paging.total;
+    var paging = _paging as Paging<T>;
+    return (paging.offset ?? 0) + _paging.limit >= _paging.total;
   }
 
   @override
   dynamic get _next {
-    var paging = _paging as Paging;
-    return (_paging.offset ?? 0) + _paging.limit;
+    var paging = _paging as Paging<T>;
+    return (paging.offset ?? 0) + _paging.limit;
   }
 
   /// Returns the [offset] for the next page.
@@ -89,14 +89,14 @@ class CursorPage<T> extends BasePage<T> {
       : super(_paging, pageItemParser, pageContainer);
 
   @override
-  dynamic get _next => (_paging as CursorPaging).cursors?.after ?? '';
+  dynamic get _next => (_paging as CursorPaging<T>).cursors?.after ?? '';
 
   /// The [cursor] pointing to the next page.
   /// Is empty, when it's the last page.
   String get after => _next as String;
 
   @override
-  bool get isLast => after == null || after.isEmpty;
+  bool get isLast => after.isEmpty;
 }
 
 /// Generic strategy to first and next
@@ -216,17 +216,16 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
 /// Handles retrieval of a page through an offset
 class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
   Pages(SpotifyApiBase api, String path, ParserFunction<T> pageParser,
-      [String pageKey, ParserFunction<Object> pageContainerMapper])
+      [String? pageKey, ParserFunction<Object>? pageContainerMapper])
       : super(api, path, pageParser, pageKey, pageContainerMapper);
 
-  Pages.fromPaging(SpotifyApiBase api, Paging<T> paging, this._pageParser,
+  Pages.fromPaging(
+      SpotifyApiBase api, Paging<T> paging, ParserFunction<T> pageParser,
       [String? pageKey, ParserFunction<Object>? pageContainerMapper])
-      : super(api, Uri.parse(paging.href!).path.substring(1), pageKey,
-      pageContainerMapper) {
+      : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
+            pageKey, pageContainerMapper) {
     _bufferedPages.add(Page<T>(paging, _pageParser));
   }
-
-
 
   @override
   Future<Page<T>> getPage(int limit, int offset) async {
@@ -251,13 +250,13 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
 class CursorPages<T> extends SinglePages<T, CursorPage<T>>
     with CursorStrategy<CursorPage<T>> {
   CursorPages(SpotifyApiBase api, String path, ParserFunction<T> pageParser,
-      [String pageKey, ParserFunction<Object> pageContainerMapper])
+      [String? pageKey, ParserFunction<Object>? pageContainerMapper])
       : super(api, path, pageParser, pageKey, pageContainerMapper);
 
   CursorPages.fromCurosrPaging(
       SpotifyApiBase api, CursorPaging<T> paging, ParserFunction<T> pageParser,
       [String? pageKey, ParserFunction<Object>? pageContainerMapper])
-      : super(api, Uri.parse(paging.href).path.substring(1), pageParser,
+      : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
             pageKey, pageContainerMapper) {
     _bufferedPages.add(CursorPage<T>(paging, _pageParser));
   }
