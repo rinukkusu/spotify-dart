@@ -21,7 +21,7 @@ class Categories extends EndpointPaging {
   /// parameter, may give odd results if not carefully matched. For example
   /// country=SE&locale=de_DE will return a list of categories relevant to
   /// Sweden but as German language strings.
-  Pages<Category> list({String country, String locale}) {
+  Pages<Category> list({String? country, String? locale}) {
     final query = _buildQuery({'country': country, 'locale': locale});
 
     return _getPages(
@@ -45,7 +45,7 @@ class Categories extends EndpointPaging {
   ///
   /// [categoryId] - the Spotify category ID for the category.
   Future<Category> get(String categoryId,
-      {String country, String locale}) async {
+      {String? country, String? locale}) async {
     final query = _buildQuery({'country': country, 'locale': locale});
 
     var jsonString = await _api._get('$_path/$categoryId?$query');
