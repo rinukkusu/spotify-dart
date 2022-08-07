@@ -69,13 +69,13 @@ class Page<T> extends BasePage<T> {
   @override
   bool get isLast {
     var paging = _paging as Paging<T>;
-    return (paging.offset ?? 0) + _paging.limit >= _paging.total;
+    return (paging.offset ?? 0) + paging.limit >= paging.total;
   }
 
   @override
   dynamic get _next {
     var paging = _paging as Paging<T>;
-    return (paging.offset ?? 0) + _paging.limit;
+    return (paging.offset ?? 0) + paging.limit;
   }
 
   /// Returns the [offset] for the next page.
@@ -253,7 +253,7 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
       [String? pageKey, ParserFunction<Object>? pageContainerMapper])
       : super(api, path, pageParser, pageKey, pageContainerMapper);
 
-  CursorPages.fromCurosrPaging(
+  CursorPages.fromCursorPaging(
       SpotifyApiBase api, CursorPaging<T> paging, ParserFunction<T> pageParser,
       [String? pageKey, ParserFunction<Object>? pageContainerMapper])
       : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,

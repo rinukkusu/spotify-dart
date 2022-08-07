@@ -9,7 +9,9 @@ import 'package:spotify/spotify.dart';
 const _scopes = [
   'user-read-playback-state',
   'user-follow-read',
-  'playlist-modify-private'
+  'playlist-modify-private',
+  'user-library-read',
+  'user-read-recently-played'
 ];
 
 void main() async {
@@ -25,6 +27,8 @@ void main() async {
   await _devices(spotify);
   await _followingArtists(spotify);
   await _playlists(spotify);
+  await _savedTracks(spotify);
+  await _recentlyPlayed(spotify);
   //await _createPrivatePlaylist(spotify);
 
   exit(0);
@@ -80,11 +84,28 @@ Future<void> _followingArtists(SpotifyApi spotify) async {
   }).catchError((ex) => _prettyPrintError(ex));
 }
 
-void _playlists(SpotifyApi spotify) async {
+Future<void> _playlists(SpotifyApi spotify) async {
   await spotify.playlists.me.all(1).then((playlists) {
     var lists = playlists.map((playlist) => playlist.name).join(', ');
     print('Playlists: $lists');
   }).catchError(_prettyPrintError);
+}
+
+Future<void> _savedTracks(SpotifyApi spotify) async {
+  var stream = spotify.tracks.me.saved.stream();
+  print('Saved Tracks:\n');
+  await for (final page in stream) {
+    var items = page.items?.map((e) => e.track?.name).join(', ');
+    print(items);
+  }
+}
+
+Future<void> _recentlyPlayed(SpotifyApi spotify) async {
+  var stream = spotify.me.recentlyPlayed().stream();
+  await for (final page in stream) {
+    var items = page.items?.map((e) => e.track?.name).join(', ');
+    print(items);
+  }
 }
 
 void _createPrivatePlaylist(SpotifyApi spotify) async {

@@ -245,9 +245,9 @@ Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) {
     ..itemsNative = itemsNativeFromJson(json['items'] as List)
     ..limit = json['limit'] as int
     ..next = json['next'] as String?
-    ..total = json['total'] as int
     ..offset = json['offset'] as int?
-    ..previous = json['previous'] as String?;
+    ..previous = json['previous'] as String?
+    ..total = json['total'] as int;
 }
 
 CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) {
@@ -256,7 +256,6 @@ CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) {
     ..itemsNative = itemsNativeFromJson(json['items'] as List)
     ..limit = json['limit'] as int
     ..next = json['next'] as String?
-    ..total = json['total'] as int
     ..cursors = json['cursors'] == null
         ? null
         : Cursor.fromJson(json['cursors'] as Map<String, dynamic>);

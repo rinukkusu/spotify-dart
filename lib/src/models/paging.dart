@@ -30,8 +30,7 @@ class BasePaging<T> extends Object {
   /// URL to the next page of items. ([null] if none)
   String? next;
 
-  /// The total number of items available to return.
-  int total = 0;
+
 }
 
 @JsonSerializable(createToJson: false)
@@ -45,6 +44,9 @@ class Paging<T> extends BasePaging<T> {
 
   /// URL to the previous page of items. (null if none)
   String? previous;
+
+  /// The total number of items available to return.
+  int total = 0;
 }
 
 @JsonSerializable(createToJson: false)
