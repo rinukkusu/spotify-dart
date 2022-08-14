@@ -23,6 +23,7 @@ void main() async {
   if (spotify == null) {
     exit(0);
   }
+  await _user(spotify);
   await _currentlyPlaying(spotify);
   await _devices(spotify);
   await _followingArtists(spotify);
@@ -66,6 +67,30 @@ Future<void> _currentlyPlaying(SpotifyApi spotify) async =>
       }
       print('Currently playing: ${a.item?.name}');
     }).catchError(_prettyPrintError);
+
+Future<void> _user(SpotifyApi spotify) async {
+  print('User\'s data:');
+  await spotify.me.get().then((user) {
+    var buffer = StringBuffer();
+    buffer.write('id:');
+    buffer.writeln(user.id);
+    buffer.write('name:');
+    buffer.writeln(user.displayName);
+    buffer.write('email:');
+    buffer.writeln(user.email);
+    buffer.write('type:');
+    buffer.writeln(user.type);
+    buffer.write('birthdate:');
+    buffer.writeln(user.birthdate);
+    buffer.write('country:');
+    buffer.writeln(user.country);
+    buffer.write('followers:');
+    buffer.writeln(user.followers?.href);
+    buffer.write('country:');
+    buffer.writeln(user.country);
+    print(buffer.toString());
+  });
+}
 
 Future<void> _devices(SpotifyApi spotify) async =>
     await spotify.me.devices().then((Iterable<Device>? devices) {

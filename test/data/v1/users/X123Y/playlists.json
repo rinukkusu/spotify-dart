@@ -1,0 +1,75 @@
+{
+  "href" : "https://api.spotify.com/v1/users/superinteressante/playlists?offset=0&limit=20",
+  "items" : [ {
+    "collaborative" : false,
+    "description" : "Ouça as últimas e melhores eletrônicas de 2022 by KRIEGER.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/1XIAxOGAEK2h4ravpNTmYF"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF",
+    "id" : "1XIAxOGAEK2h4ravpNTmYF",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706c0000bebb0a6f1b3d0ff5d5bfd3853854",
+      "width" : null
+    } ],
+    "name" : "Hot News @ Melhores Eletrônicas 2022",
+    "owner" : {
+      "display_name" : "KRIEGER",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/kriegermusik"
+      },
+      "href" : "https://api.spotify.com/v1/users/kriegermusik",
+      "id" : "kriegermusik",
+      "type" : "user",
+      "uri" : "spotify:user:kriegermusik"
+    },
+    "primary_color" : null,
+    "public" : true,
+    "snapshot_id" : "MjcxMSw2YWU5MTg1YzlkYTUxY2FjZjQ0NTRjOWQ1M2VhODdkMGY0YmUxMWMz",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF/tracks",
+      "total" : 145
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:1XIAxOGAEK2h4ravpNTmYF"
+  }, {
+    "collaborative" : false,
+    "description" : "71% das músicas gravadas nos últimos 50 anos falam de amor :)",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/0CMUJitANOO9tlpQBLEvGo"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/0CMUJitANOO9tlpQBLEvGo",
+    "id" : "0CMUJitANOO9tlpQBLEvGo",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706c0000bebb14384631910c01de44d6a798",
+      "width" : null
+    } ],
+    "name" : "Canções de amor (1950 - 2010)",
+    "owner" : {
+      "display_name" : "Superinteressante",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/superinteressante"
+      },
+      "href" : "https://api.spotify.com/v1/users/superinteressante",
+      "id" : "superinteressante",
+      "type" : "user",
+      "uri" : "spotify:user:superinteressante"
+    },
+    "primary_color" : null,
+    "public" : true,
+    "snapshot_id" : "NTAsYjZmOTdmZmM5OGM5YjdmOThiOTZiNDA1YWU4MzYyZmQ1N2MwMTE0NQ==",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/0CMUJitANOO9tlpQBLEvGo/tracks",
+      "total" : 40
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:0CMUJitANOO9tlpQBLEvGo"
+  } ],
+  "limit" : 20,
+  "next" : null,
+  "offset" : 0,
+  "previous" : null,
+  "total" : 14
+}

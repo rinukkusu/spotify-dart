@@ -14,19 +14,21 @@ class Playlists extends EndpointPaging {
         jsonDecode(await _api._get('v1/playlists/$playlistId')));
   }
 
-  Pages<PlaylistSimple> get featured {
-    return _getPages(
-        '$_path/featured-playlists',
-        (json) => PlaylistSimple.fromJson(json),
-        'playlists',
-        (json) => PlaylistsFeatured.fromJson(json));
-  }
+  Pages<PlaylistSimple> get featured => _getPages(
+      '$_path/featured-playlists',
+      (json) => PlaylistSimple.fromJson(json),
+      'playlists',
+      (json) => PlaylistsFeatured.fromJson(json));
 
   Pages<PlaylistSimple> get me {
     return _getPages(
         'v1/me/playlists', (json) => PlaylistSimple.fromJson(json));
   }
 
+  Pages<PlaylistSimple> getUsersPlaylists(String userId, [int limit = defaultLimit, int offset = 0]) {
+    assert(userId.isNotEmpty, 'UserId cannot be empty');
+    return _getPages('v1/users/$userId/playlists', (json) => PlaylistSimple.fromJson(json));
+  }
   /// [playlistId] - the Spotify playlist ID
   Pages<Track> getTracksByPlaylistId(playlistId) {
     return _getPages('v1/playlists/$playlistId/tracks',
