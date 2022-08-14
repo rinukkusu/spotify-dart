@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:spotify/src/spotify_mock.dart';
 import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
@@ -90,6 +91,21 @@ Future main() async {
     });
   });
 
+  group('Playlists', () {
+    test('getUsersPlaylists', () async {
+      var playlists = spotify.playlists.getUsersPlaylists('X123Y');
+      var firstPage = (await playlists.first());
+      expect(firstPage.metadata.href,
+          'https://api.spotify.com/v1/users/superinteressante/playlists?offset=0&limit=20');
+      var items = firstPage.items!;
+      expect(items.length, 2);
+      expect(items.first.id, '1XIAxOGAEK2h4ravpNTmYF');
+      expect(items.first.href,
+          'https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF');
+      expect(items.first.name, 'Hot News @ Melhores Eletrônicas 2022');
+    });
+  });
+
   group('Shows', () {
     test('get', () async {
       var show = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
@@ -109,7 +125,7 @@ Future main() async {
 
   group('Show episodes', () {
     test('list', () async {
-      var episodes = await spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
+      var episodes = spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
       var firstEpisode = (await episodes.first()).items!.first;
 
       expect(firstEpisode.type, 'episode');
@@ -160,8 +176,9 @@ Future main() async {
 
     test('recentlyPlayed', () async {
       // the parameters don't do anything. They are just dummies
-      var result =
-          await spotify.me.recentlyPlayed(limit: 3, before: DateTime.now()).all();
+      var result = await spotify.me
+          .recentlyPlayed(limit: 3, before: DateTime.now())
+          .all();
       expect(result.length, 2);
       var first = result.first;
       expect(first.track != null, true);
