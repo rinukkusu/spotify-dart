@@ -89,8 +89,8 @@
     ],
     "next": "https://api.spotify.com/v1/me/player/recently-played?before=1481661737016&limit=2",
     "cursors": {
-      "after": "1481661844589",
-      "before": "1481661737016"
+      "after": "",
+      "before": ""
     },
     "limit": 2,
     "href": "https://api.spotify.com/v1/me/player/recently-played?limit=2"

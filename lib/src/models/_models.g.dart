@@ -193,24 +193,6 @@ Copyright _$CopyrightFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String?;
 }
 
-CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) {
-  return CursorPaging<T>()
-    ..href = json['href'] as String?
-    ..itemsNative = itemsNativeFromJson(json['items'] as List)
-    ..limit = json['limit'] as int
-    ..next = json['next'] as String?
-    ..offset = json['offset'] as int?
-    ..previous = json['previous'] as String?
-    ..total = json['total'] as int
-    ..cursors = json['cursors'] == null
-        ? null
-        : Cursor.fromJson(json['cursors'] as Map<String, dynamic>);
-}
-
-Cursor _$CursorFromJson(Map<String, dynamic> json) {
-  return Cursor()..after = json['after'] as String?;
-}
-
 Device _$DeviceFromJson(Map<String, dynamic> json) {
   return Device()
     ..id = json['id'] as String?
@@ -266,6 +248,21 @@ Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) {
     ..offset = json['offset'] as int?
     ..previous = json['previous'] as String?
     ..total = json['total'] as int;
+}
+
+CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) {
+  return CursorPaging<T>()
+    ..href = json['href'] as String?
+    ..itemsNative = itemsNativeFromJson(json['items'] as List)
+    ..limit = json['limit'] as int
+    ..next = json['next'] as String?
+    ..cursors = json['cursors'] == null
+        ? null
+        : Cursor.fromJson(json['cursors'] as Map<String, dynamic>);
+}
+
+Cursor _$CursorFromJson(Map<String, dynamic> json) {
+  return Cursor()..after = json['after'] as String?;
 }
 
 Player _$PlayerFromJson(Map<String, dynamic> json) {

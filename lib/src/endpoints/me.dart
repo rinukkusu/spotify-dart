@@ -67,19 +67,16 @@ class Me extends EndpointPaging {
 
   /// Get tracks from the current user’s recently played tracks.
   /// Note: Currently doesn’t support podcast episodes.
-  Future<Iterable<PlayHistory>> recentlyPlayed(
-      {int? limit, DateTime? after, DateTime? before}) async {
+  CursorPages<PlayHistory> recentlyPlayed({int? limit, DateTime? after, DateTime? before}) {
     assert(after == null || before == null,
-        'Cannot specify both after and before.');
+      'Cannot specify both after and before.');
 
-    final jsonString = await _api._get('$_path/player/recently-played?' +
+    return _getCursorPages('$_path/player/recently-played?' +
         _buildQuery({
           'limit': limit,
           'after': after?.millisecondsSinceEpoch,
           'before': before?.millisecondsSinceEpoch
-        }));
-    final map = json.decode(jsonString);
-    return map['items'].map<PlayHistory>((item) => PlayHistory.fromJson(item));
+        }), (json) => PlayHistory.fromJson(json));
   }
 
   /// Get the current user's top tracks.

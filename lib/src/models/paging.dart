@@ -9,11 +9,8 @@ Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) => json;
 List<Map> itemsNativeToJson(Iterable<dynamic>? items) =>
     (items == null) ? [] : List.from(items);
 
-@JsonSerializable(createToJson: false)
-class Paging<T> extends Object {
-  Paging();
-
-  factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
+class BasePaging<T> extends Object {
+  BasePaging();
 
   /// A link to the Web API endpoint returning the full result of the request.
   String? href;
@@ -33,6 +30,15 @@ class Paging<T> extends Object {
   /// URL to the next page of items. ([null] if none)
   String? next;
 
+
+}
+
+@JsonSerializable(createToJson: false)
+class Paging<T> extends BasePaging<T> {
+  Paging();
+
+  factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
+
   /// The offset of the items returned (as set in the query or by default).
   int? offset;
 
@@ -41,4 +47,22 @@ class Paging<T> extends Object {
 
   /// The total number of items available to return.
   int total = 0;
+}
+
+@JsonSerializable(createToJson: false)
+class CursorPaging<T> extends BasePaging<T> {
+  CursorPaging();
+
+  factory CursorPaging.fromJson(Map<String, dynamic> json) =>
+      _$CursorPagingFromJson(json);
+
+  Cursor? cursors;
+}
+
+@JsonSerializable(createToJson: false)
+class Cursor extends Object {
+  factory Cursor.fromJson(Map<String, dynamic> json) => _$CursorFromJson(json);
+
+  Cursor();
+  String? after;
 }
