@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:spotify/src/spotify_mock.dart';
 import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
