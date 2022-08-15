@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0
+
+- add playlists endpoint for specific users
+- add distinct cursor and offset paging classes
+
 ## 0.7.3
 
 - fix `isLast` in paging endpoint
