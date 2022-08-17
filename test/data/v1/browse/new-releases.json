@@ -1,0 +1,131 @@
+{
+  "albums" : {
+    "href" : "https://api.spotify.com/v1/browse/new-releases?country=DE&offset=0&limit=20",
+    "items" : [ {
+      "album_type" : "album",
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/3utZ2yeQk0Z3BCOBWP7Vlu"
+        },
+        "href" : "https://api.spotify.com/v1/artists/3utZ2yeQk0Z3BCOBWP7Vlu",
+        "id" : "3utZ2yeQk0Z3BCOBWP7Vlu",
+        "name" : "CRO",
+        "type" : "artist",
+        "uri" : "spotify:artist:3utZ2yeQk0Z3BCOBWP7Vlu"
+      } ],
+      "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AO", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BN", "BO", "BR", "BS", "BT", "BW", "BZ", "CA", "CD", "CG", "CH", "CI", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IQ", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MG", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TJ", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VE", "VN", "VU", "WS", "XK", "ZA", "ZM", "ZW" ],
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/50MeziN5Do8zDtN4wINTTS"
+      },
+      "href" : "https://api.spotify.com/v1/albums/50MeziN5Do8zDtN4wINTTS",
+      "id" : "50MeziN5Do8zDtN4wINTTS",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://i.scdn.co/image/ab67616d0000b273fc1e217bd475c240b49a2f1e",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://i.scdn.co/image/ab67616d00001e02fc1e217bd475c240b49a2f1e",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://i.scdn.co/image/ab67616d00004851fc1e217bd475c240b49a2f1e",
+        "width" : 64
+      } ],
+      "name" : "11:11",
+      "release_date" : "2022-08-11",
+      "release_date_precision" : "day",
+      "total_tracks" : 12,
+      "type" : "album",
+      "uri" : "spotify:album:50MeziN5Do8zDtN4wINTTS"
+    }, {
+      "album_type" : "album",
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/2wVqIfYWtTq2JTm6f9WRwM"
+        },
+        "href" : "https://api.spotify.com/v1/artists/2wVqIfYWtTq2JTm6f9WRwM",
+        "id" : "2wVqIfYWtTq2JTm6f9WRwM",
+        "name" : "No Skool",
+        "type" : "artist",
+        "uri" : "spotify:artist:2wVqIfYWtTq2JTm6f9WRwM"
+      }, {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/78TTCmh2koperK5NBn7DgR"
+        },
+        "href" : "https://api.spotify.com/v1/artists/78TTCmh2koperK5NBn7DgR",
+        "id" : "78TTCmh2koperK5NBn7DgR",
+        "name" : "102 Boyz",
+        "type" : "artist",
+        "uri" : "spotify:artist:78TTCmh2koperK5NBn7DgR"
+      } ],
+      "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AO", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BN", "BO", "BR", "BS", "BT", "BW", "BZ", "CA", "CD", "CG", "CH", "CI", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IQ", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MG", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TJ", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VE", "VN", "VU", "WS", "XK", "ZA", "ZM", "ZW" ],
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/1ZECRSxRgZHno2V4Fat7CZ"
+      },
+      "href" : "https://api.spotify.com/v1/albums/1ZECRSxRgZHno2V4Fat7CZ",
+      "id" : "1ZECRSxRgZHno2V4Fat7CZ",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://i.scdn.co/image/ab67616d0000b2737b431b34601b69efd89e86dd",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://i.scdn.co/image/ab67616d00001e027b431b34601b69efd89e86dd",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://i.scdn.co/image/ab67616d000048517b431b34601b69efd89e86dd",
+        "width" : 64
+      } ],
+      "name" : "No Skool",
+      "release_date" : "2022-08-11",
+      "release_date_precision" : "day",
+      "total_tracks" : 12,
+      "type" : "album",
+      "uri" : "spotify:album:1ZECRSxRgZHno2V4Fat7CZ"
+    }, {
+      "album_type" : "album",
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/181bsRPaVXVlUKXrxwZfHK"
+        },
+        "href" : "https://api.spotify.com/v1/artists/181bsRPaVXVlUKXrxwZfHK",
+        "id" : "181bsRPaVXVlUKXrxwZfHK",
+        "name" : "Megan Thee Stallion",
+        "type" : "artist",
+        "uri" : "spotify:artist:181bsRPaVXVlUKXrxwZfHK"
+      } ],
+      "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AO", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BN", "BO", "BR", "BS", "BT", "BW", "BZ", "CA", "CD", "CG", "CH", "CI", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IQ", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MG", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TJ", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VE", "VN", "VU", "WS", "XK", "ZA", "ZM", "ZW" ],
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/4YP0h2KGDb20eJuStnBvim"
+      },
+      "href" : "https://api.spotify.com/v1/albums/4YP0h2KGDb20eJuStnBvim",
+      "id" : "4YP0h2KGDb20eJuStnBvim",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://i.scdn.co/image/ab67616d0000b2731182d680c2894b4e0f39033e",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://i.scdn.co/image/ab67616d00001e021182d680c2894b4e0f39033e",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://i.scdn.co/image/ab67616d000048511182d680c2894b4e0f39033e",
+        "width" : 64
+      } ],
+      "name" : "Traumazine",
+      "release_date" : "2022-08-12",
+      "release_date_precision" : "day",
+      "total_tracks" : 18,
+      "type" : "album",
+      "uri" : "spotify:album:4YP0h2KGDb20eJuStnBvim"
+    } ],
+    "limit" : 20,
+    "next" : "https://api.spotify.com/v1/browse/new-releases?country=DE&offset=20&limit=20",
+    "offset" : 0,
+    "previous" : null,
+    "total" : 100
+  }
+}

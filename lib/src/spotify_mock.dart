@@ -39,8 +39,8 @@ class MockClient implements oauth2.Client {
 
   String _readPath(String url) {
     var regexString = url.contains('api.spotify.com')
-        ? r'api.spotify.com\/([A-Za-z0-9/]+)\??'
-        : r'api/([A-Za-z0-9/]+)\??';
+        ? r'api.spotify.com\/([A-Za-z0-9/\-]+)\??'
+        : r'api/([A-Za-z0-9/\-]+)\??';
 
     var regex = RegExp(regexString);
     var partialPath = regex.firstMatch(url)!.group(1);
