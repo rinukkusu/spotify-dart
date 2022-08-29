@@ -97,4 +97,17 @@ class SpotifyApiCredentials {
         scopes: scopes,
         expiration: expiration,
       );
+
+  @override
+  String toString() {
+    return '''SpotifyApiCredentials(
+      clientId: $clientId,
+      clientSecret: $clientSecret,
+      accessToken: $accessToken,
+      refreshToken: $refreshToken,
+      tokenEndpoint: $tokenEndpoint,
+      scopes: $scopes,
+      expiration: $expiration,
+    )''';
+  }
 }
