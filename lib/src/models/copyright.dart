@@ -17,4 +17,12 @@ class Copyright extends Object {
   ///     C = the copyright
   ///     P = the sound recording (performance) copyright.
   String? type;
+
+  @override
+  String toString() {
+    return '''Copyright(
+      text: $text,
+      type: $type,
+    )''';
+  }
 }

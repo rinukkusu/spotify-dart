@@ -74,4 +74,27 @@ class Episode extends Object {
 
   factory Episode.fromJson(Map<String, dynamic> json) =>
       _$EpisodeFromJson(json);
+
+  @override
+  String toString() {
+    return '''Episode(
+      audioPreviewUrl: $audioPreviewUrl,
+      description: $description,
+      durationMs: $durationMs,
+      explicit: $explicit,
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      images: $images,
+      isExternallyHosted: $isExternallyHosted,
+      isPlayable: $isPlayable,
+      language: $language,
+      languages: $languages,
+      name: $name,
+      releaseDate: $releaseDate,
+      releaseDatePrecision: $releaseDatePrecision,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }

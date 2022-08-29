@@ -29,6 +29,18 @@ class Player extends Object {
 
   /// If something is currently playing.
   bool? is_playing;
+
+  @override
+  String toString() {
+    return '''Player(
+      timestamp: $timestamp,
+      context: $context,
+      progress_ms: $progress_ms,
+      item: $item,
+      currently_playing_type: $currently_playing_type,
+      is_playing: $is_playing,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -49,4 +61,14 @@ class PlayerContext extends Object {
 
   /// The uri of the context.
   String? uri;
+
+  @override
+  String toString() {
+    return '''PlayerContext(
+      external_urls: $external_urls,
+      href: $href,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }

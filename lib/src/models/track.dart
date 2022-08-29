@@ -115,6 +115,31 @@ class Track extends Object implements TrackSimple {
   /// The Spotify URI for the track.
   @override
   String? uri;
+
+  @override
+  String toString() {
+    return '''Track(
+      album: $album,
+      artists: $artists,
+      availableMarkets: $availableMarkets,
+      discNumber: $discNumber,
+      durationMs: $durationMs,
+      duration: $duration,
+      explicit: $explicit,
+      externalIds: $externalIds,
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      isPlayable: $isPlayable,
+      linkedFrom: $linkedFrom,
+      name: $name,
+      popularity: $popularity,
+      previewUrl: $previewUrl,
+      trackNumber: $trackNumber,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -190,6 +215,28 @@ class TrackSimple extends Object {
 
   /// The Spotify URI for the track.
   String? uri;
+
+  @override
+  String toString() {
+    return '''TrackSimple(
+      artists: $artists,
+      availableMarkets: $availableMarkets,
+      discNumber: $discNumber,
+      durationMs: $durationMs,
+      duration: $duration,
+      explicit: $explicit,
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      isPlayable: $isPlayable,
+      linkedFrom: $linkedFrom,
+      name: $name,
+      previewUrl: $previewUrl,
+      trackNumber: $trackNumber,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }
 
 /// A song saved in a Spotify user’s “Your Music” library
@@ -206,6 +253,14 @@ class TrackSaved extends Object {
 
   /// Information about the track.
   Track? track;
+
+  @override
+  String toString() {
+    return '''TrackSaved(
+      addedAt: $addedAt,
+      track: $track,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -230,6 +285,17 @@ class TrackLink extends Object {
 
   /// The Spotify URI for the track.
   String? uri;
+
+  @override
+  String toString() {
+    return '''TrackLink(
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -245,4 +311,12 @@ class TracksLink extends Object {
 
   /// Total number of tracks in the playlist
   int? total;
+
+  @override
+  String toString() {
+    return '''TracksLink(
+      href: $href,
+      total: $total,
+    )''';
+  }
 }

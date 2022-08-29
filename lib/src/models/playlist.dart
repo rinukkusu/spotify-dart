@@ -79,6 +79,27 @@ class Playlist extends Object implements PlaylistSimple {
   /// The Spotify URI for the playlist.
   @override
   String? uri;
+
+  @override
+  String toString() {
+    return '''Playlist(
+      collaborative: $collaborative,
+      description: $description,
+      externalUrls: $externalUrls,
+      followers: $followers,
+      id: $id,
+      href: $href,
+      images: $images,
+      name: $name,
+      owner: $owner,
+      public: $public,
+      snapshotId: $snapshotId,
+      tracksLink: $tracksLink,
+      tracks: $tracks,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -140,6 +161,25 @@ class PlaylistSimple extends Object {
 
   /// The Spotify URI for the playlist.
   String? uri;
+
+  @override
+  String toString() {
+    return '''PlaylistSimple(
+      collaborative: $collaborative,
+      description: $description,
+      externalUrls: $externalUrls,
+      id: $id,
+      href: $href,
+      images: $images,
+      name: $name,
+      owner: $owner,
+      public: $public,
+      snapshotId: $snapshotId,
+      tracksLink: $tracksLink,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -176,4 +216,14 @@ class PlaylistTrack extends Object {
 
   /// Information about the track
   Track? track;
+
+  @override
+  String toString() {
+    return '''PlaylistTrack(
+      addedAt: $addedAt,
+      addedBy: $addedBy,
+      isLocal: $isLocal,
+      track: $track,
+    )''';
+  }
 }

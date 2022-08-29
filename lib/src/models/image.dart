@@ -17,4 +17,13 @@ class Image extends Object {
 
   /// The source URL of the image.
   String? url;
+
+  @override
+  String toString() {
+    return '''Image(
+      height: $height,
+      width: $width,
+      url: $url,
+    )''';
+  }
 }

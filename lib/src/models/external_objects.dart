@@ -12,6 +12,11 @@ class ExternalUrls extends Object {
 
   /// The Spotify URL for the object.
   String? spotify;
+
+  @override
+  String toString() {
+    return 'ExternalUrls(spotify: $spotify)';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -29,4 +34,13 @@ class ExternalIds extends Object {
 
   /// Universal Product Code
   String? upc;
+
+  @override
+  String toString() {
+    return '''ExternalIds(
+      isrc: $isrc,
+      ean: $ean,
+      upc: $upc,
+    )''';
+  }
 }

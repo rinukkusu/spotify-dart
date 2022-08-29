@@ -69,6 +69,23 @@ class User extends Object implements UserPublic {
   /// The Spotify URI for this user.
   @override
   String? uri;
+
+  @override
+  String toString() {
+    return '''User(
+      birthdate: $birthdate,
+      country: $country,
+      displayName: $displayName,
+      email: $email,
+      followers: $followers,
+      href: $href,
+      id: $id,
+      images: $images,
+      product: $product,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -103,6 +120,19 @@ class UserPublic extends Object {
 
   /// The Spotify URI for this user.
   String? uri;
+
+  @override
+  String toString() {
+    return '''UserPublic(
+      displayName: $displayName,
+      followers: $followers,
+      href: $href,
+      id: $id,
+      images: $images,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -121,4 +151,13 @@ class PlayHistory extends Object {
 
   /// The context the track was played from.
   PlayerContext? context;
+
+  @override
+  String toString() {
+    return '''PlayHistory(
+      track: $track,
+      playedAt: $playedAt,
+      context: $context,
+    )''';
+  }
 }

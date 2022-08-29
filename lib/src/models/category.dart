@@ -18,4 +18,14 @@ class Category extends Object {
 
   /// The name of the category.
   String? name;
+
+  @override
+  String toString() {
+    return '''Category(
+      href: $href,
+      icons: $icons,
+      id: $id,
+      name: $name,
+    )''';
+  }
 }

@@ -19,4 +19,12 @@ class Followers extends Object {
 
   /// The total number of followers.
   int? total;
+
+  @override
+  String toString() {
+    return '''Followers(
+      href: $href,
+      total: $total,
+    )''';
+  }
 }

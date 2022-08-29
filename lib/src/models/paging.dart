@@ -30,7 +30,14 @@ class BasePaging<T> extends Object {
   /// URL to the next page of items. ([null] if none)
   String? next;
 
-
+  @override
+  String toString() {
+    return '''BasePaging(
+      itemsNative: $itemsNative,
+      limit: $limit,
+      next: $next,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -47,6 +54,15 @@ class Paging<T> extends BasePaging<T> {
 
   /// The total number of items available to return.
   int total = 0;
+
+  @override
+  String toString() {
+    return '''Paging(
+      offset: $offset,
+      previous: $previous,
+      total: $total,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -57,6 +73,11 @@ class CursorPaging<T> extends BasePaging<T> {
       _$CursorPagingFromJson(json);
 
   Cursor? cursors;
+
+  @override
+  String toString() {
+    return 'CursorPaging(cursors: $cursors)';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -65,4 +86,9 @@ class Cursor extends Object {
 
   Cursor();
   String? after;
+
+  @override
+  String toString() {
+    return 'Cursor(after: $after)';
+  }
 }

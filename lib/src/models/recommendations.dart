@@ -13,6 +13,14 @@ class Recommendations extends Object {
   /// A List of [TrackSimple] objects ordered according to the parameters
   /// supplied.
   List<TrackSimple>? tracks;
+
+  @override
+  String toString() {
+    return '''Recommendations(
+      seeds: $seeds,
+      tracks: $tracks,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -45,4 +53,16 @@ class RecommendationsSeed extends Object {
 
   /// The entity type of this seed. One of artist, track or genre.
   String? type;
+
+  @override
+  String toString() {
+    return '''RecommendationsSeed(
+      initialPoolSize: $initialPoolSize,
+      type: $type,
+      id: $id,
+      href: $href,
+      afterRelinkingSize: $afterRelinkingSize,
+      afterFilteringSize: $afterFilteringSize,
+    )''';
+  }
 }

@@ -16,4 +16,12 @@ class SpotifyError extends Object {
 
   /// A short description of the cause of the error.
   String? message;
+
+  @override
+  String toString() {
+    return '''SpotifyError(
+      status: $status,
+      message: $message,
+    )''';
+  }
 }

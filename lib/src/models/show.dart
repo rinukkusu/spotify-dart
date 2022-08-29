@@ -60,4 +60,25 @@ class Show {
   String? uri;
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);
+
+  @override
+  String toString() {
+    return '''Show(
+      availableMarkets: $availableMarkets,
+      copyrights: $copyrights,
+      description: $description,
+      explicit: $explicit,
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      images: $images,
+      isExternallyHosted: $isExternallyHosted,
+      languages: $languages,
+      mediaType: $mediaType,
+      name: $name,
+      publisher: $publisher,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }

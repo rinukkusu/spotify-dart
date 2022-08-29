@@ -51,6 +51,22 @@ class Artist extends Object implements ArtistSimple {
   /// being the most popular. The artist's popularity is calculated from the
   /// popularity of all the artist's tracks.
   int? popularity;
+
+  @override
+  String toString() {
+    return '''Artist(
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      name: $name,
+      type: $type,
+      uri: $uri,
+      followers: $followers,
+      genres: $genres,
+      images: $images,
+      popularity: $popularity,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -78,4 +94,16 @@ class ArtistSimple extends Object {
 
   /// The Spotify URI for the artist.
   String? uri;
+
+  @override
+  String toString() {
+    return '''ArtistSimple(
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      name: $name,
+      type: $type,
+      uri: $uri,
+    )''';
+  }
 }

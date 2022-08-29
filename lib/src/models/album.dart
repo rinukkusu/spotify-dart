@@ -30,6 +30,17 @@ class Album extends AlbumSimple {
   /// being the most popular. The artist's popularity is calculated from the
   /// popularity of all the artist's tracks.
   int? popularity;
+
+  @override
+  String toString() {
+    return '''Album(
+      copyrights: $copyrights,
+      externalIds: $externalIds,
+      genres: $genres,
+      label: $label,
+      popularity: $popularity,
+    )''';
+  }
 }
 
 @JsonSerializable(createToJson: false)
@@ -101,6 +112,24 @@ class AlbumSimple extends Object {
   /// The tracks of this album.
   @JsonKey(fromJson: _extractTracksFromPage)
   Iterable<TrackSimple>? tracks = [];
+
+  @override
+  String toString() {
+    return '''AlbumSimple(
+      albumType: $albumType,
+      artists: $artists,
+      availableMarkets: $availableMarkets,
+      externalUrls: $externalUrls,
+      href: $href,
+      id: $id,
+      images: $images,
+      name: $name,
+      releaseDate: $releaseDate,
+      releaseDatePrecision: $releaseDatePrecision,
+      uri: $uri,
+      tracks: $tracks,
+    )''';
+  }
 }
 
 enum DatePrecision { day, month, year }

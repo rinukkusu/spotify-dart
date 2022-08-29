@@ -35,6 +35,19 @@ class Device extends Object {
   /// The current volume in percent. This may be null.
   @JsonKey(name: 'volume_percent')
   int? volumePercent;
+
+  @override
+  String toString() {
+    return '''Device(
+      id: $id,
+      isActive: $isActive,
+      isPrivateSession: $isPrivateSession,
+      isRestricted: $isRestricted,
+      name: $name,
+      type: $type,
+      volumePercent: $volumePercent,
+    )''';
+  }
 }
 
 enum DeviceType {

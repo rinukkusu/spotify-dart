@@ -108,4 +108,29 @@ class AudioFeature extends Object {
   /// cheerful, euphoric), while tracks with low valence sound more negative
   /// (e.g. sad, depressed, angry).
   double? valence;
+
+  @override
+  String toString() {
+    return '''AudioFeature(
+      acousticness: $acousticness,
+      analysisUrl: $analysisUrl,
+      danceability: $danceability,
+      durationMs: $durationMs,
+      duration: $duration,
+      id: $id,
+      energy: $energy,
+      instrumentalness: $instrumentalness,
+      key: $key,
+      liveness: $liveness,
+      loudness: $loudness,
+      mode: $mode,
+      speechiness: $speechiness,
+      tempo: $tempo,
+      timeSignature: $timeSignature,
+      trackHref: $trackHref,
+      type: $type,
+      uri: $uri,
+      valence: $valence,
+    )''';
+  }
 }
