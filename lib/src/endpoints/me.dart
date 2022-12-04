@@ -66,8 +66,8 @@ class Me extends EndpointPaging {
   }
 
   // Get the currently playing as well as the queued objects.
-  Future<Queue> getQueue() async {
-    final jsonString = await _api._get('/player/queue');
+  Future<Queue> queue() async {
+    final jsonString = await _api._get('$_path/player/queue');
 
     if (jsonString.isEmpty) {
       return Queue();

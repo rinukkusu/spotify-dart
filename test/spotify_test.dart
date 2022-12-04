@@ -195,6 +195,24 @@ Future main() async {
       expect(second.context!.uri, 'spotify:artist:5INjqkS1o8h1imAzPqGZBb');
     });
 
+    test('getQueue', () async {
+      var result = await spotify.me.queue();
+      final currentlyPlaying = result.currentlyPlaying;
+      final queue = result.queue;
+
+      expect(currentlyPlaying != null, true);
+      expect(queue != null, true);
+
+      // Checking the currentlyPlaying data
+
+      expect(currentlyPlaying!.name, 'string');
+
+      // Checking the queue data
+
+      expect(queue!.length == 1, true);
+      expect(queue.first.name, 'string');
+    });
+
     test('following', () async {
       var result = await spotify.me.following(FollowingType.artist);
       expect(result == null, false);
