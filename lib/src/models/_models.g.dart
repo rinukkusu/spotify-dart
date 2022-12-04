@@ -570,3 +570,13 @@ PlayHistory _$PlayHistoryFromJson(Map<String, dynamic> json) {
         ? null
         : PlayerContext.fromJson(json['context'] as Map<String, dynamic>);
 }
+
+Queue _$QueueFromJson(Map<String, dynamic> json) {
+  return Queue()
+    ..currentlyPlaying = json['currently_playing'] == null
+        ? null
+        : Track.fromJson(json['currently_playing'] as Map<String, dynamic>)
+    ..queue = (json['queue'] as List<dynamic>?)
+        ?.map((e) => Track.fromJson(e as Map<String, dynamic>))
+        .toList();
+}
