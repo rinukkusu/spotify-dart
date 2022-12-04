@@ -77,6 +77,11 @@ class Me extends EndpointPaging {
     return Queue.fromJson(map);
   }
 
+  // Add an object to the queue with a trackId.
+  Future<void> addToQueue(String trackId) async {
+    await _api._post('$_path/player/queue?uri=$trackId');
+  }
+
   /// Get tracks from the current user’s recently played tracks.
   /// Note: Currently doesn’t support podcast episodes.
   CursorPages<PlayHistory> recentlyPlayed(
