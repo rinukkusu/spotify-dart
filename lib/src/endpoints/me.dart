@@ -89,8 +89,8 @@ class Me extends EndpointPaging {
   }
 
   /// Get the current user's top artists.
-  Future<Iterable<Artist>> topArtists() async {
-    final jsonString = await _api._get('$_path/top/artists');
+  Future<Iterable<Artist>> topArtists(int limit, String timeRange) async {
+    final jsonString = await _api._get('$_path/top/artists?time_range=$timeRange&limit=$limit');
     final map = json.decode(jsonString);
 
     final items = map['items'] as Iterable<dynamic>;
