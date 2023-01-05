@@ -23,7 +23,7 @@ class Users extends EndpointPaging {
   CursorPages<PlayHistory> recentlyPlayed() => _me.recentlyPlayed();
 
   @Deprecated('Use "SpotifyApi.me.topTracks()"')
-  Future<Iterable<Track>> topTracks() => _me.topTracks();
+  Future<Iterable<Track>> topTracks() => _me.topTracks(20, 0, "medium_term");
 
   @Deprecated('Use "SpotifyApi.me.devices()"')
   Future<Iterable<Device>> devices() async => _me.devices();
