@@ -39,7 +39,7 @@ void main() async {
   });
 
   print('\nNew Releases');
-  var newReleases = await spotify.browse.getNewReleasess().first();
+  var newReleases = await spotify.browse.getNewReleases().first();
   newReleases.items!.forEach((album) => print(album.name));
 
   print('\nFeatured Playlist:');
