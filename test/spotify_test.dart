@@ -92,7 +92,7 @@ Future main() async {
 
   group('Browse', () {
     test('Get New Releases', () async {
-      var newReleases = spotify.browse.getNewReleasess();
+      var newReleases = spotify.browse.getNewReleases();
       var firstPage = await newReleases.first();
       expect(firstPage.items!.length, 3);
 
