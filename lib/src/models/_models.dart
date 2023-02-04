@@ -24,3 +24,4 @@ part 'show.dart';
 part 'episode.dart';
 part 'track.dart';
 part 'user.dart';
+part 'queue.dart';
