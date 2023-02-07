@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.0
+
+- add new-releases endpoint
+- add queue endpoints for retrieving and adding
+
 ## 0.8.0
 
 - add playlists endpoint for specific users
