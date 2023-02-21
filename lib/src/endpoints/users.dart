@@ -7,9 +7,9 @@ class Users extends EndpointPaging {
   @override
   String get _path => 'v1/users';
 
-  Me _me;
+  late Me _me;
 
-  Users(SpotifyApiBase api, Me me) : super(api){ 
+  Users(SpotifyApiBase api, Me me) : super(api) {
     _me = me;
   }
 
@@ -20,7 +20,7 @@ class Users extends EndpointPaging {
   Future<Player> currentlyPlaying() => _me.currentlyPlaying();
 
   @Deprecated('Use "SpotifyApi.me.recentlyPlayed()"')
-  Future<Iterable<PlayHistory>> recentlyPlayed() => _me.recentlyPlayed();
+  CursorPages<PlayHistory> recentlyPlayed() => _me.recentlyPlayed();
 
   @Deprecated('Use "SpotifyApi.me.topTracks()"')
   Future<Iterable<Track>> topTracks() => _me.topTracks();

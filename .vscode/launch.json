@@ -3,15 +3,24 @@
     "configurations": [
         {
             "name": "Run tests",
-            "type": "dart-cli",
+            "type": "dart",
             "request": "launch",
+            "console": "debugConsole",
             "program": "${workspaceRoot}/test/spotify_test.dart"
         },
         {
-            "name": "Run example",
-            "type": "dart-cli",
+            "name": "Run example with authentication",
+            "type": "dart",
             "request": "launch",
-            "program": "${workspaceRoot}/example/spotify_dart_example.dart"
+            "console": "terminal",
+            "program": "${workspaceRoot}/example/example_auth.dart"
+        },
+        {
+            "name": "Run example",
+            "type": "dart",
+            "request": "launch",
+            "console": "terminal",
+            "program": "${workspaceRoot}/example/example.dart"
         }
     ]
 }

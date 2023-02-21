@@ -12,19 +12,20 @@ class Player extends Object {
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
 
   /// Unix Millisecond Timestamp when data was fetched
-  int timestamp;
+  int? timestamp;
 
   /// A [PlayerContext] Object. Can be [null].
-  PlayerContext context;
+  PlayerContext? context;
 
   /// Progress into the currently playing track. Can be [null].
-  int progress_ms;
+  int? progress_ms;
 
   /// The currently playing track. Can be [null].
-  Track item;
+  Track? item;
 
   /// The object type of the currently playing item. Can be one of track,
   /// episode, ad or unknown.
+
   @JsonKey(name: 'currently_playing_type')
   CurrentlyPlayingType currentlyPlayingType;
 
@@ -38,6 +39,11 @@ class Player extends Object {
 
   @JsonKey(name: 'repeat_state')
   RepeatState repeatState;
+
+  String? currently_playing_type;
+
+  /// If something is currently playing.
+  bool? is_playing;
 }
 
 @JsonSerializable(createToJson: false)
@@ -48,16 +54,16 @@ class PlayerContext extends Object {
       _$PlayerContextFromJson(json);
 
   /// The external_urls of the context, or [null] if not available.
-  ExternalUrls external_urls;
+  ExternalUrls? external_urls;
 
   /// The href of the context, or [null] if not available.
-  String href;
+  String? href;
 
   /// The object type of the item’s context. Can be one of album, artist or playlist.
-  String type;
+  String? type;
 
   /// The uri of the context.
-  String uri;
+  String? uri;
 }
 
 enum RepeatState { off, context, track }

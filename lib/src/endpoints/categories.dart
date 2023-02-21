@@ -1,8 +1,9 @@
 part of spotify;
 
-class Categories extends EndpointPaging {
+class Categories extends Browse {
+  
   @override
-  String get _path => 'v1/browse/categories';
+  String get _path => '${super._path}/categories';
 
   Categories(SpotifyApiBase api) : super(api);
 
@@ -21,7 +22,7 @@ class Categories extends EndpointPaging {
   /// parameter, may give odd results if not carefully matched. For example
   /// country=SE&locale=de_DE will return a list of categories relevant to
   /// Sweden but as German language strings.
-  Pages<Category> list({String country, String locale}) {
+  Pages<Category> list({String? country, String? locale}) {
     final query = _buildQuery({'country': country, 'locale': locale});
 
     return _getPages(
@@ -45,7 +46,7 @@ class Categories extends EndpointPaging {
   ///
   /// [categoryId] - the Spotify category ID for the category.
   Future<Category> get(String categoryId,
-      {String country, String locale}) async {
+      {String? country, String? locale}) async {
     final query = _buildQuery({'country': country, 'locale': locale});
 
     var jsonString = await _api._get('$_path/$categoryId?$query');

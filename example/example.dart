@@ -13,15 +13,18 @@ void main() async {
   var spotify = SpotifyApi(credentials);
 
   print('\nPodcast:');
-  var podcast = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
-  print(podcast.name);
+  await spotify.shows
+      .get('4rOoJ6Egrf8K2IrywzwOMk')
+      .then((podcast) => print(podcast.name))
+      .onError(
+          (error, stackTrace) => print((error as SpotifyException).message));
 
   print('\nPodcast episode:');
-  var episodes = await spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
-  var firstEpisode = (await episodes.first()).items.first;
-  print(firstEpisode.name);
+  var episodes = spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
+  await episodes.first().then((first) => print(first.items!.first)).onError(
+      (error, stackTrace) => print((error as SpotifyException).message));
 
-  print('Artists:');
+  print('\nArtists:');
   var artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
   artists.forEach((x) => print(x.name));
 
@@ -30,14 +33,25 @@ void main() async {
   print(album.name);
 
   print('\nAlbum Tracks:');
-  var tracks = await spotify.albums.getTracks(album.id).all();
+  var tracks = await spotify.albums.getTracks(album.id!).all();
   tracks.forEach((track) {
     print(track.name);
   });
 
+  print('\nNew Releases');
+  var newReleases = await spotify.browse.getNewReleases().first();
+  newReleases.items!.forEach((album) => print(album.name));
+
   print('\nFeatured Playlist:');
   var featuredPlaylists = await spotify.playlists.featured.all();
   featuredPlaylists.forEach((playlist) {
+    print(playlist.name);
+  });
+
+  print('\nUser\'s playlists:');
+  var usersPlaylists =
+      await spotify.playlists.getUsersPlaylists('superinteressante').all();
+  usersPlaylists.forEach((playlist) {
     print(playlist.name);
   });
 
@@ -50,20 +64,20 @@ void main() async {
     return;
   }
   search.forEach((pages) {
-    pages.items.forEach((item) {
+    pages.items!.forEach((item) {
       if (item is PlaylistSimple) {
         print('Playlist: \n'
             'id: ${item.id}\n'
             'name: ${item.name}:\n'
             'collaborative: ${item.collaborative}\n'
             'href: ${item.href}\n'
-            'trackslink: ${item.tracksLink.href}\n'
+            'trackslink: ${item.tracksLink!.href}\n'
             'owner: ${item.owner}\n'
             'public: ${item.owner}\n'
             'snapshotId: ${item.snapshotId}\n'
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
-            'images: ${item.images.length}\n'
+            'images: ${item.images!.length}\n'
             '-------------------------------');
       }
       if (item is Artist) {
@@ -83,8 +97,8 @@ void main() async {
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
             'isPlayable: ${item.isPlayable}\n'
-            'artists: ${item.artists.length}\n'
-            'availableMarkets: ${item.availableMarkets.length}\n'
+            'artists: ${item.artists!.length}\n'
+            'availableMarkets: ${item.availableMarkets!.length}\n'
             'discNumber: ${item.discNumber}\n'
             'trackNumber: ${item.trackNumber}\n'
             'explicit: ${item.explicit}\n'
@@ -98,9 +112,9 @@ void main() async {
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
             'albumType: ${item.albumType}\n'
-            'artists: ${item.artists.length}\n'
-            'availableMarkets: ${item.availableMarkets.length}\n'
-            'images: ${item.images.length}\n'
+            'artists: ${item.artists!.length}\n'
+            'availableMarkets: ${item.availableMarkets!.length}\n'
+            'images: ${item.images!.length}\n'
             'releaseDate: ${item.releaseDate}\n'
             'releaseDatePrecision: ${item.releaseDatePrecision}\n'
             '-------------------------------');

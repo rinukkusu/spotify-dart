@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.9.0
+
+- add new-releases endpoint
+- add queue endpoints for retrieving and adding
+
+## 0.8.0
+
+- add playlists endpoint for specific users
+- add distinct cursor and offset paging classes
+
+## 0.7.3
+
+- fix `isLast` in paging endpoint
+
+## 0.7.2
+
+- add update playlist endpoint
+- add docs for serverside auth token refresh
+
+## 0.7.1
+
+- several bug fixes
+- add async factory for `SpotifyApi`
+- add follow/unfollow artists and users endpoints
+- add inserting track in playlist endpoint
+- add remove tracks endpoint
+
+## 0.7.0
+
+- create client with access token only
+- add description field to playlist model
+
+## 0.6.0
+
+- fix following artist
+- add user saved shows endpoint
+- fix episode listing
+- clean up album models
+- add null safety
+
 ## 0.5.1
 
 - add createPlaylist optional parameters

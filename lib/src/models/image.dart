@@ -10,11 +10,11 @@ class Image extends Object {
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
 
   /// The image height in pixels. If unknown: null or not returned.
-  int height;
+  int? height;
 
   /// The image width in pixels. If unknown: null or not returned.
-  int width;
+  int? width;
 
   /// The source URL of the image.
-  String url;
+  String? url;
 }

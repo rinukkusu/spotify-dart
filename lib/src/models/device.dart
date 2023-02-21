@@ -10,31 +10,31 @@ class Device extends Object {
   factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
 
   /// The device ID. This may be [null].
-  String id;
+  String? id;
 
   @JsonKey(name: 'is_active', defaultValue: false)
-  bool isActive;
+  bool? isActive;
 
   /// Whether controlling this device is restricted.
   /// At present if this is [true] then no Web API commands will be
   /// accepted by this device.
   @JsonKey(name: 'is_private_session', defaultValue: false)
-  bool isPrivateSession;
+  bool? isPrivateSession;
 
   /// Whether controlling this device is restricted.
   /// At present if this is [true] then no Web API commands will be accepted by this device.
   @JsonKey(name: 'is_restricted', defaultValue: false)
-  bool isRestricted;
+  bool? isRestricted;
 
   /// The name of the device
-  String name;
+  String? name;
 
   /// [DeviceType], such as [Computer], [Smartphone] or [Speaker].
-  DeviceType type;
+  DeviceType? type;
 
   /// The current volume in percent. This may be null.
   @JsonKey(name: 'volume_percent')
-  int volumePercent;
+  int? volumePercent;
 }
 
 enum DeviceType {
