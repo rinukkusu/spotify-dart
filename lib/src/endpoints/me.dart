@@ -106,7 +106,7 @@ class Me extends EndpointPaging {
   /// to turn it off respectively.
   /// Returns the current player state by making another request.
   /// See [player([String market])];
-  Future<Player> shuffle(bool state, [String deviceId]) async {
+  Future<Player> shuffle(bool state, [String? deviceId]) async {
     return _api
         ._put('v1/me/player/shuffle?' +
             _buildQuery({'state': state, 'deviceId': deviceId}))
@@ -120,7 +120,7 @@ class Me extends EndpointPaging {
     });
   }
 
-  Future<Player> player([String market]) async {
+  Future<Player> player([String? market]) async {
     var jsonString =
         await _api._get('v1/me/player?' + _buildQuery({'market': market}));
     final map = json.decode(jsonString);

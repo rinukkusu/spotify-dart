@@ -171,7 +171,7 @@ Future main() async {
     test('currentlyPlaying', () async {
       var result = await spotify.me.currentlyPlaying();
 
-      expect(result.item!.name, 'So Voce');
+      expect(result.item!.name, 'As I Am');
     });
 
     test('devices', () async {

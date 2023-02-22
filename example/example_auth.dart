@@ -64,11 +64,11 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
 
 Future<void> _currentlyPlaying(SpotifyApi spotify) async =>
     await spotify.me.currentlyPlaying().then((Player? a) {
-      if (a == null || a.item == null) {
+      if (a?.item == null) {
         print('Nothing currently playing.');
         return;
       }
-      print('Currently playing: ${a.item?.name}');
+      print('Currently playing: ${a?.item?.name}');
     }).catchError(_prettyPrintError);
 
 Future<void> _user(SpotifyApi spotify) async {
@@ -112,7 +112,7 @@ Future<void> _followingArtists(SpotifyApi spotify) async {
   }).catchError((ex) => _prettyPrintError(ex));
 }
 
-void _shuffle(bool state, SpotifyApi spotify) async {
+Future<void> _shuffle(bool state, SpotifyApi spotify) async {
   await spotify.me.shuffle(state).then((player) {
     print('Shuffle: ${player.isShuffling}');
   }).catchError((ex) => _prettyPrintError(ex));
@@ -142,7 +142,7 @@ Future<void> _recentlyPlayed(SpotifyApi spotify) async {
   }
 }
 
-void _createPrivatePlaylist(SpotifyApi spotify) async {
+Future<void> _createPrivatePlaylist(SpotifyApi spotify) async {
   var user = await spotify.me.get();
   await spotify.playlists
       .createPlaylist(
