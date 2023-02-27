@@ -10,6 +10,7 @@ const _scopes = [
   'user-read-playback-state',
   'user-follow-read',
   'playlist-modify-private',
+  'user-modify-playback-state',
   'user-library-read',
   'user-read-recently-played'
 ];
@@ -27,6 +28,8 @@ void main() async {
   await _currentlyPlaying(spotify);
   await _devices(spotify);
   await _followingArtists(spotify);
+  await _shuffle(true, spotify);
+  await _shuffle(false, spotify);
   await _playlists(spotify);
   await _savedTracks(spotify);
   await _recentlyPlayed(spotify);
@@ -61,11 +64,11 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
 
 Future<void> _currentlyPlaying(SpotifyApi spotify) async =>
     await spotify.me.currentlyPlaying().then((Player? a) {
-      if (a == null || a.item == null) {
+      if (a?.item == null) {
         print('Nothing currently playing.');
         return;
       }
-      print('Currently playing: ${a.item?.name}');
+      print('Currently playing: ${a?.item?.name}');
     }).catchError(_prettyPrintError);
 
 Future<void> _user(SpotifyApi spotify) async {
@@ -109,6 +112,12 @@ Future<void> _followingArtists(SpotifyApi spotify) async {
   }).catchError((ex) => _prettyPrintError(ex));
 }
 
+Future<void> _shuffle(bool state, SpotifyApi spotify) async {
+  await spotify.me.shuffle(state).then((player) {
+    print('Shuffle: ${player.isShuffling}');
+  }).catchError((ex) => _prettyPrintError(ex));
+}
+
 Future<void> _playlists(SpotifyApi spotify) async {
   await spotify.playlists.me.all(1).then((playlists) {
     var lists = playlists.map((playlist) => playlist.name).join(', ');
@@ -133,7 +142,7 @@ Future<void> _recentlyPlayed(SpotifyApi spotify) async {
   }
 }
 
-void _createPrivatePlaylist(SpotifyApi spotify) async {
+Future<void> _createPrivatePlaylist(SpotifyApi spotify) async {
   var user = await spotify.me.get();
   await spotify.playlists
       .createPlaylist(

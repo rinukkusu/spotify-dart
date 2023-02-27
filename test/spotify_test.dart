@@ -23,8 +23,8 @@ Future main() async {
     test('album tracks', () async {
       var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
       var items = album.tracks;
-
       expect(items!.length, 3);
+
       var tracks = album.tracks;
 
       var trackOne = tracks!.first;
@@ -171,7 +171,7 @@ Future main() async {
     test('currentlyPlaying', () async {
       var result = await spotify.me.currentlyPlaying();
 
-      expect(result.item!.name, 'So Voce');
+      expect(result.item!.name, 'As I Am');
     });
 
     test('devices', () async {
@@ -280,6 +280,17 @@ Future main() async {
       expect(list.first, isTrue);
       expect(list[1], isFalse);
       expect(list.last, isTrue);
+    });
+  });
+
+  group('Player', () {
+    test('player', () async {
+      var result = await spotify.me.player();
+      expect(result == null, false);
+      expect(result.isShuffling, true);
+      expect(result.isPlaying, true);
+      expect(result.currentlyPlayingType, CurrentlyPlayingType.track);
+      expect(result.repeatState, RepeatState.off);
     });
   });
 

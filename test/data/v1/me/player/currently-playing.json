@@ -1,100 +1,154 @@
 {
-    "timestamp" : 1544041388482,
-    "context" : {
-      "external_urls" : {
-        "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DX0FOF1IUWK1W"
-      },
-      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX0FOF1IUWK1W",
-      "type" : "playlist",
-      "uri" : "spotify:user:spotify:playlist:37i9dQZF1DX0FOF1IUWK1W"
+  "device": {
+    "id": "string",
+    "is_active": true,
+    "is_private_session": true,
+    "is_restricted": true,
+    "name": "Kitchen speaker",
+    "type": "computer",
+    "volume_percent": 59
+  },
+  "repeat_state": "off",
+  "shuffle_state": true,
+  "context": {
+    "type": "string",
+    "href": "string",
+    "external_urls": {
+      "spotify": "string"
     },
-    "progress_ms" : 431,
-    "item" : {
-      "album" : {
-        "album_type" : "single",
-        "artists" : [ {
-          "external_urls" : {
-            "spotify" : "https://open.spotify.com/artist/6xlRSRMLgZbsSNd0BMobwy"
+    "uri": "string"
+  },
+  "timestamp": 0,
+  "progress_ms": 0,
+  "is_playing": true,
+  "item": {
+    "album": {
+      "album_type": "compilation",
+      "total_tracks": 9,
+      "available_markets": [
+        "CA",
+        "BR",
+        "IT"
+      ],
+      "external_urls": {
+        "spotify": "string"
+      },
+      "href": "string",
+      "id": "2up3OPMp9Tb4dAKM2erWXQ",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228\n",
+          "height": 300,
+          "width": 300
+        }
+      ],
+      "name": "Train of Thought",
+      "release_date": "1981-12",
+      "release_date_precision": "year",
+      "restrictions": {
+        "reason": "market"
+      },
+      "type": "album",
+      "uri": "spotify:album:2up3OPMp9Tb4dAKM2erWXQ",
+      "copyrights": [
+        {
+          "text": "string",
+          "type": "string"
+        }
+      ],
+      "external_ids": {
+        "isrc": "string",
+        "ean": "string",
+        "upc": "string"
+      },
+      "genres": [
+        "Egg punk",
+        "Noise rock"
+      ],
+      "label": "string",
+      "popularity": 0,
+      "album_group": "compilation",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "string"
           },
-          "href" : "https://api.spotify.com/v1/artists/6xlRSRMLgZbsSNd0BMobwy",
-          "id" : "6xlRSRMLgZbsSNd0BMobwy",
-          "name" : "Dennis DJ",
-          "type" : "artist",
-          "uri" : "spotify:artist:6xlRSRMLgZbsSNd0BMobwy"
-        }, {
-          "external_urls" : {
-            "spotify" : "https://open.spotify.com/artist/3Nipsl6GVwwGyeAk0J29C6"
-          },
-          "href" : "https://api.spotify.com/v1/artists/3Nipsl6GVwwGyeAk0J29C6",
-          "id" : "3Nipsl6GVwwGyeAk0J29C6",
-          "name" : "MC G15",
-          "type" : "artist",
-          "uri" : "spotify:artist:3Nipsl6GVwwGyeAk0J29C6"
-        } ],
-        "external_urls" : {
-          "spotify" : "https://open.spotify.com/album/5HkCmKyKVNRpNspP9vM7de"
-        },
-        "href" : "https://api.spotify.com/v1/albums/5HkCmKyKVNRpNspP9vM7de",
-        "id" : "5HkCmKyKVNRpNspP9vM7de",
-        "images" : [ {
-          "height" : 640,
-          "url" : "https://i.scdn.co/image/75e33588c6b73e9ad7beedd6ad04ecd9d3bf5531",
-          "width" : 640
-        }, {
-          "height" : 300,
-          "url" : "https://i.scdn.co/image/cb0ce73e35b8d944f056df31213bbefa035a2f77",
-          "width" : 300
-        }, {
-          "height" : 64,
-          "url" : "https://i.scdn.co/image/55de46e7d729c02cbddf773b69f8c5c3ddc7c776",
-          "width" : 64
-        } ],
-        "name" : "So Voce",
-        "release_date" : "2018-05-04",
-        "release_date_precision" : "day",
-        "total_tracks" : 1,
-        "type" : "album",
-        "uri" : "spotify:album:5HkCmKyKVNRpNspP9vM7de"
-      },
-      "artists" : [ {
-        "external_urls" : {
-          "spotify" : "https://open.spotify.com/artist/6xlRSRMLgZbsSNd0BMobwy"
-        },
-        "href" : "https://api.spotify.com/v1/artists/6xlRSRMLgZbsSNd0BMobwy",
-        "id" : "6xlRSRMLgZbsSNd0BMobwy",
-        "name" : "Dennis DJ",
-        "type" : "artist",
-        "uri" : "spotify:artist:6xlRSRMLgZbsSNd0BMobwy"
-      }, {
-        "external_urls" : {
-          "spotify" : "https://open.spotify.com/artist/3Nipsl6GVwwGyeAk0J29C6"
-        },
-        "href" : "https://api.spotify.com/v1/artists/3Nipsl6GVwwGyeAk0J29C6",
-        "id" : "3Nipsl6GVwwGyeAk0J29C6",
-        "name" : "MC G15",
-        "type" : "artist",
-        "uri" : "spotify:artist:3Nipsl6GVwwGyeAk0J29C6"
-      } ],
-      "disc_number" : 1,
-      "duration_ms" : 161444,
-      "explicit" : false,
-      "external_ids" : {
-        "isrc" : "BRT3O1800046"
-      },
-      "external_urls" : {
-        "spotify" : "https://open.spotify.com/track/4xc6RrWzEOdprPqYn9Cyen"
-      },
-      "href" : "https://api.spotify.com/v1/tracks/4xc6RrWzEOdprPqYn9Cyen",
-      "id" : "4xc6RrWzEOdprPqYn9Cyen",
-      "is_local" : false,
-      "is_playable" : true,
-      "name" : "So Voce",
-      "popularity" : 80,
-      "preview_url" : "https://p.scdn.co/mp3-preview/241464f58cf03be720fe625a10ae5b16bb60bdcb?cid=774b29d4f13844c495f206cafdad9c86",
-      "track_number" : 1,
-      "type" : "track",
-      "uri" : "spotify:track:4xc6RrWzEOdprPqYn9Cyen"
+          "href": "string",
+          "id": "string",
+          "name": "string",
+          "type": "artist",
+          "uri": "string"
+        }
+      ]
     },
-    "currently_playing_type" : "track",
-    "is_playing" : true
+    "artists": [
+      {
+        "external_urls": {
+          "spotify": "string"
+        },
+        "followers": {
+          "href": "string",
+          "total": 0
+        },
+        "genres": [
+          "Prog rock",
+          "Grunge"
+        ],
+        "href": "string",
+        "id": "string",
+        "images": [
+          {
+            "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228\n",
+            "height": 300,
+            "width": 300
+          }
+        ],
+        "name": "Dream Theater",
+        "popularity": 0,
+        "type": "artist",
+        "uri": "string"
+      }
+    ],
+    "available_markets": [
+      "string"
+    ],
+    "disc_number": 1,
+    "duration_ms": 0,
+    "explicit": true,
+    "external_ids": {
+      "isrc": "string",
+      "ean": "string",
+      "upc": "string"
+    },
+    "external_urls": {
+      "spotify": "string"
+    },
+    "href": "string",
+    "id": "string",
+    "is_playable": true,
+    "linked_from": {},
+    "restrictions": {
+      "reason": "string"
+    },
+    "name": "As I Am",
+    "popularity": 0,
+    "preview_url": "string",
+    "track_number": 1,
+    "type": "track",
+    "uri": "string",
+    "is_local": true
+  },
+  "currently_playing_type": "track",
+  "actions": {
+    "interrupting_playback": true,
+    "pausing": true,
+    "resuming": true,
+    "seeking": true,
+    "skipping_next": true,
+    "skipping_prev": true,
+    "toggling_repeat_context": true,
+    "toggling_shuffle": true,
+    "toggling_repeat_track": true,
+    "transferring_playback": true
   }
+}
