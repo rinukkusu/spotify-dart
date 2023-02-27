@@ -34,7 +34,7 @@ class Search extends EndpointPaging {
 
     return _getBundledPages('$_path?$query', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
-      'albums': (json) => AlbumSimple.fromJson(json),
+      'albums': (json) => Album.fromJson(json),
       'artists': (json) => Artist.fromJson(json),
       'tracks': (json) => Track.fromJson(json),
       'shows': (json) => Show.fromJson(json),
@@ -61,6 +61,7 @@ class SearchType {
     SearchType.playlist,
     SearchType.track,
     SearchType.show,
-    SearchType.episode
+    SearchType.episode,
+    SearchType.show,
   ];
 }
