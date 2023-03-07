@@ -263,6 +263,13 @@ Future main() async {
       expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
     });
 
+    test('containsShows', () async {
+      var response = await spotify.me.isSavedShows(['one', 'two']);
+      expect(response.isNotEmpty, true);
+      expect(response['one'], true);
+      expect(response['two'], false);
+    });
+
     test('savedAlbums', () async {
       final albums = await spotify.me.savedAlbums().getPage(10, 0);
       expect(albums.items?.length, 2);

@@ -127,9 +127,41 @@ class Me extends EndpointPaging {
     return _getPages('$_path/shows', (json) => Show.fromJson(json['show']));
   }
 
+  /// Save shows for the current user. It requires the `user-library-modify`
+  /// scope.
+  /// [ids] - the ids of the shows to save
+  Future<void> saveShows(List<String> ids) async {
+    assert(ids.isNotEmpty, 'No show ids were provided for saving');
+    await _api._put('$_path/shows?' + _buildQuery({'ids': ids.join(',')}));
+  }
+
+  /// Removes shows for the current user. It requires the `user-library-modify`
+  /// scope.
+  /// [ids] - the ids of the shows to remove
+  /// [market] - An ISO 3166-1 alpha-2 country code. If a country code is
+  /// specified, only content that is available in that market will be returned.
+  Future<void> removeShows(List<String> ids, [String market = '']) async {
+    assert(ids.isNotEmpty, 'No show ids were provided for removing');
+    var query = _buildQuery({'ids': ids.join(','), 'market': market});
+    await _api._delete('$_path/shows?' + query);
+  }
+
+  /// Check if passed albums (ids) are saved by current user. The output
+  /// [ids] the ist of id's to check
+  /// Returns the list of id's mapped with the response whether it has been saved
+  Future<Map<String, bool>> isSavedShows(List<String> ids) async {
+    assert(
+        ids.isNotEmpty, 'No show ids were provided for checking saved shows');
+    var query = _buildQuery({'ids': ids.join(',')});
+    var jsonString = await _api._get('$_path/shows/contains?' + query);
+    var response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
+
+    return Map.fromIterables(ids, response);
+  }
+
   /// gets current user's saved albums in pages
   Pages<AlbumSimple> savedAlbums() {
-    return _getPages('v1/me/albums', (json) => Album.fromJson(json['album']));
+    return _getPages('$_path/albums', (json) => Album.fromJson(json['album']));
   }
 
   /// Save albums for the current-user. It requires the

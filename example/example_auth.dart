@@ -11,7 +11,8 @@ const _scopes = [
   'user-follow-read',
   'playlist-modify-private',
   'user-library-read',
-  'user-read-recently-played'
+  'user-read-recently-played',
+  'user-library-modify'
 ];
 
 void main() async {
@@ -30,6 +31,8 @@ void main() async {
   await _playlists(spotify);
   await _savedTracks(spotify);
   await _recentlyPlayed(spotify);
+  await _savedShows(spotify);
+  await _saveAndRemoveShow(spotify);
   //await _createPrivatePlaylist(spotify);
 
   exit(0);
@@ -131,6 +134,27 @@ Future<void> _recentlyPlayed(SpotifyApi spotify) async {
     var items = page.items?.map((e) => e.track?.name).join(', ');
     print(items);
   }
+}
+
+Future<void> _savedShows(SpotifyApi spotify) async {
+  var response = spotify.me.savedShows().stream();
+  await for (final page in response) {
+    var names = page.items?.map((e) => e.name).join(', ');
+    print(names);
+  }
+}
+
+Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
+  print('Saving show with id 4XPl3uEEL9hvqMkoZrzbx5');
+  await spotify.me.saveShows(['4XPl3uEEL9hvqMkoZrzbx5']);
+  var saved = await spotify.me.isSavedShows(['4XPl3uEEL9hvqMkoZrzbx5']);
+  print('Checking is 4XPl3uEEL9hvqMkoZrzbx5 is in saved shows...');
+  print(saved);
+  print('Removing show wish id 4XPl3uEEL9hvqMkoZrzbx5');
+  await spotify.me.removeShows(['4XPl3uEEL9hvqMkoZrzbx5']);
+  print('Checking is 4XPl3uEEL9hvqMkoZrzbx5 is in saved shows...');
+  saved = await spotify.me.isSavedShows(['4XPl3uEEL9hvqMkoZrzbx5']);
+  print(saved);
 }
 
 void _createPrivatePlaylist(SpotifyApi spotify) async {
