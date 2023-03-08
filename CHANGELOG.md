@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.1
+- bump dependency versions
+- regenerate serialization models
+
 ## 0.9.0
 
 - add new-releases endpoint
