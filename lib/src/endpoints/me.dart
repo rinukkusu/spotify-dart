@@ -4,7 +4,6 @@
 part of spotify;
 
 abstract class MeEndpointBase extends EndpointPaging {
-
   @override
   String get _path => 'v1/me';
 
@@ -12,8 +11,11 @@ abstract class MeEndpointBase extends EndpointPaging {
 }
 
 class Me extends MeEndpointBase {
+  late PlayerEndpoint _player;
 
-  Me(SpotifyApiBase api) : super(api);
+  Me(SpotifyApiBase api, PlayerEndpoint player) : super(api) {
+    _player = player;
+  }
 
   Future<User> get() async {
     final jsonString = await _api._get(_path);
@@ -59,7 +61,17 @@ class Me extends MeEndpointBase {
         ._delete("$_path/following?type=${type.key}&ids=${ids.join(",")}");
   }
 
-  
+  /// Get the object currently being played on the user’s Spotify account.
+  @Deprecated('Use [spotify.player.currentlyPlaying()]')
+  Future<Player> currentlyPlaying() async => _player.currentlyPlaying();
+
+  // Get the currently playing as well as the queued objects.
+  @Deprecated('Use [spotify.player.queue()]')
+  Future<Queue> queue() async => _player.queue();
+
+  // Add an object to the queue with a trackId.
+  @Deprecated('Use [spotify.player.addToQueue()]')
+  Future<void> addToQueue(String trackId) async => _player.addToQueue(trackId);
 
   /// Get tracks from the current user’s recently played tracks.
   /// Note: Currently doesn’t support podcast episodes.
@@ -78,6 +90,19 @@ class Me extends MeEndpointBase {
         (json) => PlayHistory.fromJson(json));
   }
 
+  /// Toggle Shuffle For User's Playback.
+  ///
+  /// Use [state] to toggle the shuffle. [true] to turn shuffle on and [false]
+  /// to turn it off respectively.
+  /// Returns the current player state by making another request.
+  /// See [player([String market])];
+  @Deprecated('Use [spotify.player.shuffle()]')
+  Future<Player> shuffle(bool state, [String? deviceId]) async => _player.shuffle(state, deviceId);
+
+  @Deprecated('Use [spotify.player.playbackState()]')
+  Future<Player> player([String? market]) async =>
+      _player.playbackState(market);
+
   /// Get the current user's top tracks.
   Future<Iterable<Track>> topTracks() async {
     final jsonString = await _api._get('$_path/top/tracks');
@@ -95,6 +120,10 @@ class Me extends MeEndpointBase {
     final items = map['items'] as Iterable<dynamic>;
     return items.map((item) => Artist.fromJson(item));
   }
+
+  /// Get information about a user’s available devices.
+  @Deprecated('Use [spotify.player.deviced()]')
+  Future<Iterable<Device>> devices() async => _player.devices();
 
   /// Get a list of shows saved in the current Spotify user’s library.
   Pages<Show> savedShows() {

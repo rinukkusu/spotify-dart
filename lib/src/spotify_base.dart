@@ -48,8 +48,8 @@ abstract class SpotifyApiBase {
     _tracks = Tracks(this);
     _playlists = Playlists(this);
     _recommendations = RecommendationsEndpoint(this);
-    _me = Me(this);
     _player = PlayerEndpoint(this);
+    _me = Me(this, _player);
     _users = Users(this, _me, _player);
     _search = Search(this);
     _audioFeatures = AudioFeatures(this);
