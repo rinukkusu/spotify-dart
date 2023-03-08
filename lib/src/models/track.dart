@@ -36,7 +36,7 @@ class Track extends Object implements TrackSimple {
   int? durationMs;
 
   /// The track length
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
@@ -143,7 +143,7 @@ class TrackSimple extends Object {
   int? durationMs;
 
   /// The track length
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
   /// Whether or not the track has explicit lyrics
