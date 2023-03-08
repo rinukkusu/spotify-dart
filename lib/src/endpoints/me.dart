@@ -174,7 +174,7 @@ class Me extends EndpointPaging {
     await _api._delete('$_path/shows?' + query);
   }
 
-  /// Check if passed albums (ids) are saved by current user. The output
+  /// Check if passed albums (ids) are saved by current user.
   /// [ids] the ist of id's to check
   /// Returns the list of id's mapped with the response whether it has been saved
   Future<Map<String, bool>> isSavedShows(List<String> ids) async {
