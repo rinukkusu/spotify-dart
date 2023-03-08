@@ -4,6 +4,10 @@
 
 - add new-releases endpoint
 - add queue endpoints for retrieving and adding
+- fix nullability and static analysis issues
+- fix search endpoint and examples
+- add shows related endpoints
+- deprecate `isSavedAlbums` and prefer usage of `containsSavedAlbums`
 
 ## 0.8.0
 
