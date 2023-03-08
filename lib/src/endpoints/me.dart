@@ -175,7 +175,7 @@ class Me extends EndpointPaging {
   }
 
   /// Check if passed albums (ids) are saved by current user.
-  /// [ids] the ist of id's to check
+  /// [ids] - list of id's to check
   /// Returns the list of id's mapped with the response whether it has been saved
   Future<Map<String, bool>> isSavedShows(List<String> ids) async {
     assert(
