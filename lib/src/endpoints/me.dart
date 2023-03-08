@@ -211,16 +211,18 @@ class Me extends EndpointPaging {
   /// [bool] list is in the same order as the provided album ids list
   @Deprecated('Use [containsSavedAbums(ids)]')
   Future<List<bool>> isSavedAlbums(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No album ids were provided for checking');
-    final jsonString =
-        await _api._get('$_path/albums/contains?ids=${ids.join(",")}');
-    return List.castFrom<dynamic, bool>(json.decode(jsonString));
+    final result = await containsSavedAlbums(ids);
+    return result.values.toList();
   }
 
   /// Check if passed albums (ids) are saved by current user.
   /// Returns the list of id's mapped with the response whether it has been saved
   Future<Map<String, bool>> containsSavedAlbums(List<String> ids) async {
-    final result = await isSavedAlbums(ids);
+    assert(ids.isNotEmpty, 'No album ids were provided for checking');
+    final jsonString =
+        await _api._get('$_path/albums/contains?ids=${ids.join(",")}');
+    final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
+
     return Map.fromIterables(ids, result);
   }
 

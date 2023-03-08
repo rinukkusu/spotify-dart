@@ -1,6 +1,7 @@
 // Copyright (c) 2020 hayribakici. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -166,21 +167,7 @@ Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
   print(saved);
 }
 
-void _createPrivatePlaylist(SpotifyApi spotify) async {
-  var user = await spotify.me.get();
-  await spotify.playlists
-      .createPlaylist(
-    user.id!,
-    'Cool New Playlist 2',
-    description: 'Songs to test by',
-    public: false,
-  )
-      .then((playlist) {
-    print('Private playlist created!');
-  }).catchError(_prettyPrintError);
-}
-
-void _prettyPrintError(Object error) {
+FutureOr<Null> _prettyPrintError(Object error) {
   if (error is SpotifyException) {
     print('${error.status} : ${error.message}');
   } else {

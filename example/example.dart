@@ -56,9 +56,8 @@ void main() async {
   });
 
   print("\nSearching for \'Metallica\':");
-  var search = await spotify.search.get('metallica').first(2).catchError((err) {
-    print((err as SpotifyException).message);
-  });
+  var search = await spotify.search.get('metallica').first(2);
+
   search.forEach((pages) {
     if (pages.items == null) {
       print('Empty items');

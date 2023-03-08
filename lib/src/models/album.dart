@@ -40,7 +40,7 @@ class AlbumSimple extends Object {
       _$AlbumSimpleFromJson(json);
 
   /// Helper function that unwraps the items from the paging object.
-  static Iterable<TrackSimple> _extractTracksFromPage(dynamic? json) {
+  static Iterable<TrackSimple> _extractTracksFromPage(dynamic json) {
     if (json == null) {
       return [];
     }

@@ -10,7 +10,7 @@ class Show {
   /// The markets in which the show is available: ISO 3166-1 alpha-2 country
   /// codes. Note that an album is considered available in a market when at least
   /// 1 of its tracks is available in that market.
-  @JsonKey(name: 'available_markets', nullable: true)
+  @JsonKey(name: 'available_markets')
   List<String>? availableMarkets;
 
   /// The copyright statements of the show.

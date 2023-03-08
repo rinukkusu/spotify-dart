@@ -62,6 +62,5 @@ class SearchType {
     SearchType.track,
     SearchType.show,
     SearchType.episode,
-    SearchType.show,
   ];
 }
