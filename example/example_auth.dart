@@ -145,7 +145,6 @@ Future<void> _recentlyPlayed(SpotifyApi spotify) async {
   }
 }
 
-
 Future<void> _savedShows(SpotifyApi spotify) async {
   var response = spotify.me.savedShows().stream();
   await for (final page in response) {
@@ -157,13 +156,13 @@ Future<void> _savedShows(SpotifyApi spotify) async {
 Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
   print('Saving show with id 4XPl3uEEL9hvqMkoZrzbx5');
   await spotify.me.saveShows(['4XPl3uEEL9hvqMkoZrzbx5']);
-  var saved = await spotify.me.isSavedShows(['4XPl3uEEL9hvqMkoZrzbx5']);
+  var saved = await spotify.me.containsSavedShows(['4XPl3uEEL9hvqMkoZrzbx5']);
   print('Checking is 4XPl3uEEL9hvqMkoZrzbx5 is in saved shows...');
   print(saved);
   print('Removing show wish id 4XPl3uEEL9hvqMkoZrzbx5');
   await spotify.me.removeShows(['4XPl3uEEL9hvqMkoZrzbx5']);
   print('Checking is 4XPl3uEEL9hvqMkoZrzbx5 is in saved shows...');
-  saved = await spotify.me.isSavedShows(['4XPl3uEEL9hvqMkoZrzbx5']);
+  saved = await spotify.me.containsSavedShows(['4XPl3uEEL9hvqMkoZrzbx5']);
   print(saved);
 }
 

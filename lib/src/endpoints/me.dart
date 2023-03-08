@@ -99,7 +99,6 @@ class Me extends EndpointPaging {
         (json) => PlayHistory.fromJson(json));
   }
 
-
   /// Toggle Shuffle For User's Playback.
   ///
   /// Use [state] to toggle the shuffle. [true] to turn shuffle on and [false]
@@ -177,7 +176,7 @@ class Me extends EndpointPaging {
   /// Check if passed albums (ids) are saved by current user.
   /// [ids] - list of id's to check
   /// Returns the list of id's mapped with the response whether it has been saved
-  Future<Map<String, bool>> isSavedShows(List<String> ids) async {
+  Future<Map<String, bool>> containsSavedShows(List<String> ids) async {
     assert(
         ids.isNotEmpty, 'No show ids were provided for checking saved shows');
     var query = _buildQuery({'ids': ids.join(',')});
@@ -210,12 +209,19 @@ class Me extends EndpointPaging {
 
   /// Check if passed albums (ids) are saved by current user. The output
   /// [bool] list is in the same order as the provided album ids list
+  @Deprecated('Use [containsSavedAbums(ids)]')
   Future<List<bool>> isSavedAlbums(List<String> ids) async {
     assert(ids.isNotEmpty, 'No album ids were provided for checking');
     final jsonString =
         await _api._get('$_path/albums/contains?ids=${ids.join(",")}');
-    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return list;
+    return List.castFrom<dynamic, bool>(json.decode(jsonString));
+  }
+
+  /// Check if passed albums (ids) are saved by current user.
+  /// Returns the list of id's mapped with the response whether it has been saved
+  Future<Map<String, bool>> containsSavedAlbums(List<String> ids) async {
+    final result = await isSavedAlbums(ids);
+    return Map.fromIterables(ids, result);
   }
 
   Iterable<Device> _parseDeviceJson(String jsonString) {

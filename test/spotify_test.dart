@@ -264,7 +264,7 @@ Future main() async {
     });
 
     test('containsShows', () async {
-      var response = await spotify.me.isSavedShows(['one', 'two']);
+      var response = await spotify.me.containsSavedShows(['one', 'two']);
       expect(response.isNotEmpty, true);
       expect(response['one'], true);
       expect(response['two'], false);
