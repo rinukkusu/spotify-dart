@@ -8,16 +8,18 @@ class Users extends EndpointPaging {
   String get _path => 'v1/users';
 
   late Me _me;
+  late PlayerEndpoint _player;
 
-  Users(SpotifyApiBase api, Me me) : super(api) {
+  Users(SpotifyApiBase api, Me me, PlayerEndpoint player) : super(api) {
     _me = me;
+    _player = player;
   }
 
   @Deprecated('Use "SpotifyApi.me.get()"')
   Future<User> me() => _me.get();
 
-  @Deprecated('Use "SpotifyApi.me.currentlyPlaying()"')
-  Future<Player> currentlyPlaying() => _me.currentlyPlaying();
+  @Deprecated('Use "SpotifyApi.player.currentlyPlaying()"')
+  Future<Player> currentlyPlaying() => _player.currentlyPlaying();
 
   @Deprecated('Use "SpotifyApi.me.recentlyPlayed()"')
   CursorPages<PlayHistory> recentlyPlayed() => _me.recentlyPlayed();
@@ -25,8 +27,8 @@ class Users extends EndpointPaging {
   @Deprecated('Use "SpotifyApi.me.topTracks()"')
   Future<Iterable<Track>> topTracks() => _me.topTracks();
 
-  @Deprecated('Use "SpotifyApi.me.devices()"')
-  Future<Iterable<Device>> devices() async => _me.devices();
+  @Deprecated('Use "SpotifyApi.player.devices()"')
+  Future<Iterable<Device>> devices() async => _player.devices();
 
   Future<UserPublic> get(String userId) async {
     var jsonString = await _api._get('$_path/$userId');

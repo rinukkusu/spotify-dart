@@ -3,9 +3,15 @@
 
 part of spotify;
 
-class Me extends EndpointPaging {
+abstract class MeEndpointBase extends EndpointPaging {
+
   @override
   String get _path => 'v1/me';
+
+  MeEndpointBase(SpotifyApiBase api) : super(api);
+}
+
+class Me extends MeEndpointBase {
 
   Me(SpotifyApiBase api) : super(api);
 
@@ -53,34 +59,7 @@ class Me extends EndpointPaging {
         ._delete("$_path/following?type=${type.key}&ids=${ids.join(",")}");
   }
 
-  /// Get the object currently being played on the user’s Spotify account.
-  Future<Player> currentlyPlaying() async {
-    final jsonString = await _api._get('$_path/player/currently-playing');
-
-    if (jsonString.isEmpty) {
-      return Player();
-    }
-
-    final map = json.decode(jsonString);
-    return Player.fromJson(map);
-  }
-
-  // Get the currently playing as well as the queued objects.
-  Future<Queue> queue() async {
-    final jsonString = await _api._get('$_path/player/queue');
-
-    if (jsonString.isEmpty) {
-      return Queue();
-    }
-
-    final map = json.decode(jsonString);
-    return Queue.fromJson(map);
-  }
-
-  // Add an object to the queue with a trackId.
-  Future<void> addToQueue(String trackId) async {
-    await _api._post('$_path/player/queue?uri=$trackId');
-  }
+  
 
   /// Get tracks from the current user’s recently played tracks.
   /// Note: Currently doesn’t support podcast episodes.
@@ -99,33 +78,6 @@ class Me extends EndpointPaging {
         (json) => PlayHistory.fromJson(json));
   }
 
-  /// Toggle Shuffle For User's Playback.
-  ///
-  /// Use [state] to toggle the shuffle. [true] to turn shuffle on and [false]
-  /// to turn it off respectively.
-  /// Returns the current player state by making another request.
-  /// See [player([String market])];
-  Future<Player> shuffle(bool state, [String? deviceId]) async {
-    return _api
-        ._put('v1/me/player/shuffle?' +
-            _buildQuery({'state': state, 'deviceId': deviceId}))
-        .then((response) {
-      if (response.isNotEmpty) {
-        // the success response of shuffle is always empty, therefore
-        // a non-empty response has to be an error
-        return Future.error(SpotifyError.fromJson(json.decode(response)));
-      }
-      return player();
-    });
-  }
-
-  Future<Player> player([String? market]) async {
-    var jsonString =
-        await _api._get('v1/me/player?' + _buildQuery({'market': market}));
-    final map = json.decode(jsonString);
-    return Player.fromJson(map);
-  }
-
   /// Get the current user's top tracks.
   Future<Iterable<Track>> topTracks() async {
     final jsonString = await _api._get('$_path/top/tracks');
@@ -142,11 +94,6 @@ class Me extends EndpointPaging {
 
     final items = map['items'] as Iterable<dynamic>;
     return items.map((item) => Artist.fromJson(item));
-  }
-
-  /// Get information about a user’s available devices.
-  Future<Iterable<Device>> devices() async {
-    return _api._get('$_path/player/devices').then(_parseDeviceJson);
   }
 
   /// Get a list of shows saved in the current Spotify user’s library.
@@ -224,13 +171,6 @@ class Me extends EndpointPaging {
     final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
 
     return Map.fromIterables(ids, result);
-  }
-
-  Iterable<Device> _parseDeviceJson(String jsonString) {
-    final map = json.decode(jsonString);
-
-    final items = map['devices'] as Iterable<dynamic>;
-    return items.map((item) => Device.fromJson(item));
   }
 }
 

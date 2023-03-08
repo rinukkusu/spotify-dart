@@ -33,6 +33,8 @@ abstract class SpotifyApiBase {
   Categories get categories => _categories;
   late Me _me;
   Me get me => _me;
+  late PlayerEndpoint _player;
+  PlayerEndpoint get player => _player;
   late Shows _shows;
   Shows get shows => _shows;
   FutureOr<oauth2.Client> get client => _client;
@@ -47,7 +49,8 @@ abstract class SpotifyApiBase {
     _playlists = Playlists(this);
     _recommendations = RecommendationsEndpoint(this);
     _me = Me(this);
-    _users = Users(this, _me);
+    _player = PlayerEndpoint(this);
+    _users = Users(this, _me, _player);
     _search = Search(this);
     _audioFeatures = AudioFeatures(this);
     _categories = Categories(this);
