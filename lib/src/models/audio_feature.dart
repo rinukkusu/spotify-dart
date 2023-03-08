@@ -30,7 +30,7 @@ class AudioFeature extends Object {
   int? durationMs;
 
   /// The track length
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
   /// Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of

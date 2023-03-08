@@ -184,14 +184,14 @@ Please file feature requests and bugs at the [issue tracker][tracker].
 ## Development
 
 ### Generating JSON Serializers
-Run `pub run build_runner build` to generate JSON serializers via [json_serializable][].
-Run `pub run build_runner watch` to continuously rebuild serializers in the background when files are updated.
+Run `dart run build_runner build` to generate JSON serializers via [json_serializable][].
+Run `dart run build_runner watch` to continuously rebuild serializers in the background when files are updated.
 
 ### Running tests
-Run `pub run test` to run all of the tests in `test/spotify_test.dart`.
+Run `dart test` to run all of the tests in `test/spotify_test.dart`.
 
 ### Running example code
-Run `pub run example/example` to run the example code. You'll need to modify `example/example.dart` to use your Spotify client ID and secret.
+Run `dart example/example` to run the example code. You'll need to modify `example/example.dart` to use your Spotify client ID and secret.
 
 If you would like to run the example that accesses your user data (such as currently playing song etc.), run `pub run example/example_auth.dart`. There, you are requested to
 enter your redirect url (see the comment above [`redirectUri`](#authorization-code-flow)). After that, you are requested to call a given url (or paste it into your browser). That url will do a redirect in your browser. You should copy and paste this redirected url into your console to see the currently playing song and your available devices.

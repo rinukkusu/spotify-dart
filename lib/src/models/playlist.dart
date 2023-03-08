@@ -66,7 +66,7 @@ class Playlist extends Object implements PlaylistSimple {
 
   /// Use [Playlist.tracks]
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   TracksLink? tracksLink;
 
   /// Information about the tracks of the playlist.
