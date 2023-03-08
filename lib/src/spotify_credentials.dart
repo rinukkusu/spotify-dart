@@ -57,13 +57,11 @@ class SpotifyApiCredentials {
     clientId = client.identifier;
     clientSecret = client.secret;
 
-    if (client.credentials != null) {
-      accessToken = client.credentials.accessToken;
-      refreshToken = client.credentials.refreshToken;
-      tokenEndpoint = client.credentials.tokenEndpoint;
-      scopes = client.credentials.scopes;
-      expiration = client.credentials.expiration;
-    }
+    accessToken = client.credentials.accessToken;
+    refreshToken = client.credentials.refreshToken;
+    tokenEndpoint = client.credentials.tokenEndpoint;
+    scopes = client.credentials.scopes;
+    expiration = client.credentials.expiration;
   }
 
   /// Whether or not these credentials have expired.

@@ -136,7 +136,7 @@ abstract class _Pages {
   final String? _pageKey;
   final ParserFunction<dynamic>? _pageContainerParser;
 
-  _Pages(this._api, this._path, [this._pageKey, this._pageContainerParser]) {
+  _Pages(this._api, this._path, this._pageKey, this._pageContainerParser) {
     if (_pageKey != null && _pageContainerParser == null) {
       throw ArgumentError.notNull('pageContainerParser');
     } else if (_pageKey == null && _pageContainerParser != null) {
