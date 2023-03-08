@@ -15,4 +15,4 @@ dependencies:
 dev_dependencies:
   test: ^1.16.5
   build_runner: ^2.0.3
-  json_serializable: ^4.1.1
+  json_serializable: ">=4.1.1 <7.0.0"
