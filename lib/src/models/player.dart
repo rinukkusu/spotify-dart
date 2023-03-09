@@ -63,23 +63,20 @@ class PlayerContext extends Object {
 @JsonSerializable(createFactory: false)
 class StartOrResumeOptions extends Object {
   /// Optional. Spotify URI of the context to play. Valid contexts are albums,
-  /// artists & playlists. {context_uri:"spotify:album:1Je1IMUlBXcx1Fz0WE7oPT"}
+  /// artists & playlists.
+  /// Example: "spotify:album:1Je1IMUlBXcx1Fz0WE7oPT"
   @JsonKey(name: 'context_uri')
   String? contextUri;
 
   /// Optional. A JSON array of the Spotify track URIs to play. For example:
-  /// { "uris": [
+  /// Example: [
   ///     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
   ///     "spotify:track:1301WleyT98MSxVHPZCA6M"
-  /// ]}
+  /// ]
   List<String>? uris;
 
   /// Optional. Indicates from where in the context playback should start.
   /// Only available when context_uri corresponds to an album or playlist object
-  /// "position" is zero based and can’t be negative.
-  /// Example: "offset": {"position": 5} "uri" is a string representing the uri
-  /// of the item to start at.
-  ///  Example: "offset": {"uri": "spotify:track:1301WleyT98MSxVHPZCA6M"}
   @JsonKey(toJson: _offsetToJson)
   Offset? offset;
 
@@ -105,6 +102,8 @@ class StartOrResumeOptions extends Object {
 
 abstract class Offset {}
 
+/// "uri" is a string representing the uri of the item to start at.
+/// Example: "spotify:track:1301WleyT98MSxVHPZCA6M"
 @JsonSerializable()
 class UriOffset extends Offset {
   final String uri;
@@ -112,6 +111,7 @@ class UriOffset extends Offset {
   UriOffset(this.uri);
 }
 
+/// "position" is zero based and can’t be negative.
 @JsonSerializable()
 class PositionOffset extends Offset {
   final int position;
