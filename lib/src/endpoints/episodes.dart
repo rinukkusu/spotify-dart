@@ -3,7 +3,7 @@
 
 part of spotify;
 
-class Episodes extends EndpointPaging {
+class Episodes extends EndpointBase {
   @override
   String get _path => 'v1/episodes';
 
