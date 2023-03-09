@@ -13,8 +13,13 @@ class Copyright extends Object {
   /// The copyright text for this album.
   String? text;
 
-  /// The type of copyright:
-  ///     C = the copyright
-  ///     P = the sound recording (performance) copyright.
-  String? type;
+  /// The type of copyright
+  CopyrightType? type;
+}
+
+enum CopyrightType {
+  /// C = the copyright
+  C,
+  /// P = the sound recording (performance) copyright.
+  P
 }
