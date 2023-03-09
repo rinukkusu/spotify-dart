@@ -122,7 +122,7 @@ class Me extends MeEndpointBase {
   }
 
   /// Get information about a user’s available devices.
-  @Deprecated('Use [spotify.player.deviced()]')
+  @Deprecated('Use [spotify.player.devices()]')
   Future<Iterable<Device>> devices() async => _player.devices();
 
   /// Get a list of shows saved in the current Spotify user’s library.
