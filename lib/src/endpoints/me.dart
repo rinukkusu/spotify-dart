@@ -63,7 +63,7 @@ class Me extends MeEndpointBase {
 
   /// Get the object currently being played on the user’s Spotify account.
   @Deprecated('Use [spotify.player.currentlyPlaying()]')
-  Future<Player> currentlyPlaying() async => _player.currentlyPlaying();
+  Future<PlaybackState> currentlyPlaying() async => _player.currentlyPlaying();
 
   // Get the currently playing as well as the queued objects.
   @Deprecated('Use [spotify.player.queue()]')
@@ -97,10 +97,11 @@ class Me extends MeEndpointBase {
   /// Returns the current player state by making another request.
   /// See [player([String market])];
   @Deprecated('Use [spotify.player.shuffle()]')
-  Future<Player> shuffle(bool state, [String? deviceId]) async => _player.shuffle(state, deviceId);
+  Future<PlaybackState> shuffle(bool state, [String? deviceId]) async =>
+      _player.shuffle(state, deviceId);
 
   @Deprecated('Use [spotify.player.playbackState()]')
-  Future<Player> player([String? market]) async =>
+  Future<PlaybackState> player([String? market]) async =>
       _player.playbackState(market);
 
   /// Get the current user's top tracks.

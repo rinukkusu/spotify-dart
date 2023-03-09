@@ -4,10 +4,11 @@
 part of spotify.models;
 
 @JsonSerializable(createToJson: false)
-class Player extends Object {
-  Player();
+class PlaybackState extends Object {
+  PlaybackState();
 
-  factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
+  factory PlaybackState.fromJson(Map<String, dynamic> json) =>
+      _$PlaybackStateFromJson(json);
 
   /// Unix Millisecond Timestamp when data was fetched
   int? timestamp;
@@ -57,6 +58,65 @@ class PlayerContext extends Object {
 
   /// The uri of the context.
   String? uri;
+}
+
+@JsonSerializable(createFactory: false)
+class StartOrResumeOptions extends Object {
+  /// Optional. Spotify URI of the context to play. Valid contexts are albums,
+  /// artists & playlists. {context_uri:"spotify:album:1Je1IMUlBXcx1Fz0WE7oPT"}
+  @JsonKey(name: 'context_uri')
+  String? contextUri;
+
+  /// Optional. A JSON array of the Spotify track URIs to play. For example:
+  /// { "uris": [
+  ///     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
+  ///     "spotify:track:1301WleyT98MSxVHPZCA6M"
+  /// ]}
+  List<String>? uris;
+
+  /// Optional. Indicates from where in the context playback should start.
+  /// Only available when context_uri corresponds to an album or playlist object
+  /// "position" is zero based and can’t be negative.
+  /// Example: "offset": {"position": 5} "uri" is a string representing the uri
+  /// of the item to start at.
+  ///  Example: "offset": {"uri": "spotify:track:1301WleyT98MSxVHPZCA6M"}
+  @JsonKey(toJson: _offsetToJson)
+  Offset? offset;
+
+  /// Optional. The position in milliseconds to start playback.
+  @JsonKey(name: 'position_ms')
+  int? positionMs;
+
+  StartOrResumeOptions(
+      {this.contextUri, this.uris, this.offset, this.positionMs});
+
+  Map<String, dynamic> toJson() => _$StartOrResumeOptionsToJson(this);
+
+  static Map<String, dynamic> _offsetToJson(Offset? offset) {
+    if (offset is UriOffset) {
+      return {'uri': offset.uri};
+    } else if (offset is PositionOffset) {
+      return {'position': offset.position};
+    } else {
+      return {};
+    }
+  }
+}
+
+abstract class Offset {}
+
+@JsonSerializable()
+class UriOffset extends Offset {
+  final String uri;
+
+  UriOffset(this.uri);
+}
+
+@JsonSerializable()
+class PositionOffset extends Offset {
+  final int position;
+
+  PositionOffset(this.position);
 }
 
 enum RepeatState { off, context, track }
