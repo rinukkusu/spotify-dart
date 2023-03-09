@@ -169,13 +169,13 @@ Future main() async {
 
   group('User', () {
     test('currentlyPlaying', () async {
-      var result = await spotify.me.currentlyPlaying();
+      var result = await spotify.player.currentlyPlaying();
 
       expect(result.item!.name, 'As I Am');
     });
 
     test('devices', () async {
-      var result = await spotify.me.devices();
+      var result = await spotify.player.devices();
       expect(result.length, 1);
       expect(result.first.id, '5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e');
       expect(result.first.isActive, true);
@@ -209,7 +209,7 @@ Future main() async {
     });
 
     test('getQueue', () async {
-      var result = await spotify.me.queue();
+      var result = await spotify.player.queue();
       final currentlyPlaying = result.currentlyPlaying;
       final queue = result.queue;
 
@@ -293,7 +293,7 @@ Future main() async {
 
   group('Player', () {
     test('player', () async {
-      var result = await spotify.me.player();
+      var result = await spotify.player.playbackState();
       expect(result.isShuffling, true);
       expect(result.isPlaying, true);
       expect(result.currentlyPlayingType, CurrentlyPlayingType.track);

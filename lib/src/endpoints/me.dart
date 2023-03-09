@@ -3,11 +3,19 @@
 
 part of spotify;
 
-class Me extends EndpointPaging {
+abstract class MeEndpointBase extends EndpointPaging {
   @override
   String get _path => 'v1/me';
 
-  Me(SpotifyApiBase api) : super(api);
+  MeEndpointBase(SpotifyApiBase api) : super(api);
+}
+
+class Me extends MeEndpointBase {
+  late PlayerEndpoint _player;
+
+  Me(SpotifyApiBase api, PlayerEndpoint player) : super(api) {
+    _player = player;
+  }
 
   Future<User> get() async {
     final jsonString = await _api._get(_path);
@@ -54,33 +62,16 @@ class Me extends EndpointPaging {
   }
 
   /// Get the object currently being played on the user’s Spotify account.
-  Future<Player> currentlyPlaying() async {
-    final jsonString = await _api._get('$_path/player/currently-playing');
-
-    if (jsonString.isEmpty) {
-      return Player();
-    }
-
-    final map = json.decode(jsonString);
-    return Player.fromJson(map);
-  }
+  @Deprecated('Use [spotify.player.currentlyPlaying()]')
+  Future<Player> currentlyPlaying() async => _player.currentlyPlaying();
 
   // Get the currently playing as well as the queued objects.
-  Future<Queue> queue() async {
-    final jsonString = await _api._get('$_path/player/queue');
-
-    if (jsonString.isEmpty) {
-      return Queue();
-    }
-
-    final map = json.decode(jsonString);
-    return Queue.fromJson(map);
-  }
+  @Deprecated('Use [spotify.player.queue()]')
+  Future<Queue> queue() async => _player.queue();
 
   // Add an object to the queue with a trackId.
-  Future<void> addToQueue(String trackId) async {
-    await _api._post('$_path/player/queue?uri=$trackId');
-  }
+  @Deprecated('Use [spotify.player.addToQueue()]')
+  Future<void> addToQueue(String trackId) async => _player.addToQueue(trackId);
 
   /// Get tracks from the current user’s recently played tracks.
   /// Note: Currently doesn’t support podcast episodes.
@@ -105,26 +96,12 @@ class Me extends EndpointPaging {
   /// to turn it off respectively.
   /// Returns the current player state by making another request.
   /// See [player([String market])];
-  Future<Player> shuffle(bool state, [String? deviceId]) async {
-    return _api
-        ._put('v1/me/player/shuffle?' +
-            _buildQuery({'state': state, 'deviceId': deviceId}))
-        .then((response) {
-      if (response.isNotEmpty) {
-        // the success response of shuffle is always empty, therefore
-        // a non-empty response has to be an error
-        return Future.error(SpotifyError.fromJson(json.decode(response)));
-      }
-      return player();
-    });
-  }
+  @Deprecated('Use [spotify.player.shuffle()]')
+  Future<Player> shuffle(bool state, [String? deviceId]) async => _player.shuffle(state, deviceId);
 
-  Future<Player> player([String? market]) async {
-    var jsonString =
-        await _api._get('v1/me/player?' + _buildQuery({'market': market}));
-    final map = json.decode(jsonString);
-    return Player.fromJson(map);
-  }
+  @Deprecated('Use [spotify.player.playbackState()]')
+  Future<Player> player([String? market]) async =>
+      _player.playbackState(market);
 
   /// Get the current user's top tracks.
   Future<Iterable<Track>> topTracks() async {
@@ -145,9 +122,8 @@ class Me extends EndpointPaging {
   }
 
   /// Get information about a user’s available devices.
-  Future<Iterable<Device>> devices() async {
-    return _api._get('$_path/player/devices').then(_parseDeviceJson);
-  }
+  @Deprecated('Use [spotify.player.devices()]')
+  Future<Iterable<Device>> devices() async => _player.devices();
 
   /// Get a list of shows saved in the current Spotify user’s library.
   Pages<Show> savedShows() {
@@ -224,13 +200,6 @@ class Me extends EndpointPaging {
     final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
 
     return Map.fromIterables(ids, result);
-  }
-
-  Iterable<Device> _parseDeviceJson(String jsonString) {
-    final map = json.decode(jsonString);
-
-    final items = map['devices'] as Iterable<dynamic>;
-    return items.map((item) => Device.fromJson(item));
   }
 }
 
