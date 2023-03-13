@@ -52,7 +52,7 @@
           "copyrights": [
             {
               "text": "string",
-              "type": "string"
+              "type": "C"
             }
           ],
           "description": "string",
