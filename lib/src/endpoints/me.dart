@@ -97,8 +97,8 @@ class Me extends MeEndpointBase {
   /// Returns the current player state by making another request.
   /// See [player([String market])];
   @Deprecated('Use [spotify.player.shuffle()]')
-  Future<PlaybackState> shuffle(bool state, [String? deviceId]) async =>
-      _player.shuffle(state, deviceId);
+  Future<PlaybackState?> shuffle(bool state, [String? deviceId]) async =>
+      _player.shuffle(state, deviceId: deviceId);
 
   @Deprecated('Use [spotify.player.playbackState()]')
   Future<PlaybackState> player([String? market]) async =>

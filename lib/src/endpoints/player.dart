@@ -13,14 +13,14 @@ class PlayerEndpoint extends MeEndpointBase {
   ///
   /// Use [state] to toggle the shuffle. [true] to turn shuffle on and [false]
   /// to turn it off respectively.
-  ///
-  /// Returns the current player state by making another request.
-  /// See [playbackState([String market])];
-  Future<PlaybackState> shuffle(bool state, [String? deviceId]) async {
-    return _api
-        ._put('$_path/shuffle?' +
-            _buildQuery({'state': state, 'deviceId': deviceId}))
-        .then(playbackState);
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> shuffle(bool state,
+      {String? deviceId, bool retrievePlaybackState = true}) async {
+    await _api._put('$_path/shuffle?' +
+        _buildQuery({'state': state, 'deviceId': deviceId}));
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 
   /// Returns the current playback state, including progress, track
@@ -81,45 +81,73 @@ class PlayerEndpoint extends MeEndpointBase {
 
   /// Start a new context or resume current playback on the user's active device.
   /// [deviceId] is optional. If not provided, the user's currently active device
-  /// is the target. [options] is optional. If not provided, playback will start
+  /// is the target.
+  /// [options] is optional. If not provided, playback will start
   /// from the context's current track.
-  Future<Null> startOrResume(
-      {String? deviceId, StartOrResumeOptions? options}) async {
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> startOrResume(
+      {String? deviceId,
+      StartOrResumeOptions? options,
+      bool retrievePlaybackState = true}) async {
     var body = options?.toJson();
     var json = jsonEncode(body ?? '');
 
     await _api._put(
         '$_path/play?' + _buildQuery({'device_id': deviceId}), json);
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 
   /// Pause playback on the user's account.
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
-  Future<Null> pause([String? deviceId]) async {
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> pause(
+      {String? deviceId, bool retrievePlaybackState = true}) async {
     await _api._put('$_path/pause?' + _buildQuery({'device_id': deviceId}));
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 
   /// Skips to previous track in the user’s queue.
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
-  Future<Null> previous([String? deviceId]) async {
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> previous(
+      {String? deviceId, bool retrievePlaybackState = true}) async {
     await _api._post('$_path/previous?' + _buildQuery({'device_id': deviceId}));
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 
   /// Skips to next track in the user’s queue.
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
-  Future<Null> next([String? deviceId]) async {
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> next(
+      {String? deviceId, bool retrievePlaybackState = true}) async {
     await _api._post('$_path/next?' + _buildQuery({'device_id': deviceId}));
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 
   /// Seeks to the given position in the user’s currently playing track.
   /// [positionMs] is required. The position in milliseconds to seek to.
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
-  Future<Null> seek(int positionMs, [String? deviceId]) async {
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> seek(int positionMs,
+      {String? deviceId, bool retrievePlaybackState = true}) async {
+    assert(positionMs >= 0, 'positionMs must be greater or equal to 0');
     await _api._put('$_path/seek?' +
         _buildQuery({'position_ms': positionMs, 'device_id': deviceId}));
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 
   /// Set the repeat mode for the user’s playback.
@@ -127,12 +155,17 @@ class PlayerEndpoint extends MeEndpointBase {
   /// [RepeatState.track], [RepeatState.context].
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
-  Future<Null> repeat(RepeatState state, [String? deviceId]) async {
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> repeat(RepeatState state,
+      {String? deviceId, bool retrievePlaybackState = true}) async {
     await _api._put('$_path/repeat?' +
         _buildQuery({
           'state': state.toString().split('.').last,
           'device_id': deviceId
         }));
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 
   /// Set the volume for the user’s current playback device.
@@ -140,8 +173,15 @@ class PlayerEndpoint extends MeEndpointBase {
   /// 100 inclusive.
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
-  Future<Null> volume(int volumePercent, [String? deviceId]) async {
+  /// [retrievePlaybackState] is optional. If true, the current playback state
+  /// will be retrieved after setting the volume. Defaults to true.
+  Future<PlaybackState?> volume(int volumePercent,
+      {String? deviceId, bool retrievePlaybackState = true}) async {
+    assert(volumePercent >= 0 && volumePercent <= 100,
+        'Volume must be between 0 and 100');
     await _api._put('$_path/volume?' +
         _buildQuery({'volume_percent': volumePercent, 'device_id': deviceId}));
+
+    return retrievePlaybackState ? playbackState() : null;
   }
 }
