@@ -211,6 +211,9 @@ PlaybackState _$PlaybackStateFromJson(Map<String, dynamic> json) =>
           : Track.fromJson(json['item'] as Map<String, dynamic>)
       ..currentlyPlayingType = $enumDecodeNullable(
           _$CurrentlyPlayingTypeEnumMap, json['currently_playing_type'])
+      ..actions = json['actions'] == null
+          ? null
+          : Actions.fromJson(json['actions'] as Map<String, dynamic>)
       ..isPlaying = json['is_playing'] as bool? ?? false
       ..isShuffling = json['shuffle_state'] as bool? ?? false
       ..repeatState =
@@ -238,6 +241,18 @@ PlayerContext _$PlayerContextFromJson(Map<String, dynamic> json) =>
       ..href = json['href'] as String?
       ..type = json['type'] as String?
       ..uri = json['uri'] as String?;
+
+Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions()
+  ..interruptingPlayback = json['interrupting_playback'] as bool? ?? false
+  ..pausing = json['pausing'] as bool? ?? false
+  ..resuming = json['resuming'] as bool? ?? false
+  ..seeking = json['seeking'] as bool? ?? false
+  ..skippingNext = json['skipping_next'] as bool? ?? false
+  ..skippingPrev = json['skipping_prev'] as bool? ?? false
+  ..togglingRepeatContext = json['toggling_repeat_context'] as bool? ?? false
+  ..togglingRepeatTrack = json['toggling_repeat_track'] as bool? ?? false
+  ..togglingShuffle = json['toggling_shuffle'] as bool? ?? false
+  ..transferringPlayback = json['transferring_playback'] as bool? ?? false;
 
 Map<String, dynamic> _$StartOrResumeOptionsToJson(
         StartOrResumeOptions instance) =>

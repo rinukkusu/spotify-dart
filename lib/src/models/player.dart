@@ -27,6 +27,10 @@ class PlaybackState extends Object {
   @JsonKey(name: 'currently_playing_type')
   CurrentlyPlayingType? currentlyPlayingType;
 
+  /// Allows to update the user interface based on which playback actions are
+  /// available within the current context.
+  Actions? actions;
+
   /// [true] if something is currently playing.
   @JsonKey(name: 'is_playing', defaultValue: false)
   bool? isPlaying;
@@ -58,6 +62,54 @@ class PlayerContext extends Object {
 
   /// The uri of the context.
   String? uri;
+}
+
+@JsonSerializable(createToJson: false)
+class Actions extends Object {
+  Actions();
+
+  factory Actions.fromJson(Map<String, dynamic> json) =>
+      _$ActionsFromJson(json);
+
+  /// Interrupting playback. Optional field.
+  @JsonKey(name: 'interrupting_playback', defaultValue: false)
+  bool? interruptingPlayback;
+
+  /// Pausing playback. Optional field.
+  @JsonKey(name: 'pausing', defaultValue: false)
+  bool? pausing;
+
+  /// Resuming playback. Optional field.
+  @JsonKey(name: 'resuming', defaultValue: false)
+  bool? resuming;
+
+  /// Seeking playback location. Optional field.
+  @JsonKey(name: 'seeking', defaultValue: false)
+  bool? seeking;
+
+  /// Skipping to the next context. Optional field.
+  @JsonKey(name: 'skipping_next', defaultValue: false)
+  bool? skippingNext;
+
+  /// Skipping to the previous context. Optional field.
+  @JsonKey(name: 'skipping_prev', defaultValue: false)
+  bool? skippingPrev;
+
+  /// Toggling repeat context flag. Optional field.
+  @JsonKey(name: 'toggling_repeat_context', defaultValue: false)
+  bool? togglingRepeatContext;
+
+  /// Toggling repeat track flag. Optional field.
+  @JsonKey(name: 'toggling_repeat_track', defaultValue: false)
+  bool? togglingRepeatTrack;
+
+  /// Toggling shuffle flag. Optional field.
+  @JsonKey(name: 'toggling_shuffle', defaultValue: false)
+  bool? togglingShuffle;
+
+  /// Transfering playback between devices. Optional field.
+  @JsonKey(name: 'transferring_playback', defaultValue: false)
+  bool? transferringPlayback;
 }
 
 @JsonSerializable(createFactory: false)
