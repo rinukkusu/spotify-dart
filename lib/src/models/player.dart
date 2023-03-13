@@ -68,7 +68,7 @@ class StartOrResumeOptions extends Object {
   @JsonKey(name: 'context_uri')
   String? contextUri;
 
-  /// Optional. A JSON array of the Spotify track URIs to play. For example:
+  /// Optional. A JSON array of the Spotify track URIs to play.
   /// Example: [
   ///     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
   ///     "spotify:track:1301WleyT98MSxVHPZCA6M"
@@ -116,7 +116,9 @@ class UriOffset extends Offset {
 class PositionOffset extends Offset {
   final int position;
 
-  PositionOffset(this.position);
+  PositionOffset(this.position) {
+    assert(position >= 0, 'Position must be greater than or equal to 0');
+  }
 }
 
 enum RepeatState { off, context, track }
