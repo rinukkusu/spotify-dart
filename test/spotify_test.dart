@@ -125,6 +125,7 @@ Future main() async {
       expect(show.type, 'show');
       expect(show.id, '4AlxqGkkrqe0mfIx3Mi7Xt');
       expect(show.name, 'Universo Flutter');
+      expect(show.totalEpisodes, 26);
     });
 
     test('list', () async {
@@ -174,7 +175,7 @@ Future main() async {
       expect(result.item!.name, 'As I Am');
     });
 
-    test('devices', () async {
+    test('Devices', () async {
       var result = await spotify.player.devices();
       expect(result.length, 1);
       expect(result.first.id, '5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e');
@@ -288,6 +289,32 @@ Future main() async {
       expect(list[albumIds[0]], isTrue);
       expect(list[albumIds[1]], isFalse);
       expect(list[albumIds[2]], isTrue);
+    });
+
+    group('Episodes', () {
+      test('getEpisode', () async {
+        var result = await spotify.episodes.get('5Xt5DXGzch68nYYamXrNxZ');
+
+        expect(result.durationMs, 1686230);
+        expect(result.explicit, true);
+        expect(result.audioPreviewUrl,
+            'https://p.scdn.co/mp3-preview/2f37da1d4221f40b9d1a98cd191f4d6f1646ad17');
+        expect(result.href,
+            'https://api.spotify.com/v1/episodes/5Xt5DXGzch68nYYamXrNxZ');
+        expect(result.name,
+            'Starting Your Own Podcast: Tips, Tricks, and Advice From Anchor Creators');
+        expect(result.releaseDate, DateTime(1981, 12, 15));
+        expect(result.type, 'episode');
+        expect(result.description,
+            'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.');
+        expect(result.show == null, false);
+
+        var show = result.show;
+        expect(show?.copyrights?.first.type, CopyrightType.C);
+        expect(show?.isExternallyHosted, true);
+        expect(show?.name, 'The No-Show');
+        expect(show?.totalEpisodes, 1);
+      });
     });
   });
 

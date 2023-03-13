@@ -1,0 +1,75 @@
+{
+  "audio_preview_url": "https://p.scdn.co/mp3-preview/2f37da1d4221f40b9d1a98cd191f4d6f1646ad17",
+  "description": "A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.",
+  "html_description": "<p>A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.</p>\n",
+  "duration_ms": 1686230,
+  "explicit": true,
+  "external_urls": {
+    "spotify": "string"
+  },
+  "href": "https://api.spotify.com/v1/episodes/5Xt5DXGzch68nYYamXrNxZ",
+  "id": "5Xt5DXGzch68nYYamXrNxZ",
+  "images": [
+    {
+      "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228\n",
+      "height": 300,
+      "width": 300
+    }
+  ],
+  "is_externally_hosted": true,
+  "is_playable": true,
+  "language": "en",
+  "languages": [
+    "fr",
+    "en"
+  ],
+  "name": "Starting Your Own Podcast: Tips, Tricks, and Advice From Anchor Creators",
+  "release_date": "1981-12-15",
+  "release_date_precision": "day",
+  "resume_point": {
+    "fully_played": true,
+    "resume_position_ms": 0
+  },
+  "type": "episode",
+  "uri": "spotify:episode:0zLhl3WsOCQHbe1BPTiHgr",
+  "restrictions": {
+    "reason": "string"
+  },
+  "show": {
+    "available_markets": [
+      "string"
+    ],
+    "copyrights": [
+      {
+        "text": "No rights",
+        "type": "C"
+      }
+    ],
+    "description": "hi",
+    "html_description": "string",
+    "explicit": true,
+    "external_urls": {
+      "spotify": "string"
+    },
+    "href": "string",
+    "id": "string",
+    "images": [
+      {
+        "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228\n",
+        "height": 300,
+        "width": 300
+      }
+    ],
+    "is_externally_hosted": true,
+    "languages": [
+      "string"
+    ],
+    "media_type": "string",
+    "name": "The No-Show",
+    "publisher": "string",
+    "type": "show",
+    "uri": "string",
+    "total_episodes": 1
+  }
+
+}

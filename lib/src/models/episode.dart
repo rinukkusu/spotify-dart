@@ -75,3 +75,14 @@ class Episode extends Object {
   factory Episode.fromJson(Map<String, dynamic> json) =>
       _$EpisodeFromJson(json);
 }
+
+@JsonSerializable(createToJson: false)
+class EpisodeFull extends Episode {
+
+  EpisodeFull();
+
+  Show? show;
+
+  factory EpisodeFull.fromJson(Map<String, dynamic> json) =>
+      _$EpisodeFullFromJson(json);
+}

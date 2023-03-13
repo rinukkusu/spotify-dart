@@ -137,7 +137,12 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category()
 
 Copyright _$CopyrightFromJson(Map<String, dynamic> json) => Copyright()
   ..text = json['text'] as String?
-  ..type = json['type'] as String?;
+  ..type = $enumDecodeNullable(_$CopyrightTypeEnumMap, json['type']);
+
+const _$CopyrightTypeEnumMap = {
+  CopyrightType.C: 'C',
+  CopyrightType.P: 'P',
+};
 
 Device _$DeviceFromJson(Map<String, dynamic> json) => Device()
   ..id = json['id'] as String?
@@ -389,7 +394,8 @@ Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..name = json['name'] as String?
   ..publisher = json['publisher'] as String?
   ..type = json['type'] as String?
-  ..uri = json['uri'] as String?;
+  ..uri = json['uri'] as String?
+  ..totalEpisodes = json['total_episodes'] as int? ?? 0;
 
 Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
   ..audioPreviewUrl = json['audio_preview_url'] as String?
@@ -416,6 +422,35 @@ Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
   ..releaseDatePrecision = json['release_date_precision'] as String?
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
+
+EpisodeFull _$EpisodeFullFromJson(Map<String, dynamic> json) => EpisodeFull()
+  ..audioPreviewUrl = json['audio_preview_url'] as String?
+  ..description = json['description'] as String?
+  ..durationMs = json['duration_ms'] as int?
+  ..explicit = json['explicit'] as bool?
+  ..externalUrls = json['external_urls'] == null
+      ? null
+      : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
+  ..href = json['href'] as String?
+  ..id = json['id'] as String?
+  ..images = (json['images'] as List<dynamic>?)
+      ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
+      .toList()
+  ..isExternallyHosted = json['is_externally_hosted'] as bool?
+  ..isPlayable = json['is_playable'] as bool?
+  ..language = json['language'] as String?
+  ..languages =
+      (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList()
+  ..name = json['name'] as String?
+  ..releaseDate = json['release_date'] == null
+      ? null
+      : DateTime.parse(json['release_date'] as String)
+  ..releaseDatePrecision = json['release_date_precision'] as String?
+  ..type = json['type'] as String?
+  ..uri = json['uri'] as String?
+  ..show = json['show'] == null
+      ? null
+      : Show.fromJson(json['show'] as Map<String, dynamic>);
 
 Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..album = json['album'] == null
