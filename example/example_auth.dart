@@ -67,7 +67,7 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
 }
 
 Future<void> _currentlyPlaying(SpotifyApi spotify) async =>
-    await spotify.player.currentlyPlaying().then((Player? a) {
+    await spotify.player.currentlyPlaying().then((PlaybackState? a) {
       if (a?.item == null) {
         print('Nothing currently playing.');
         return;
@@ -118,7 +118,7 @@ Future<void> _followingArtists(SpotifyApi spotify) async {
 
 Future<void> _shuffle(bool state, SpotifyApi spotify) async {
   await spotify.player.shuffle(state).then((player) {
-    print('Shuffle: ${player.isShuffling}');
+    print('Shuffle: ${player?.isShuffling}');
   }).catchError((ex) => _prettyPrintError(ex));
 }
 
