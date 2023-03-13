@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of an album
 @JsonSerializable(createToJson: false)
 class Album extends AlbumSimple {
   Album();

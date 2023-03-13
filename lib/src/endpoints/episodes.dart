@@ -3,6 +3,7 @@
 
 part of spotify;
 
+/// Endpoint of episodes `v1/episodes`
 class Episodes extends EndpointBase {
   @override
   String get _path => 'v1/episodes';

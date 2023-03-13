@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of the playback state
 @JsonSerializable(createToJson: false)
 class PlaybackState extends Object {
   PlaybackState();
@@ -44,6 +45,7 @@ class PlaybackState extends Object {
   RepeatState? repeatState;
 }
 
+/// Json representation of the context of the playbackState
 @JsonSerializable(createToJson: false)
 class PlayerContext extends Object {
   PlayerContext();
@@ -175,4 +177,5 @@ class PositionOffset extends Offset {
 
 enum RepeatState { off, context, track }
 
+/// Reprensation of what is currently playing
 enum CurrentlyPlayingType { track, episode, ad, unknown }

@@ -3,6 +3,7 @@
 
 part of spotify;
 
+/// Endpoint of shows `v1/shows`
 class Shows extends EndpointPaging {
   @override
   String get _path => 'v1/shows';

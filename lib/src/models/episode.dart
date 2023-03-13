@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of an episode
 @JsonSerializable(createToJson: false)
 class Episode extends Object {
   Episode();
@@ -76,6 +77,7 @@ class Episode extends Object {
       _$EpisodeFromJson(json);
 }
 
+/// Json representation of an episode with information about its show
 @JsonSerializable(createToJson: false)
 class EpisodeFull extends Episode {
 

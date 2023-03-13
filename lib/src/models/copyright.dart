@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of copyright
 @JsonSerializable(createToJson: false)
 class Copyright extends Object {
   Copyright();

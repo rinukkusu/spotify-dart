@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of a device
 @JsonSerializable(createToJson: false)
 class Device extends Object {
   Device();
@@ -37,6 +38,7 @@ class Device extends Object {
   int? volumePercent;
 }
 
+/// API supported types
 enum DeviceType {
   Computer,
   Tablet,

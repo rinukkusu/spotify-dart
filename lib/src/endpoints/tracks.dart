@@ -3,6 +3,7 @@
 
 part of spotify;
 
+/// Endpoint of tracks `v1/tracks`
 class Tracks extends EndpointBase {
   late TracksMe _me;
 

@@ -3,7 +3,8 @@
 
 part of spotify;
 
-class PlayerEndpoint extends MeEndpointBase {
+/// Endpoint of the player
+class PlayerEndpoint extends _MeEndpointBase {
   @override
   String get _path => '${super._path}/player';
 

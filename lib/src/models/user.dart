@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of a user
 @JsonSerializable(createToJson: false)
 class User extends Object implements UserPublic {
   User();
@@ -71,6 +72,7 @@ class User extends Object implements UserPublic {
   String? uri;
 }
 
+/// Json representation of a publicly displayed user
 @JsonSerializable(createToJson: false)
 class UserPublic extends Object {
   UserPublic();
@@ -105,6 +107,7 @@ class UserPublic extends Object {
   String? uri;
 }
 
+/// Json representation of the playback history
 @JsonSerializable(createToJson: false)
 class PlayHistory extends Object {
   PlayHistory();

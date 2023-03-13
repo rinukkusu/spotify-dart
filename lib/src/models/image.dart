@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of an image
 @JsonSerializable(createToJson: false)
 class Image extends Object {
   Image();

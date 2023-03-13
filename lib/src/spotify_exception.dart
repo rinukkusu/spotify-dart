@@ -18,6 +18,7 @@ class SpotifyException implements Exception {
   String toString() => 'Error Code: $status\r\n$message';
 }
 
+/// Exception when the api-requsts has been exceeded
 class ApiRateException extends SpotifyException {
   final num retryAfter;
 

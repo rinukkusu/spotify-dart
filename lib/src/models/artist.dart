@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of an artist
 @JsonSerializable(createToJson: false)
 class Artist extends Object implements ArtistSimple {
   Artist();
@@ -53,6 +54,7 @@ class Artist extends Object implements ArtistSimple {
   int? popularity;
 }
 
+/// Json representation of a simplified artist
 @JsonSerializable(createToJson: false)
 class ArtistSimple extends Object {
   ArtistSimple();

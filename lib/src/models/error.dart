@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of an API error
 @JsonSerializable(createToJson: false)
 class SpotifyError extends Object {
   SpotifyError();
