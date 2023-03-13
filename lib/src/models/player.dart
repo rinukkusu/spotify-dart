@@ -4,10 +4,11 @@
 part of spotify.models;
 
 @JsonSerializable(createToJson: false)
-class Player extends Object {
-  Player();
+class PlaybackState extends Object {
+  PlaybackState();
 
-  factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
+  factory PlaybackState.fromJson(Map<String, dynamic> json) =>
+      _$PlaybackStateFromJson(json);
 
   /// Unix Millisecond Timestamp when data was fetched
   int? timestamp;
@@ -25,6 +26,10 @@ class Player extends Object {
   /// [episode], [ad] or [unknown].
   @JsonKey(name: 'currently_playing_type')
   CurrentlyPlayingType? currentlyPlayingType;
+
+  /// Allows to update the user interface based on which playback actions are
+  /// available within the current context.
+  Actions? actions;
 
   /// [true] if something is currently playing.
   @JsonKey(name: 'is_playing', defaultValue: false)
@@ -57,6 +62,115 @@ class PlayerContext extends Object {
 
   /// The uri of the context.
   String? uri;
+}
+
+@JsonSerializable(createToJson: false)
+class Actions extends Object {
+  Actions();
+
+  factory Actions.fromJson(Map<String, dynamic> json) =>
+      _$ActionsFromJson(json);
+
+  /// Interrupting playback. Optional field.
+  @JsonKey(name: 'interrupting_playback', defaultValue: false)
+  bool? interruptingPlayback;
+
+  /// Pausing playback. Optional field.
+  @JsonKey(name: 'pausing', defaultValue: false)
+  bool? pausing;
+
+  /// Resuming playback. Optional field.
+  @JsonKey(name: 'resuming', defaultValue: false)
+  bool? resuming;
+
+  /// Seeking playback location. Optional field.
+  @JsonKey(name: 'seeking', defaultValue: false)
+  bool? seeking;
+
+  /// Skipping to the next context. Optional field.
+  @JsonKey(name: 'skipping_next', defaultValue: false)
+  bool? skippingNext;
+
+  /// Skipping to the previous context. Optional field.
+  @JsonKey(name: 'skipping_prev', defaultValue: false)
+  bool? skippingPrev;
+
+  /// Toggling repeat context flag. Optional field.
+  @JsonKey(name: 'toggling_repeat_context', defaultValue: false)
+  bool? togglingRepeatContext;
+
+  /// Toggling repeat track flag. Optional field.
+  @JsonKey(name: 'toggling_repeat_track', defaultValue: false)
+  bool? togglingRepeatTrack;
+
+  /// Toggling shuffle flag. Optional field.
+  @JsonKey(name: 'toggling_shuffle', defaultValue: false)
+  bool? togglingShuffle;
+
+  /// Transfering playback between devices. Optional field.
+  @JsonKey(name: 'transferring_playback', defaultValue: false)
+  bool? transferringPlayback;
+}
+
+@JsonSerializable(createFactory: false)
+class StartOrResumeOptions extends Object {
+  /// Optional. Spotify URI of the context to play. Valid contexts are albums,
+  /// artists & playlists.
+  /// Example: "spotify:album:1Je1IMUlBXcx1Fz0WE7oPT"
+  @JsonKey(name: 'context_uri')
+  String? contextUri;
+
+  /// Optional. A JSON array of the Spotify track URIs to play.
+  /// Example: [
+  ///     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
+  ///     "spotify:track:1301WleyT98MSxVHPZCA6M"
+  /// ]
+  List<String>? uris;
+
+  /// Optional. Indicates from where in the context playback should start.
+  /// Only available when context_uri corresponds to an album or playlist object
+  @JsonKey(toJson: _offsetToJson)
+  Offset? offset;
+
+  /// Optional. The position in milliseconds to start playback.
+  @JsonKey(name: 'position_ms')
+  int? positionMs;
+
+  StartOrResumeOptions(
+      {this.contextUri, this.uris, this.offset, this.positionMs});
+
+  Map<String, dynamic> toJson() => _$StartOrResumeOptionsToJson(this);
+
+  static Map<String, dynamic> _offsetToJson(Offset? offset) {
+    if (offset is UriOffset) {
+      return {'uri': offset.uri};
+    } else if (offset is PositionOffset) {
+      return {'position': offset.position};
+    } else {
+      return {};
+    }
+  }
+}
+
+abstract class Offset {}
+
+/// "uri" is a string representing the uri of the item to start at.
+/// Example: "spotify:track:1301WleyT98MSxVHPZCA6M"
+@JsonSerializable()
+class UriOffset extends Offset {
+  final String uri;
+
+  UriOffset(this.uri);
+}
+
+/// "position" is zero based and can’t be negative.
+@JsonSerializable()
+class PositionOffset extends Offset {
+  final int position;
+
+  PositionOffset(this.position) {
+    assert(position >= 0, 'Position must be greater than or equal to 0');
+  }
 }
 
 enum RepeatState { off, context, track }

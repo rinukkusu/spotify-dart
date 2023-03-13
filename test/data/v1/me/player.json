@@ -23,16 +23,18 @@
     "item": {
         "album": {
             "album_type": "album",
-            "artists": [{
-                "external_urls": {
-                    "spotify": "https://open.spotify.com/artist/2aaLAng2L2aWD2FClzwiep"
-                },
-                "href": "https://api.spotify.com/v1/artists/2aaLAng2L2aWD2FClzwiep",
-                "id": "2aaLAng2L2aWD2FClzwiep",
-                "name": "Dream Theater",
-                "type": "artist",
-                "uri": "spotify:artist:2aaLAng2L2aWD2FClzwiep"
-            }],
+            "artists": [
+                {
+                    "external_urls": {
+                        "spotify": "https://open.spotify.com/artist/2aaLAng2L2aWD2FClzwiep"
+                    },
+                    "href": "https://api.spotify.com/v1/artists/2aaLAng2L2aWD2FClzwiep",
+                    "id": "2aaLAng2L2aWD2FClzwiep",
+                    "name": "Dream Theater",
+                    "type": "artist",
+                    "uri": "spotify:artist:2aaLAng2L2aWD2FClzwiep"
+                }
+            ],
             "available_markets": [
                 "AD",
                 "AE",
@@ -132,7 +134,8 @@
             },
             "href": "https://api.spotify.com/v1/albums/2qMujQgkbogm4owxpt8aVP",
             "id": "2qMujQgkbogm4owxpt8aVP",
-            "images": [{
+            "images": [
+                {
                     "height": 640,
                     "url": "https://i.scdn.co/image/ab67616d0000b2730fbdbfc4dd5b2b93448c7104",
                     "width": 640
@@ -155,16 +158,18 @@
             "type": "album",
             "uri": "spotify:album:2qMujQgkbogm4owxpt8aVP"
         },
-        "artists": [{
-            "external_urls": {
-                "spotify": "https://open.spotify.com/artist/2aaLAng2L2aWD2FClzwiep"
-            },
-            "href": "https://api.spotify.com/v1/artists/2aaLAng2L2aWD2FClzwiep",
-            "id": "2aaLAng2L2aWD2FClzwiep",
-            "name": "Dream Theater",
-            "type": "artist",
-            "uri": "spotify:artist:2aaLAng2L2aWD2FClzwiep"
-        }],
+        "artists": [
+            {
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/artist/2aaLAng2L2aWD2FClzwiep"
+                },
+                "href": "https://api.spotify.com/v1/artists/2aaLAng2L2aWD2FClzwiep",
+                "id": "2aaLAng2L2aWD2FClzwiep",
+                "name": "Dream Theater",
+                "type": "artist",
+                "uri": "spotify:artist:2aaLAng2L2aWD2FClzwiep"
+            }
+        ],
         "available_markets": [
             "AD",
             "AE",
@@ -280,10 +285,16 @@
     },
     "currently_playing_type": "track",
     "actions": {
-        "disallows": {
-            "resuming": true,
-            "skipping_prev": true
-        }
+        "interrupting_playback": false,
+        "pausing": true,
+        "resuming": false,
+        "seeking": false,
+        "skipping_next": false,
+        "skipping_prev": false,
+        "toggling_repeat_context": false,
+        "toggling_shuffle": false,
+        "toggling_repeat_track": false,
+        "transferring_playback": false
     },
     "is_playing": true
 }
