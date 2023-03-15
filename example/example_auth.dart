@@ -33,8 +33,8 @@ void main() async {
   await _shuffle(true, spotify);
   await _shuffle(false, spotify);
   await _playlists(spotify);
-  // await _savedTracks(spotify);
-  // await _recentlyPlayed(spotify);
+  await _savedTracks(spotify);
+  await _recentlyPlayed(spotify);
   await _getShow(spotify);
   await _listShows(spotify);
   await _savedShows(spotify);
