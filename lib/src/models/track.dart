@@ -118,7 +118,7 @@ class Track extends Object implements TrackSimple {
   String? uri;
 }
 
-/// Json representation of simplified track.
+/// Json representation of a simplified track.
 @JsonSerializable(createToJson: false)
 class TrackSimple extends Object {
   TrackSimple();
