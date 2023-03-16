@@ -174,7 +174,7 @@ class PositionOffset extends Offset {
     assert(position >= 0, 'Position must be greater than or equal to 0');
   }
 }
-
+/// Representation of the current repeat state
 enum RepeatState { off, context, track }
 
 /// Representation of what is currently playing
