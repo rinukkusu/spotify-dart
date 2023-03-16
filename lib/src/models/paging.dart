@@ -13,7 +13,7 @@ Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) {
 List<Map> itemsNativeToJson(Iterable<dynamic>? items) =>
     (items == null) ? [] : List.from(items);
 
-/// A generic reprentation of a JSON page
+/// A generic representation of a JSON page
 class BasePaging<T> extends Object {
   BasePaging();
 
