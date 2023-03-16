@@ -202,6 +202,41 @@ class Me extends MeEndpointBase {
 
     return Map.fromIterables(ids, result);
   }
+
+  /// Returns the current user's saved episodes. Requires the `user-library-read`
+  /// scope.
+  Pages<EpisodeFull> savedEpisodes() {
+    return _getPages('$_path/episodes', 
+       (json) => EpisodeFull.fromJson(json['episode']));
+  }
+
+  /// Saves episodes for the current user. Requires the `user-library-modify`
+  /// scope.
+  /// [ids] - the ids of the episodes
+  Future<void> saveEpisodes(List<String> ids) async {
+    assert(ids.isNotEmpty, 'No episode ids were provided for saving');
+    await _api._put('$_path/episodes?' + _buildQuery({'ids': ids.join(',')}));
+  }
+
+  /// Removes episodes for the current user. Requires the `user-library-modify`
+  /// scope.
+  /// [ids] - the ids of the episodes
+  Future<void> removeEpisode(List<String> ids) async {
+    assert(ids.isNotEmpty, 'No episode ids were provided for removing');
+    await _api
+        ._delete('$_path/episodes?' + _buildQuery({'ids': ids.join(',')}));
+  }
+
+  /// Check if passed episode [ids] are saved by current user.
+  /// Returns the list of id's mapped with the response whether it has been saved
+  Future<Map<String, bool>> containsSavedEpisodes(List<String> ids) async {
+    assert(ids.isNotEmpty, 'No episode ids were provided for checking');
+    final jsonString = await _api._get(
+        '$_path/episodes/contains?' + _buildQuery({'ids': ids.join(',')}));
+    final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
+
+    return Map.fromIterables(ids, result);
+  }
 }
 
 class FollowingType {

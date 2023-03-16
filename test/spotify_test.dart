@@ -251,70 +251,102 @@ Future main() async {
       expect(result.last, isTrue);
     });
 
-    test('savedShows', () async {
-      var pages = spotify.me.savedShows();
-      var result = await pages.first(2);
-      expect(result.items!.length, 2);
+    group('me/shows', () {
+      test('savedShows', () async {
+        var pages = spotify.me.savedShows();
+        var result = await pages.first(2);
+        expect(result.items!.length, 2);
 
-      var firstShow = result.items!.first;
-      expect(firstShow.type, 'show');
-      expect(firstShow.name != null, true);
-      expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
-    });
-
-    test('containsShows', () async {
-      var response = await spotify.me.containsSavedShows(['one', 'two']);
-      expect(response.isNotEmpty, true);
-      expect(response['one'], true);
-      expect(response['two'], false);
-    });
-
-    test('savedAlbums', () async {
-      final albums = await spotify.me.savedAlbums().getPage(10, 0);
-      expect(albums.items?.length, 2);
-      expect(albums.isLast, true);
-      expect(albums.items?.every((item) => item is Album), isTrue);
-    });
-
-    test('containsSavedAlbums', () async {
-      final albumIds = [
-        '382ObEPsp2rxGrESizN5TX',
-        '1A2GTWGtFfWp7KSQTwWOyo',
-        '2noRn2Aes5aoNVsU6iWThc'
-      ];
-
-      final list = await spotify.me.containsSavedAlbums(albumIds);
-
-      expect(list.length, 3);
-      expect(list[albumIds[0]], isTrue);
-      expect(list[albumIds[1]], isFalse);
-      expect(list[albumIds[2]], isTrue);
-    });
-
-    group('Episodes', () {
-      test('getEpisode', () async {
-        var result = await spotify.episodes.get('5Xt5DXGzch68nYYamXrNxZ');
-
-        expect(result.durationMs, 1686230);
-        expect(result.explicit, true);
-        expect(result.audioPreviewUrl,
-            'https://p.scdn.co/mp3-preview/2f37da1d4221f40b9d1a98cd191f4d6f1646ad17');
-        expect(result.href,
-            'https://api.spotify.com/v1/episodes/5Xt5DXGzch68nYYamXrNxZ');
-        expect(result.name,
-            'Starting Your Own Podcast: Tips, Tricks, and Advice From Anchor Creators');
-        expect(result.releaseDate, DateTime(1981, 12, 15));
-        expect(result.type, 'episode');
-        expect(result.description,
-            'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.');
-        expect(result.show == null, false);
-
-        var show = result.show;
-        expect(show?.copyrights?.first.type, CopyrightType.C);
-        expect(show?.isExternallyHosted, true);
-        expect(show?.name, 'The No-Show');
-        expect(show?.totalEpisodes, 1);
+        var firstShow = result.items!.first;
+        expect(firstShow.type, 'show');
+        expect(firstShow.name != null, true);
+        expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
       });
+
+      test('containsShows', () async {
+        var response = await spotify.me.containsSavedShows(['one', 'two']);
+        expect(response.isNotEmpty, true);
+        expect(response['one'], true);
+        expect(response['two'], false);
+      });
+    });
+
+    group('me/albums', () {
+      test('savedAlbums', () async {
+        final albums = await spotify.me.savedAlbums().getPage(10, 0);
+        expect(albums.items?.length, 2);
+        expect(albums.isLast, true);
+        expect(albums.items?.every((item) => item is Album), isTrue);
+      });
+
+      test('containsSavedAlbums', () async {
+        final albumIds = [
+          '382ObEPsp2rxGrESizN5TX',
+          '1A2GTWGtFfWp7KSQTwWOyo',
+          '2noRn2Aes5aoNVsU6iWThc'
+        ];
+
+        final list = await spotify.me.containsSavedAlbums(albumIds);
+
+        expect(list.length, 3);
+        expect(list[albumIds[0]], isTrue);
+        expect(list[albumIds[1]], isFalse);
+        expect(list[albumIds[2]], isTrue);
+      });
+    });
+
+    group('me/episodes', () {
+      test('savedEpisodes', () async {
+        var pages = spotify.me.savedEpisodes();
+        var result = await pages.first(2);
+        expect(result.items!.length, 1);
+
+        var firstEpisode = result.items!.first;
+        expect(firstEpisode.type, 'episode');
+        expect(firstEpisode.name != null, true);
+        expect(firstEpisode.id, '5Xt5DXGzch68nYYamXrNxZ');
+      });
+
+      test('containsSavedEpisodes', () async {
+        final episodeIds = [
+          '5Xt5DXGzch68nYYamXrNxZ',
+          '1A2GTWGtFfWp7KSQTwWOyo',
+          '2noRn2Aes5aoNVsU6iWThc'
+        ];
+
+        final list = await spotify.me.containsSavedEpisodes(episodeIds);
+
+        expect(list.length, 3);
+        expect(list[episodeIds[0]], isTrue);
+        expect(list[episodeIds[1]], isFalse);
+        expect(list[episodeIds[2]], isFalse);
+      });
+    });
+  });
+
+  group('Episodes', () {
+    test('getEpisode', () async {
+      var result = await spotify.episodes.get('5Xt5DXGzch68nYYamXrNxZ');
+
+      expect(result.durationMs, 1686230);
+      expect(result.explicit, true);
+      expect(result.audioPreviewUrl,
+          'https://p.scdn.co/mp3-preview/2f37da1d4221f40b9d1a98cd191f4d6f1646ad17');
+      expect(result.href,
+          'https://api.spotify.com/v1/episodes/5Xt5DXGzch68nYYamXrNxZ');
+      expect(result.name,
+          'Starting Your Own Podcast: Tips, Tricks, and Advice From Anchor Creators');
+      expect(result.releaseDate, DateTime(1981, 12, 15));
+      expect(result.type, 'episode');
+      expect(result.description,
+          'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.');
+      expect(result.show == null, false);
+
+      var show = result.show;
+      expect(show?.copyrights?.first.type, CopyrightType.C);
+      expect(show?.isExternallyHosted, true);
+      expect(show?.name, 'The No-Show');
+      expect(show?.totalEpisodes, 1);
     });
   });
 

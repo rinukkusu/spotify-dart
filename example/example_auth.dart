@@ -35,8 +35,14 @@ void main() async {
   await _playlists(spotify);
   await _savedTracks(spotify);
   await _recentlyPlayed(spotify);
+  await _getShow(spotify);
+  await _listShows(spotify);
   await _savedShows(spotify);
   await _saveAndRemoveShow(spotify);
+  await _getEpisode(spotify);
+  await _listEpisodes(spotify);
+  await _savedEpisodes(spotify);
+  await _saveAndRemoveEpisode(spotify);
   //await _createPrivatePlaylist(spotify);
 
   exit(0);
@@ -146,7 +152,20 @@ Future<void> _recentlyPlayed(SpotifyApi spotify) async {
   }
 }
 
+Future<void> _getShow(SpotifyApi spotify) async {
+  var response = await spotify.shows.get('3kbLJJLzRGsAKESODPSbiB');
+  print(response.name);
+}
+
+Future<void> _listShows(SpotifyApi spotify) async {
+  var response = await spotify.shows.list(['3kbLJJLzRGsAKESODPSbiB']);
+  for (final show in response) {
+    print(show.name);
+  }
+}
+
 Future<void> _savedShows(SpotifyApi spotify) async {
+  print('Users saved shows');
   var response = spotify.me.savedShows().stream();
   await for (final page in response) {
     var names = page.items?.map((e) => e.name).join(', ');
@@ -164,6 +183,44 @@ Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
   await spotify.me.removeShows(['4XPl3uEEL9hvqMkoZrzbx5']);
   print('Checking is 4XPl3uEEL9hvqMkoZrzbx5 is in saved shows...');
   saved = await spotify.me.containsSavedShows(['4XPl3uEEL9hvqMkoZrzbx5']);
+  print(saved);
+}
+
+Future<void> _getEpisode(SpotifyApi spotify) async {
+  print('\nRetriving Information about episode with id 2TkVS48EgJwFUMiH8UwqGL');
+  var episode = await spotify.episodes.get('2TkVS48EgJwFUMiH8UwqGL');
+  print('${episode.name} - ${episode.show?.name}');
+}
+
+Future<void> _listEpisodes(SpotifyApi spotify) async {
+  print('\nRetriving Information about episodes 2TkVS48EgJwFUMiH8UwqGL, 4Bje2xtE4VxqO2HO1PQdsG');
+  var episodes = await spotify.episodes
+      .list(['2TkVS48EgJwFUMiH8UwqGL', '4Bje2xtE4VxqO2HO1PQdsG']);
+  for (final episode in episodes) {
+    print('${episode.name} - ${episode.show?.name}');
+  }
+}
+
+Future<void> _savedEpisodes(SpotifyApi spotify) async {
+  print('Users saved episodes:');
+
+  var episodes = spotify.me.savedEpisodes().stream();
+  await for (final page in episodes) {
+    var names = page.items?.map((e) => e.name).join(', ');
+    print(names);
+  }
+}
+
+Future<void> _saveAndRemoveEpisode(spotify) async {
+  print('Saving episode with id 4Bje2xtE4VxqO2HO1PQdsG');
+  await spotify.me.saveShows(['4Bje2xtE4VxqO2HO1PQdsG']);
+  var saved = await spotify.me.containsSavedShows(['4Bje2xtE4VxqO2HO1PQdsG']);
+  print('Checking is 4Bje2xtE4VxqO2HO1PQdsG is in saved shows...');
+  print(saved);
+  print('Removing show wish id 4Bje2xtE4VxqO2HO1PQdsG');
+  await spotify.me.removeShows(['4Bje2xtE4VxqO2HO1PQdsG']);
+  print('Checking is 4Bje2xtE4VxqO2HO1PQdsG is in saved shows...');
+  saved = await spotify.me.containsSavedShows(['4Bje2xtE4VxqO2HO1PQdsG']);
   print(saved);
 }
 
