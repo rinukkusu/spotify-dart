@@ -1,6 +1,16 @@
 # Changelog
 
+## 0.10.0
+
+- add more documentation
+- refactor library organization
+- add episodes methods to `me` endpoint
+- add episodes endpoint
+- add player methods for controlling playback
+- refactor player methods out of `me` endpoint
+
 ## 0.9.1
+
 - bump dependency versions
 - regenerate serialization models
 
