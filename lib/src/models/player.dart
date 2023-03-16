@@ -144,36 +144,39 @@ class StartOrResumeOptions extends Object {
   Map<String, dynamic> toJson() => _$StartOrResumeOptionsToJson(this);
 
   static Map<String, dynamic> _offsetToJson(Offset? offset) {
-    if (offset is UriOffset) {
-      return {'uri': offset.uri};
-    } else if (offset is PositionOffset) {
-      return {'position': offset.position};
-    } else {
-      return {};
-    }
+    return offset?.toJson() ?? {};
   }
 }
 
-abstract class Offset {}
+abstract class Offset {
+  Map<String, dynamic> toJson();
+}
 
 /// "uri" is a string representing the uri of the item to start at.
 /// Example: "spotify:track:1301WleyT98MSxVHPZCA6M"
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 class UriOffset extends Offset {
   final String uri;
 
   UriOffset(this.uri);
+
+  @override
+  Map<String, dynamic> toJson() => _$UriOffsetToJson(this);
 }
 
 /// "position" is zero based and can’t be negative.
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 class PositionOffset extends Offset {
   final int position;
 
   PositionOffset(this.position) {
     assert(position >= 0, 'Position must be greater than or equal to 0');
   }
+
+  @override
+  Map<String, dynamic> toJson() => _$PositionOffsetToJson(this);
 }
+
 /// Representation of the current repeat state
 enum RepeatState { off, context, track }
 

@@ -268,18 +268,9 @@ Map<String, dynamic> _$StartOrResumeOptionsToJson(
       'position_ms': instance.positionMs,
     };
 
-UriOffset _$UriOffsetFromJson(Map<String, dynamic> json) => UriOffset(
-      json['uri'] as String,
-    );
-
 Map<String, dynamic> _$UriOffsetToJson(UriOffset instance) => <String, dynamic>{
       'uri': instance.uri,
     };
-
-PositionOffset _$PositionOffsetFromJson(Map<String, dynamic> json) =>
-    PositionOffset(
-      json['position'] as int,
-    );
 
 Map<String, dynamic> _$PositionOffsetToJson(PositionOffset instance) =>
     <String, dynamic>{
