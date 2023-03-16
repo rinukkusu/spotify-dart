@@ -45,7 +45,7 @@ class PlaybackState extends Object {
   RepeatState? repeatState;
 }
 
-/// Json representation of the context of the playbackState
+/// Json representation of the context of the playback state
 @JsonSerializable(createToJson: false)
 class PlayerContext extends Object {
   PlayerContext();
