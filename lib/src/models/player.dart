@@ -177,5 +177,5 @@ class PositionOffset extends Offset {
 
 enum RepeatState { off, context, track }
 
-/// Reprensation of what is currently playing
+/// Representation of what is currently playing
 enum CurrentlyPlayingType { track, episode, ad, unknown }
