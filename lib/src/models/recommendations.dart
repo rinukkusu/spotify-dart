@@ -16,7 +16,7 @@ class Recommendations extends Object {
   List<TrackSimple>? tracks;
 }
 
-/// Json representation of a the recommendation seed
+/// Json representation of the recommendation seed
 @JsonSerializable(createToJson: false)
 class RecommendationsSeed extends Object {
   RecommendationsSeed();
