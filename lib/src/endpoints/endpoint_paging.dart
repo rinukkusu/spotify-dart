@@ -3,7 +3,7 @@
 
 part of spotify;
 
-/// 
+/// Base class of all endpoints using pagination
 abstract class EndpointPaging extends EndpointBase {
   EndpointPaging(SpotifyApiBase api) : super(api);
 
