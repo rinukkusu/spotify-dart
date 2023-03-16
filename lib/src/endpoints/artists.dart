@@ -18,7 +18,7 @@ class Artists extends EndpointPaging {
     return Artist.fromJson(map);
   }
 
-  /// Returns the top tracks of an artist with its [artistId] inside a [countryCoude]
+  /// Returns the top tracks of an artist with its [artistId] inside a [countryCode]
   Future<Iterable<Track>> getTopTracks(
       String artistId, String countryCode) async {
     var jsonString =
