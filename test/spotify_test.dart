@@ -357,6 +357,8 @@ Future main() async {
       expect(result.isPlaying, true);
       expect(result.currentlyPlayingType, CurrentlyPlayingType.track);
       expect(result.repeatState, RepeatState.off);
+      expect(result.actions?.resuming, false);
+      expect(result.actions?.pausing, true);
     });
   });
 

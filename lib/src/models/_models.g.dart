@@ -204,22 +204,26 @@ CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) =>
 Cursor _$CursorFromJson(Map<String, dynamic> json) =>
     Cursor()..after = json['after'] as String?;
 
-Player _$PlayerFromJson(Map<String, dynamic> json) => Player()
-  ..timestamp = json['timestamp'] as int?
-  ..context = json['context'] == null
-      ? null
-      : PlayerContext.fromJson(json['context'] as Map<String, dynamic>)
-  ..progress_ms = json['progress_ms'] as int?
-  ..item = json['item'] == null
-      ? null
-      : Track.fromJson(json['item'] as Map<String, dynamic>)
-  ..currentlyPlayingType = $enumDecodeNullable(
-      _$CurrentlyPlayingTypeEnumMap, json['currently_playing_type'])
-  ..isPlaying = json['is_playing'] as bool? ?? false
-  ..isShuffling = json['shuffle_state'] as bool? ?? false
-  ..repeatState =
-      $enumDecodeNullable(_$RepeatStateEnumMap, json['repeat_state']) ??
-          RepeatState.off;
+PlaybackState _$PlaybackStateFromJson(Map<String, dynamic> json) =>
+    PlaybackState()
+      ..timestamp = json['timestamp'] as int?
+      ..context = json['context'] == null
+          ? null
+          : PlayerContext.fromJson(json['context'] as Map<String, dynamic>)
+      ..progress_ms = json['progress_ms'] as int?
+      ..item = json['item'] == null
+          ? null
+          : Track.fromJson(json['item'] as Map<String, dynamic>)
+      ..currentlyPlayingType = $enumDecodeNullable(
+          _$CurrentlyPlayingTypeEnumMap, json['currently_playing_type'])
+      ..actions = json['actions'] == null
+          ? null
+          : Actions.fromJson(json['actions'] as Map<String, dynamic>)
+      ..isPlaying = json['is_playing'] as bool? ?? false
+      ..isShuffling = json['shuffle_state'] as bool? ?? false
+      ..repeatState =
+          $enumDecodeNullable(_$RepeatStateEnumMap, json['repeat_state']) ??
+              RepeatState.off;
 
 const _$CurrentlyPlayingTypeEnumMap = {
   CurrentlyPlayingType.track: 'track',
@@ -242,6 +246,45 @@ PlayerContext _$PlayerContextFromJson(Map<String, dynamic> json) =>
       ..href = json['href'] as String?
       ..type = json['type'] as String?
       ..uri = json['uri'] as String?;
+
+Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions()
+  ..interruptingPlayback = json['interrupting_playback'] as bool? ?? false
+  ..pausing = json['pausing'] as bool? ?? false
+  ..resuming = json['resuming'] as bool? ?? false
+  ..seeking = json['seeking'] as bool? ?? false
+  ..skippingNext = json['skipping_next'] as bool? ?? false
+  ..skippingPrev = json['skipping_prev'] as bool? ?? false
+  ..togglingRepeatContext = json['toggling_repeat_context'] as bool? ?? false
+  ..togglingRepeatTrack = json['toggling_repeat_track'] as bool? ?? false
+  ..togglingShuffle = json['toggling_shuffle'] as bool? ?? false
+  ..transferringPlayback = json['transferring_playback'] as bool? ?? false;
+
+Map<String, dynamic> _$StartOrResumeOptionsToJson(
+        StartOrResumeOptions instance) =>
+    <String, dynamic>{
+      'context_uri': instance.contextUri,
+      'uris': instance.uris,
+      'offset': StartOrResumeOptions._offsetToJson(instance.offset),
+      'position_ms': instance.positionMs,
+    };
+
+UriOffset _$UriOffsetFromJson(Map<String, dynamic> json) => UriOffset(
+      json['uri'] as String,
+    );
+
+Map<String, dynamic> _$UriOffsetToJson(UriOffset instance) => <String, dynamic>{
+      'uri': instance.uri,
+    };
+
+PositionOffset _$PositionOffsetFromJson(Map<String, dynamic> json) =>
+    PositionOffset(
+      json['position'] as int,
+    );
+
+Map<String, dynamic> _$PositionOffsetToJson(PositionOffset instance) =>
+    <String, dynamic>{
+      'position': instance.position,
+    };
 
 Playlist _$PlaylistFromJson(Map<String, dynamic> json) => Playlist()
   ..collaborative = json['collaborative'] as bool?
