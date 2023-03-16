@@ -1,5 +1,6 @@
 part of spotify.models;
 
+/// Json representation of the recommendations
 @JsonSerializable(createToJson: false)
 class Recommendations extends Object {
   Recommendations();
@@ -15,6 +16,7 @@ class Recommendations extends Object {
   List<TrackSimple>? tracks;
 }
 
+/// Json representation of the recommendation seed
 @JsonSerializable(createToJson: false)
 class RecommendationsSeed extends Object {
   RecommendationsSeed();

@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of a track
 @JsonSerializable(createToJson: false)
 class Track extends Object implements TrackSimple {
   Track();
@@ -117,6 +118,7 @@ class Track extends Object implements TrackSimple {
   String? uri;
 }
 
+/// Json representation of a simplified track.
 @JsonSerializable(createToJson: false)
 class TrackSimple extends Object {
   TrackSimple();

@@ -34,7 +34,7 @@ part 'src/endpoints/search.dart';
 part 'src/endpoints/shows.dart';
 part 'src/endpoints/tracks.dart';
 part 'src/endpoints/users.dart';
-part 'src/spotify.dart';
+part 'src/spotify_api.dart';
 part 'src/spotify_base.dart';
 part 'src/spotify_credentials.dart';
 part 'src/spotify_exception.dart';

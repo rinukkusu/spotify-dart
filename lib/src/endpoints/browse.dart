@@ -1,5 +1,6 @@
 part of spotify;
 
+/// Endpoint of browse `v1/browse`
 class Browse extends EndpointPaging {
   Browse(SpotifyApiBase api) : super(api);
 

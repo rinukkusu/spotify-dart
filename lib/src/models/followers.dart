@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of followers
 @JsonSerializable(createToJson: false)
 class Followers extends Object {
   Followers();

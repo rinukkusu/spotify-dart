@@ -3,6 +3,7 @@
 
 part of spotify;
 
+/// Base class of all endpoint classes
 abstract class EndpointBase {
   // ignore: unused_element
   String get _path;

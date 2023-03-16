@@ -1,5 +1,6 @@
 part of spotify;
 
+/// Endpoint of browsing the categories `v1/browse/categories`
 class Categories extends Browse {
   
   @override

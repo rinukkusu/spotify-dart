@@ -3,6 +3,7 @@
 
 part of spotify;
 
+/// Holds information about credentials to access the api.
 class SpotifyApiCredentials {
   /// The client identifier for this Spotify client.
   ///

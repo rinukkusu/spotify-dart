@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of an audio feature
 @JsonSerializable(createToJson: false)
 class AudioFeature extends Object {
   AudioFeature();

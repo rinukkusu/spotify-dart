@@ -3,14 +3,15 @@
 
 part of spotify;
 
-abstract class MeEndpointBase extends EndpointPaging {
+abstract class _MeEndpointBase extends EndpointPaging {
   @override
   String get _path => 'v1/me';
 
-  MeEndpointBase(SpotifyApiBase api) : super(api);
+  _MeEndpointBase(SpotifyApiBase api) : super(api);
 }
 
-class Me extends MeEndpointBase {
+/// Endpoint for authenticated users `v1/me/*`
+class Me extends _MeEndpointBase {
   late PlayerEndpoint _player;
 
   Me(SpotifyApiBase api, PlayerEndpoint player) : super(api) {

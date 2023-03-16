@@ -3,6 +3,7 @@
 
 part of spotify;
 
+/// Endpoint of the search `v1/search`
 class Search extends EndpointPaging {
   @override
   String get _path => 'v1/search';
@@ -43,6 +44,7 @@ class Search extends EndpointPaging {
   }
 }
 
+/// Type for narrowing the search results
 class SearchType {
   final String _key;
 

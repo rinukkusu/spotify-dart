@@ -3,6 +3,7 @@
 
 part of spotify;
 
+/// Base class of all endpoints using pagination
 abstract class EndpointPaging extends EndpointBase {
   EndpointPaging(SpotifyApiBase api) : super(api);
 
@@ -283,7 +284,7 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
   }
 }
 
-/// Page that allows multiple types together
+/// Page that allows multiple types (artist, track, episode etc.) together
 class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
   final Map<String, ParserFunction<dynamic>> _pageMappers;
 

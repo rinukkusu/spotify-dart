@@ -5,6 +5,7 @@ import 'package:spotify/spotify.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 
+/// Mock class for making requests
 class SpotifyApiMock extends SpotifyApiBase {
   SpotifyApiMock(SpotifyApiCredentials credentials)
       : super.fromClient(MockClient(credentials));

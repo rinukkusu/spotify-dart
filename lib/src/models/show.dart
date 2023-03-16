@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of a show
 @JsonSerializable(createToJson: false)
 class Show {
   Show();
@@ -59,6 +60,7 @@ class Show {
   /// The Spotify URI for the show.
   String? uri;
 
+  /// The number of total episodes in this show
   @JsonKey(name: 'total_episodes', defaultValue: 0)
   int? totalEpisodes;
 

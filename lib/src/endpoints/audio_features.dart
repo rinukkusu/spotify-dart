@@ -3,12 +3,14 @@
 
 part of spotify;
 
+/// Endpoint of audio features `v1/audio-features`
 class AudioFeatures extends EndpointBase {
   @override
   String get _path => 'v1/audio-features';
 
   AudioFeatures(SpotifyApiBase api) : super(api);
 
+  /// Returns audio features of a track with [trackId]
   Future<AudioFeature> get(String trackId) async {
     var jsonString = await _api._get('$_path/$trackId');
     var map = json.decode(jsonString);
@@ -16,6 +18,7 @@ class AudioFeatures extends EndpointBase {
     return AudioFeature.fromJson(map);
   }
 
+  /// Retrieve multiple audio features of tracks with [trackIds]
   Future<Iterable<AudioFeature>> list(Iterable<String> trackIds) async {
     var jsonString = await _api._get('$_path?ids=${trackIds.join(',')}');
     var map = json.decode(jsonString);

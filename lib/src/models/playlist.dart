@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// Json representation of a playlist
 @JsonSerializable(createToJson: false)
 class Playlist extends Object implements PlaylistSimple {
   Playlist();
@@ -81,6 +82,7 @@ class Playlist extends Object implements PlaylistSimple {
   String? uri;
 }
 
+/// Json representation of a simplified playlist
 @JsonSerializable(createToJson: false)
 class PlaylistSimple extends Object {
   PlaylistSimple();
@@ -142,6 +144,7 @@ class PlaylistSimple extends Object {
   String? uri;
 }
 
+/// Json representation of a featured playlist. Used as a wrapper object.
 @JsonSerializable(createToJson: false)
 class PlaylistsFeatured extends Object {
   PlaylistsFeatured();
@@ -153,6 +156,7 @@ class PlaylistsFeatured extends Object {
   String? message;
 }
 
+/// Json representation of a playlist with a single track
 @JsonSerializable(createToJson: false)
 class PlaylistTrack extends Object {
   PlaylistTrack();

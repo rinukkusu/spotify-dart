@@ -3,12 +3,14 @@
 
 part of spotify;
 
+/// Endpoint for artists `v1/artists`
 class Artists extends EndpointPaging {
   @override
   String get _path => 'v1/artists';
 
   Artists(SpotifyApiBase api) : super(api);
 
+  /// Retrieves an artist with its [artistId]
   Future<Artist> get(String artistId) async {
     var jsonString = await _api._get('$_path/$artistId');
     var map = json.decode(jsonString);
@@ -16,6 +18,7 @@ class Artists extends EndpointPaging {
     return Artist.fromJson(map);
   }
 
+  /// Returns the top tracks of an artist with its [artistId] inside a [countryCode]
   Future<Iterable<Track>> getTopTracks(
       String artistId, String countryCode) async {
     var jsonString =
@@ -26,14 +29,11 @@ class Artists extends EndpointPaging {
     return topTracks.map((m) => Track.fromJson(m));
   }
 
-  Future<Iterable<Artist>> getRelatedArtists(String artistId) async {
-    var jsonString = await _api._get('$_path/$artistId/related-artists');
-    var map = json.decode(jsonString);
+  /// Returns related artists based on the artist with its [artistId]
+  @Deprecated('Use relatedArtists instead')
+  Future<Iterable<Artist>> getRelatedArtists(String artistId) async => relatedArtists(artistId);
 
-    var relatedArtists = map['artists'] as Iterable<dynamic>;
-    return relatedArtists.map((m) => Artist.fromJson(m));
-  }
-
+  /// Retrieves multiple artists with [artistIds]
   Future<Iterable<Artist>> list(Iterable<String> artistIds) async {
     var jsonString = await _api._get('$_path?ids=${artistIds.join(',')}');
     var map = json.decode(jsonString);
@@ -42,6 +42,7 @@ class Artists extends EndpointPaging {
     return artistsMap.map((m) => Artist.fromJson(m));
   }
 
+  /// Returns related artists based on the artist with its [artistId]
   Future<Iterable<Artist>> relatedArtists(String artistId) async {
     var jsonString = await _api._get('$_path/$artistId/related-artists');
     var map = json.decode(jsonString);
