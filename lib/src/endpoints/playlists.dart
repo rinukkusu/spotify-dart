@@ -28,11 +28,12 @@ class Playlists extends EndpointPaging {
   }
 
   /// Returns a playlist of a user with [userId]
-  Pages<PlaylistSimple> getUsersPlaylists(String userId, [int limit = defaultLimit, int offset = 0]) {
+  Pages<PlaylistSimple> getUsersPlaylists(String userId,
+      [int limit = defaultLimit, int offset = 0]) {
     assert(userId.isNotEmpty, 'UserId cannot be empty');
-    return _getPages('v1/users/$userId/playlists', (json) => PlaylistSimple.fromJson(json));
+    return _getPages(
+        'v1/users/$userId/playlists', (json) => PlaylistSimple.fromJson(json));
   }
-
 
   /// [playlistId] - the Spotify playlist ID
   Pages<Track> getTracksByPlaylistId(playlistId) {
@@ -215,5 +216,13 @@ class Playlists extends EndpointPaging {
     );
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
     return list;
+  }
+
+  /// Returns the cover images of [playlistId]
+  Future<Iterable<Image>> images(String playlistId) async {
+    assert(playlistId.isNotEmpty, 'PlaylistId cannot be empty');
+    var jsonString = await _api._get('v1/playlists/$playlistId/images');
+    final items = json.decode(jsonString) as Iterable<dynamic>;
+    return items.map((item) => Image.fromJson(item));
   }
 }

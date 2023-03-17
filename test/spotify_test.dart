@@ -116,6 +116,16 @@ Future main() async {
           'https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF');
       expect(items.first.name, 'Hot News @ Melhores Eletrônicas 2022');
     });
+
+    test('Get Playlist images', () async {
+      var images = await spotify.playlists.images('1XIAxOGAEK2h4ravpNTmYF');
+      expect(images.length, 1);
+      var firstImage = images.first;
+      expect(firstImage.url,
+          'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228');
+      expect(firstImage.height, 300);
+      expect(firstImage.width, 300);
+    });
   });
 
   group('Shows', () {
