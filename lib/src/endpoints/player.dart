@@ -12,7 +12,7 @@ class PlayerEndpoint extends _MeEndpointBase {
 
   /// Toggle Shuffle For User's Playback.
   ///
-  /// Use [state] to toggle the shuffle. [true] to turn shuffle on and [false]
+  /// Use [state] to toggle the shuffle. `true` to turn shuffle on and `false`
   /// to turn it off respectively.
   /// [retrievePlaybackState] is optional. If true, the current playback state
   /// will be retrieved after setting the volume. Defaults to true.

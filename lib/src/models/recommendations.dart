@@ -8,7 +8,7 @@ class Recommendations extends Object {
   factory Recommendations.fromJson(Map<String, dynamic> json) =>
       _$RecommendationsFromJson(json);
 
-  /// A List of [RecommendationSeed] objects.
+  /// A List of [RecommendationsSeed] objects.
   List<RecommendationsSeed>? seeds;
 
   /// A List of [TrackSimple] objects ordered according to the parameters
