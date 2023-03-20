@@ -1,6 +1,14 @@
 // Copyright (c) 2017, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
+/// A dart library for interfacing with the Spotify API. 
+/// 
+/// Example:
+/// ```dart
+///    final credentials = SpotifyApiCredentials(clientId, clientSecret);
+///    final spotify = SpotifyApi(credentials);
+///    final artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
+/// ```
 library spotify;
 
 import 'dart:async';
