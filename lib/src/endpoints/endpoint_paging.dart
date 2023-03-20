@@ -45,7 +45,7 @@ abstract class BasePage<T> {
   /// The requested data
   Iterable<T>? get items => _items;
 
-  /// [true] if this page is the last page. [false] otherwise.
+  /// `true` if this page is the last page. `false` otherwise.
   bool get isLast;
 
   /// Generic next for multiple purposes for internal use only.
@@ -61,7 +61,7 @@ abstract class BasePage<T> {
   Object? get container => _container;
 }
 
-/// A page that uses an [offset] to get to the next page.
+/// A page that uses an offset to get to the next page.
 class Page<T> extends BasePage<T> {
   Page(Paging<T> _paging, ParserFunction<T> pageItemParser,
       [Object? pageContainer])
@@ -79,11 +79,11 @@ class Page<T> extends BasePage<T> {
     return (paging.offset ?? 0) + paging.limit;
   }
 
-  /// Returns the [offset] for the next page.
+  /// Returns the offset for the next page.
   int get nextOffset => _next as int;
 }
 
-/// A page that uses a [cursor] to get to the next page
+/// A page that uses a cursor to get to the next page
 class CursorPage<T> extends BasePage<T> {
   CursorPage(CursorPaging<T> _paging, ParserFunction<T> pageItemParser,
       [Object? pageContainer])
@@ -92,7 +92,7 @@ class CursorPage<T> extends BasePage<T> {
   @override
   dynamic get _next => (_paging as CursorPaging<T>).cursors?.after ?? '';
 
-  /// The [cursor] pointing to the next page.
+  /// The cursor pointing to the next page.
   /// Is empty, when it's the last page.
   String get after => _next as String;
 

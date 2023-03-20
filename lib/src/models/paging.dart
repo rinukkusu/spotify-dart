@@ -32,7 +32,7 @@ class BasePaging<T> extends Object {
   /// default).
   int limit = 20;
 
-  /// URL to the next page of items. ([null] if none)
+  /// URL to the next page of items. (`null` if none)
   String? next;
 }
 

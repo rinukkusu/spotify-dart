@@ -93,10 +93,10 @@ class Me extends _MeEndpointBase {
 
   /// Toggle Shuffle For User's Playback.
   ///
-  /// Use [state] to toggle the shuffle. [true] to turn shuffle on and [false]
+  /// Use [state] to toggle the shuffle. `true` to turn shuffle on and `false`
   /// to turn it off respectively.
   /// Returns the current player state by making another request.
-  /// See [player([String market])];
+  /// See [player(String market)];
   @Deprecated('Use [spotify.player.shuffle()]')
   Future<PlaybackState?> shuffle(bool state, [String? deviceId]) async =>
       _player.shuffle(state, deviceId: deviceId);

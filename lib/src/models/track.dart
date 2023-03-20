@@ -26,7 +26,7 @@ class Track extends Object implements TrackSimple {
   List<String>? availableMarkets;
 
   /// The disc number
-  /// (usually [1] unless the album consists of more than one disc)
+  /// (usually `1` unless the album consists of more than one disc)
   @JsonKey(name: 'disc_number')
   @override
   int? discNumber;
@@ -42,7 +42,7 @@ class Track extends Object implements TrackSimple {
   Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
   /// Whether or not the track has explicit lyrics
-  /// ([true] = yes it does; [false] = no it does not OR unknown).
+  /// (`true` = yes it does; `false` = no it does not OR unknown).
   @override
   bool? explicit;
 
@@ -97,7 +97,7 @@ class Track extends Object implements TrackSimple {
   /// by a few days: the value is not updated in real time.
   int? popularity;
 
-  /// A URL to a 30 second preview (MP3 format) of the track. [null] if not
+  /// A URL to a 30 second preview (MP3 format) of the track. `null` if not
   /// available.
   @JsonKey(name: 'preview_url')
   @override
@@ -136,7 +136,7 @@ class TrackSimple extends Object {
   List<String>? availableMarkets;
 
   /// The disc number
-  /// (usually [1] unless the album consists of more than one disc)
+  /// (usually `1` unless the album consists of more than one disc)
   @JsonKey(name: 'disc_number')
   int? discNumber;
 
@@ -149,7 +149,7 @@ class TrackSimple extends Object {
   Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
   /// Whether or not the track has explicit lyrics
-  /// ([true] = yes it does; [false] = no it does not OR unknown).
+  /// (`true` = yes it does; `false` = no it does not OR unknown).
   bool? explicit;
 
   /// Known external URLs for this track.
@@ -177,7 +177,7 @@ class TrackSimple extends Object {
   /// The name of the track.
   String? name;
 
-  /// A URL to a 30 second preview (MP3 format) of the track. [null] if not
+  /// A URL to a 30 second preview (MP3 format) of the track. `null` if not
   /// available.
   @JsonKey(name: 'preview_url')
   String? previewUrl;
