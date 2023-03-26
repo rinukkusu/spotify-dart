@@ -93,6 +93,21 @@ class Playlists extends EndpointPaging {
     await _api._put(url, jsonEncode(json));
   }
 
+  /// Removes a playlist with [playlistId]
+  ///
+  /// Since there is actually no endpoint for removing a playlist,
+  /// the spotify [documentation](https://developer.spotify.com/documentation/general/guides/working-with-playlists/#following-and-unfollowing-a-playlist)
+  /// says this:
+  /// > We have no endpoint for deleting a playlist in the Web API;
+  /// the notion of deleting a playlist is not relevant within the Spotify’s
+  /// playlist system. Even if you are the playlist’s owner and you
+  /// choose to manually remove it from your own list of playlists,
+  /// you are simply unfollowing it. Although this behavior may sound strange,
+  /// it means that other users who are already following the playlist
+  /// can keep enjoying it.
+  Future<void> removePlaylist(String playlistId) async =>
+      unfollowPlaylist(playlistId);
+
   /// [playlistId] - the ID of the playlist to update
   ///
   /// [imageData] - BASE64 encoded JPEG image data
@@ -165,17 +180,13 @@ class Playlists extends EndpointPaging {
   }
 
   /// Replaces items (tracks, episodes etc.) in a playlist with [playlistId]
-  /// and its optional [snapshotId] against  which you want to make the changes.
   ///
   /// [uris] - the spotify ids to overwrite a playlists existing items.
   ///
-  /// If [snapshotId] is `null`, the current id is used.
-  ///
   /// Returns a new `snapshotId` for the playlist.
-  Future<String> replace(String playlistId, List<String> uris,
-      [String? snapshotId]) async {
+  Future<String> replace(String playlistId, List<String> uris) async {
     assert(uris.isNotEmpty, 'No uris provided');
-    return _replace(playlistId, uris, snapshotId);
+    return _replace(playlistId, uris);
   }
 
   /// Clears all items of [playlistId].
@@ -183,11 +194,10 @@ class Playlists extends EndpointPaging {
   /// Returns a new `snapshotId` of the playlist.
   Future<String> clear(String playlistId) => _replace(playlistId, []);
 
-  Future<String> _replace(String playlistId, List<String> uris,
-      [String? snapshotId]) async {
+  /// internal replace method
+  Future<String> _replace(String playlistId, List<String> uris) async {
     var body = jsonEncode({
-      'uris': uris.join(','),
-      // 'snapshot_id': snapshotId,
+      'uris': uris,
     });
     return _reorderOrReplace(playlistId, body);
   }
@@ -208,16 +218,21 @@ class Playlists extends EndpointPaging {
   /// If [snapshotId] is `null`, the current id is used.
   ///
   /// Returns a new `snapshotId` for the playlist.
-  Future<String> reorder(String playlistId, int rangeStart, int insertBefore,
-      [int rangeLength = 1, String? snapshotId]) async {
+  Future<String> reorder(String playlistId,
+      {required int rangeStart,
+      required int insertBefore,
+      int rangeLength = 1,
+      String? snapshotId}) async {
     assert(rangeStart >= 0, 'rangeStart out of bounds');
-    var body = jsonEncode({
-      'rande_start': rangeStart,
+    var body = <String, dynamic>{
+      'range_start': rangeStart,
       'insert_before': insertBefore,
       'range_length': rangeLength,
-      'snapshot_id': snapshotId,
-    });
-    return _reorderOrReplace(playlistId, body);
+    };
+    if (snapshotId != null) {
+      body['snapshot_id'] = snapshotId;
+    }
+    return _reorderOrReplace(playlistId, jsonEncode(body));
   }
 
   /// Endpoint of reordering and replacing items in a playlist depending
