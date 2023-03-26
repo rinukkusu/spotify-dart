@@ -97,17 +97,13 @@ class Playlists extends EndpointPaging {
   ///
   /// [imageData] - BASE64 encoded JPEG image data
   ///
-  Future<void> updatePlaylistImage(
-    String playlistId,
-    String imageData,
-  ) async {
+  Future<void> updatePlaylistImage(String playlistId, String imageData) async {
     final url = 'v1/playlists/$playlistId/images';
     await _api._put(url, imageData);
   }
 
-  /// [trackUri] - the Spotify track uri (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
-  ///
-  /// [playlistId] - the playlist ID
+  /// Adds a track with [trackUri] (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
+  /// to a playlist with [playlistId]
   Future<void> addTrack(String trackUri, String playlistId,
       {int position = -1}) async {
     var url = 'v1/playlists/$playlistId/tracks';
@@ -123,17 +119,23 @@ class Playlists extends EndpointPaging {
         }));
   }
 
-  /// [trackUris] - the Spotify track uris
-  /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
-  ///
-  /// [playlistId] - the playlist ID
-  Future<void> addTracks(List<String> trackUris, String playlistId) async {
+  /// Adds a collection of [uris] (i.e each list
+  /// item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh") to a
+  /// playlist with [playlistId]
+  Future<void> addTracks(List<String> uris, String playlistId) async {
+    assert(playlistId.isNotEmpty, 'No playlist id was provided');
+    assert(uris.isNotEmpty, 'No uris provided');
     final url = 'v1/playlists/$playlistId/tracks';
-    await _api._post(url, jsonEncode({'uris': trackUris}));
+    await _api._post(url, jsonEncode({'uris': uris}));
   }
 
+  /// Removes a track with [trackUri] in the playlist with [playlistId]
+  ///
+  /// [trackUris] - the Spotify track uris
+  /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
   Future<void> removeTrack(String trackUri, String playlistId,
       [List<int>? positions]) async {
+    assert(playlistId.isNotEmpty, 'No playlist id was provided');
     final url = 'v1/playlists/$playlistId/tracks';
     final track = <String, dynamic>{'uri': trackUri};
     if (positions != null) {
@@ -146,11 +148,12 @@ class Playlists extends EndpointPaging {
     await _api._delete(url, body);
   }
 
+  /// Removes multiple tracks from a playlist wish [playlistId]
   /// [trackUris] - the Spotify track uris
   /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
-  ///
-  /// [playlistId] - the playlist ID
   Future<void> removeTracks(List<String> trackUris, String playlistId) async {
+    assert(trackUris.isNotEmpty, 'No trackUris are provided');
+    assert(playlistId.isNotEmpty, 'No playlist id was provided');
     final url = 'v1/playlists/$playlistId/tracks';
     final tracks =
         trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
@@ -159,6 +162,70 @@ class Playlists extends EndpointPaging {
       'tracks': tracks,
     });
     await _api._delete(url, body);
+  }
+
+  /// Replaces items (tracks, episodes etc.) in a playlist with [playlistId]
+  /// and its optional [snapshotId] against  which you want to make the changes.
+  ///
+  /// [uris] - the spotify ids to overwrite a playlists existing items.
+  ///
+  /// If [snapshotId] is `null`, the current id is used.
+  ///
+  /// Returns a new `snapshotId` for the playlist.
+  Future<String> replace(String playlistId, List<String> uris,
+      [String? snapshotId]) async {
+    assert(uris.isNotEmpty, 'No uris provided');
+    return _replace(playlistId, uris, snapshotId);
+  }
+
+  /// Clears all items of [playlistId].
+  ///
+  /// Returns a new `snapshotId` of the playlist.
+  Future<String> clear(String playlistId) => _replace(playlistId, []);
+
+  Future<String> _replace(String playlistId, List<String> uris,
+      [String? snapshotId]) async {
+    var body = jsonEncode({
+      'uris': uris.join(','),
+      'snapshot_id': snapshotId,
+    });
+    return _reorderOrReplace(playlistId, body);
+  }
+
+  /// Reorders items in a playlist with [playlistId] and its
+  /// optional [snapshotId] against which you want to make the changes.
+  ///
+  /// [rangeStart] is the position of the first item to be reordered.
+  ///
+  /// [insertBefore] is the position where the item(s) should be inserted.
+  /// To reorder the item(s) to the end of the playlist, simply set [insertBefore]
+  /// to the position after the last item.
+  ///
+  /// [rangeLength] is the amount of items to be reordered. Defaults to `1` if not set.
+  /// The range of items to be reordered begins from the [rangeStart] position,
+  /// and includes the [rangeLength] subsequent items.
+  ///
+  /// If [snapshotId] is `null`, the current id is used.
+  ///
+  /// Returns a new `snapshotId` for the playlist.
+  Future<String> reorder(String playlistId, int rangeStart, int insertBefore,
+      [int rangeLength = 1, String? snapshotId]) async {
+    assert(rangeStart >= 0, 'rangeStart out of bounds');
+    var body = jsonEncode({
+      'insert_before': insertBefore,
+      'range_length': rangeLength,
+      'snapshot_id': snapshotId,
+    });
+    return _reorderOrReplace(playlistId, body);
+  }
+
+  /// Endpoint of reordering and replacing items in a playlist depending
+  /// on the request's parameters, a.k.a [body].
+  ///
+  /// Returns a new `snapshotId` of the playlist.
+  Future<String> _reorderOrReplace(String playlistId, String body) async {
+    assert(playlistId.isNotEmpty, 'No playlist id was provided');
+    return await _api._put('v1/playlists/$playlistId/tracks', body);
   }
 
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
