@@ -26,25 +26,23 @@ void main() async {
   if (spotify == null) {
     exit(0);
   }
-  // await _user(spotify);
-  // await _currentlyPlaying(spotify);
-  // await _devices(spotify);
-  // await _followingArtists(spotify);
-  // await _shuffle(true, spotify);
-  // await _shuffle(false, spotify);
-  // await _playlists(spotify);
-  // await _savedTracks(spotify);
-  // await _recentlyPlayed(spotify);
-  // await _getShow(spotify);
-  // await _listShows(spotify);
-  // await _savedShows(spotify);
-  // await _saveAndRemoveShow(spotify);
-  // await _getEpisode(spotify);
-  // await _listEpisodes(spotify);
-  // await _savedEpisodes(spotify);
-  // await _saveAndRemoveEpisode(spotify);
-  print(
-      'WARNING! The following methods create multiple playlists on your account');
+  await _user(spotify);
+  await _currentlyPlaying(spotify);
+  await _devices(spotify);
+  await _followingArtists(spotify);
+  await _shuffle(true, spotify);
+  await _shuffle(false, spotify);
+  await _playlists(spotify);
+  await _savedTracks(spotify);
+  await _recentlyPlayed(spotify);
+  await _getShow(spotify);
+  await _listShows(spotify);
+  await _savedShows(spotify);
+  await _saveAndRemoveShow(spotify);
+  await _getEpisode(spotify);
+  await _listEpisodes(spotify);
+  await _savedEpisodes(spotify);
+  await _saveAndRemoveEpisode(spotify);
   await _clearPlaylist(spotify);
   await _reorderItemsInPlaylist(spotify);
   await _replaceItemsInPlaylist(spotify);
