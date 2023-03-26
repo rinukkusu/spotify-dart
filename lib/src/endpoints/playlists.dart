@@ -187,7 +187,7 @@ class Playlists extends EndpointPaging {
       [String? snapshotId]) async {
     var body = jsonEncode({
       'uris': uris.join(','),
-      'snapshot_id': snapshotId,
+      // 'snapshot_id': snapshotId,
     });
     return _reorderOrReplace(playlistId, body);
   }
@@ -212,6 +212,7 @@ class Playlists extends EndpointPaging {
       [int rangeLength = 1, String? snapshotId]) async {
     assert(rangeStart >= 0, 'rangeStart out of bounds');
     var body = jsonEncode({
+      'rande_start': rangeStart,
       'insert_before': insertBefore,
       'range_length': rangeLength,
       'snapshot_id': snapshotId,
