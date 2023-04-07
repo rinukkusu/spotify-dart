@@ -146,7 +146,7 @@ class Playlists extends EndpointPaging {
 
   /// Removes a track with [trackUri] in the playlist with [playlistId]
   ///
-  /// [trackUris] - the Spotify track uris
+  /// [trackUri] - the Spotify track uri
   /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
   Future<void> removeTrack(String trackUri, String playlistId,
       [List<int>? positions]) async {
