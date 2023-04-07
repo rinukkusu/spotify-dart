@@ -38,14 +38,23 @@ class MockClient implements oauth2.Client {
     }
   }
 
-  String _readPath(String url) {
-    var regexString = url.contains('api.spotify.com')
+  String _readPath(Uri url) {
+    var regexString = url.host.contains('api.spotify.com')
         ? r'api.spotify.com\/([A-Za-z0-9/\-]+)\??'
         : r'api/([A-Za-z0-9/\-]+)\??';
 
     var regex = RegExp(regexString);
-    var partialPath = regex.firstMatch(url)!.group(1);
-    var file = File('test/data/$partialPath.json');
+    var urlString = url.toString();
+    var partialPath = regex.firstMatch(urlString)!.group(1);
+    var file;
+    if (url.hasQuery &&
+        (url.queryParameters.containsKey('offset') ||
+            url.queryParameters.containsKey('after'))) {
+      var next = url.queryParameters['offset'] ?? url.queryParameters['after'];
+      file = File('test/data/${partialPath}_$next.json');
+    } else {
+      file = File('test/data/$partialPath.json');
+    }
 
     return file.readAsStringSync();
   }
@@ -67,7 +76,7 @@ class MockClient implements oauth2.Client {
     if (err != null) {
       return createErrorResponse(err);
     }
-    return createSuccessResponse(_readPath(url.toString()));
+    return createSuccessResponse(_readPath(url));
   }
 
   @override
@@ -88,7 +97,7 @@ class MockClient implements oauth2.Client {
     if (err != null) {
       return createErrorResponse(err);
     }
-    return createSuccessResponse(_readPath(url.toString()));
+    return createSuccessResponse(_readPath(url));
   }
 
   @override

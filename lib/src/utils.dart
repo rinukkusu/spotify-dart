@@ -14,3 +14,10 @@ Iterable<List<T>> batches<T>(Iterable<T> source, int size) sync* {
   }
   if (accumulator != null) yield accumulator;
 }
+
+class ExtendedEnum {
+  final String _key;
+
+  const ExtendedEnum(this._key);
+  String get key => _key;
+}
