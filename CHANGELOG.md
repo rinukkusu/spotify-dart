@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0
+
+- remove deprecated library entrypoints
+- add/fix doc comments
+- add v1/playlists/$playlistId/tracks related methods
+
 ## 0.10.0
 
 - add more documentation
