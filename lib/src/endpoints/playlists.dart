@@ -292,13 +292,25 @@ class Playlists extends EndpointPaging {
   /// [playlistId] - the playlist ID
   /// [userIds] - the ids of the users
   /// The output List of boolean maps to the order of provided userIds list
+  @Deprecated('Use [followedByUsers(playListId, userIds)] instead')
   Future<List<bool>> followedBy(String playlistId, List<String> userIds) async {
+    return (await followedByUsers(playlistId, userIds)).values.toList();
+  }
+
+  /// check if a playlist is followed by provided users
+  /// [playlistId] - the playlist ID
+  /// [userIds] - the ids of the users
+  ///
+  /// Returns the list of [userIds] mapped with whether they are following or
+  /// not
+  Future<Map<String, bool>> followedByUsers(
+      String playlistId, List<String> userIds) async {
     assert(userIds.isNotEmpty, 'No user id was provided for checking');
     final jsonString = await _api._get(
       'v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',
     );
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return list;
+    return Map.fromIterables(userIds, list);
   }
 
   /// Returns the cover images of [playlistId]
