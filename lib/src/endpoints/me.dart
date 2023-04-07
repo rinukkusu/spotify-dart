@@ -30,8 +30,10 @@ class Me extends _MeEndpointBase {
   ///
   /// Needs `user-follow-read` scope
   CursorPages<Artist> following(FollowingType type) {
-    assert(type == FollowingType.artist,
-        'Only [FollowingType.artist] supported for now. Check the spotify documentation: ');
+    assert(
+        type == FollowingType.artist,
+        'Only [FollowingType.artist] supported for now. Check the spotify documentation: '
+        'https://developer.spotify.com/documentation/web-api/reference/get-followed');
     // since 'artists' is the container, there is no
     // containerParse necessary. Adding json to make the
     // CursorPages-Object happy.
