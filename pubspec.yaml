@@ -1,6 +1,6 @@
 name: spotify
 description: An incomplete dart library for interfacing with the Spotify Web API.
-version: 0.10.0
+version: 0.11.0
 homepage: https://github.com/rinukkusu/spotify-dart
 
 environment:
