@@ -207,8 +207,8 @@ class Me extends _MeEndpointBase {
   /// Returns the current user's saved episodes. Requires the `user-library-read`
   /// scope.
   Pages<EpisodeFull> savedEpisodes() {
-    return _getPages('$_path/episodes', 
-       (json) => EpisodeFull.fromJson(json['episode']));
+    return _getPages(
+        '$_path/episodes', (json) => EpisodeFull.fromJson(json['episode']));
   }
 
   /// Saves episodes for the current user. Requires the `user-library-modify`
@@ -240,12 +240,8 @@ class Me extends _MeEndpointBase {
   }
 }
 
-class FollowingType {
-  final String _key;
-
-  const FollowingType(this._key);
-
-  String get key => _key;
+class FollowingType extends ExtendedEnum {
+  const FollowingType(String key) : super(key);
 
   static const artist = FollowingType('artist');
   static const user = FollowingType('user');
