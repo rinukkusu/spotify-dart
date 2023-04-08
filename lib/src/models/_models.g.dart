@@ -107,6 +107,24 @@ ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) => ArtistSimple()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+AudioAnalysis _$AudioAnalysisFromJson(Map<String, dynamic> json) =>
+    AudioAnalysis()
+      ..bars = (json['bars'] as List<dynamic>?)
+          ?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..beats = (json['beats'] as List<dynamic>?)
+          ?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..sections = (json['sections'] as List<dynamic>?)
+          ?.map((e) => Section.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..segments = (json['segments'] as List<dynamic>?)
+          ?.map((e) => Segment.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..tatums = (json['tatums'] as List<dynamic>?)
+          ?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>))
+          .toList();
+
 AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) => AudioFeature()
   ..acousticness = (json['acousticness'] as num?)?.toDouble()
   ..analysisUrl = json['analysis_url'] as String?
@@ -168,6 +186,61 @@ const _$DeviceTypeEnumMap = {
   DeviceType.Automobile: 'Automobile',
   DeviceType.Unknown: 'Unknown',
 };
+
+Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
+  ..audioPreviewUrl = json['audio_preview_url'] as String?
+  ..description = json['description'] as String?
+  ..durationMs = json['duration_ms'] as int?
+  ..explicit = json['explicit'] as bool?
+  ..externalUrls = json['external_urls'] == null
+      ? null
+      : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
+  ..href = json['href'] as String?
+  ..id = json['id'] as String?
+  ..images = (json['images'] as List<dynamic>?)
+      ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
+      .toList()
+  ..isExternallyHosted = json['is_externally_hosted'] as bool?
+  ..isPlayable = json['is_playable'] as bool?
+  ..language = json['language'] as String?
+  ..languages =
+      (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList()
+  ..name = json['name'] as String?
+  ..releaseDate = json['release_date'] == null
+      ? null
+      : DateTime.parse(json['release_date'] as String)
+  ..releaseDatePrecision = json['release_date_precision'] as String?
+  ..type = json['type'] as String?
+  ..uri = json['uri'] as String?;
+
+EpisodeFull _$EpisodeFullFromJson(Map<String, dynamic> json) => EpisodeFull()
+  ..audioPreviewUrl = json['audio_preview_url'] as String?
+  ..description = json['description'] as String?
+  ..durationMs = json['duration_ms'] as int?
+  ..explicit = json['explicit'] as bool?
+  ..externalUrls = json['external_urls'] == null
+      ? null
+      : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
+  ..href = json['href'] as String?
+  ..id = json['id'] as String?
+  ..images = (json['images'] as List<dynamic>?)
+      ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
+      .toList()
+  ..isExternallyHosted = json['is_externally_hosted'] as bool?
+  ..isPlayable = json['is_playable'] as bool?
+  ..language = json['language'] as String?
+  ..languages =
+      (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList()
+  ..name = json['name'] as String?
+  ..releaseDate = json['release_date'] == null
+      ? null
+      : DateTime.parse(json['release_date'] as String)
+  ..releaseDatePrecision = json['release_date_precision'] as String?
+  ..type = json['type'] as String?
+  ..uri = json['uri'] as String?
+  ..show = json['show'] == null
+      ? null
+      : Show.fromJson(json['show'] as Map<String, dynamic>);
 
 SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) => SpotifyError()
   ..status = json['status'] as int?
@@ -343,6 +416,14 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) =>
           ? null
           : Track.fromJson(json['track'] as Map<String, dynamic>);
 
+Queue _$QueueFromJson(Map<String, dynamic> json) => Queue()
+  ..currentlyPlaying = json['currently_playing'] == null
+      ? null
+      : Track.fromJson(json['currently_playing'] as Map<String, dynamic>)
+  ..queue = (json['queue'] as List<dynamic>?)
+      ?.map((e) => Track.fromJson(e as Map<String, dynamic>))
+      .toList();
+
 Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) =>
     Recommendations()
       ..seeds = (json['seeds'] as List<dynamic>?)
@@ -360,6 +441,36 @@ RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) =>
       ..id = json['id'] as String?
       ..initialPoolSize = json['initialPoolSize'] as int?
       ..type = json['type'] as String?;
+
+Section _$SectionFromJson(Map<String, dynamic> json) => Section()
+  ..start = (json['start'] as num?)?.toDouble()
+  ..duration = (json['duration'] as num?)?.toDouble()
+  ..confidence = (json['confidence'] as num?)?.toDouble()
+  ..loudness = (json['loudness'] as num?)?.toDouble()
+  ..tempo = (json['tempo'] as num?)?.toDouble()
+  ..tempoConfidence = (json['tempo_confidence'] as num?)?.toDouble()
+  ..key = json['key'] as int?
+  ..keyConfidence = (json['key_confidence'] as num?)?.toDouble()
+  ..mode = json['mode'] as int?
+  ..modeConfidence = (json['mode_confidence'] as num?)?.toDouble()
+  ..timeSignature = json['time_signature'] as int?
+  ..timeSignatureConfidence =
+      (json['time_signature_confidence'] as num?)?.toDouble();
+
+Segment _$SegmentFromJson(Map<String, dynamic> json) => Segment()
+  ..start = (json['start'] as num?)?.toDouble()
+  ..duration = (json['duration'] as num?)?.toDouble()
+  ..confidence = (json['confidence'] as num?)?.toDouble()
+  ..loudnessStart = (json['loudness_start'] as num?)?.toDouble()
+  ..loudnessMax = (json['loudness_max'] as num?)?.toDouble()
+  ..loudnessMaxTime = (json['loudness_max_time'] as num?)?.toDouble()
+  ..loudnessEnd = (json['loudness_end'] as num?)?.toDouble()
+  ..pitches = (json['pitches'] as List<dynamic>?)
+      ?.map((e) => (e as num).toDouble())
+      .toList()
+  ..timbre = (json['timbre'] as List<dynamic>?)
+      ?.map((e) => (e as num).toDouble())
+      .toList();
 
 Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
@@ -388,60 +499,10 @@ Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..uri = json['uri'] as String?
   ..totalEpisodes = json['total_episodes'] as int? ?? 0;
 
-Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
-  ..audioPreviewUrl = json['audio_preview_url'] as String?
-  ..description = json['description'] as String?
-  ..durationMs = json['duration_ms'] as int?
-  ..explicit = json['explicit'] as bool?
-  ..externalUrls = json['external_urls'] == null
-      ? null
-      : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
-  ..href = json['href'] as String?
-  ..id = json['id'] as String?
-  ..images = (json['images'] as List<dynamic>?)
-      ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
-      .toList()
-  ..isExternallyHosted = json['is_externally_hosted'] as bool?
-  ..isPlayable = json['is_playable'] as bool?
-  ..language = json['language'] as String?
-  ..languages =
-      (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList()
-  ..name = json['name'] as String?
-  ..releaseDate = json['release_date'] == null
-      ? null
-      : DateTime.parse(json['release_date'] as String)
-  ..releaseDatePrecision = json['release_date_precision'] as String?
-  ..type = json['type'] as String?
-  ..uri = json['uri'] as String?;
-
-EpisodeFull _$EpisodeFullFromJson(Map<String, dynamic> json) => EpisodeFull()
-  ..audioPreviewUrl = json['audio_preview_url'] as String?
-  ..description = json['description'] as String?
-  ..durationMs = json['duration_ms'] as int?
-  ..explicit = json['explicit'] as bool?
-  ..externalUrls = json['external_urls'] == null
-      ? null
-      : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
-  ..href = json['href'] as String?
-  ..id = json['id'] as String?
-  ..images = (json['images'] as List<dynamic>?)
-      ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
-      .toList()
-  ..isExternallyHosted = json['is_externally_hosted'] as bool?
-  ..isPlayable = json['is_playable'] as bool?
-  ..language = json['language'] as String?
-  ..languages =
-      (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList()
-  ..name = json['name'] as String?
-  ..releaseDate = json['release_date'] == null
-      ? null
-      : DateTime.parse(json['release_date'] as String)
-  ..releaseDatePrecision = json['release_date_precision'] as String?
-  ..type = json['type'] as String?
-  ..uri = json['uri'] as String?
-  ..show = json['show'] == null
-      ? null
-      : Show.fromJson(json['show'] as Map<String, dynamic>);
+TimeInterval _$TimeIntervalFromJson(Map<String, dynamic> json) => TimeInterval()
+  ..confidence = (json['confidence'] as num?)?.toDouble()
+  ..duration = (json['duration'] as num?)?.toDouble()
+  ..start = (json['start'] as num?)?.toDouble();
 
 Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..album = json['album'] == null
@@ -561,11 +622,3 @@ PlayHistory _$PlayHistoryFromJson(Map<String, dynamic> json) => PlayHistory()
   ..context = json['context'] == null
       ? null
       : PlayerContext.fromJson(json['context'] as Map<String, dynamic>);
-
-Queue _$QueueFromJson(Map<String, dynamic> json) => Queue()
-  ..currentlyPlaying = json['currently_playing'] == null
-      ? null
-      : Track.fromJson(json['currently_playing'] as Map<String, dynamic>)
-  ..queue = (json['queue'] as List<dynamic>?)
-      ?.map((e) => Track.fromJson(e as Map<String, dynamic>))
-      .toList();
