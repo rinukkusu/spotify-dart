@@ -233,32 +233,6 @@ abstract class SpotifyApiBase {
         error,
       );
     }
-    AuthorizationScope.user.readFollow;
     return responseBody;
   }
-}
-
-class AuthorizationScope extends ExtendedEnum {
-  const AuthorizationScope(String key) : super(key);
-
-  static _UserAuthorizationScope user = _UserAuthorizationScope();
-
-  static const playlistModifyPrivate =
-      AuthorizationScope('playlist-modify-private');
-  static const playlistModifyPublic =
-      AuthorizationScope('playlist-modify-public');
-}
-
-class _UserAuthorizationScope {
-  _UserAuthorizationScope();
-
-  AuthorizationScope readFollow = AuthorizationScope('user-follow-read');
-  static const readPlaybackState =
-      AuthorizationScope('user-read-playback-state');
-  static const modifyPlaybackState =
-      AuthorizationScope('user-modify-playback-state');
-  static const readLibrary = AuthorizationScope('user-library-read');
-  static const modifyLibrary = AuthorizationScope('user-library-modify');
-  static const readRecentlyPlayed =
-      AuthorizationScope('user-read-recently-played');
 }

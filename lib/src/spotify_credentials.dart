@@ -32,7 +32,8 @@ class SpotifyApiCredentials {
 
   /// The specific permissions being requested from Spotify.
   ///
-  /// See https://developer.spotify.com/documentation/general/guides/scopes/
+  /// Use [AuthorizationScope] or
+  /// see https://developer.spotify.com/documentation/web-api/concepts/scopes
   /// for a full list of available scopes.
   List<String>? scopes;
 
