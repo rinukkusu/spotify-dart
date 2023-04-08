@@ -115,8 +115,8 @@ class Me extends _MeEndpointBase {
   Pages<Artist> topArtists({TimeRange timeRange = TimeRange.mediumTerm}) =>
       _top(_TopItemsType.artists, (item) => Artist.fromJson(item), timeRange);
 
-  Pages<T> _top<T>(_TopItemsType type, T Function(dynamic) parser,
-          [TimeRange range = TimeRange.mediumTerm]) =>
+  Pages<T> _top<T>(
+          _TopItemsType type, T Function(dynamic) parser, TimeRange range) =>
       _getPages(
           '$_path/top/${type.name}?' +
               _buildQuery({
