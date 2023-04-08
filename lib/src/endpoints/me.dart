@@ -31,7 +31,7 @@ class Me extends _MeEndpointBase {
     // since 'artists' is the container, there is no
     // containerParse necessary. Adding json to make the
     // CursorPages-Object happy.
-    return _getCursorPages('$_path/following?type=${type.key}',
+    return _getCursorPages('$_path/following?type=${type._key}',
         (json) => Artist.fromJson(json), 'artists', (json) => json);
   }
 
@@ -40,7 +40,7 @@ class Me extends _MeEndpointBase {
   Future<List<bool>> isFollowing(FollowingType type, List<String> ids) async {
     assert(ids.isNotEmpty, 'No user/artist id was provided');
     final jsonString = await _api._get(
-        '$_path/following/contains?type=${type.key}&ids=${ids.join(",")}');
+        '$_path/following/contains?type=${type._key}&ids=${ids.join(",")}');
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
     return list;
   }
@@ -50,7 +50,7 @@ class Me extends _MeEndpointBase {
   /// [ids] - user/artist
   Future<void> follow(FollowingType type, List<String> ids) async {
     assert(ids.isNotEmpty, 'No user/artist id was provided');
-    await _api._put("$_path/following?type=${type.key}&ids=${ids.join(",")}");
+    await _api._put("$_path/following?type=${type._key}&ids=${ids.join(",")}");
   }
 
   /// Unfollow already following users/artists\
@@ -59,7 +59,7 @@ class Me extends _MeEndpointBase {
   Future<void> unfollow(FollowingType type, List<String> ids) async {
     assert(ids.isNotEmpty, 'No user/artist id was provided');
     await _api
-        ._delete("$_path/following?type=${type.key}&ids=${ids.join(",")}");
+        ._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
   }
 
   /// Get the object currently being played on the user’s Spotify account.
@@ -222,7 +222,7 @@ class Me extends _MeEndpointBase {
   /// Removes episodes for the current user. Requires the `user-library-modify`
   /// scope.
   /// [ids] - the ids of the episodes
-  Future<void> removeEpisode(List<String> ids) async {
+  Future<void> removeEpisodes(List<String> ids) async {
     assert(ids.isNotEmpty, 'No episode ids were provided for removing');
     await _api
         ._delete('$_path/episodes?' + _buildQuery({'ids': ids.join(',')}));

@@ -19,5 +19,8 @@ class ExtendedEnum {
   final String _key;
 
   const ExtendedEnum(this._key);
-  String get key => _key;
+  // String get key => _key;
+
+  @override
+  String toString() => _key;
 }

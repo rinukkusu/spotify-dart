@@ -38,7 +38,7 @@ final redirectUri = 'https://example.com/auth';
 // See https://developer.spotify.com/documentation/general/guides/scopes/
 // for a complete list of these Spotify authorization permissions. If no
 // scopes are specified, only public Spotify information will be available.
-final scopes = ['user-read-email', 'user-library-read'];
+final scopes = [AuthorizationScope.user.readEmail, AuthorizationScope.library.read];
 
 final authUri = grant.getAuthorizationUrl(
   Uri.parse(redirectUri),
