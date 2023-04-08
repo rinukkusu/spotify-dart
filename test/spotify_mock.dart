@@ -46,16 +46,7 @@ class MockClient implements oauth2.Client {
     var regex = RegExp(regexString);
     var urlString = url.toString();
     var partialPath = regex.firstMatch(urlString)!.group(1);
-    var file;
-    if (url.hasQuery &&
-        (url.queryParameters.containsKey('offset') ||
-            url.queryParameters.containsKey('after'))) {
-      var next = url.queryParameters['offset'] ?? url.queryParameters['after'];
-      file = File('test/data/${partialPath}_$next.json');
-    } else {
-      file = File('test/data/$partialPath.json');
-    }
-
+    var file = File('test/data/$partialPath.json');
     return file.readAsStringSync();
   }
 
