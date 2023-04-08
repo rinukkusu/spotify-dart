@@ -106,22 +106,23 @@ class Me extends _MeEndpointBase {
       _player.playbackState(market);
 
   /// Get the current user's top tracks.
-  Future<Iterable<Track>> topTracks() async {
-    final jsonString = await _api._get('$_path/top/tracks');
-    final map = json.decode(jsonString);
-
-    final items = map['items'] as Iterable<dynamic>;
-    return items.map((item) => Track.fromJson(item));
-  }
+  /// 
+  /// 
+  Pages<Track> topTracks({TimeRange range = TimeRange.mediumTerm}) =>
+      _top(_TopType.tracks, (item) => Track.fromJson(item), range);
 
   /// Get the current user's top artists.
-  Future<Iterable<Artist>> topArtists() async {
-    final jsonString = await _api._get('$_path/top/artists');
-    final map = json.decode(jsonString);
+  Pages<Artist> topArtists({TimeRange range = TimeRange.mediumTerm}) =>
+      _top(_TopType.artists, (item) => Artist.fromJson(item), range);
 
-    final items = map['items'] as Iterable<dynamic>;
-    return items.map((item) => Artist.fromJson(item));
-  }
+  Pages<T> _top<T>(_TopType type, T Function(dynamic) parser,
+          [TimeRange range = TimeRange.mediumTerm]) =>
+      _getPages(
+          '$_path/top/${type.toString()}?' +
+              _buildQuery({
+                'time_range': range._key,
+              }),
+          parser);
 
   /// Get information about a user’s available devices.
   @Deprecated('Use [spotify.player.devices()]')
@@ -207,8 +208,8 @@ class Me extends _MeEndpointBase {
   /// Returns the current user's saved episodes. Requires the `user-library-read`
   /// scope.
   Pages<EpisodeFull> savedEpisodes() {
-    return _getPages('$_path/episodes', 
-       (json) => EpisodeFull.fromJson(json['episode']));
+    return _getPages(
+        '$_path/episodes', (json) => EpisodeFull.fromJson(json['episode']));
   }
 
   /// Saves episodes for the current user. Requires the `user-library-modify`
@@ -250,3 +251,20 @@ class FollowingType {
   static const artist = FollowingType('artist');
   static const user = FollowingType('user');
 }
+
+class TimeRange {
+  final String _key;
+
+  const TimeRange(this._key);
+
+  /// Consists of several years of data and including all new data as it becomes available
+  static const longTerm = TimeRange('long_term');
+
+  /// Consists of approximately last 6 months
+  static const mediumTerm = TimeRange('medium_term');
+
+  /// Consists of approximately last 4 weeks
+  static const shortTerm = TimeRange('short_term');
+}
+
+enum _TopType { artists, tracks }
