@@ -7,15 +7,15 @@ import 'dart:io';
 
 import 'package:spotify/spotify.dart';
 
-const _scopes = [
-  'user-read-playback-state',
-  'user-follow-read',
-  'playlist-modify-private',
-  'playlist-modify-public',
-  'user-modify-playback-state',
-  'user-library-read',
-  'user-read-recently-played',
-  'user-library-modify'
+final _scopes = [
+  AuthorizationScope.playlist.modifyPrivate,
+  AuthorizationScope.playlist.modifyPublic,
+  AuthorizationScope.library.read,
+  AuthorizationScope.library.modify,
+  AuthorizationScope.connect.readPlaybackState,
+  AuthorizationScope.connect.modifyPlaybackState,
+  AuthorizationScope.listen.readRecentlyPlayed,
+  AuthorizationScope.follow.read
 ];
 
 void main() async {

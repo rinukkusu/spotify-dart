@@ -24,7 +24,7 @@ class Search extends EndpointPaging {
     Iterable<SearchType> types = SearchType.all,
     String market = '',
   }) {
-    var type = types.map((type) => type.key).join(',');
+    var type = types.map((type) => type._key).join(',');
 
     var queryMap = {'q': searchQuery, 'type': type};
     if (market.isNotEmpty) {
@@ -45,11 +45,8 @@ class Search extends EndpointPaging {
 }
 
 /// Type for narrowing the search results
-class SearchType {
-  final String _key;
-
-  const SearchType(this._key);
-  String get key => _key;
+class SearchType extends ExtendedEnum {
+  const SearchType(String key) : super(key);
 
   static const album = SearchType('album');
   static const artist = SearchType('artist');
