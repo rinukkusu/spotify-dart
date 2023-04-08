@@ -110,4 +110,4 @@ class AlbumSimple extends Object {
 
 enum DatePrecision { day, month, year }
 
-enum AlbumType { album, singe, compilation }
+enum AlbumType { album, single, compilation }
