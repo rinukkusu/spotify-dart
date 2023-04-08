@@ -105,20 +105,20 @@ class Me extends _MeEndpointBase {
   Future<PlaybackState> player([String? market]) async =>
       _player.playbackState(market);
 
-  /// Get the current user's top tracks.
-  /// 
-  /// 
-  Pages<Track> topTracks({TimeRange range = TimeRange.mediumTerm}) =>
-      _top(_TopType.tracks, (item) => Track.fromJson(item), range);
+  /// Get the current user's top tracks, spanning over a [timeRange].
+  /// The [timeRange]'s default is [TimeRange.mediumTerm].
+  Pages<Track> topTracks({TimeRange timeRange = TimeRange.mediumTerm}) =>
+      _top(_TopItemsType.tracks, (item) => Track.fromJson(item), timeRange);
 
-  /// Get the current user's top artists.
-  Pages<Artist> topArtists({TimeRange range = TimeRange.mediumTerm}) =>
-      _top(_TopType.artists, (item) => Artist.fromJson(item), range);
+  /// Get the current user's top artists, spanning over a [timeRange].
+  /// The [timeRange]'s default is [TimeRange.mediumTerm].
+  Pages<Artist> topArtists({TimeRange timeRange = TimeRange.mediumTerm}) =>
+      _top(_TopItemsType.artists, (item) => Artist.fromJson(item), timeRange);
 
-  Pages<T> _top<T>(_TopType type, T Function(dynamic) parser,
+  Pages<T> _top<T>(_TopItemsType type, T Function(dynamic) parser,
           [TimeRange range = TimeRange.mediumTerm]) =>
       _getPages(
-          '$_path/top/${type.toString()}?' +
+          '$_path/top/${type.name}?' +
               _buildQuery({
                 'time_range': range._key,
               }),
@@ -267,4 +267,4 @@ class TimeRange {
   static const shortTerm = TimeRange('short_term');
 }
 
-enum _TopType { artists, tracks }
+enum _TopItemsType { artists, tracks }

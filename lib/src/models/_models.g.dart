@@ -15,7 +15,7 @@ ExternalIds _$ExternalIdsFromJson(Map<String, dynamic> json) => ExternalIds()
   ..upc = json['upc'] as String?;
 
 Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
-  ..albumType = json['album_type'] as String?
+  ..albumType = AlbumSimple._convertForAlbumType(json['album_type'] as String?)
   ..artists = (json['artists'] as List<dynamic>?)
       ?.map((e) => ArtistSimple.fromJson(e as Map<String, dynamic>))
       .toList()
@@ -55,7 +55,7 @@ const _$DatePrecisionEnumMap = {
 };
 
 AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) => AlbumSimple()
-  ..albumType = json['album_type'] as String?
+  ..albumType = AlbumSimple._convertForAlbumType(json['album_type'] as String?)
   ..artists = (json['artists'] as List<dynamic>?)
       ?.map((e) => ArtistSimple.fromJson(e as Map<String, dynamic>))
       .toList()

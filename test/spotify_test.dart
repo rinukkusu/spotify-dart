@@ -13,7 +13,7 @@ Future main() async {
     test('get', () async {
       var album = await spotify.albums.get('4aawyAB9vmqN3uQ7FjRGTy');
 
-      expect(album.albumType, 'album');
+      expect(album.albumType, AlbumType.album);
       expect(album.id, '4aawyAB9vmqN3uQ7FjRGTy');
       expect(album.images!.length, 3);
       expect(album.releaseDatePrecision, DatePrecision.day);
@@ -259,6 +259,28 @@ Future main() async {
       expect(result.first, isTrue);
       expect(result[1], isFalse);
       expect(result.last, isTrue);
+    });
+
+    group('me/top', () {
+      test('tracks', () async {
+        final result = await spotify.me.topTracks().first();
+        expect(result.items?.length, 2);
+
+        var firstItem = result.items?.first;
+        expect(firstItem?.album?.albumType, AlbumType.album);
+        expect(firstItem?.album?.name, 'Ali');
+        expect(firstItem?.album?.uri, 'spotify:album:4dfAJiDQHQf4dGX0ZdtxPh');
+        expect(firstItem?.artists?.length, 2);
+        expect(firstItem?.artists?.first.name, 'Vieux Farka Touré');
+      });
+
+      test('artists', () async {
+        final result = await spotify.me.topArtists().first();
+        expect(result.items?.length, 2);
+
+        var firstItem = result.items?.first;
+        expect(firstItem?.name, 'Porcupine Tree');
+      });
     });
 
     group('me/shows', () {
