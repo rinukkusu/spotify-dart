@@ -1,0 +1,88 @@
+{
+  "items": [
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/5NXHXK6hOCotCF8lvGM1I0"
+      },
+      "followers": {
+        "href": null,
+        "total": 0
+      },
+      "genres": [
+        "alternative metal",
+        "art rock",
+        "progressive metal",
+        "progressive rock",
+        "symphonic rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/5NXHXK6hOCotCF8lvGM1I0",
+      "id": "5NXHXK6hOCotCF8lvGM1I0",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab6761610000e5ebc4f72407be5d96db73982400",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/ab67616100005174c4f72407be5d96db73982400",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/ab6761610000f178c4f72407be5d96db73982400",
+          "width": 160
+        }
+      ],
+      "name": "Porcupine Tree",
+      "popularity": 56,
+      "type": "artist",
+      "uri": "spotify:artist:5NXHXK6hOCotCF8lvGM1I0"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/4X42BfuhWCAZ2swiVze9O0"
+      },
+      "followers": {
+        "href": null,
+        "total": 0
+      },
+      "genres": [
+        "art rock",
+        "neo-progressive",
+        "progressive metal",
+        "progressive rock",
+        "symphonic rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/4X42BfuhWCAZ2swiVze9O0",
+      "id": "4X42BfuhWCAZ2swiVze9O0",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab6761610000e5ebb0655526ab51d102711937d7",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/ab67616100005174b0655526ab51d102711937d7",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/ab6761610000f178b0655526ab51d102711937d7",
+          "width": 160
+        }
+      ],
+      "name": "Steven Wilson",
+      "popularity": 49,
+      "type": "artist",
+      "uri": "spotify:artist:4X42BfuhWCAZ2swiVze9O0"
+    }
+  ],
+  "total": 50,
+  "limit": 2,
+  "offset": 0,
+  "href": "https://api.spotify.com/v1/me/top/artists?limit=2&offset=0",
+  "next": "https://api.spotify.com/v1/me/top/artists?limit=2&offset=2",
+  "previous": null
+}

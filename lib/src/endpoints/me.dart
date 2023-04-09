@@ -105,23 +105,24 @@ class Me extends _MeEndpointBase {
   Future<PlaybackState> player([String? market]) async =>
       _player.playbackState(market);
 
-  /// Get the current user's top tracks.
-  Future<Iterable<Track>> topTracks() async {
-    final jsonString = await _api._get('$_path/top/tracks');
-    final map = json.decode(jsonString);
+  /// Get the current user's top tracks, spanning over a [timeRange].
+  /// The [timeRange]'s default is [TimeRange.mediumTerm].
+  Pages<Track> topTracks({TimeRange timeRange = TimeRange.mediumTerm}) =>
+      _top(_TopItemsType.tracks, (item) => Track.fromJson(item), timeRange);
 
-    final items = map['items'] as Iterable<dynamic>;
-    return items.map((item) => Track.fromJson(item));
-  }
+  /// Get the current user's top artists, spanning over a [timeRange].
+  /// The [timeRange]'s default is [TimeRange.mediumTerm].
+  Pages<Artist> topArtists({TimeRange timeRange = TimeRange.mediumTerm}) =>
+      _top(_TopItemsType.artists, (item) => Artist.fromJson(item), timeRange);
 
-  /// Get the current user's top artists.
-  Future<Iterable<Artist>> topArtists() async {
-    final jsonString = await _api._get('$_path/top/artists');
-    final map = json.decode(jsonString);
-
-    final items = map['items'] as Iterable<dynamic>;
-    return items.map((item) => Artist.fromJson(item));
-  }
+  Pages<T> _top<T>(
+          _TopItemsType type, T Function(dynamic) parser, TimeRange range) =>
+      _getPages(
+          '$_path/top/${type.name}?' +
+              _buildQuery({
+                'time_range': range._key,
+              }),
+          parser);
 
   /// Get information about a user’s available devices.
   @Deprecated('Use [spotify.player.devices()]')
@@ -246,3 +247,20 @@ class FollowingType extends ExtendedEnum {
   static const artist = FollowingType('artist');
   static const user = FollowingType('user');
 }
+
+class TimeRange {
+  final String _key;
+
+  const TimeRange(this._key);
+
+  /// Consists of several years of data and including all new data as it becomes available
+  static const longTerm = TimeRange('long_term');
+
+  /// Consists of approximately last 6 months
+  static const mediumTerm = TimeRange('medium_term');
+
+  /// Consists of approximately last 4 weeks
+  static const shortTerm = TimeRange('short_term');
+}
+
+enum _TopItemsType { artists, tracks }
