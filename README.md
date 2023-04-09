@@ -14,7 +14,7 @@ final artist = await spotify.artists.get('0OdUWJ0sBjDrqHygGUXeCF');
 
 ### Authorization
 
-For detailed information regarding authorization, clent credentials flow and more, see the [wiki](https://github.com/rinukkusu/spotify-dart/wiki).
+For detailed information regarding authorization, client credentials flow and more, see the [wiki](https://github.com/rinukkusu/spotify-dart/wiki).
 
 ## Features and bugs
 
