@@ -15,5 +15,4 @@ class AudioAnalyses extends EndpointBase {
 
     return AudioAnalysis.fromJson(map);
   }
-
 }

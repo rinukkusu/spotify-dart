@@ -59,6 +59,43 @@ Future main() async {
     });
   });
 
+  group('Audio Analysis', () {
+    test('get', () async {
+      var result = await spotify.audioAnalysis.get('xyz123');
+
+      expect(result.bars?.isEmpty, isFalse);
+      expect(result.beats?.isEmpty, isFalse);
+      expect(result.sections?.isEmpty, isFalse);
+      expect(result.segments?.isEmpty, isFalse);
+      expect(result.tatums?.isEmpty, isFalse);
+
+      var firstSection = result.sections?.first;
+      expect(firstSection?.start, 0);
+      expect(firstSection?.duration, 6.97092);
+      expect(firstSection?.confidence, 1);
+      expect(firstSection?.loudness, -14.938);
+      expect(firstSection?.tempo, 113.178);
+      expect(firstSection?.tempoConfidence, 0.647);
+      expect(firstSection?.key, 9);
+      expect(firstSection?.keyConfidence, 0.297);
+      expect(firstSection?.mode, 1);
+      expect(firstSection?.modeConfidence, 0.471);
+      expect(firstSection?.timeSignature, 4);
+      expect(firstSection?.timeSignatureConfidence, 1);
+
+      var firstSegment = result.segments?.first;
+      expect(firstSegment?.start, 0);
+      expect(firstSegment?.duration, 0.24317);
+      expect(firstSegment?.confidence, 1);
+      expect(firstSegment?.loudnessStart, -59.656);
+      expect(firstSegment?.loudnessMaxTime, 0.21478);
+      expect(firstSegment?.loudnessMax, -36.317);
+      expect(firstSegment?.loudnessEnd, 0);
+      expect(firstSegment?.pitches?.isEmpty, isFalse);
+      expect(firstSegment?.timbre?.isEmpty, isFalse);
+    });
+  });
+
   group('Artists', () {
     test('get', () async {
       var artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');

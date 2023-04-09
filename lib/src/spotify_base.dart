@@ -32,7 +32,7 @@ abstract class SpotifyApiBase {
   late AudioFeatures _audioFeatures;
   AudioFeatures get audioFeatures => _audioFeatures;
   late AudioAnalyses _audioAnalyses;
-  AudioAnalyses get audioAnalyses => _audioAnalyses;
+  AudioAnalyses get audioAnalysis => _audioAnalyses;
   late Categories _categories;
   Categories get categories => _categories;
   late Me _me;
