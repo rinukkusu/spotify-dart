@@ -3,11 +3,12 @@
 
 part of spotify;
 
-class AudioAnalysis extends EndpointBase {
+/// Endpoint of a tracks audio analysis
+class AudioAnalysisEndpoint extends EndpointBase {
   @override
   String get _path => 'v1/audio-analysis';
 
-  AudioAnalysis(SpotifyApiBase api) : super(api);
+  AudioAnalysisEndpoint(SpotifyApiBase api) : super(api);
 
   Future<AudioAnalysis> get(String trackId) async {
     var jsonString = await _api._get('$_path/$trackId');
