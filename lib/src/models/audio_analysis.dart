@@ -3,6 +3,7 @@
 
 part of spotify.models;
 
+/// JSON representation of a track's analysis information
 @JsonSerializable(createToJson: false)
 class AudioAnalysis extends Object {
   AudioAnalysis();
