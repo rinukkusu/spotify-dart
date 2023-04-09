@@ -10,6 +10,8 @@ class AudioAnalysis extends Object {
   factory AudioAnalysis.fromJson(Map<String, dynamic> json) =>
       _$AudioAnalysisFromJson(json);
 
+  TrackAudioAnalysis? track;
+
   List<TimeInterval>? bars;
 
   List<TimeInterval>? beats;
@@ -21,42 +23,7 @@ class AudioAnalysis extends Object {
   List<TimeInterval>? tatums;
 }
 
-/// JSON representation of the track analysis summary
-@JsonSerializable(createToJson: false)
-class TrackAnalysisSummary {
-  TrackAnalysisSummary();
-
-  /// The exact number of audio samples analyzed from this track.
-  /// See also [analysisSampleRate].
-  @JsonKey(name: 'num_samples')
-  int? numSamples;
-
-  /// Length of the track in seconds.
-  double? duration;
-
-  /// The sample rate used to decode and analyze this track. 
-  /// 
-  /// May differ from the actual sample rate of this track available on Spotify.
-  @JsonKey(name: 'analysis_sample_rate')
-  int? analysisSampleRate;
-
-  /// The time, in seconds, at which the track's fade-in period ends.
-  /// If the track has no fade-in, this will be `0.0`.
-  @JsonKey(name: 'end_of_fade_in')
-  double? endOfFadeIn;
-}
-
-/// JSON representation of track section in the analysis
-@JsonSerializable(createToJson: false)
-class Section extends Object {
-  Section();
-
-  factory Section.fromJson(Map<String, dynamic> json) =>
-      _$SectionFromJson(json);
-
-  /// The starting point (in seconds) of the section.
-  double? start;
-
+abstract class _Section {
   /// The duration (in seconds) of the section.
   double? duration;
 
@@ -113,6 +80,75 @@ class Section extends Object {
   /// to low values in this field.
   @JsonKey(name: 'time_signature_confidence')
   double? timeSignatureConfidence;
+}
+
+/// JSON representation of the track analysis summary
+@JsonSerializable(createToJson: false)
+class TrackAudioAnalysis extends _Section {
+  TrackAudioAnalysis();
+
+  factory TrackAudioAnalysis.fromJson(Map<String, dynamic> json) =>
+      _$TrackAudioAnalysisFromJson(json);
+
+  /// The exact number of audio samples analyzed from this track.
+  /// See also [analysisSampleRate].
+  @JsonKey(name: 'num_samples')
+  int? numSamples;
+
+  /// The sample rate used to decode and analyze this track.
+  ///
+  /// May differ from the actual sample rate of this track available on Spotify.
+  @JsonKey(name: 'analysis_sample_rate')
+  int? analysisSampleRate;
+
+  @JsonKey(name: 'analysis_channels')
+  int? analysisChannels;
+
+  /// The time, in seconds, at which the track's fade-in period ends.
+  /// If the track has no fade-in, this will be `0.0`.
+  @JsonKey(name: 'end_of_fade_in')
+  double? endOfFadeIn;
+
+  @JsonKey(name: 'start_of_fade_out')
+  double? startOfFadeOut;
+
+  @JsonKey(name: 'synchstring')
+  String? synchString;
+
+  /// A version number for the Synchstring used in the synchstring field.
+  @JsonKey(name: 'synch_version')
+  double? synchVersion;
+
+  /// A Rhythmstring for this track.
+  /// The format of this string is similar to the [synchString].
+  @JsonKey(name: 'rhythmstring')
+  String? rhythmString;
+
+  /// A version number for the Rhythmstring used in the [rhythmString] field.
+  @JsonKey(name: 'rhythm_version')
+  double? rhythmVersion;
+
+  /// An Echo Nest [Musical Fingerprint (ENMFP)](https://academiccommons.columbia.edu/doi/10.7916/D8Q248M4)
+  /// codestring for this track.
+  @JsonKey(name: 'codestring')
+  String? codeString;
+
+  /// A version number for the Echo Nest Musical Fingerprint format
+  /// used in the [codeString] field.
+  @JsonKey(name: 'code_version')
+  double? codeVersion;
+}
+
+/// JSON representation of track section in the analysis
+@JsonSerializable(createToJson: false)
+class Section extends _Section {
+  Section();
+
+  factory Section.fromJson(Map<String, dynamic> json) =>
+      _$SectionFromJson(json);
+
+  /// The starting point (in seconds) of the section.
+  double? start;
 }
 
 /// JSON representation of track segment in the analysis

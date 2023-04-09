@@ -63,6 +63,7 @@ Future main() async {
     test('get', () async {
       var result = await spotify.audioAnalysis.get('xyz123');
 
+      expect(result.track, isNotNull);
       expect(result.bars?.isEmpty, isFalse);
       expect(result.beats?.isEmpty, isFalse);
       expect(result.sections?.isEmpty, isFalse);
@@ -93,6 +94,28 @@ Future main() async {
       expect(firstSegment?.loudnessEnd, 0);
       expect(firstSegment?.pitches?.isEmpty, isFalse);
       expect(firstSegment?.timbre?.isEmpty, isFalse);
+
+      var track = result.track;
+      expect(track?.numSamples, 4585515);
+      expect(track?.duration, 207.95985);
+      expect(track?.analysisSampleRate, 22050);
+      expect(track?.analysisChannels, 1);
+      expect(track?.endOfFadeIn, 0);
+      expect(track?.startOfFadeOut, 201.13705);
+      expect(track?.loudness, -2.743);
+      expect(track?.tempo, 114.944);
+      expect(track?.tempoConfidence, 0.74);
+      expect(track?.timeSignature, 4);
+      expect(track?.timeSignatureConfidence, 0.994);
+      expect(track?.key, 2);
+      expect(track?.keyConfidence, 0.408);
+      expect(track?.mode, 1);
+      expect(track?.codeString, 'eJxVmgl2LDcOBK_SR-');
+      expect(track?.codeVersion, 3.15);
+      expect(track?.synchString, 'eJxNWglyHDEI_I');
+      expect(track?.synchVersion, 1);
+      expect(track?.rhythmString, 'eJx1XFmW4zgOvIqPwJ3g_S');
+      expect(track?.rhythmVersion, 1);
     });
   });
 
