@@ -11,8 +11,8 @@ class AudioFeature extends Object {
   factory AudioFeature.fromJson(Map<String, dynamic> json) =>
       _$AudioFeatureFromJson(json);
 
-  /// A confidence measure from 0.0 to 1.0 of whether the track is acoustic.
-  /// 1.0 represents high confidence the track is acoustic.
+  /// A confidence measure from `0.0` to `1.0` of whether the track is acoustic.
+  /// `1.0` represents high confidence the track is acoustic.
   double? acousticness;
 
   /// An HTTP URL to access the full audio analysis of this track. An access
@@ -22,8 +22,8 @@ class AudioFeature extends Object {
 
   /// Danceability describes how suitable a track is for dancing based on a
   /// combination of musical elements including tempo, rhythm stability, beat
-  /// strength, and overall regularity. A value of 0.0 is least danceable and
-  /// 1.0 is most danceable.
+  /// strength, and overall regularity. A value of `0.0` is least danceable and
+  /// `1.0` is most danceable.
   double? danceability;
 
   /// The track length in milliseconds.
@@ -31,10 +31,10 @@ class AudioFeature extends Object {
   int? durationMs;
 
   /// The track length
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(includeFromJson: false)
   Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
-  /// Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of
+  /// Energy is a measure from `0.0` to `1.0` and represents a perceptual measure of
   /// intensity and activity. Typically, energetic tracks feel fast, loud, and
   /// noisy. For example, death metal has high energy, while a Bach prelude
   /// scores low on the scale. Perceptual features contributing to this
@@ -47,14 +47,14 @@ class AudioFeature extends Object {
 
   /// Predicts whether a track contains no vocals. "Ooh" and "aah" sounds are
   /// treated as instrumental in this context. Rap or spoken word tracks are
-  /// clearly "vocal". The closer the instrumentalness value is to 1.0, the
-  /// greater likelihood the track contains no vocal content. Values above 0.5
+  /// clearly "vocal". The closer the instrumentalness value is to `1.0`, the
+  /// greater likelihood the track contains no vocal content. Values above `0.5`
   /// are intended to represent instrumental tracks, but confidence is higher as
-  /// the value approaches 1.0.
+  /// the value approaches `1.0`.
   double? instrumentalness;
 
   /// The key the track is in. Integers map to pitches using standard Pitch
-  /// Class notation. E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on.
+  /// Class notation. E.g. `0 = C`, `1 = C♯/D♭`, `2 = D`, and so on.
   int? key;
 
   /// Detects the presence of an audience in the recording. Higher liveness
@@ -66,20 +66,20 @@ class AudioFeature extends Object {
   /// averaged across the entire track and are useful for comparing relative
   /// loudness of tracks. Loudness is the quality of a sound that is the primary
   /// psychological correlate of physical strength (amplitude). Values typical
-  /// range between -60 and 0 db.
+  /// range between `-60` and `0 db`.
   double? loudness;
 
   /// Mode indicates the modality (major or minor) of a track, the type of scale
   /// from which its melodic content is derived. Major is represented by 1 and
-  /// minor is 0.
+  /// minor is `0`.
   int? mode;
 
   /// Speechiness detects the presence of spoken words in a track. The more
   /// exclusively speech-like the recording (e.g. talk show, audio book, poetry),
-  /// the closer to 1.0 the attribute value. Values above 0.66 describe tracks
-  /// that are probably made entirely of spoken words. Values between 0.33 and
-  /// 0.66 describe tracks that may contain both music and speech, either in
-  /// sections or layered, including such cases as rap music. Values below 0.33
+  /// the closer to `1.0` the attribute value. Values above 0.66 describe tracks
+  /// that are probably made entirely of spoken words. Values between `0.33` and
+  /// `0.66` describe tracks that may contain both music and speech, either in
+  /// sections or layered, including such cases as rap music. Values below `0.33`
   /// most likely represent music and other non-speech-like tracks.
   double? speechiness;
 
@@ -104,7 +104,7 @@ class AudioFeature extends Object {
   /// The Spotify URI for the track.
   String? uri;
 
-  /// A measure from 0.0 to 1.0 describing the musical positiveness conveyed by
+  /// A measure from `0.0` to `1.0` describing the musical positiveness conveyed by
   /// a track. Tracks with high valence sound more positive (e.g. happy,
   /// cheerful, euphoric), while tracks with low valence sound more negative
   /// (e.g. sad, depressed, angry).
