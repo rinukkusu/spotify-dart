@@ -488,9 +488,9 @@ Future main() async {
       var result = await spotify.tracks.me.containsTracks(['1', '2', '3']);
 
       expect(result.length, 3);
-      expect(result[0], isTrue);
-      expect(result[1], isFalse);
-      expect(result[2], isTrue);
+      expect(result['1'], isTrue);
+      expect(result['2'], isFalse);
+      expect(result['3'], isTrue);
     });
   });
 
