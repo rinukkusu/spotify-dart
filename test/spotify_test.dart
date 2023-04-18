@@ -196,16 +196,6 @@ Future main() async {
       expect(result['2'], isFalse);
       expect(result['3'], isTrue);
     });
-
-    test('followedBy', () async {
-      var result = await spotify.playlists
-          .followedByUsers('1XIAxOGAEK2h4ravpNTmYF', ['1', '2', '3']);
-
-      expect(result.length, 3);
-      expect(result['1'], isTrue);
-      expect(result['2'], isFalse);
-      expect(result['3'], isTrue);
-    });
   });
 
   group('Shows', () {
@@ -476,15 +466,6 @@ Future main() async {
 
   group('Tracks', () {
     test('containsTracks', () async {
-      var result = await spotify.tracks.me.containsTracks(['1', '2', '3']);
-
-      expect(result.length, 3);
-      expect(result['1'], isTrue);
-      expect(result['2'], isFalse);
-      expect(result['3'], isTrue);
-    });
-
-    test('contains', () async {
       var result = await spotify.tracks.me.containsTracks(['1', '2', '3']);
 
       expect(result.length, 3);
