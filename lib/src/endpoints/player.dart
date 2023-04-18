@@ -188,7 +188,7 @@ class PlayerEndpoint extends _MeEndpointBase {
 
   /// Transfer playback to a new device and determine if 
   /// it should start [play]ing. Default is `true`.
-  /// 
+  ///
   /// The `AuthorizationScope.connect.modifyPlaybackState` needs to be set.
   /// [retrievePlaybackState] is optional. If `true`, the current playback state
   /// will be retrieved. Defaults to `true`.
@@ -196,7 +196,7 @@ class PlayerEndpoint extends _MeEndpointBase {
       [bool play = true, bool retrievePlaybackState = true]) async {
     assert(deviceId.isNotEmpty, 'No deviceId provided');
     var jsonBody = jsonEncode({
-      'device_id': [deviceId],
+      'device_ids': [deviceId],
       'play': play
     });
     await _api._put(_path, jsonBody);
