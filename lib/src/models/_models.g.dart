@@ -107,6 +107,88 @@ ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) => ArtistSimple()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+AudioAnalysis _$AudioAnalysisFromJson(Map<String, dynamic> json) =>
+    AudioAnalysis()
+      ..track = json['track'] == null
+          ? null
+          : TrackAudioAnalysis.fromJson(json['track'] as Map<String, dynamic>)
+      ..bars = (json['bars'] as List<dynamic>?)
+          ?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..beats = (json['beats'] as List<dynamic>?)
+          ?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..sections = (json['sections'] as List<dynamic>?)
+          ?.map((e) => Section.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..segments = (json['segments'] as List<dynamic>?)
+          ?.map((e) => Segment.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..tatums = (json['tatums'] as List<dynamic>?)
+          ?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+TrackAudioAnalysis _$TrackAudioAnalysisFromJson(Map<String, dynamic> json) =>
+    TrackAudioAnalysis()
+      ..duration = (json['duration'] as num?)?.toDouble()
+      ..confidence = (json['confidence'] as num?)?.toDouble()
+      ..loudness = (json['loudness'] as num?)?.toDouble()
+      ..tempo = (json['tempo'] as num?)?.toDouble()
+      ..tempoConfidence = (json['tempo_confidence'] as num?)?.toDouble()
+      ..key = json['key'] as int?
+      ..keyConfidence = (json['key_confidence'] as num?)?.toDouble()
+      ..mode = json['mode'] as int?
+      ..modeConfidence = (json['mode_confidence'] as num?)?.toDouble()
+      ..timeSignature = json['time_signature'] as int?
+      ..timeSignatureConfidence =
+          (json['time_signature_confidence'] as num?)?.toDouble()
+      ..numSamples = json['num_samples'] as int?
+      ..analysisSampleRate = json['analysis_sample_rate'] as int?
+      ..analysisChannels = json['analysis_channels'] as int?
+      ..endOfFadeIn = (json['end_of_fade_in'] as num?)?.toDouble()
+      ..startOfFadeOut = (json['start_of_fade_out'] as num?)?.toDouble()
+      ..synchString = json['synchstring'] as String?
+      ..synchVersion = (json['synch_version'] as num?)?.toDouble()
+      ..rhythmString = json['rhythmstring'] as String?
+      ..rhythmVersion = (json['rhythm_version'] as num?)?.toDouble()
+      ..codeString = json['codestring'] as String?
+      ..codeVersion = (json['code_version'] as num?)?.toDouble();
+
+Section _$SectionFromJson(Map<String, dynamic> json) => Section()
+  ..duration = (json['duration'] as num?)?.toDouble()
+  ..confidence = (json['confidence'] as num?)?.toDouble()
+  ..loudness = (json['loudness'] as num?)?.toDouble()
+  ..tempo = (json['tempo'] as num?)?.toDouble()
+  ..tempoConfidence = (json['tempo_confidence'] as num?)?.toDouble()
+  ..key = json['key'] as int?
+  ..keyConfidence = (json['key_confidence'] as num?)?.toDouble()
+  ..mode = json['mode'] as int?
+  ..modeConfidence = (json['mode_confidence'] as num?)?.toDouble()
+  ..timeSignature = json['time_signature'] as int?
+  ..timeSignatureConfidence =
+      (json['time_signature_confidence'] as num?)?.toDouble()
+  ..start = (json['start'] as num?)?.toDouble();
+
+Segment _$SegmentFromJson(Map<String, dynamic> json) => Segment()
+  ..start = (json['start'] as num?)?.toDouble()
+  ..duration = (json['duration'] as num?)?.toDouble()
+  ..confidence = (json['confidence'] as num?)?.toDouble()
+  ..loudnessStart = (json['loudness_start'] as num?)?.toDouble()
+  ..loudnessMax = (json['loudness_max'] as num?)?.toDouble()
+  ..loudnessMaxTime = (json['loudness_max_time'] as num?)?.toDouble()
+  ..loudnessEnd = (json['loudness_end'] as num?)?.toDouble()
+  ..pitches = (json['pitches'] as List<dynamic>?)
+      ?.map((e) => (e as num).toDouble())
+      .toList()
+  ..timbre = (json['timbre'] as List<dynamic>?)
+      ?.map((e) => (e as num).toDouble())
+      .toList();
+
+TimeInterval _$TimeIntervalFromJson(Map<String, dynamic> json) => TimeInterval()
+  ..confidence = (json['confidence'] as num?)?.toDouble()
+  ..duration = (json['duration'] as num?)?.toDouble()
+  ..start = (json['start'] as num?)?.toDouble();
+
 AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) => AudioFeature()
   ..acousticness = (json['acousticness'] as num?)?.toDouble()
   ..analysisUrl = json['analysis_url'] as String?

@@ -9,6 +9,7 @@ part 'external_objects.dart';
 
 part 'album.dart';
 part 'artist.dart';
+part 'audio_analysis.dart';
 part 'audio_feature.dart';
 part 'category.dart';
 part 'copyright.dart';

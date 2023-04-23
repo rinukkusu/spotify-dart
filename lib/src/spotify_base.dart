@@ -31,6 +31,8 @@ abstract class SpotifyApiBase {
   Search get search => _search;
   late AudioFeatures _audioFeatures;
   AudioFeatures get audioFeatures => _audioFeatures;
+  late AudioAnalysisEndpoint _audioAnalysis;
+  AudioAnalysisEndpoint get audioAnalysis => _audioAnalysis;
   late Categories _categories;
   Categories get categories => _categories;
   late Me _me;
@@ -56,6 +58,7 @@ abstract class SpotifyApiBase {
     _users = Users(this);
     _search = Search(this);
     _audioFeatures = AudioFeatures(this);
+    _audioAnalysis = AudioAnalysisEndpoint(this);
     _categories = Categories(this);
     _shows = Shows(this);
   }
