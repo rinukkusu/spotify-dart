@@ -170,12 +170,12 @@ class PlayerEndpoint extends _MeEndpointBase {
   }
 
   /// Set the volume for the user’s current playback device.
-  /// [volumePercent] is required. The volume to set. Must be a value from 0 to
-  /// 100 inclusive.
+  /// [volumePercent] is required. The volume to set. Must be a value from `0` to
+  /// `100` inclusive.
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
-  /// [retrievePlaybackState] is optional. If true, the current playback state
-  /// will be retrieved. Defaults to true.
+  /// [retrievePlaybackState] is optional. If `true`, the current playback state
+  /// will be retrieved. Defaults to `true`.
   Future<PlaybackState?> volume(int volumePercent,
       {String? deviceId, bool retrievePlaybackState = true}) async {
     assert(volumePercent >= 0 && volumePercent <= 100,
@@ -183,6 +183,23 @@ class PlayerEndpoint extends _MeEndpointBase {
     await _api._put('$_path/volume?' +
         _buildQuery({'volume_percent': volumePercent, 'device_id': deviceId}));
 
+    return retrievePlaybackState ? playbackState() : null;
+  }
+
+  /// Transfer playback to a new device and determine if 
+  /// it should start [play]ing. Default is `true`.
+  ///
+  /// The `AuthorizationScope.connect.modifyPlaybackState` needs to be set.
+  /// [retrievePlaybackState] is optional. If `true`, the current playback state
+  /// will be retrieved. Defaults to `true`.
+  Future<PlaybackState?> transfer(String deviceId,
+      [bool play = true, bool retrievePlaybackState = true]) async {
+    assert(deviceId.isNotEmpty, 'No deviceId provided');
+    var jsonBody = jsonEncode({
+      'device_ids': [deviceId],
+      'play': play
+    });
+    await _api._put(_path, jsonBody);
     return retrievePlaybackState ? playbackState() : null;
   }
 }
