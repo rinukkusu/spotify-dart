@@ -58,22 +58,25 @@ class TracksMe extends EndpointPaging {
   }
 
   Future<bool> containsOne(String id) async {
-    final list = await contains([id]);
-    return list.first;
+    final list = await containsTracks([id]);
+    return list[id] ?? false;
   }
 
+  @Deprecated('Use [containsTracks(ids)] instead')
   Future<List<bool>> contains(List<String> ids) async {
+    return (await containsTracks(ids)).values.toList();
+  }
+
+  Future<Map<String, bool>> containsTracks(List<String> ids) async {
     assert(ids.isNotEmpty, 'No track ids were provided');
     final limit = ids.length < 50 ? ids.length : 50;
     final idsParam = ids.sublist(0, limit).join(',');
     final jsonString = await _api._get('$_path/contains?ids=$idsParam');
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return list;
+    return Map.fromIterables(ids, list);
   }
 
-  Future<void> saveOne(String id) {
-    return save([id]);
-  }
+  Future<void> saveOne(String id) => save([id]);
 
   Future<void> save(List<String> ids) async {
     assert(ids.isNotEmpty, 'No track ids were provided');

@@ -186,6 +186,16 @@ Future main() async {
       expect(firstImage.height, 300);
       expect(firstImage.width, 300);
     });
+
+    test('followedByUsers', () async {
+      var result = await spotify.playlists
+          .followedByUsers('1XIAxOGAEK2h4ravpNTmYF', ['1', '2', '3']);
+
+      expect(result.length, 3);
+      expect(result['1'], isTrue);
+      expect(result['2'], isFalse);
+      expect(result['3'], isTrue);
+    });
   });
 
   group('Shows', () {
@@ -309,16 +319,16 @@ Future main() async {
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
     });
 
-    test('isFollowing', () async {
-      final result = await spotify.me.isFollowing(FollowingType.artist, [
+    test('checkFollowing', () async {
+      final result = await spotify.me.checkFollowing(FollowingType.artist, [
         '2CIMQHirSU0MQqyYHq0eOx',
         '57dN52uHvrHOxijzpIgu3E',
         '1vCWHaC5f2uS3yhpwWbIA6'
       ]);
       expect(result.isNotEmpty, isTrue);
-      expect(result.first, isTrue);
-      expect(result[1], isFalse);
-      expect(result.last, isTrue);
+      expect(result['2CIMQHirSU0MQqyYHq0eOx'], isTrue);
+      expect(result['57dN52uHvrHOxijzpIgu3E'], isFalse);
+      expect(result['1vCWHaC5f2uS3yhpwWbIA6'], isTrue);
     });
 
     group('me/top', () {
@@ -451,6 +461,17 @@ Future main() async {
       expect(result.repeatState, RepeatState.off);
       expect(result.actions?.resuming, false);
       expect(result.actions?.pausing, true);
+    });
+  });
+
+  group('Tracks', () {
+    test('containsTracks', () async {
+      var result = await spotify.tracks.me.containsTracks(['1', '2', '3']);
+
+      expect(result.length, 3);
+      expect(result['1'], isTrue);
+      expect(result['2'], isFalse);
+      expect(result['3'], isTrue);
     });
   });
 

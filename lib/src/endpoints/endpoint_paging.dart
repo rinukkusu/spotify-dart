@@ -110,19 +110,19 @@ abstract class NextStrategy<T> {
 /// Strategy to get the next set of elements from an offset
 mixin OffsetStrategy<T> implements NextStrategy<T> {
   @override
-  Future<T> first([int limit = defaultLimit]) => _getPage(limit, 0);
+  Future<T> first([int limit = defaultLimit]) => getPage(limit);
 
   @override
   Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as int);
 
   /// Abstract method that is used to do the api call and json serializing
-  Future<T> getPage(int limit, int offset);
+  Future<T> getPage(int limit, [int offset = 0]);
 }
 
 /// Strategy to get the next set of elements from a cursor
 mixin CursorStrategy<T> implements NextStrategy<T> {
   @override
-  Future<T> first([int limit = defaultLimit]) => _getPage(limit, '');
+  Future<T> first([int limit = defaultLimit]) => getPage(limit);
 
   @override
   Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as String);
@@ -229,7 +229,7 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
   }
 
   @override
-  Future<Page<T>> getPage(int limit, int offset) async {
+  Future<Page<T>> getPage(int limit, [int offset = 0]) async {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var newPath = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
@@ -293,7 +293,7 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
       : super(api, path, pageKey, pageContainerParser);
 
   @override
-  Future<List<Page<dynamic>>> getPage(int limit, int offset) async {
+  Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
     var pathDelimiter = _path.contains('?') ? '&' : '?';
     var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 

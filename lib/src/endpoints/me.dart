@@ -25,9 +25,15 @@ class Me extends _MeEndpointBase {
     return User.fromJson(map);
   }
 
-  /// Endpoint /v1/me/following only supports "artist" type at the moment.
-  /// needs 'user-follow-read' scope
-  CursorPages<Artist> following(FollowingType type, [String after = '']) {
+  /// Endpoint `/v1/me/following` only supports [FollowingType.artist]
+  /// at the moment.
+  ///
+  /// Needs `user-follow-read` scope
+  CursorPages<Artist> following(FollowingType type) {
+    assert(
+        type == FollowingType.artist,
+        'Only [FollowingType.artist] supported for now. Check the spotify documentation: '
+        'https://developer.spotify.com/documentation/web-api/reference/get-followed');
     // since 'artists' is the container, there is no
     // containerParse necessary. Adding json to make the
     // CursorPages-Object happy.
@@ -35,14 +41,29 @@ class Me extends _MeEndpointBase {
         (json) => Artist.fromJson(json), 'artists', (json) => json);
   }
 
-  /// Check if current user follow the provided artists. The output [bool]
-  /// list is in the same order as the provided artist-id list
-  Future<List<bool>> isFollowing(FollowingType type, List<String> ids) async {
+  /// Check to see if the current user is following one or more artists or
+  /// other Spotify users. The output [bool] list
+  /// is in the same order as the provided artist-id list
+  @Deprecated('Use [spotify.me.checkFollowing(type, ids)] instead')
+  Future<List<bool>> isFollowing(FollowingType type, List<String> ids) async =>
+      (await checkFollowing(type, ids)).values.toList();
+
+  /// Check if current user follow the provided [FollowingType.artist]s or
+  /// [FollowingType.user]s.
+  ///
+  /// Returns the list of [ids] mapped with the response whether it has been
+  /// followed or not
+  Future<Map<String, bool>> checkFollowing(
+      FollowingType type, List<String> ids) async {
     assert(ids.isNotEmpty, 'No user/artist id was provided');
-    final jsonString = await _api._get(
-        '$_path/following/contains?type=${type._key}&ids=${ids.join(",")}');
+
+    final jsonString = await _api._get('$_path/following/contains?' +
+        _buildQuery({
+          'type': type._key,
+          'ids': ids.join(','),
+        }));
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return list;
+    return Map.fromIterables(ids, list);
   }
 
   /// Follow provided users/artists\
@@ -207,10 +228,8 @@ class Me extends _MeEndpointBase {
 
   /// Returns the current user's saved episodes. Requires the `user-library-read`
   /// scope.
-  Pages<EpisodeFull> savedEpisodes() {
-    return _getPages(
-        '$_path/episodes', (json) => EpisodeFull.fromJson(json['episode']));
-  }
+  Pages<EpisodeFull> savedEpisodes() => _getPages(
+      '$_path/episodes', (json) => EpisodeFull.fromJson(json['episode']));
 
   /// Saves episodes for the current user. Requires the `user-library-modify`
   /// scope.

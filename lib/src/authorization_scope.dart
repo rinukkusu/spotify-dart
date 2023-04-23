@@ -54,7 +54,7 @@ class FollowAuthorizationScope extends _Scope {
   /// Read access to the list of artists and other users that the user follows.
   ///
   /// Endpoints that require the `user-follow-read` scope:
-  /// * [Me.isFollowing]
+  /// * [Me.containsFollowing]
   /// * [Me.following]
   String get read => 'user-follow-read';
 
@@ -145,7 +145,7 @@ class LibraryAuthorizationScope extends _Scope {
   /// * [Me.containsSavedEpisodes]
   /// * [Me.savedAlbums]
   /// * [Me.containsSavedAlbums]
-  /// * [TracksMe.contains]
+  /// * [TracksMe.containsTracks]
   /// * [TracksMe.containsOne]
   /// * [TracksMe.saved]
   String get read => 'user-library-read';
@@ -194,7 +194,7 @@ class PlaylistAuthorizationScope extends _Scope {
   /// Read access to user's private playlists.
   ///
   /// Endpoints that require the `playlist-read-private` scope:
-  /// * [Playlists.followedBy]
+  /// * [Playlists.followedByUsers]
   /// * [Playlists.me]
   /// * [Users.playlist]
   String get readPrivate => 'playlist-read-private';
