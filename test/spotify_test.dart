@@ -495,9 +495,9 @@ Future main() async {
     test('getAvailableMarkets', () async {
       var result = await spotify.markets.availableMarkets;
       expect(result.isEmpty, false);
-      expect(result.first, CountryCode.CA);
-      expect(result.elementAt(1), CountryCode.BR);
-      expect(result.last, CountryCode.IT);
+      expect(result.first, Market.CA);
+      expect(result.elementAt(1), Market.BR);
+      expect(result.last, Market.IT);
     });
   });
 

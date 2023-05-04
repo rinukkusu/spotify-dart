@@ -1,5 +1,6 @@
 part of spotify;
 
+/// Endpoint for `v1/markets`
 class Markets extends EndpointBase {
   @override
   String get _path => 'v1/markets';
@@ -7,10 +8,11 @@ class Markets extends EndpointBase {
   Markets(SpotifyApiBase api) : super(api);
 
   /// Get the list of markets where Spotify is available.
-  Future<Iterable<CountryCode>> get availableMarkets async {
+  Future<Iterable<Market?>> get availableMarkets async {
     var jsonString = await _api._get(_path);
     var map = json.decode(jsonString);
     var markets = map['markets'] as Iterable<dynamic>;
-    return markets.map((market) => CountryCode.ofAlpha(market));
+    var marketsMap = Market.values.asNameMap();
+    return markets.map((market) => marketsMap[market]);
   }
 }
