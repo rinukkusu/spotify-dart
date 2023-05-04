@@ -8,6 +8,8 @@ class Markets extends EndpointBase {
   Markets(SpotifyApiBase api) : super(api);
 
   /// Get the list of markets where Spotify is available.
+  /// A result of `null` means that the country is not mapped 
+  /// in this library. 
   Future<Iterable<Market?>> get availableMarkets async {
     var jsonString = await _api._get(_path);
     var map = json.decode(jsonString);
