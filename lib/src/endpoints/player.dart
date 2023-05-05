@@ -35,7 +35,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// and active device.
   Future<PlaybackState> playbackState([Market? market]) async {
     var jsonString = await _api
-        ._get('$_path?' + _buildQuery({'market': market?.name ?? ''}));
+        ._get('$_path?' + _buildQuery({'market': market?.name}));
     final map = json.decode(jsonString);
     return PlaybackState.fromJson(map);
   }
