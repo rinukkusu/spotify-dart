@@ -496,9 +496,9 @@ Future main() async {
     test('getAvailableMarkets', () async {
       var result = await spotify.markets.availableMarkets;
       expect(result.isEmpty, false);
-      expect(result.first, Market.CA);
-      expect(result.elementAt(1), Market.BR);
-      expect(result.last, Market.IT);
+      expect(result.first, Market.AD);
+      expect(result.elementAt(1), Market.AE);
+      expect(result.last, Market.ZW);
     });
   });
 
