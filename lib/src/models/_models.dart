@@ -17,6 +17,7 @@ part 'device.dart';
 part 'error.dart';
 part 'followers.dart';
 part 'image.dart';
+part 'market.dart';
 part 'paging.dart';
 part 'player.dart';
 part 'playlist.dart';

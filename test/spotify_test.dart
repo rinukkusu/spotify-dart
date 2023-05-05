@@ -490,6 +490,17 @@ Future main() async {
       expect(result.isExpired, true);
     });
   });
+
+  group('markets', () {
+    test('getAvailableMarkets', () async {
+      var result = await spotify.markets.availableMarkets;
+      expect(result.isEmpty, false);
+      expect(result.first, Market.CA);
+      expect(result.elementAt(1), Market.BR);
+      expect(result.last, Market.IT);
+    });
+  });
+
   group('Errors', () {
     test('apiRateErrorSuccess', () async {
       spotify.mockHttpErrors = List.generate(
