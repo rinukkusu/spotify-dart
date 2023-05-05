@@ -22,16 +22,15 @@ class Search extends EndpointPaging {
   BundledPages get(
     String searchQuery, {
     Iterable<SearchType> types = SearchType.all,
-    String market = '',
+    Market? market,
   }) {
     var type = types.map((type) => type._key).join(',');
 
-    var queryMap = {'q': searchQuery, 'type': type};
-    if (market.isNotEmpty) {
-      queryMap.addAll({'market': market});
-    }
-
-    var query = _buildQuery(queryMap);
+    var query = _buildQuery({
+      'q': searchQuery,
+      'type': type,
+      'market': market?.name,
+    });
 
     return _getBundledPages('$_path?$query', {
       'playlists': (json) => PlaylistSimple.fromJson(json),

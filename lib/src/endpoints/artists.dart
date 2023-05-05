@@ -31,7 +31,8 @@ class Artists extends EndpointPaging {
 
   /// Returns related artists based on the artist with its [artistId]
   @Deprecated('Use relatedArtists instead')
-  Future<Iterable<Artist>> getRelatedArtists(String artistId) async => relatedArtists(artistId);
+  Future<Iterable<Artist>> getRelatedArtists(String artistId) async =>
+      relatedArtists(artistId);
 
   /// Retrieves multiple artists with [artistIds]
   Future<Iterable<Artist>> list(Iterable<String> artistIds) async {
@@ -63,13 +64,14 @@ class Artists extends EndpointPaging {
   /// the album is available!
   Pages<Album> albums(
     String artistId, {
-    String? country,
+    Market? country,
     List<String>? includeGroups,
   }) {
-    final _includeGroups =
-        includeGroups == null ? null : includeGroups.join(',');
-    final query =
-        _buildQuery({'include_groups': _includeGroups, 'country': country});
+    final _includeGroups = includeGroups?.join(',');
+    final query = _buildQuery({
+      'include_groups': _includeGroups,
+      'country': country?.name,
+    });
     return _getPages(
         '$_path/$artistId/albums?$query', (json) => Album.fromJson(json));
   }

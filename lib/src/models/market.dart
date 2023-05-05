@@ -246,6 +246,7 @@ enum Market {
   VU,
   WF,
   WS,
+  XK,
   YE,
   YT,
   ZA,

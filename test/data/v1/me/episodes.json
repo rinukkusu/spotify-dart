@@ -47,7 +47,7 @@
         },
         "show": {
           "available_markets": [
-            "string"
+            "US"
           ],
           "copyrights": [
             {
