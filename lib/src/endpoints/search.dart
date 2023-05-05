@@ -21,7 +21,7 @@ class Search extends EndpointPaging {
   /// content that is playable in that market is returned.
   BundledPages get(
     String searchQuery, {
-    Iterable<SearchType> types = SearchType.all,
+    Iterable<SearchType> types = SearchType.values,
     Market? market,
   }) {
     var type = types.map((type) => type._key).join(',');
@@ -44,21 +44,15 @@ class Search extends EndpointPaging {
 }
 
 /// Type for narrowing the search results
-class SearchType extends ExtendedEnum {
-  const SearchType(String key) : super(key);
+enum SearchType {
+  album(key: 'album'),
+  artist(key: 'artist'),
+  playlist(key: 'playlist'),
+  track(key: 'track'),
+  show(key: 'show'),
+  episode(key: 'episode');
 
-  static const album = SearchType('album');
-  static const artist = SearchType('artist');
-  static const playlist = SearchType('playlist');
-  static const track = SearchType('track');
-  static const show = SearchType('show');
-  static const episode = SearchType('episode');
-  static const all = [
-    SearchType.album,
-    SearchType.artist,
-    SearchType.playlist,
-    SearchType.track,
-    SearchType.show,
-    SearchType.episode,
-  ];
+  const SearchType({required String key}) : _key = key;
+
+  final String _key;
 }

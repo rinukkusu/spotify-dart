@@ -263,26 +263,28 @@ class Me extends _MeEndpointBase {
   }
 }
 
-class FollowingType extends ExtendedEnum {
-  const FollowingType(String key) : super(key);
+enum FollowingType {
+  artist(key: 'artist'),
+  user(key: 'user');
 
-  static const artist = FollowingType('artist');
-  static const user = FollowingType('user');
+  const FollowingType({required String key}) : _key = key;
+
+  final String _key;
 }
 
-class TimeRange {
-  final String _key;
-
-  const TimeRange(this._key);
-
+enum TimeRange {
   /// Consists of several years of data and including all new data as it becomes available
-  static const longTerm = TimeRange('long_term');
+  longTerm(key: 'long_term'),
 
   /// Consists of approximately last 6 months
-  static const mediumTerm = TimeRange('medium_term');
+  mediumTerm(key: 'medium_term'),
 
   /// Consists of approximately last 4 weeks
-  static const shortTerm = TimeRange('short_term');
+  shortTerm(key: 'short_term');
+
+  const TimeRange({required String key}) : _key = key;
+
+  final String _key;
 }
 
 enum _TopItemsType { artists, tracks }
