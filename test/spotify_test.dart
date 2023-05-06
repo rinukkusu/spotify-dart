@@ -294,8 +294,8 @@ Future main() async {
       final currentlyPlaying = result.currentlyPlaying;
       final queue = result.queue;
 
-      expect(currentlyPlaying != null, true);
-      expect(queue != null, true);
+      expect(currentlyPlaying, isNotNull);
+      expect(queue, isNotNull);
 
       // Checking the currentlyPlaying data
 
@@ -405,8 +405,9 @@ Future main() async {
 
         var firstEpisode = result.items!.first;
         expect(firstEpisode.type, 'episode');
-        expect(firstEpisode.name != null, true);
+        expect(firstEpisode.name, isNotNull);
         expect(firstEpisode.id, '5Xt5DXGzch68nYYamXrNxZ');
+        expect(firstEpisode.show, isNotNull);
       });
 
       test('containsSavedEpisodes', () async {
@@ -495,9 +496,9 @@ Future main() async {
     test('getAvailableMarkets', () async {
       var result = await spotify.markets.availableMarkets;
       expect(result.isEmpty, false);
-      expect(result.first, Market.CA);
-      expect(result.elementAt(1), Market.BR);
-      expect(result.last, Market.IT);
+      expect(result.first, Market.AD);
+      expect(result.elementAt(1), Market.AE);
+      expect(result.last, Market.ZW);
     });
   });
 

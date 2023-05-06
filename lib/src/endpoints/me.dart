@@ -117,14 +117,14 @@ class Me extends _MeEndpointBase {
   /// Use [state] to toggle the shuffle. `true` to turn shuffle on and `false`
   /// to turn it off respectively.
   /// Returns the current player state by making another request.
-  /// See [player(String market)];
+  /// See [player];
   @Deprecated('Use [spotify.player.shuffle()]')
   Future<PlaybackState?> shuffle(bool state, [String? deviceId]) async =>
       _player.shuffle(state, deviceId: deviceId);
 
   @Deprecated('Use [spotify.player.playbackState()]')
   Future<PlaybackState> player([String? market]) async =>
-      _player.playbackState(market);
+      _player.playbackState(Market.values.asNameMap()[market]);
 
   /// Get the current user's top tracks, spanning over a [timeRange].
   /// The [timeRange]'s default is [TimeRange.mediumTerm].
@@ -167,10 +167,13 @@ class Me extends _MeEndpointBase {
   /// [ids] - the ids of the shows to remove
   /// [market] - An ISO 3166-1 alpha-2 country code. If a country code is
   /// specified, only content that is available in that market will be returned.
-  Future<void> removeShows(List<String> ids, [String market = '']) async {
+  Future<void> removeShows(List<String> ids, [Market? market]) async {
     assert(ids.isNotEmpty, 'No show ids were provided for removing');
-    var query = _buildQuery({'ids': ids.join(','), 'market': market});
-    await _api._delete('$_path/shows?' + query);
+    var queryMap = {
+      'ids': ids.join(','),
+      'market': market?.name,
+    };
+    await _api._delete('$_path/shows?' + _buildQuery(queryMap));
   }
 
   /// Check if passed albums (ids) are saved by current user.

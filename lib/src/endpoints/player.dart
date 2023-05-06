@@ -28,14 +28,14 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// and active device.
   @Deprecated('Use [playbackState] instead')
   Future<PlaybackState> player([String? market]) async {
-    return playbackState(market);
+    return playbackState(Market.values.asNameMap()[market]);
   }
 
   /// Returns the current playback state, including progress, track
   /// and active device.
-  Future<PlaybackState> playbackState([String? market]) async {
-    var jsonString =
-        await _api._get('$_path?' + _buildQuery({'market': market}));
+  Future<PlaybackState> playbackState([Market? market]) async {
+    var jsonString = await _api
+        ._get('$_path?' + _buildQuery({'market': market?.name}));
     final map = json.decode(jsonString);
     return PlaybackState.fromJson(map);
   }

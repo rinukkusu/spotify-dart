@@ -10,18 +10,20 @@ class Episodes extends EndpointBase {
 
   Episodes(SpotifyApiBase api) : super(api);
 
-  Future<EpisodeFull> get(String id, [String? market]) async {
+  Future<EpisodeFull> get(String id, [Market? market]) async {
     assert(id.isNotEmpty, 'No episode id was provided');
-    var jsonString =
-        await _api._get('$_path/$id?' + _buildQuery({'market': market}));
+    var jsonString = await _api
+        ._get('$_path/$id?' + _buildQuery({'market': market?.name}));
     return EpisodeFull.fromJson(jsonDecode(jsonString));
   }
 
-  Future<Iterable<EpisodeFull>> list(List<String> ids,
-      [String? market]) async {
+  Future<Iterable<EpisodeFull>> list(List<String> ids, [Market? market]) async {
     assert(ids.isNotEmpty, 'No episode id\'s were provided');
-    var jsonString = await _api._get(
-        '$_path?' + _buildQuery({'ids': ids.join(','), 'market': market}));
+    var jsonString = await _api._get('$_path?' +
+        _buildQuery({
+          'ids': ids.join(','),
+          'market': market?.name,
+        }));
     var episodesJson = jsonDecode(jsonString)['episodes'] as Iterable<dynamic>;
     return episodesJson.map((json) => EpisodeFull.fromJson(json));
   }

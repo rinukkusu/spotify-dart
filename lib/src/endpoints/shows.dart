@@ -15,10 +15,10 @@ class Shows extends EndpointPaging {
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
-  Future<Show> get(String showId, {String market = ''}) async {
+  Future<Show> get(String showId, {Market? market}) async {
     var jsonString;
-    if (market.isNotEmpty) {
-      var queryMap = {'market': market};
+    if (market != null) {
+      var queryMap = {'market': market.name};
       var query = _buildQuery(queryMap);
       jsonString = await _get('$_path/$showId?$query');
     } else {
@@ -44,8 +44,10 @@ class Shows extends EndpointPaging {
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
-  Pages<Episode> episodes(String showId, {String? market}) {
-    var query = _buildQuery({'market': market});
+  Pages<Episode> episodes(String showId, [Market? market]) {
+    var query = _buildQuery({
+      'market': market?.name,
+    });
     var queryString = query.isNotEmpty ? '?$query' : '';
 
     return _getPages('$_path/$showId/episodes$queryString',
