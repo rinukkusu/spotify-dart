@@ -68,7 +68,7 @@ class AlbumSimple extends Object {
   /// codes. Note that an album is considered available in a market when at least
   /// 1 of its tracks is available in that market.
   @JsonKey(name: 'available_markets')
-  List<String>? availableMarkets;
+  List<Market>? availableMarkets;
 
   /// Known external URLs for this album.
   @JsonKey(name: 'external_urls')
