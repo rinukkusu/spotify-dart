@@ -20,7 +20,7 @@ Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
       ?.map((e) => ArtistSimple.fromJson(e as Map<String, dynamic>))
       .toList()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
-      ?.map((e) => e as String)
+      ?.map((e) => $enumDecode(_$MarketEnumMap, e))
       .toList()
   ..externalUrls = json['external_urls'] == null
       ? null
@@ -48,6 +48,259 @@ Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
   ..label = json['label'] as String?
   ..popularity = json['popularity'] as int?;
 
+const _$MarketEnumMap = {
+  Market.AD: 'AD',
+  Market.AE: 'AE',
+  Market.AF: 'AF',
+  Market.AG: 'AG',
+  Market.AI: 'AI',
+  Market.AL: 'AL',
+  Market.AM: 'AM',
+  Market.AO: 'AO',
+  Market.AQ: 'AQ',
+  Market.AR: 'AR',
+  Market.AS: 'AS',
+  Market.AT: 'AT',
+  Market.AU: 'AU',
+  Market.AW: 'AW',
+  Market.AX: 'AX',
+  Market.AZ: 'AZ',
+  Market.BA: 'BA',
+  Market.BB: 'BB',
+  Market.BD: 'BD',
+  Market.BE: 'BE',
+  Market.BF: 'BF',
+  Market.BG: 'BG',
+  Market.BH: 'BH',
+  Market.BI: 'BI',
+  Market.BJ: 'BJ',
+  Market.BL: 'BL',
+  Market.BM: 'BM',
+  Market.BN: 'BN',
+  Market.BO: 'BO',
+  Market.BQ: 'BQ',
+  Market.BR: 'BR',
+  Market.BS: 'BS',
+  Market.BT: 'BT',
+  Market.BV: 'BV',
+  Market.BW: 'BW',
+  Market.BY: 'BY',
+  Market.BZ: 'BZ',
+  Market.CA: 'CA',
+  Market.CC: 'CC',
+  Market.CD: 'CD',
+  Market.CF: 'CF',
+  Market.CG: 'CG',
+  Market.CH: 'CH',
+  Market.CI: 'CI',
+  Market.CK: 'CK',
+  Market.CL: 'CL',
+  Market.CM: 'CM',
+  Market.CN: 'CN',
+  Market.CO: 'CO',
+  Market.CR: 'CR',
+  Market.CU: 'CU',
+  Market.CV: 'CV',
+  Market.CW: 'CW',
+  Market.CX: 'CX',
+  Market.CY: 'CY',
+  Market.CZ: 'CZ',
+  Market.DE: 'DE',
+  Market.DJ: 'DJ',
+  Market.DK: 'DK',
+  Market.DM: 'DM',
+  Market.DO: 'DO',
+  Market.DZ: 'DZ',
+  Market.EC: 'EC',
+  Market.EE: 'EE',
+  Market.EG: 'EG',
+  Market.EH: 'EH',
+  Market.ER: 'ER',
+  Market.ES: 'ES',
+  Market.ET: 'ET',
+  Market.FI: 'FI',
+  Market.FJ: 'FJ',
+  Market.FK: 'FK',
+  Market.FM: 'FM',
+  Market.FO: 'FO',
+  Market.FR: 'FR',
+  Market.GA: 'GA',
+  Market.GB: 'GB',
+  Market.GD: 'GD',
+  Market.GE: 'GE',
+  Market.GF: 'GF',
+  Market.GG: 'GG',
+  Market.GH: 'GH',
+  Market.GI: 'GI',
+  Market.GL: 'GL',
+  Market.GM: 'GM',
+  Market.GN: 'GN',
+  Market.GP: 'GP',
+  Market.GQ: 'GQ',
+  Market.GR: 'GR',
+  Market.GS: 'GS',
+  Market.GT: 'GT',
+  Market.GU: 'GU',
+  Market.GW: 'GW',
+  Market.GY: 'GY',
+  Market.HK: 'HK',
+  Market.HM: 'HM',
+  Market.HN: 'HN',
+  Market.HR: 'HR',
+  Market.HT: 'HT',
+  Market.HU: 'HU',
+  Market.ID: 'ID',
+  Market.IE: 'IE',
+  Market.IL: 'IL',
+  Market.IM: 'IM',
+  Market.IN: 'IN',
+  Market.IO: 'IO',
+  Market.IQ: 'IQ',
+  Market.IR: 'IR',
+  Market.IS: 'IS',
+  Market.IT: 'IT',
+  Market.JE: 'JE',
+  Market.JM: 'JM',
+  Market.JO: 'JO',
+  Market.JP: 'JP',
+  Market.KE: 'KE',
+  Market.KG: 'KG',
+  Market.KH: 'KH',
+  Market.KI: 'KI',
+  Market.KM: 'KM',
+  Market.KN: 'KN',
+  Market.KP: 'KP',
+  Market.KR: 'KR',
+  Market.KW: 'KW',
+  Market.KY: 'KY',
+  Market.KZ: 'KZ',
+  Market.LA: 'LA',
+  Market.LB: 'LB',
+  Market.LC: 'LC',
+  Market.LI: 'LI',
+  Market.LK: 'LK',
+  Market.LR: 'LR',
+  Market.LS: 'LS',
+  Market.LT: 'LT',
+  Market.LU: 'LU',
+  Market.LV: 'LV',
+  Market.LY: 'LY',
+  Market.MA: 'MA',
+  Market.MC: 'MC',
+  Market.MD: 'MD',
+  Market.ME: 'ME',
+  Market.MF: 'MF',
+  Market.MG: 'MG',
+  Market.MH: 'MH',
+  Market.MK: 'MK',
+  Market.ML: 'ML',
+  Market.MM: 'MM',
+  Market.MN: 'MN',
+  Market.MO: 'MO',
+  Market.MP: 'MP',
+  Market.MQ: 'MQ',
+  Market.MR: 'MR',
+  Market.MS: 'MS',
+  Market.MT: 'MT',
+  Market.MU: 'MU',
+  Market.MV: 'MV',
+  Market.MW: 'MW',
+  Market.MX: 'MX',
+  Market.MY: 'MY',
+  Market.MZ: 'MZ',
+  Market.NA: 'NA',
+  Market.NC: 'NC',
+  Market.NE: 'NE',
+  Market.NF: 'NF',
+  Market.NG: 'NG',
+  Market.NI: 'NI',
+  Market.NL: 'NL',
+  Market.NO: 'NO',
+  Market.NP: 'NP',
+  Market.NR: 'NR',
+  Market.NU: 'NU',
+  Market.NZ: 'NZ',
+  Market.OM: 'OM',
+  Market.PA: 'PA',
+  Market.PE: 'PE',
+  Market.PF: 'PF',
+  Market.PG: 'PG',
+  Market.PH: 'PH',
+  Market.PK: 'PK',
+  Market.PL: 'PL',
+  Market.PM: 'PM',
+  Market.PN: 'PN',
+  Market.PR: 'PR',
+  Market.PS: 'PS',
+  Market.PT: 'PT',
+  Market.PW: 'PW',
+  Market.PY: 'PY',
+  Market.QA: 'QA',
+  Market.RE: 'RE',
+  Market.RO: 'RO',
+  Market.RS: 'RS',
+  Market.RU: 'RU',
+  Market.RW: 'RW',
+  Market.SA: 'SA',
+  Market.SB: 'SB',
+  Market.SC: 'SC',
+  Market.SD: 'SD',
+  Market.SE: 'SE',
+  Market.SG: 'SG',
+  Market.SH: 'SH',
+  Market.SI: 'SI',
+  Market.SJ: 'SJ',
+  Market.SK: 'SK',
+  Market.SL: 'SL',
+  Market.SM: 'SM',
+  Market.SN: 'SN',
+  Market.SO: 'SO',
+  Market.SR: 'SR',
+  Market.SS: 'SS',
+  Market.ST: 'ST',
+  Market.SV: 'SV',
+  Market.SX: 'SX',
+  Market.SY: 'SY',
+  Market.SZ: 'SZ',
+  Market.TC: 'TC',
+  Market.TD: 'TD',
+  Market.TF: 'TF',
+  Market.TG: 'TG',
+  Market.TH: 'TH',
+  Market.TJ: 'TJ',
+  Market.TK: 'TK',
+  Market.TL: 'TL',
+  Market.TM: 'TM',
+  Market.TN: 'TN',
+  Market.TO: 'TO',
+  Market.TR: 'TR',
+  Market.TT: 'TT',
+  Market.TV: 'TV',
+  Market.TW: 'TW',
+  Market.TZ: 'TZ',
+  Market.UA: 'UA',
+  Market.UG: 'UG',
+  Market.UM: 'UM',
+  Market.US: 'US',
+  Market.UY: 'UY',
+  Market.UZ: 'UZ',
+  Market.VA: 'VA',
+  Market.VC: 'VC',
+  Market.VE: 'VE',
+  Market.VG: 'VG',
+  Market.VI: 'VI',
+  Market.VN: 'VN',
+  Market.VU: 'VU',
+  Market.WF: 'WF',
+  Market.WS: 'WS',
+  Market.XK: 'XK',
+  Market.YE: 'YE',
+  Market.YT: 'YT',
+  Market.ZA: 'ZA',
+  Market.ZM: 'ZM',
+  Market.ZW: 'ZW',
+};
+
 const _$DatePrecisionEnumMap = {
   DatePrecision.day: 'day',
   DatePrecision.month: 'month',
@@ -60,7 +313,7 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) => AlbumSimple()
       ?.map((e) => ArtistSimple.fromJson(e as Map<String, dynamic>))
       .toList()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
-      ?.map((e) => e as String)
+      ?.map((e) => $enumDecode(_$MarketEnumMap, e))
       .toList()
   ..externalUrls = json['external_urls'] == null
       ? null
@@ -445,7 +698,7 @@ RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) =>
 
 Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
-      ?.map((e) => e as String)
+      ?.map((e) => $enumDecode(_$MarketEnumMap, e))
       .toList()
   ..copyrights = (json['copyrights'] as List<dynamic>?)
       ?.map((e) => Copyright.fromJson(e as Map<String, dynamic>))
@@ -533,7 +786,7 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
       ?.map((e) => Artist.fromJson(e as Map<String, dynamic>))
       .toList()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
-      ?.map((e) => e as String)
+      ?.map((e) => $enumDecode(_$MarketEnumMap, e))
       .toList()
   ..discNumber = json['disc_number'] as int?
   ..durationMs = json['duration_ms'] as int?
@@ -562,7 +815,7 @@ TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) => TrackSimple()
       ?.map((e) => Artist.fromJson(e as Map<String, dynamic>))
       .toList()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
-      ?.map((e) => e as String)
+      ?.map((e) => $enumDecode(_$MarketEnumMap, e))
       .toList()
   ..discNumber = json['disc_number'] as int?
   ..durationMs = json['duration_ms'] as int?
@@ -605,7 +858,7 @@ TracksLink _$TracksLinkFromJson(Map<String, dynamic> json) => TracksLink()
 
 User _$UserFromJson(Map<String, dynamic> json) => User()
   ..birthdate = json['birthdate'] as String?
-  ..country = json['country'] as String?
+  ..country = $enumDecodeNullable(_$MarketEnumMap, json['country'])
   ..displayName = json['display_name'] as String?
   ..email = json['email'] as String?
   ..followers = json['followers'] == null

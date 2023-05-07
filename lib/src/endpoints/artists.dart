@@ -18,11 +18,17 @@ class Artists extends EndpointPaging {
     return Artist.fromJson(map);
   }
 
-  /// Returns the top tracks of an artist with its [artistId] inside a [countryCode]
-  Future<Iterable<Track>> getTopTracks(
-      String artistId, String countryCode) async {
-    var jsonString =
-        await _api._get('$_path/$artistId/top-tracks?country=$countryCode');
+  /// Returns the top tracks of an artist with its [artistId] inside a [country]
+  @Deprecated('Use [topTracks] instead')
+  Future<Iterable<Track>> getTopTracks(String artistId, Market country) async =>
+      topTracks(artistId, country);
+
+  /// Returns the top tracks of an artist with its [artistId] inside a [country]
+  Future<Iterable<Track>> topTracks(String artistId, Market country) async {
+    var query = _buildQuery({
+      'country': country.name,
+    });
+    var jsonString = await _api._get('$_path/$artistId/top-tracks?$query');
     var map = json.decode(jsonString);
 
     var topTracks = map['tracks'] as Iterable<dynamic>;

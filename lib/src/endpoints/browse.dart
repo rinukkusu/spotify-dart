@@ -13,8 +13,8 @@ class Browse extends EndpointPaging {
   /// parameter if you want to narrow the list of returned new releases to those
   /// relevant to a particular country. If omitted, the returned items will be
   /// globally relevant.
-  Pages<AlbumSimple> getNewReleases({String? country}) {
-    var params = _buildQuery({'country': country});
+  Pages<AlbumSimple> getNewReleases({Market? country}) {
+    var params = _buildQuery({'country': country?.name});
 
     return _getPages(
         '$_path/new-releases?$params',
