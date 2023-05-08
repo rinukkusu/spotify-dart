@@ -20,8 +20,12 @@ class Artists extends EndpointPaging {
 
   /// Returns the top tracks of an artist with its [artistId] inside a [country]
   @Deprecated('Use [topTracks] instead')
-  Future<Iterable<Track>> getTopTracks(String artistId, Market country) async =>
-      topTracks(artistId, country);
+  Future<Iterable<Track>> getTopTracks(String artistId, String country) {
+    var contains = Market.values.asNameMap().containsKey(country);
+    assert(contains == true,
+        'The country code $country does not match with any Market enum value');
+    return topTracks(artistId, Market.values.asNameMap()[country]!);
+  }
 
   /// Returns the top tracks of an artist with its [artistId] inside a [country]
   Future<Iterable<Track>> topTracks(String artistId, Market country) async {
