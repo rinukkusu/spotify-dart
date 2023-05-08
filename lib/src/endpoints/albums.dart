@@ -28,8 +28,10 @@ class Albums extends EndpointPaging {
   }
 
   /// Returns the tracks of a given [albumId]
-  Pages<TrackSimple> getTracks(String albumId) {
-    return _getPages(
-        '$_path/$albumId/tracks', (json) => TrackSimple.fromJson(json));
-  }
+  @Deprecated('Use [tracks] instead')
+  Pages<TrackSimple> getTracks(String albumId) => tracks(albumId);
+
+  /// Returns the tracks of a given [albumId]
+  Pages<TrackSimple> tracks(String albumId) =>
+      _getPages('$_path/$albumId/tracks', (json) => TrackSimple.fromJson(json));
 }
