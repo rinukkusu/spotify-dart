@@ -35,22 +35,17 @@ class Artists extends EndpointPaging {
       relatedArtists(artistId);
 
   /// Retrieves multiple artists with [artistIds]
-  Future<Iterable<Artist>> list(Iterable<String> artistIds) async {
-    var jsonString = await _api._get('$_path?ids=${artistIds.join(',')}');
-    var map = json.decode(jsonString);
-
-    var artistsMap = map['artists'] as Iterable<dynamic>;
-    return artistsMap.map((m) => Artist.fromJson(m));
-  }
+  Future<Iterable<Artist>> list(List<String> artistIds) async => _listWithIds(
+      path: _path,
+      ids: artistIds,
+      jsonKey: 'artists',
+      fromJson: Artist.fromJson);
 
   /// Returns related artists based on the artist with its [artistId]
-  Future<Iterable<Artist>> relatedArtists(String artistId) async {
-    var jsonString = await _api._get('$_path/$artistId/related-artists');
-    var map = json.decode(jsonString);
-
-    var artistsMap = map['artists'] as Iterable<dynamic>;
-    return artistsMap.map((m) => Artist.fromJson(m));
-  }
+  Future<Iterable<Artist>> relatedArtists(String artistId) async => _list(
+      path: '$_path/$artistId/related-artists',
+      jsonKey: 'artists',
+      fromJson: Artist.fromJson);
 
   /// [includeGroups] - A comma-separated list of keywords that will be used to
   /// filter the response. If not supplied, all album types will be returned.

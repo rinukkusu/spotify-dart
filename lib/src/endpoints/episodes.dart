@@ -12,19 +12,17 @@ class Episodes extends EndpointBase {
 
   Future<EpisodeFull> get(String id, [Market? market]) async {
     assert(id.isNotEmpty, 'No episode id was provided');
-    var jsonString = await _api
-        ._get('$_path/$id?' + _buildQuery({'market': market?.name}));
+    var jsonString =
+        await _api._get('$_path/$id?' + _buildQuery({'market': market?.name}));
     return EpisodeFull.fromJson(jsonDecode(jsonString));
   }
 
-  Future<Iterable<EpisodeFull>> list(List<String> ids, [Market? market]) async {
-    assert(ids.isNotEmpty, 'No episode id\'s were provided');
-    var jsonString = await _api._get('$_path?' +
-        _buildQuery({
-          'ids': ids.join(','),
-          'market': market?.name,
-        }));
-    var episodesJson = jsonDecode(jsonString)['episodes'] as Iterable<dynamic>;
-    return episodesJson.map((json) => EpisodeFull.fromJson(json));
-  }
+  Future<Iterable<EpisodeFull>> list(List<String> ids,
+          [Market? market]) async =>
+      _listWithIds(
+          path: _path,
+          ids: ids,
+          jsonKey: 'episodes',
+          fromJson: EpisodeFull.fromJson,
+          optionalParams: {'market': market?.name});
 }

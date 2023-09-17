@@ -31,13 +31,8 @@ class Shows extends EndpointPaging {
   }
 
   /// Get one or several shows
-  Future<Iterable<Show>> list(List<String> showsId) async {
-    final jsonString = await _get('$_path?ids=${showsId.join(',')}');
-    final map = json.decode(jsonString);
-
-    final showsMap = map['shows'] as Iterable<dynamic>;
-    return showsMap.map((m) => Show.fromJson(m));
-  }
+  Future<Iterable<Show>> list(List<String> showsId) async => _listWithIds(
+      path: _path, ids: showsId, jsonKey: 'shows', fromJson: Show.fromJson);
 
   /// Get a Show's Episodes
   ///

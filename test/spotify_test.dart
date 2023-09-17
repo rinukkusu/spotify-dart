@@ -134,6 +134,16 @@ Future main() async {
       expect(artists.length, 2);
     });
 
+    test('getRelatedArtists', () async {
+      var relatedArtists =
+          await spotify.artists.relatedArtists('0TnOYISbd1XYRBk9myaseg');
+      var first = relatedArtists.first;
+      expect(first.id, '0jnsk9HBra6NMjO2oANoPY');
+      expect(first.href,
+          'https://api.spotify.com/v1/artists/0jnsk9HBra6NMjO2oANoPY');
+      expect(first.name, 'Flo Rida');
+    });
+
     test('getError', () async {
       spotify.mockHttpErrors =
           [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
