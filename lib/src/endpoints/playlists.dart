@@ -257,8 +257,8 @@ class Playlists extends EndpointPaging {
   ///
   /// [categoryId] - the Spotify category ID for the category.
   Pages<PlaylistSimple> getByCategoryId(String categoryId,
-      {String? country, String? locale}) {
-    final query = _buildQuery({'country': country, 'locale': locale});
+      {Market? country, String? locale}) {
+    final query = _buildQuery({'country': country?.name, 'locale': locale});
 
     return _getPages(
         '$_path/categories/$categoryId/playlists?$query',
