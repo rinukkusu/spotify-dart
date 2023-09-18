@@ -23,12 +23,8 @@ class Tracks extends EndpointBase {
     return Track.fromJson(map);
   }
 
-  Future<Iterable<Track>> list(Iterable<String> trackIds) async {
-    final jsonString = await _api._get('$_path?ids=${trackIds.join(',')}');
-    final map = json.decode(jsonString);
-    final artistsMap = map['tracks'] as Iterable<dynamic>;
-    return artistsMap.map((m) => Track.fromJson(m));
-  }
+  Future<Iterable<Track>> list(List<String> trackIds) async => _listWithIds(
+      path: _path, ids: trackIds, jsonKey: 'tracks', fromJson: Track.fromJson);
 
   /// queries track batches of size [queryLimit] from [trackIds] and yields Track object Iterables
   Stream<Iterable<Track>> listInBatches(Iterable<String> trackIds,

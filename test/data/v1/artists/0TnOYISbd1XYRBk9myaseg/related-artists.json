@@ -1,0 +1,42 @@
+{
+  "artists": [
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/0jnsk9HBra6NMjO2oANoPY"
+      },
+      "followers": {
+        "href": null,
+        "total": 8953912
+      },
+      "genres": [
+        "dance pop",
+        "miami hip hop",
+        "pop",
+        "pop rap"
+      ],
+      "href": "https://api.spotify.com/v1/artists/0jnsk9HBra6NMjO2oANoPY",
+      "id": "0jnsk9HBra6NMjO2oANoPY",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab6761610000e5eb655ca8f3196953554b479452",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/ab67616100005174655ca8f3196953554b479452",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/ab6761610000f178655ca8f3196953554b479452",
+          "width": 160
+        }
+      ],
+      "name": "Flo Rida",
+      "popularity": 77,
+      "type": "artist",
+      "uri": "spotify:artist:0jnsk9HBra6NMjO2oANoPY"
+    }
+  ]
+}

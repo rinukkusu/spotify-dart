@@ -19,11 +19,10 @@ class AudioFeatures extends EndpointBase {
   }
 
   /// Retrieve multiple audio features of tracks with [trackIds]
-  Future<Iterable<AudioFeature>> list(Iterable<String> trackIds) async {
-    var jsonString = await _api._get('$_path?ids=${trackIds.join(',')}');
-    var map = json.decode(jsonString);
-
-    var artistsMap = map['audio_features'] as Iterable<dynamic>;
-    return artistsMap.map((m) => AudioFeature.fromJson(m));
-  }
+  Future<Iterable<AudioFeature>> list(List<String> trackIds) async =>
+      _listWithIds(
+          path: _path,
+          ids: trackIds,
+          jsonKey: 'audio_features',
+          fromJson: AudioFeature.fromJson);
 }

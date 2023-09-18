@@ -19,13 +19,8 @@ class Albums extends EndpointPaging {
   }
 
   /// Returns album informations about a list of [albumIds]
-  Future<Iterable<Album>> list(Iterable<String> albumIds) async {
-    var jsonString = await _get('$_path?ids=${albumIds.join(',')}');
-    var map = json.decode(jsonString);
-
-    var artistsMap = map['albums'] as Iterable<dynamic>;
-    return artistsMap.map((m) => Album.fromJson(m));
-  }
+  Future<Iterable<Album>> list(List<String> albumIds) async => _listWithIds(
+      path: _path, ids: albumIds, jsonKey: 'albums', fromJson: Album.fromJson);
 
   /// Returns the tracks of a given [albumId]
   @Deprecated('Use [tracks] instead')
