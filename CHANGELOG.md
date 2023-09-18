@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0
+
+- improve authorization scope handling
+- add audio analysis endpoint
+- add transfer playback endpoint
+- improve usage of Market throughout exposed library code
+- upgrade dependencies and enable Dart SDK 3.0 compatibility
+
 ## 0.11.0
 
 - remove deprecated library entrypoints
