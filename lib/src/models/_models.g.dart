@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of spotify.models;
+part of '_models.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

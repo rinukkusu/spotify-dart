@@ -9,7 +9,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
-import 'package:pedantic/pedantic.dart';
 import 'package:spotify/spotify.dart';
 
 import 'src/models/_models.dart';
