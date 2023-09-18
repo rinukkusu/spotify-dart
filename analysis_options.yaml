@@ -1,10 +1,10 @@
-include: package:pedantic/analysis_options.yaml
+include: package:lints/recommended.yaml
 
 analyzer:
 #   exclude:
 #     - path/to/excluded/files/**
 
-# Lint rules and documentation, see http://dart-lang.github.io/linter/lints
+# Lint rules and documentation, see https://dart.dev/tools/linter-rules
 linter:
   rules:
     - cancel_subscriptions
