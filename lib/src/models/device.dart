@@ -32,6 +32,7 @@ class Device extends Object {
 
   /// [DeviceType], such as [DeviceType.Computer], [DeviceType.Smartphone] or
   /// [DeviceType.Speaker].
+  @JsonKey(unknownEnumValue: DeviceType.Unknown)
   DeviceType? type;
 
   /// The current volume in percent. This may be `null`.

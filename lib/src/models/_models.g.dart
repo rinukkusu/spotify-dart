@@ -485,7 +485,8 @@ Device _$DeviceFromJson(Map<String, dynamic> json) => Device()
   ..isPrivateSession = json['is_private_session'] as bool? ?? false
   ..isRestricted = json['is_restricted'] as bool? ?? false
   ..name = json['name'] as String?
-  ..type = $enumDecodeNullable(_$DeviceTypeEnumMap, json['type'])
+  ..type = $enumDecodeNullable(_$DeviceTypeEnumMap, json['type'],
+      unknownValue: DeviceType.Unknown)
   ..volumePercent = json['volume_percent'] as int?;
 
 const _$DeviceTypeEnumMap = {
