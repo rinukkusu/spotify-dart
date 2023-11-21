@@ -32,6 +32,8 @@ class Device extends Object {
 
   /// [DeviceType], such as [DeviceType.Computer], [DeviceType.Smartphone] or
   /// [DeviceType.Speaker].
+  ///
+  /// Sets to [DeviceType.Unknown] if the type is not supported.
   @JsonKey(unknownEnumValue: DeviceType.Unknown)
   DeviceType? type;
 
