@@ -546,7 +546,7 @@ PlaybackState _$PlaybackStateFromJson(Map<String, dynamic> json) =>
       ..context = json['context'] == null
           ? null
           : PlayerContext.fromJson(json['context'] as Map<String, dynamic>)
-      ..progress_ms = json['progress_ms'] as int?
+      ..progressMs = json['progress_ms'] as int?
       ..item = json['item'] == null
           ? null
           : Track.fromJson(json['item'] as Map<String, dynamic>)
@@ -576,7 +576,7 @@ const _$RepeatStateEnumMap = {
 
 PlayerContext _$PlayerContextFromJson(Map<String, dynamic> json) =>
     PlayerContext()
-      ..external_urls = json['external_urls'] == null
+      ..externalUrls = json['external_urls'] == null
           ? null
           : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
       ..href = json['href'] as String?

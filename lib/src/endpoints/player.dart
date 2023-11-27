@@ -18,8 +18,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved after setting the volume. Defaults to true.
   Future<PlaybackState?> shuffle(bool state,
       {String? deviceId, bool retrievePlaybackState = true}) async {
-    await _api._put('$_path/shuffle?' +
-        _buildQuery({'state': state, 'deviceId': deviceId}));
+    await _api._put('$_path/shuffle?${_buildQuery({'state': state, 'deviceId': deviceId})}');
 
     return retrievePlaybackState ? playbackState() : null;
   }
@@ -34,8 +33,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// Returns the current playback state, including progress, track
   /// and active device.
   Future<PlaybackState> playbackState([Market? market]) async {
-    var jsonString = await _api
-        ._get('$_path?' + _buildQuery({'market': market?.name}));
+    var jsonString =
+        await _api._get('$_path?${_buildQuery({'market': market?.name})}');
     final map = json.decode(jsonString);
     return PlaybackState.fromJson(map);
   }
@@ -87,6 +86,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// from the context's current track.
   /// [retrievePlaybackState] is optional. If true, the current playback state
   /// will be retrieved. Defaults to true.
+  @Deprecated("Use `startOrResumeTracks` or `startOrResumeContext` instead")
   Future<PlaybackState?> startOrResume(
       {String? deviceId,
       StartOrResumeOptions? options,
@@ -94,10 +94,44 @@ class PlayerEndpoint extends _MeEndpointBase {
     var body = options?.toJson();
     var json = jsonEncode(body ?? '');
 
-    await _api._put(
-        '$_path/play?' + _buildQuery({'device_id': deviceId}), json);
+    await _api._put('$_path/play?${_buildQuery({'device_id': deviceId})}', json);
 
     return retrievePlaybackState ? playbackState() : null;
+  }
+
+  /// Start a new context with given [uris] or resume current playback on the 
+  /// user's active device.
+  /// [deviceId] is optional. If not provided, the user's currently active device
+  /// is the target.
+  /// [uris] is optional. If not provided, playback will start
+  /// from the context's current track.
+  /// [retrievePlaybackState] is optional. If `true`, the current [PlaybackState]
+  /// will be retrieved. Defaults to `true`.
+  Future<PlaybackState?> startOrResumeTracks(
+      {String? deviceId,
+      List<String> uris = const [],
+      int positionMs = 0,
+      bool retrievePlaybackState = true}) async {
+    assert(uris.isNotEmpty, "No uris provided to start of resume playback");
+
+    var options = StartOrResumeOptions(uris: uris, positionMs: positionMs);
+    return startOrResume(
+        deviceId: deviceId,
+        options: options,
+        retrievePlaybackState: retrievePlaybackState);
+  }
+
+    Future<PlaybackState?> startOrResumeContext(
+      {String? deviceId,
+      String? contextUri,
+      Offset? offset,
+      bool retrievePlaybackState = true}) async {
+    
+    var options = StartOrResumeOptions(contextUri: contextUri, offset: offset);
+    return startOrResume(
+        deviceId: deviceId,
+        options: options,
+        retrievePlaybackState: retrievePlaybackState);
   }
 
   /// Pause playback on the user's account.
@@ -107,7 +141,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Defaults to true.
   Future<PlaybackState?> pause(
       {String? deviceId, bool retrievePlaybackState = true}) async {
-    await _api._put('$_path/pause?' + _buildQuery({'device_id': deviceId}));
+    await _api._put('$_path/pause?${_buildQuery({'device_id': deviceId})}');
 
     return retrievePlaybackState ? playbackState() : null;
   }
@@ -119,7 +153,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Defaults to true.
   Future<PlaybackState?> previous(
       {String? deviceId, bool retrievePlaybackState = true}) async {
-    await _api._post('$_path/previous?' + _buildQuery({'device_id': deviceId}));
+    await _api._post('$_path/previous?${_buildQuery({'device_id': deviceId})}');
 
     return retrievePlaybackState ? playbackState() : null;
   }
@@ -131,7 +165,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Defaults to true.
   Future<PlaybackState?> next(
       {String? deviceId, bool retrievePlaybackState = true}) async {
-    await _api._post('$_path/next?' + _buildQuery({'device_id': deviceId}));
+    await _api._post('$_path/next?${_buildQuery({'device_id': deviceId})}');
 
     return retrievePlaybackState ? playbackState() : null;
   }
@@ -145,8 +179,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   Future<PlaybackState?> seek(int positionMs,
       {String? deviceId, bool retrievePlaybackState = true}) async {
     assert(positionMs >= 0, 'positionMs must be greater or equal to 0');
-    await _api._put('$_path/seek?' +
-        _buildQuery({'position_ms': positionMs, 'device_id': deviceId}));
+    await _api._put('$_path/seek?${_buildQuery({'position_ms': positionMs, 'device_id': deviceId})}');
 
     return retrievePlaybackState ? playbackState() : null;
   }
@@ -160,11 +193,10 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Defaults to true.
   Future<PlaybackState?> repeat(RepeatState state,
       {String? deviceId, bool retrievePlaybackState = true}) async {
-    await _api._put('$_path/repeat?' +
-        _buildQuery({
+    await _api._put('$_path/repeat?${_buildQuery({
           'state': state.toString().split('.').last,
           'device_id': deviceId
-        }));
+        })}');
 
     return retrievePlaybackState ? playbackState() : null;
   }
@@ -180,8 +212,7 @@ class PlayerEndpoint extends _MeEndpointBase {
       {String? deviceId, bool retrievePlaybackState = true}) async {
     assert(volumePercent >= 0 && volumePercent <= 100,
         'Volume must be between 0 and 100');
-    await _api._put('$_path/volume?' +
-        _buildQuery({'volume_percent': volumePercent, 'device_id': deviceId}));
+    await _api._put('$_path/volume?${_buildQuery({'volume_percent': volumePercent, 'device_id': deviceId})}');
 
     return retrievePlaybackState ? playbackState() : null;
   }
