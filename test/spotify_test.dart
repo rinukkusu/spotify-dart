@@ -268,7 +268,7 @@ Future main() async {
 
     test('Devices', () async {
       var result = await spotify.player.devices();
-      expect(result.length, 1);
+      expect(result.length, 2);
       expect(result.first.id, '5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e');
       expect(result.first.isActive, true);
       expect(result.first.isRestricted, true);
@@ -276,6 +276,10 @@ Future main() async {
       expect(result.first.name, 'My fridge');
       expect(result.first.type, DeviceType.Computer);
       expect(result.first.volumePercent, 100);
+
+      // the second entry does not have a valid [DeviceType], 
+      // and should have `Unknown` instead.
+      expect(result.last.type, DeviceType.Unknown);
     });
 
     test('recentlyPlayed', () async {

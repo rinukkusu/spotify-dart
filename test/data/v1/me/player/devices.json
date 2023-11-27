@@ -8,6 +8,15 @@
             "name": "My fridge",
             "type": "Computer",
             "volume_percent": 100
+        },
+        {
+            "id": "5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e",
+            "is_active": true,
+            "is_private_session": true,
+            "is_restricted": true,
+            "name": "SamsungGalaxy S3",
+            "type": "SmartWatch",
+            "volume_percent": 100
         }
     ]
 }
