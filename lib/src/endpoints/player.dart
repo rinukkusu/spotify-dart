@@ -112,7 +112,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Default's to `true`.
   ///
   /// Note: Before starting a new playback context check the [playbackState]
-  /// if necessary before [resume]ing.
+  /// if necessary before [resume]ing, otherwise you overwrite the current
+  /// context.
   Future<PlaybackState?> startWithTracks(List<String> trackUris,
       {String? deviceId,
       int positionMs = 0,
@@ -134,7 +135,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Default's to `true`.
   ///
   /// Note: Before starting a new playback context check the [playbackState]
-  /// if necessary before [resume]ing.
+  /// if necessary before [resume]ing, otherwise you overwrite the current
+  /// context. 
   Future<PlaybackState?> startWithContext(String contextUri,
       {String? deviceId,
       Offset? offset,
