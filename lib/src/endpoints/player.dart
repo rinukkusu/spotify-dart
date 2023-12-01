@@ -89,7 +89,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// from the context's current track.
   /// [retrievePlaybackState] is optional. If true, the current playback state
   /// will be retrieved. Defaults to true.
-  @Deprecated("Use `startWithTracks` or `startWithContext` instead")
+  @Deprecated(
+      "Use `startWithTracks()` or `startWithContext()` to start a new context and resume() instead")
   Future<PlaybackState?> startOrResume(
       {String? deviceId,
       StartOrResumeOptions? options,
@@ -103,17 +104,17 @@ class PlayerEndpoint extends _MeEndpointBase {
     return retrievePlaybackState ? playbackState() : null;
   }
 
-  /// Start a new playback context with given [trackUris] or resume current playback on the
-  /// user's active device.
-  /// [deviceId] is optional. If not provided, the user's currently active device
-  /// is the target.
-  /// [trackUris] is optional. If not provided, playback will start
-  /// from the context's current track.
+  /// Start a new playback context with given [trackUris] and with given optional
+  /// [deviceId]. If not provided, the user's currently active device
+  /// is the target. Playback can also start at [positionMs], which is set to `0`
+  /// by default.
   /// [retrievePlaybackState] is optional. If `true`, the current [PlaybackState]
   /// will be retrieved. Default's to `true`.
-  Future<PlaybackState?> startWithTracks(
+  ///
+  /// Note: Before starting a new playback context check the [playbackState]
+  /// if necessary before [resume]ing.
+  Future<PlaybackState?> startWithTracks(List<String> trackUris,
       {String? deviceId,
-      List<String> trackUris = const [],
       int positionMs = 0,
       bool retrievePlaybackState = true}) async {
     assert(trackUris.isNotEmpty, 'Cannot start playback with empty track uris');
@@ -127,18 +128,19 @@ class PlayerEndpoint extends _MeEndpointBase {
   }
 
   /// Start a new playback context (album, playlist) with given a [contextUri].
-  /// [deviceId] is optional. If not provided, the user's currently active device
-  /// is the target.
-  /// [contextUri] is optional. If not provided, playback will start
-  /// from the context's current track.
+  /// and given optional [deviceId]. If not provided, the user's currently active
+  /// device is the target. Set [Offset] to start playback at a specific point.
   /// [retrievePlaybackState] is optional. If `true`, the current [PlaybackState]
   /// will be retrieved. Default's to `true`.
-  Future<PlaybackState?> startWithContext(
+  ///
+  /// Note: Before starting a new playback context check the [playbackState]
+  /// if necessary before [resume]ing.
+  Future<PlaybackState?> startWithContext(String contextUri,
       {String? deviceId,
-      String? contextUri,
       Offset? offset,
       bool retrievePlaybackState = true}) async {
-    assert(contextUri?.isNotEmpty ?? false, 'Cannot start playback with empty context uri');
+    assert(
+        contextUri.isNotEmpty, 'Cannot start playback with empty context uri');
     var options = StartOrResumeOptions(contextUri: contextUri, offset: offset);
     return startOrResume(
         deviceId: deviceId,
