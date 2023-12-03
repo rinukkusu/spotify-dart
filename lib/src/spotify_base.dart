@@ -45,6 +45,8 @@ abstract class SpotifyApiBase {
   Shows get shows => _shows;
   FutureOr<oauth2.Client> get client => _client;
 
+  Logger logger = Logger('spotify-dart');
+
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
     _client = client as FutureOr<oauth2.Client>;
 
@@ -114,6 +116,8 @@ abstract class SpotifyApiBase {
             : null);
   }
 
+  
+
   static FutureOr<oauth2.Client> _getOauth2Client(
       SpotifyApiCredentials credentials, http.Client? httpClient,
       [Function(SpotifyApiCredentials)? callBack]) async {
@@ -137,7 +141,7 @@ abstract class SpotifyApiBase {
         oauthCredentials = await oauthCredentials.refresh(
           identifier: credentials.clientId,
           secret: credentials.clientSecret,
-          httpClient: httpClient,
+          httpClient: SpotifyHttpClient(httpClient, ,
         );
         credentialRefreshedWrapperCallback(oauthCredentials);
       }
@@ -222,9 +226,8 @@ abstract class SpotifyApiBase {
     throw SpotifyException('Could not complete request');
   }
 
-  Future<SpotifyApiCredentials> getCredentials() async {
-    return SpotifyApiCredentials._fromClient(await _client);
-  }
+  Future<SpotifyApiCredentials> getCredentials() async =>
+      SpotifyApiCredentials._fromClient(await _client);
 
   String handleErrors(http.Response response) {
     final responseBody = utf8.decode(response.bodyBytes);

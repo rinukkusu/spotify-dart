@@ -16,6 +16,8 @@ import 'src/models/_models.dart';
 export 'package:oauth2/oauth2.dart'
     show AuthorizationException, ExpirationException;
 
+import 'package:logging/logging.dart';
+
 export 'src/models/_models.dart';
 
 part 'src/endpoints/albums.dart';
@@ -42,3 +44,4 @@ part 'src/spotify_credentials.dart';
 part 'src/spotify_exception.dart';
 part 'src/utils.dart';
 part 'src/authorization_scope.dart';
+part 'src/spotify_httpclient.dart';
