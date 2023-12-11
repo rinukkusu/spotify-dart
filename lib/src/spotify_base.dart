@@ -10,7 +10,7 @@ abstract class SpotifyApiBase {
       'https://accounts.spotify.com/authorize';
 
   bool _shouldWait = false;
-  late FutureOr<oauth2.Client> _client;
+  late FutureOr<SpotifyHttpClient> _client;
   late Artists _artists;
   Artists get artists => _artists;
   late Albums _albums;
@@ -43,12 +43,12 @@ abstract class SpotifyApiBase {
   PlayerEndpoint get player => _player;
   late Shows _shows;
   Shows get shows => _shows;
-  FutureOr<oauth2.Client> get client => _client;
+  FutureOr<SpotifyHttpClient> get client => _client;
 
   Logger logger = Logger('spotify-dart');
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
-    _client = client as FutureOr<oauth2.Client>;
+    _client = client as FutureOr<SpotifyHttpClient>;
 
     _artists = Artists(this);
     _albums = Albums(this);
@@ -70,15 +70,17 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
       [http.Client? httpClient, Function(SpotifyApiCredentials)? callBack])
-      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
+      : this.fromClient(SpotifyHttpClient(
+            _getOauth2Client(credentials, httpClient, callBack)));
 
   SpotifyApiBase.fromAuthCodeGrant(
       oauth2.AuthorizationCodeGrant grant, String responseUri)
-      : this.fromClient(grant.handleAuthorizationResponse(
-            Uri.parse(responseUri).queryParameters));
+      : this.fromClient(SpotifyHttpClient(grant.handleAuthorizationResponse(
+            Uri.parse(responseUri).queryParameters)));
 
   SpotifyApiBase._withAccessToken(String accessToken)
-      : this.fromClient(oauth2.Client(oauth2.Credentials(accessToken)));
+      : this.fromClient(
+            SpotifyHttpClient(oauth2.Client(oauth2.Credentials(accessToken))));
 
   static Future<SpotifyApi> _asyncFromCredentials(
     SpotifyApiCredentials credentials, [
@@ -102,7 +104,7 @@ abstract class SpotifyApiBase {
         Uri.parse(SpotifyApiBase._authorizationUrl),
         Uri.parse(SpotifyApiBase._tokenUrl),
         secret: credentials.clientSecret,
-        httpClient: httpClient,
+        httpClient: SpotifyHttpClient(httpClient),
         onCredentialsRefreshed: callBack != null
             ? (oauth2.Credentials cred) {
                 final newCredentials = SpotifyApiCredentials(
@@ -115,8 +117,6 @@ abstract class SpotifyApiBase {
               }
             : null);
   }
-
-  
 
   static FutureOr<oauth2.Client> _getOauth2Client(
       SpotifyApiCredentials credentials, http.Client? httpClient,
@@ -139,10 +139,9 @@ abstract class SpotifyApiBase {
 
       if (oauthCredentials.isExpired) {
         oauthCredentials = await oauthCredentials.refresh(
-          identifier: credentials.clientId,
-          secret: credentials.clientSecret,
-          httpClient: SpotifyHttpClient(httpClient, ,
-        );
+            identifier: credentials.clientId,
+            secret: credentials.clientSecret,
+            httpClient: httpClient);
         credentialRefreshedWrapperCallback(oauthCredentials);
       }
 
@@ -227,7 +226,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async =>
-      SpotifyApiCredentials._fromClient(await _client);
+      SpotifyApiCredentials._fromClient((await _client).delegate));
 
   String handleErrors(http.Response response) {
     final responseBody = utf8.decode(response.bodyBytes);

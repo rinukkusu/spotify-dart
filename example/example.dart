@@ -11,6 +11,8 @@ void main() async {
 
   var credentials = SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   var spotify = SpotifyApi(credentials);
+  spotify.enableLogging = true;
+  spotify.loggingDetail = LoggingDetail.simple;
 
   print('\nPodcast:');
   await spotify.shows
