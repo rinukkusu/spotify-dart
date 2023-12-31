@@ -226,7 +226,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async =>
-      SpotifyApiCredentials._fromClient((await _client)));
+      SpotifyApiCredentials._fromClient(await (await _client).delegate);
 
   String handleErrors(http.Response response) {
     final responseBody = utf8.decode(response.bodyBytes);
