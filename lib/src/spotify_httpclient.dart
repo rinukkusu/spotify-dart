@@ -31,8 +31,18 @@ class SpotifyHttpClient extends http.BaseClient {
       s.writeln("header: ${request.headers}");
       if (loggingDetail.index >= LoggingDetail.full.index) {
         if (request is http.Request) {
-          if (request.body.isNotEmpty) {
-            s.writeln("body: ${request.body}");
+          var body = request.body;
+          if (body.isNotEmpty) {
+            var lineSplitter = LineSplitter();
+            var lines = lineSplitter.convert(body);
+            const maxLineCount = 30;
+            // truncating body that has > 100 lines
+            if (lines.length > maxLineCount) {
+              s.writeln("body: ${lines.getRange(0, maxLineCount).join('\n')}");
+              s.writeln("... (body truncated)");
+            } else {
+              s.writeln('body: ${request.body}');
+            }
           } else {
             s.writeln('body: --no body--');
           }
