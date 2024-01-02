@@ -45,10 +45,8 @@ abstract class SpotifyApiBase {
   Shows get shows => _shows;
   FutureOr<SpotifyHttpClient> get client => _client;
 
-  Logger logger = Logger('spotify-dart');
-
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
-    _client = client as FutureOr<SpotifyHttpClient>;
+    _client = SpotifyHttpClient(client as FutureOr<oauth2.Client>);
 
     _artists = Artists(this);
     _albums = Albums(this);
@@ -70,17 +68,15 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
       [http.Client? httpClient, Function(SpotifyApiCredentials)? callBack])
-      : this.fromClient(SpotifyHttpClient(
-            _getOauth2Client(credentials, httpClient, callBack)));
+      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
 
   SpotifyApiBase.fromAuthCodeGrant(
       oauth2.AuthorizationCodeGrant grant, String responseUri)
-      : this.fromClient(SpotifyHttpClient(grant.handleAuthorizationResponse(
-            Uri.parse(responseUri).queryParameters)));
+      : this.fromClient(grant.handleAuthorizationResponse(
+            Uri.parse(responseUri).queryParameters));
 
   SpotifyApiBase._withAccessToken(String accessToken)
-      : this.fromClient(
-            SpotifyHttpClient(oauth2.Client(oauth2.Credentials(accessToken))));
+      : this.fromClient(oauth2.Client(oauth2.Credentials(accessToken)));
 
   static Future<SpotifyApi> _asyncFromCredentials(
     SpotifyApiCredentials credentials, [
@@ -139,9 +135,10 @@ abstract class SpotifyApiBase {
 
       if (oauthCredentials.isExpired) {
         oauthCredentials = await oauthCredentials.refresh(
-            identifier: credentials.clientId,
-            secret: credentials.clientSecret,
-            httpClient: httpClient);
+          identifier: credentials.clientId,
+          secret: credentials.clientSecret,
+          httpClient: SpotifyHttpClient(httpClient),
+        );
         credentialRefreshedWrapperCallback(oauthCredentials);
       }
 
@@ -225,8 +222,9 @@ abstract class SpotifyApiBase {
     throw SpotifyException('Could not complete request');
   }
 
-  Future<SpotifyApiCredentials> getCredentials() async =>
-      SpotifyApiCredentials._fromClient(await (await _client).delegate);
+  Future<SpotifyApiCredentials> getCredentials() async {
+    return SpotifyApiCredentials._fromClient(await (await _client).delegate);
+  }
 
   String handleErrors(http.Response response) {
     final responseBody = utf8.decode(response.bodyBytes);
