@@ -25,14 +25,16 @@ class PlayerEndpoint extends _MeEndpointBase {
   }
 
   /// Returns the current playback state, including progress, track
-  /// and active device.
+  /// and active device. Returns an empty [PlaybackState] object when
+  /// no playback context has been started.
   @Deprecated('Use [playbackState] instead')
   Future<PlaybackState> player([String? market]) async {
     return playbackState(Market.values.asNameMap()[market]);
   }
 
   /// Returns the current playback state, including progress, track
-  /// and active device.
+  /// and active device. Returns an empty [PlaybackState] object when
+  /// no playback context has been started.
   Future<PlaybackState> playbackState([Market? market]) async {
     var jsonString = await _api
         ._get('$_path?' + _buildQuery({'market': market?.name}));
