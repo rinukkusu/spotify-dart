@@ -15,10 +15,10 @@ Iterable<List<T>> batches<T>(Iterable<T> source, int size) sync* {
   if (accumulator != null) yield accumulator;
 }
 
-/// Helper function to overcome the current 
+/// Helper function to overcome the current
 /// [spotify bug](https://community.spotify.com/t5/Spotify-for-Developers/The-response-type-of-artist-endpoint-is-marked-as-Integer-in/m-p/5800044#M12164)
-int? convertToInfIfDoubleValue(dynamic jsonValue) {
-  switch(jsonValue.runtimeType) {
+int? convertToIntIfDoubleValue(dynamic jsonValue) {
+  switch (jsonValue.runtimeType) {
     case double:
       return (jsonValue as double).toInt();
     case int:

@@ -511,11 +511,11 @@ SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) => SpotifyError()
 
 Followers _$FollowersFromJson(Map<String, dynamic> json) => Followers()
   ..href = json['href'] as String?
-  ..total = convertToInfIfDoubleValue(json['total']);
+  ..total = convertToIntIfDoubleValue(json['total']);
 
 Image _$ImageFromJson(Map<String, dynamic> json) => Image()
-  ..height = convertToInfIfDoubleValue(json['height'])
-  ..width = convertToInfIfDoubleValue(json['width'])
+  ..height = convertToIntIfDoubleValue(json['height'])
+  ..width = convertToIntIfDoubleValue(json['width'])
   ..url = json['url'] as String?;
 
 Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) => Paging<T>()

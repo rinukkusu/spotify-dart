@@ -19,6 +19,6 @@ class Followers extends Object {
   String? href;
 
   /// The total number of followers.
-  @JsonKey(fromJson: convertToInfIfDoubleValue)
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? total;
 }
