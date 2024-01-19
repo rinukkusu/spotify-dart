@@ -10,9 +10,9 @@
   "href" : "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
   "id" : "0TnOYISbd1XYRBk9myaseg",
   "images" : [ {
-    "height" : 640,
+    "height" : 640.0,
     "url" : "https://i.scdn.co/image/c82dfff224bfb7fe29e0364a5aacc55da29b465b",
-    "width" : 640
+    "width" : 640.0
   }, {
     "height" : 320,
     "url" : "https://i.scdn.co/image/d482525120fc7eed9ea0696f564c6cba5237c8f5",
