@@ -46,7 +46,7 @@ Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
   ..genres =
       (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList()
   ..label = json['label'] as String?
-  ..popularity = json['popularity'] as int?;
+  ..popularity = convertToIntIfDoubleValue(json['popularity']);
 
 const _$MarketEnumMap = {
   Market.AD: 'AD',
@@ -348,7 +348,7 @@ Artist _$ArtistFromJson(Map<String, dynamic> json) => Artist()
   ..images = (json['images'] as List<dynamic>?)
       ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
       .toList()
-  ..popularity = json['popularity'] as int?;
+  ..popularity = convertToIntIfDoubleValue(json['popularity']);
 
 ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) => ArtistSimple()
   ..externalUrls = json['external_urls'] == null
@@ -805,7 +805,7 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
       ? null
       : TrackLink.fromJson(json['linked_from'] as Map<String, dynamic>)
   ..name = json['name'] as String?
-  ..popularity = json['popularity'] as int?
+  ..popularity = convertToIntIfDoubleValue(json['popularity'])
   ..previewUrl = json['preview_url'] as String?
   ..trackNumber = json['track_number'] as int?
   ..type = json['type'] as String?
