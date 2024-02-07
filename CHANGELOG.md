@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.13.0
+
+- fix unknown devices bug
+- add tracks restriction on playlist items
+- deprecate `startOrResume` in favor of starting with tracks or context and a new resume method
+- fix spotify floating point bug on integer fields (temp)
+
 ## 0.12.0
 
 - improve authorization scope handling
