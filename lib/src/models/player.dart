@@ -18,7 +18,8 @@ class PlaybackState extends Object {
   PlayerContext? context;
 
   /// Progress into the currently playing track. Can be `null`.
-  int? progress_ms;
+  @JsonKey(name: 'progress_ms')
+  int? progressMs;
 
   /// The currently playing track. Can be `null`.
   Track? item;
@@ -40,7 +41,7 @@ class PlaybackState extends Object {
   @JsonKey(name: 'shuffle_state', defaultValue: false)
   bool? isShuffling;
 
-  /// The repeat state. Can be [RepeatState.off], [RepeatState.track] or 
+  /// The repeat state. Can be [RepeatState.off], [RepeatState.track] or
   /// [RepeatState.context]
   @JsonKey(name: 'repeat_state', defaultValue: RepeatState.off)
   RepeatState? repeatState;
@@ -55,7 +56,8 @@ class PlayerContext extends Object {
       _$PlayerContextFromJson(json);
 
   /// The external_urls of the context, or `null` if not available.
-  ExternalUrls? external_urls;
+  @JsonKey(name: 'external_urls')
+  ExternalUrls? externalUrls;
 
   /// The href of the context, or `null` if not available.
   String? href;
@@ -125,7 +127,7 @@ class StartOrResumeOptions extends Object {
 
   /// Optional. A JSON array of the Spotify track URIs to play.
   ///
-  /// Example: 
+  /// Example:
   /// ```json
   /// [
   ///     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
@@ -148,9 +150,8 @@ class StartOrResumeOptions extends Object {
 
   Map<String, dynamic> toJson() => _$StartOrResumeOptionsToJson(this);
 
-  static Map<String, dynamic> _offsetToJson(Offset? offset) {
-    return offset?.toJson() ?? {};
-  }
+  static Map<String, dynamic> _offsetToJson(Offset? offset) =>
+      offset?.toJson() ?? {};
 }
 
 abstract class Offset {
