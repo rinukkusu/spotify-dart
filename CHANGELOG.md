@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.1
+
+- fix empty playbackState returning 404
+
 ## 0.13.0
 
 - fix unknown devices bug
