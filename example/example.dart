@@ -12,6 +12,10 @@ void main() async {
   var credentials = SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   var spotify = SpotifyApi(credentials);
 
+  print('\nExpannd shortened spotify link of https://spotify.link/hRkBrwub9xb');
+  var longLink = await spotify.expandLink('https://spotify.link/hRkBrwub9xb');
+  print(longLink);
+
   print('\nPodcast:');
   await spotify.shows
       .get('4rOoJ6Egrf8K2IrywzwOMk')
