@@ -158,6 +158,9 @@ abstract class SpotifyApiBase {
     );
   }
 
+  /// Expands shortened spotify [url]
+  Future<String> expandLink(String url) async => _streamedHeadImpl(url, const {});
+
   Future<String> _get(String path) {
     return _getImpl('$_baseUrl/$path', const {});
   }
@@ -172,6 +175,15 @@ abstract class SpotifyApiBase {
 
   Future<String> _put(String path, [String body = '']) {
     return _putImpl('$_baseUrl/$path', const {}, body);
+  }
+
+  Future<String> _streamedHeadImpl(
+      String url, Map<String, String> headers) async {
+    return await _requestWrapper(() async {
+      final request = http.Request('HEAD', Uri.parse(url));
+      request.headers.addAll(headers);
+      return (await _client).send(request);
+    });
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
@@ -202,14 +214,26 @@ abstract class SpotifyApiBase {
         .put(Uri.parse(url), headers: headers, body: body));
   }
 
-  Future<String> _requestWrapper(Future<http.Response> Function() request,
+  // the reason we are using [http.BaseResponse] is because
+  // otherwise we wouldn't be able to access the redirect url from
+  // BaseResponseWithUrl
+  Future<String> _requestWrapper(Future<http.BaseResponse> Function() request,
       {retryLimit = 5}) async {
     for (var i = 0; i < retryLimit; i++) {
       while (_shouldWait) {
         await Future.delayed(Duration(milliseconds: 500));
       }
       try {
-        return handleErrors(await request());
+        var response = await request();
+        
+        // distinguish between url redirect responses and body responses
+        // note, that any response that also contains a redirect url
+        // will be chosen instead of its body contents
+        // FIXME: in future releases of http2, the url is a part of the [http.Response] type
+        if (response case http.BaseResponseWithUrl(:final url)) {
+            return url.toString();
+        }
+        return handleResponseWithBody(response as http.Response);
       } on ApiRateException catch (ex) {
         if (i == retryLimit - 1) rethrow;
         print(
@@ -226,7 +250,7 @@ abstract class SpotifyApiBase {
     return SpotifyApiCredentials._fromClient(await _client);
   }
 
-  String handleErrors(http.Response response) {
+  String handleResponseWithBody(http.Response response) {
     final responseBody = utf8.decode(response.bodyBytes);
     if (response.statusCode >= 400) {
       final jsonMap = json.decode(responseBody);
