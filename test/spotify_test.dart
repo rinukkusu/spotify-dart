@@ -124,6 +124,8 @@ Future main() async {
       expect(artist.type, 'artist');
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
       expect(artist.images!.length, 3);
+      expect(artist.images![0].height, 640);
+      expect(artist.images![0].width, 640);
     });
 
     test('list', () async {
