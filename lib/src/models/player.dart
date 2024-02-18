@@ -158,12 +158,21 @@ class StartWithUrisOptions extends StartOrResumeOptions {
   /// ```
   List<String>? uris;
 
+  /// Optional. Indicates from where in the context playback should start.
+  /// Only available when [contextUri] corresponds to an album or playlist object
+  @JsonKey(toJson: _offsetToJson)
+  Offset? offset;
+
   /// Optional. The position in milliseconds to start playback.
   @JsonKey(name: 'position_ms')
   int? positionMs;
 
-  @override
-  Map<String, dynamic> toJson() => _$StartWithUrisOptionsToJson(this);
+  StartOrResumeOptions(
+      {this.contextUri, this.uris, this.offset, this.positionMs});
+
+  Map<String, dynamic> toJson() => _$StartOrResumeOptionsToJson(this);
+
+  static Map<String, dynamic>? _offsetToJson(Offset? offset) => offset?.toJson();
 }
 
 abstract class Offset {
