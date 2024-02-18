@@ -27,6 +27,7 @@ void main() async {
     exit(0);
   }
   await _user(spotify);
+  await _play(spotify);
   await _currentlyPlaying(spotify);
   await _devices(spotify);
   await _followingArtists(spotify);
@@ -304,6 +305,23 @@ Future<Iterable<Track>> _getPlaylistTracks(
     SpotifyApi spotify, String playlistId) async {
   var tracksPage = spotify.playlists.getTracksByPlaylistId(playlistId);
   return (await tracksPage.first()).items ?? [];
+}
+
+Future<PlaybackState?> _play(SpotifyApi spotify) async {
+  var track = await spotify.tracks.get('6zW80jVqLtgSF1yCtGHiiD');
+  print('Playing "${track.name} - ${track.artists?.first.name}" with track context for 10 s');
+  var result = await spotify.player.startWithTracks(['spotify:track:6zW80jVqLtgSF1yCtGHiiD?si=99fd66ccb2464bad'], positionMs: 10000);
+  sleep(Duration(seconds: 10));
+  print('Pausing...');
+  spotify.player.pause();
+  var album = await spotify.albums.get('0rwbMKjNkp4ehQTwf9V2Jk');
+  track = await spotify.tracks.get('4VnDmjYCZkyeqeb0NIKqdA');
+  print('Playing album "${album.name} - ${album.artists?.first.name}" with uri context');
+  print('and offset to "${track.name} - ${track.artists?.first.name}" for 10 s');
+  result = await spotify.player.startWithContext('spotify:album:0rwbMKjNkp4ehQTwf9V2Jk?si=HA-mX2mPQ1CUp7ExfdDt2g', offset: UriOffset('spotify:track:4VnDmjYCZkyeqeb0NIKqdA'));
+  sleep(Duration(seconds: 10));
+
+  return result;
 }
 
 FutureOr<Null> _prettyPrintError(Object error) {
