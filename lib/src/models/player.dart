@@ -137,7 +137,7 @@ class StartOrResumeOptions extends Object {
   List<String>? uris;
 
   /// Optional. Indicates from where in the context playback should start.
-  /// Only available when context_uri corresponds to an album or playlist object
+  /// Only available when [contextUri] corresponds to an album or playlist object
   @JsonKey(toJson: _offsetToJson)
   Offset? offset;
 
@@ -150,8 +150,7 @@ class StartOrResumeOptions extends Object {
 
   Map<String, dynamic> toJson() => _$StartOrResumeOptionsToJson(this);
 
-  static Map<String, dynamic> _offsetToJson(Offset? offset) =>
-      offset?.toJson() ?? {};
+  static Map<String, dynamic>? _offsetToJson(Offset? offset) => offset?.toJson();
 }
 
 abstract class Offset {
