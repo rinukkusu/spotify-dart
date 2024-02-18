@@ -123,6 +123,7 @@ abstract class StartOrResumeOptions extends Object {
 
 @JsonSerializable(createFactory: false)
 class StartWithContextOptions extends StartOrResumeOptions {
+
   StartWithContextOptions({this.contextUri, this.offset});
 
   /// Optional. Spotify URI of the context to play. Valid contexts are albums,
@@ -145,6 +146,7 @@ class StartWithContextOptions extends StartOrResumeOptions {
 
 @JsonSerializable(createFactory: false)
 class StartWithUrisOptions extends StartOrResumeOptions {
+
   StartWithUrisOptions({this.uris, this.positionMs});
 
   /// Optional. A JSON array of the Spotify track URIs to play.
@@ -158,21 +160,13 @@ class StartWithUrisOptions extends StartOrResumeOptions {
   /// ```
   List<String>? uris;
 
-  /// Optional. Indicates from where in the context playback should start.
-  /// Only available when [contextUri] corresponds to an album or playlist object
-  @JsonKey(toJson: _offsetToJson)
-  Offset? offset;
-
   /// Optional. The position in milliseconds to start playback.
   @JsonKey(name: 'position_ms')
   int? positionMs;
 
-  StartOrResumeOptions(
-      {this.contextUri, this.uris, this.offset, this.positionMs});
+  @override
+  Map<String, dynamic> toJson() => _$StartWithUrisOptionsToJson(this);
 
-  Map<String, dynamic> toJson() => _$StartOrResumeOptionsToJson(this);
-
-  static Map<String, dynamic>? _offsetToJson(Offset? offset) => offset?.toJson();
 }
 
 abstract class Offset {
