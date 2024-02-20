@@ -126,7 +126,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     assert(trackUris.isNotEmpty, 'Cannot start playback with empty track uris');
     assert(positionMs >= 0, 'Position must be greater than or equal to 0');
 
-    var options = StartOrResumeOptions(uris: trackUris, positionMs: positionMs);
+    var options = StartWithUrisOptions(uris: trackUris, positionMs: positionMs);
     return startOrResume(
         deviceId: deviceId,
         options: options,
@@ -148,7 +148,7 @@ class PlayerEndpoint extends _MeEndpointBase {
       bool retrievePlaybackState = true}) async {
     assert(
         contextUri.isNotEmpty, 'Cannot start playback with empty context uri');
-    var options = StartOrResumeOptions(contextUri: contextUri, offset: offset);
+    var options = StartWithContextOptions(contextUri: contextUri, offset: offset);
     return startOrResume(
         deviceId: deviceId,
         options: options,
