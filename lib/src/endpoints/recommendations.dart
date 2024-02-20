@@ -1,10 +1,10 @@
-part of spotify;
+part of '../../spotify.dart';
 
 class RecommendationsEndpoint extends EndpointBase {
   @override
   String get _path => 'v1/recommendations';
 
-  RecommendationsEndpoint(SpotifyApiBase api) : super(api);
+  RecommendationsEndpoint(super.api);
 
   /// Generates a list of size [limit] of tracks based on
   /// [seedArtists], [seedGenres], [seedTracks] spotify IDs
@@ -34,7 +34,9 @@ class RecommendationsEndpoint extends EndpointBase {
       'seed_tracks': seedTracks
     }.forEach((key, list) => _addList(parameters, key, list!));
     if (market != null) parameters['market'] = market.name;
-    [min, max, target].forEach((map) => _addTunableTrackMap(parameters, map));
+    for (var map in [min, max, target]) {
+      _addTunableTrackMap(parameters, map);
+    }
     final pathQuery = Uri(path: _path, queryParameters: parameters)
         .toString()
         .replaceAll(RegExp(r'%2C'), ',');

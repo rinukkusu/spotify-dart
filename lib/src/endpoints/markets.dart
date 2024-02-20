@@ -1,15 +1,15 @@
-part of spotify;
+part of '../../spotify.dart';
 
 /// Endpoint for `v1/markets`
 class Markets extends EndpointBase {
   @override
   String get _path => 'v1/markets';
 
-  Markets(SpotifyApiBase api) : super(api);
+  Markets(super.api);
 
   /// Get the list of markets where Spotify is available.
-  /// A result of `null` means that the country is not mapped 
-  /// in this library. 
+  /// A result of `null` means that the country is not mapped
+  /// in this library.
   Future<Iterable<Market?>> get availableMarkets async {
     var jsonString = await _api._get(_path);
     var map = json.decode(jsonString);

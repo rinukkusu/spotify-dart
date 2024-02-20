@@ -3,16 +3,22 @@ name: Dart CI
 on: [push, pull_request]
 
 jobs:
-  build:
 
+  build:
     runs-on: ubuntu-latest
-    
-    container:
-      image:  dart:latest
-    
     steps:
-    - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: dart pub get
-    - name: Run tests
-      run: dart test
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+      - name: Dart version
+        run: |
+          dart --version
+          uname -a
+      - name: Install dependencies
+        run: dart pub get
+      - name: dart format
+        run: dart format -o none --set-exit-if-changed .
+      - name: dart analyze
+        run: dart analyze --fatal-infos --fatal-warnings .
+      - name: Run tests
+        run: dart run test
+

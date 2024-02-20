@@ -1,5 +1,7 @@
 // Copyright (c) 2019-2021, Denis Portnov. All rights reserved.
-part of spotify.models;
+part of '_models.dart';
+
+// ignore_for_file: constant_identifier_names
 
 enum Market {
   AD,

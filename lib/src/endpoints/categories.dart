@@ -1,11 +1,11 @@
-part of spotify;
+part of '../../spotify.dart';
 
 /// Endpoint of browsing the categories `v1/browse/categories`
 class Categories extends Browse {
   @override
   String get _path => '${super._path}/categories';
 
-  Categories(SpotifyApiBase api) : super(api);
+  Categories(super.api);
 
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
   /// parameter if you want to narrow the list of returned categories to those

@@ -69,7 +69,8 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
 
   print(
       'Please paste this url \n\n$authUri\n\nto your browser and enter the redirected url:');
-  var redirectUrl;
+
+  Uri? redirectUrl;
   var userInput = stdin.readLineSync();
   if (userInput == null || (redirectUrl = Uri.tryParse(userInput)) == null) {
     print('Invalid redirect url');
@@ -77,7 +78,7 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
   }
 
   var client =
-      await grant.handleAuthorizationResponse(redirectUrl.queryParameters);
+      await grant.handleAuthorizationResponse(redirectUrl!.queryParameters);
   return SpotifyApi.fromClient(client);
 }
 
@@ -309,16 +310,23 @@ Future<Iterable<Track>> _getPlaylistTracks(
 
 Future<PlaybackState?> _play(SpotifyApi spotify) async {
   var track = await spotify.tracks.get('6zW80jVqLtgSF1yCtGHiiD');
-  print('Playing "${track.name} - ${track.artists?.first.name}" with track context for 10 s');
-  var result = await spotify.player.startWithTracks(['spotify:track:6zW80jVqLtgSF1yCtGHiiD?si=99fd66ccb2464bad'], positionMs: 10000);
+  print(
+      'Playing "${track.name} - ${track.artists?.first.name}" with track context for 10 s');
+  var result = await spotify.player.startWithTracks(
+      ['spotify:track:6zW80jVqLtgSF1yCtGHiiD?si=99fd66ccb2464bad'],
+      positionMs: 10000);
   sleep(Duration(seconds: 10));
   print('Pausing...');
   spotify.player.pause();
   var album = await spotify.albums.get('0rwbMKjNkp4ehQTwf9V2Jk');
   track = await spotify.tracks.get('4VnDmjYCZkyeqeb0NIKqdA');
-  print('Playing album "${album.name} - ${album.artists?.first.name}" with uri context');
-  print('and offset to "${track.name} - ${track.artists?.first.name}" for 10 s');
-  result = await spotify.player.startWithContext('spotify:album:0rwbMKjNkp4ehQTwf9V2Jk?si=HA-mX2mPQ1CUp7ExfdDt2g', offset: UriOffset('spotify:track:4VnDmjYCZkyeqeb0NIKqdA'));
+  print(
+      'Playing album "${album.name} - ${album.artists?.first.name}" with uri context');
+  print(
+      'and offset to "${track.name} - ${track.artists?.first.name}" for 10 s');
+  result = await spotify.player.startWithContext(
+      'spotify:album:0rwbMKjNkp4ehQTwf9V2Jk?si=HA-mX2mPQ1CUp7ExfdDt2g',
+      offset: UriOffset('spotify:track:4VnDmjYCZkyeqeb0NIKqdA'));
   sleep(Duration(seconds: 10));
 
   return result;

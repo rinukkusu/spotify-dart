@@ -1,20 +1,20 @@
 // Copyright (c) 2019, chances, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+part of '../../spotify.dart';
 
 abstract class _MeEndpointBase extends EndpointPaging {
   @override
   String get _path => 'v1/me';
 
-  _MeEndpointBase(SpotifyApiBase api) : super(api);
+  _MeEndpointBase(super.api);
 }
 
 /// Endpoint for authenticated users `v1/me/*`
 class Me extends _MeEndpointBase {
   late PlayerEndpoint _player;
 
-  Me(SpotifyApiBase api, PlayerEndpoint player) : super(api) {
+  Me(super.api, PlayerEndpoint player) {
     _player = player;
   }
 
@@ -57,11 +57,11 @@ class Me extends _MeEndpointBase {
       FollowingType type, List<String> ids) async {
     assert(ids.isNotEmpty, 'No user/artist id was provided');
 
-    final jsonString = await _api._get('$_path/following/contains?' +
-        _buildQuery({
+    final jsonString =
+        await _api._get('$_path/following/contains?${_buildQuery({
           'type': type._key,
           'ids': ids.join(','),
-        }));
+        })}');
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
     return Map.fromIterables(ids, list);
   }
@@ -103,12 +103,11 @@ class Me extends _MeEndpointBase {
         'Cannot specify both after and before.');
 
     return _getCursorPages(
-        '$_path/player/recently-played?' +
-            _buildQuery({
+        '$_path/player/recently-played?${_buildQuery({
               'limit': limit,
               'after': after?.millisecondsSinceEpoch,
               'before': before?.millisecondsSinceEpoch
-            }),
+            })}',
         (json) => PlayHistory.fromJson(json));
   }
 
@@ -139,10 +138,9 @@ class Me extends _MeEndpointBase {
   Pages<T> _top<T>(
           _TopItemsType type, T Function(dynamic) parser, TimeRange range) =>
       _getPages(
-          '$_path/top/${type.name}?' +
-              _buildQuery({
+          '$_path/top/${type.name}?${_buildQuery({
                 'time_range': range._key,
-              }),
+              })}',
           parser);
 
   /// Get information about a user’s available devices.
@@ -159,7 +157,7 @@ class Me extends _MeEndpointBase {
   /// [ids] - the ids of the shows to save
   Future<void> saveShows(List<String> ids) async {
     assert(ids.isNotEmpty, 'No show ids were provided for saving');
-    await _api._put('$_path/shows?' + _buildQuery({'ids': ids.join(',')}));
+    await _api._put('$_path/shows?${_buildQuery({'ids': ids.join(',')})}');
   }
 
   /// Removes shows for the current user. It requires the `user-library-modify`
@@ -173,7 +171,7 @@ class Me extends _MeEndpointBase {
       'ids': ids.join(','),
       'market': market?.name,
     };
-    await _api._delete('$_path/shows?' + _buildQuery(queryMap));
+    await _api._delete('$_path/shows?${_buildQuery(queryMap)}');
   }
 
   /// Check if passed albums (ids) are saved by current user.
@@ -183,7 +181,7 @@ class Me extends _MeEndpointBase {
     assert(
         ids.isNotEmpty, 'No show ids were provided for checking saved shows');
     var query = _buildQuery({'ids': ids.join(',')});
-    var jsonString = await _api._get('$_path/shows/contains?' + query);
+    var jsonString = await _api._get('$_path/shows/contains?$query');
     var response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
 
     return Map.fromIterables(ids, response);
@@ -239,7 +237,7 @@ class Me extends _MeEndpointBase {
   /// [ids] - the ids of the episodes
   Future<void> saveEpisodes(List<String> ids) async {
     assert(ids.isNotEmpty, 'No episode ids were provided for saving');
-    await _api._put('$_path/episodes?' + _buildQuery({'ids': ids.join(',')}));
+    await _api._put('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
   }
 
   /// Removes episodes for the current user. Requires the `user-library-modify`
@@ -248,7 +246,7 @@ class Me extends _MeEndpointBase {
   Future<void> removeEpisodes(List<String> ids) async {
     assert(ids.isNotEmpty, 'No episode ids were provided for removing');
     await _api
-        ._delete('$_path/episodes?' + _buildQuery({'ids': ids.join(',')}));
+        ._delete('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
   }
 
   /// Check if passed episode [ids] are saved by current user.
@@ -256,7 +254,7 @@ class Me extends _MeEndpointBase {
   Future<Map<String, bool>> containsSavedEpisodes(List<String> ids) async {
     assert(ids.isNotEmpty, 'No episode ids were provided for checking');
     final jsonString = await _api._get(
-        '$_path/episodes/contains?' + _buildQuery({'ids': ids.join(',')}));
+        '$_path/episodes/contains?${_buildQuery({'ids': ids.join(',')})}');
     final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
 
     return Map.fromIterables(ids, result);

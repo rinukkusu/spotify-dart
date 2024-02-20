@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'spotify_mock.dart';
 import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
+
+// ignore_for_file: deprecated_member_use_from_same_package
 
 Future main() async {
   var spotify = SpotifyApiMock(SpotifyApiCredentials(
@@ -284,7 +285,7 @@ Future main() async {
       expect(result.first.type, DeviceType.Computer);
       expect(result.first.volumePercent, 100);
 
-      // the second entry does not have a valid [DeviceType], 
+      // the second entry does not have a valid [DeviceType],
       // and should have `Unknown` instead.
       expect(result.last.type, DeviceType.Unknown);
     });
@@ -486,7 +487,6 @@ Future main() async {
       expect(result.actions?.pausing, true);
     });
 
-
     test('startWithContext', () async {
       spotify.interceptor = (method, url, headers, [body]) {
         // checking sincce startWithContext makes a PUT and a GET request
@@ -494,10 +494,12 @@ Future main() async {
         if (method == 'PUT') {
           expect(method, 'PUT');
           expect(body, isNotNull);
-          expect(body, '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}');
+          expect(body,
+              '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}');
         }
       };
-      await spotify.player.startWithContext('contextUri', offset: UriOffset('urioffset'));
+      await spotify.player
+          .startWithContext('contextUri', offset: UriOffset('urioffset'));
     });
 
     test('startWithUris', () async {
@@ -512,7 +514,6 @@ Future main() async {
       };
       await spotify.player.startWithTracks(['track1'], positionMs: 10);
     });
-
   });
 
   group('Tracks', () {

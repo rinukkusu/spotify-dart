@@ -12,8 +12,11 @@ class SpotifyApiMock extends SpotifyApiBase {
 
   set mockHttpErrors(Iterator<MockHttpError> errors) =>
       (client as MockClient)._mockHttpErrors = errors;
-  
-  set interceptor(Function(String method, String url, Map<String, String>? headers, [String? body])? interceptor) => 
+
+  set interceptor(
+          Function(String method, String url, Map<String, String>? headers,
+                  [String? body])?
+              interceptor) =>
       (client as MockClient).interceptFunction = interceptor;
 }
 
@@ -25,9 +28,11 @@ class MockClient implements oauth2.Client {
     _mockHttpErrors = mockHttpErrors;
   }
 
-  Function(String method, String url, Map<String, String>? headers, [String? body])? interceptFunction;  
+  Function(String method, String url, Map<String, String>? headers,
+      [String? body])? interceptFunction;
 
-  void _intercept(String method, String url, Map<String, String>? headers, [String? body]) {
+  void _intercept(String method, String url, Map<String, String>? headers,
+      [String? body]) {
     if (interceptFunction != null) {
       interceptFunction!(method, url, headers, body);
     }
@@ -108,7 +113,7 @@ class MockClient implements oauth2.Client {
   @override
   Future<http.Response> put(url,
       {Map<String, String>? headers, body, Encoding? encoding}) async {
-        _intercept('PUT', url.toString(), headers, body.toString());
+    _intercept('PUT', url.toString(), headers, body.toString());
     return createSuccessResponse(_readPath(url));
   }
 
@@ -158,7 +163,7 @@ class MockClient implements oauth2.Client {
   }
 
   String _wrapMessageToJson(int statusCode, String message) =>
-      '{ \"error\": {\"status\":$statusCode,\"message\": \"$message\"}}';
+      '{ "error": {"status":$statusCode,"message": "$message"}}';
 }
 
 class MockHttpError {
