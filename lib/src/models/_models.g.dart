@@ -46,7 +46,7 @@ Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
   ..genres =
       (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList()
   ..label = json['label'] as String?
-  ..popularity = json['popularity'] as int?;
+  ..popularity = convertToIntIfDoubleValue(json['popularity']);
 
 const _$MarketEnumMap = {
   Market.AD: 'AD',
@@ -348,7 +348,7 @@ Artist _$ArtistFromJson(Map<String, dynamic> json) => Artist()
   ..images = (json['images'] as List<dynamic>?)
       ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
       .toList()
-  ..popularity = json['popularity'] as int?;
+  ..popularity = convertToIntIfDoubleValue(json['popularity']);
 
 ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) => ArtistSimple()
   ..externalUrls = json['external_urls'] == null
@@ -511,11 +511,11 @@ SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) => SpotifyError()
 
 Followers _$FollowersFromJson(Map<String, dynamic> json) => Followers()
   ..href = json['href'] as String?
-  ..total = json['total'] as int?;
+  ..total = convertToIntIfDoubleValue(json['total']);
 
 Image _$ImageFromJson(Map<String, dynamic> json) => Image()
-  ..height = json['height'] as int?
-  ..width = json['width'] as int?
+  ..height = convertToIntIfDoubleValue(json['height'])
+  ..width = convertToIntIfDoubleValue(json['width'])
   ..url = json['url'] as String?;
 
 Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) => Paging<T>()
@@ -546,7 +546,7 @@ PlaybackState _$PlaybackStateFromJson(Map<String, dynamic> json) =>
       ..context = json['context'] == null
           ? null
           : PlayerContext.fromJson(json['context'] as Map<String, dynamic>)
-      ..progress_ms = json['progress_ms'] as int?
+      ..progressMs = json['progress_ms'] as int?
       ..item = json['item'] == null
           ? null
           : Track.fromJson(json['item'] as Map<String, dynamic>)
@@ -576,7 +576,7 @@ const _$RepeatStateEnumMap = {
 
 PlayerContext _$PlayerContextFromJson(Map<String, dynamic> json) =>
     PlayerContext()
-      ..external_urls = json['external_urls'] == null
+      ..externalUrls = json['external_urls'] == null
           ? null
           : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
       ..href = json['href'] as String?
@@ -595,12 +595,17 @@ Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions()
   ..togglingShuffle = json['toggling_shuffle'] as bool? ?? false
   ..transferringPlayback = json['transferring_playback'] as bool? ?? false;
 
-Map<String, dynamic> _$StartOrResumeOptionsToJson(
-        StartOrResumeOptions instance) =>
+Map<String, dynamic> _$StartWithContextOptionsToJson(
+        StartWithContextOptions instance) =>
     <String, dynamic>{
       'context_uri': instance.contextUri,
+      'offset': StartWithContextOptions._offsetToJson(instance.offset),
+    };
+
+Map<String, dynamic> _$StartWithUrisOptionsToJson(
+        StartWithUrisOptions instance) =>
+    <String, dynamic>{
       'uris': instance.uris,
-      'offset': StartOrResumeOptions._offsetToJson(instance.offset),
       'position_ms': instance.positionMs,
     };
 
@@ -805,7 +810,7 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
       ? null
       : TrackLink.fromJson(json['linked_from'] as Map<String, dynamic>)
   ..name = json['name'] as String?
-  ..popularity = json['popularity'] as int?
+  ..popularity = convertToIntIfDoubleValue(json['popularity'])
   ..previewUrl = json['preview_url'] as String?
   ..trackNumber = json['track_number'] as int?
   ..type = json['type'] as String?

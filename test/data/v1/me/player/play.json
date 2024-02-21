@@ -1,0 +1,93 @@
+{
+    "device": {
+      "id": "123",
+      "is_active": true,
+      "is_private_session": false,
+      "is_restricted": false,
+      "name": "spotify-player",
+      "supports_volume": true,
+      "type": "Speaker",
+      "volume_percent": 50
+    },
+    "shuffle_state": false,
+    "smart_shuffle": false,
+    "repeat_state": "off",
+    "timestamp": 1708246313962,
+    "context": null,
+    "progress_ms": 96749,
+    "item": {
+      "album": {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0OcclcP5o8VKH2TRqSY2A7"
+            },
+            "href": "https://api.spotify.com/v1/artists/0OcclcP5o8VKH2TRqSY2A7",
+            "id": "0OcclcP5o8VKH2TRqSY2A7",
+            "name": "Howard Shore",
+            "type": "artist",
+            "uri": "spotify:artist:0OcclcP5o8VKH2TRqSY2A7"
+          }
+        ],
+        "available_markets": ["AR"],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/55RTkgUCP7t80hiTUhATMH"
+        },
+        "href": "https://api.spotify.com/v1/albums/55RTkgUCP7t80hiTUhATMH",
+        "id": "55RTkgUCP7t80hiTUhATMH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b2738236dee9524214e0e6be4a1f",
+            "width": 640
+          }
+        ],
+        "name": "The Lord of the Rings: The Fellowship of the Ring - the Complete Recordings",
+        "release_date": "2001",
+        "release_date_precision": "year",
+        "total_tracks": 37,
+        "type": "album",
+        "uri": "spotify:album:55RTkgUCP7t80hiTUhATMH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/0OcclcP5o8VKH2TRqSY2A7"
+          },
+          "href": "https://api.spotify.com/v1/artists/0OcclcP5o8VKH2TRqSY2A7",
+          "id": "0OcclcP5o8VKH2TRqSY2A7",
+          "name": "Howard Shore",
+          "type": "artist",
+          "uri": "spotify:artist:0OcclcP5o8VKH2TRqSY2A7"
+        }
+      ],
+      "available_markets": ["AR"],
+      "disc_number": 1,
+      "duration_ms": 149480,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "USRE10501559"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/6zW80jVqLtgSF1yCtGHiiD"
+      },
+      "href": "https://api.spotify.com/v1/tracks/6zW80jVqLtgSF1yCtGHiiD",
+      "id": "6zW80jVqLtgSF1yCtGHiiD",
+      "is_local": false,
+      "name": "The Shire",
+      "popularity": 66,
+      "preview_url": "https://p.scdn.co/mp3-preview/0cb0d3080071ec5c911ea209ec4fc2258e2081d6?cid=a51c360ccea644af8e2a0b1baad8a878",
+      "track_number": 2,
+      "type": "track",
+      "uri": "spotify:track:6zW80jVqLtgSF1yCtGHiiD"
+    },
+    "currently_playing_type": "track",
+    "actions": {
+      "disallows": {
+        "skipping_prev": true,
+        "toggling_repeat_track": true
+      }
+    },
+    "is_playing": false
+  }

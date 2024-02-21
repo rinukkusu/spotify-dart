@@ -95,6 +95,7 @@ class Track extends Object implements TrackSimple {
   /// independently. Artist and album popularity is derived mathematically from
   /// track popularity. Note that the popularity value may lag actual popularity
   /// by a few days: the value is not updated in real time.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? popularity;
 
   /// A URL to a 30 second preview (MP3 format) of the track. `null` if not
