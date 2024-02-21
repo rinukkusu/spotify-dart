@@ -18,6 +18,8 @@ export 'package:oauth2/oauth2.dart'
 
 import 'package:logging/logging.dart';
 
+import 'package:http_interceptor/http_interceptor.dart' as interceptor;
+
 export 'src/models/_models.dart';
 
 part 'src/endpoints/albums.dart';
@@ -44,4 +46,4 @@ part 'src/spotify_credentials.dart';
 part 'src/spotify_exception.dart';
 part 'src/utils.dart';
 part 'src/authorization_scope.dart';
-part 'src/spotify_httpclient.dart';
+part 'src/spotify_interceptor.dart';

@@ -10,7 +10,7 @@ abstract class SpotifyApiBase {
       'https://accounts.spotify.com/authorize';
 
   bool _shouldWait = false;
-  late FutureOr<SpotifyHttpClient> _client;
+  late FutureOr<oauth2.Client> _client;
   late Artists _artists;
   Artists get artists => _artists;
   late Albums _albums;
@@ -43,10 +43,10 @@ abstract class SpotifyApiBase {
   PlayerEndpoint get player => _player;
   late Shows _shows;
   Shows get shows => _shows;
-  FutureOr<SpotifyHttpClient> get client => _client;
+  FutureOr<oauth2.Client> get client => _client;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
-    _client = SpotifyHttpClient(client as FutureOr<oauth2.Client>);
+    _client = client as FutureOr<oauth2.Client>;
 
     _artists = Artists(this);
     _albums = Albums(this);
@@ -68,7 +68,7 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
       [http.Client? httpClient, Function(SpotifyApiCredentials)? callBack])
-      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
+      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack) as FutureOr<http.BaseClient>);
 
   SpotifyApiBase.fromAuthCodeGrant(
       oauth2.AuthorizationCodeGrant grant, String responseUri)
@@ -89,7 +89,7 @@ abstract class SpotifyApiBase {
       callBack,
     );
 
-    return SpotifyApi.fromClient(client);
+    return SpotifyApi.fromClient(client as FutureOr<oauth2.Client>);
   }
 
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
@@ -100,7 +100,7 @@ abstract class SpotifyApiBase {
         Uri.parse(SpotifyApiBase._authorizationUrl),
         Uri.parse(SpotifyApiBase._tokenUrl),
         secret: credentials.clientSecret,
-        httpClient: SpotifyHttpClient(httpClient),
+        httpClient: httpClient,
         onCredentialsRefreshed: callBack != null
             ? (oauth2.Credentials cred) {
                 final newCredentials = SpotifyApiCredentials(
@@ -114,7 +114,7 @@ abstract class SpotifyApiBase {
             : null);
   }
 
-  static FutureOr<oauth2.Client> _getOauth2Client(
+  static FutureOr<http.Client> _getOauth2Client(
       SpotifyApiCredentials credentials, http.Client? httpClient,
       [Function(SpotifyApiCredentials)? callBack]) async {
     if (credentials.fullyQualified) {
@@ -137,29 +137,37 @@ abstract class SpotifyApiBase {
         oauthCredentials = await oauthCredentials.refresh(
           identifier: credentials.clientId,
           secret: credentials.clientSecret,
-          httpClient: SpotifyHttpClient(httpClient),
+          httpClient: httpClient,
         );
         credentialRefreshedWrapperCallback(oauthCredentials);
       }
 
-      return oauth2.Client(
-        oauthCredentials,
-        identifier: credentials.clientId,
-        onCredentialsRefreshed: credentialRefreshedWrapperCallback,
-        secret: credentials.clientSecret,
+      return interceptor.InterceptedClient.build(
+        interceptors: [SpotifyInterceptor(shouldIntercept: true, loggingDetail: LoggingDetail.simple)],
+        retryPolicy: ExpiredTokenRetryPolicy(retryLimit: 5),
+        client: oauth2.Client(
+          oauthCredentials,
+          identifier: credentials.clientId,
+          onCredentialsRefreshed: credentialRefreshedWrapperCallback,
+          secret: credentials.clientSecret,
+        ),
       );
     }
 
-    return oauth2.clientCredentialsGrant(
-      Uri.parse(SpotifyApiBase._tokenUrl),
-      credentials.clientId,
-      credentials.clientSecret,
-      httpClient: httpClient,
+    return interceptor.InterceptedClient.build(
+      interceptors: [SpotifyInterceptor(shouldIntercept: true)],
+      client: await oauth2.clientCredentialsGrant(
+        Uri.parse(SpotifyApiBase._tokenUrl),
+        credentials.clientId,
+        credentials.clientSecret,
+        httpClient: httpClient,
+      ),
     );
   }
 
   /// Expands shortened spotify [url]
-  Future<String> expandLink(String url) async => _streamedHeadImpl(url, const {});
+  Future<String> expandLink(String url) async =>
+      _streamedHeadImpl(url, const {});
 
   Future<String> _get(String path) {
     return _getImpl('$_baseUrl/$path', const {});
@@ -225,13 +233,13 @@ abstract class SpotifyApiBase {
       }
       try {
         var response = await request();
-        
+
         // distinguish between url redirect responses and body responses
         // note, that any response that also contains a redirect url
         // will be chosen instead of its body contents
         // FIXME: in future releases of http2, the url is a part of the [http.Response] type
         if (response case http.BaseResponseWithUrl(:final url)) {
-            return url.toString();
+          return url.toString();
         }
         return handleResponseWithBody(response as http.Response);
       } on ApiRateException catch (ex) {
@@ -247,7 +255,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async {
-    return SpotifyApiCredentials._fromClient(await (await _client).delegate);
+    return SpotifyApiCredentials._fromClient(await _client);
   }
 
   String handleResponseWithBody(http.Response response) {

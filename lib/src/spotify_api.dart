@@ -44,11 +44,4 @@ class SpotifyApi extends SpotifyApiBase {
     return SpotifyApiBase.authorizationCodeGrant(
         credentials, http.Client(), onCredentialsRefreshed);
   }
-
-  bool get enableLogging => SpotifyHttpClient.enableLogging;
-  set enableLogging(bool enable) => SpotifyHttpClient.enableLogging = enable;
-
-  LoggingDetail get loggingDetail => SpotifyHttpClient.loggingDetail;
-  set loggingDetail(LoggingDetail detail) =>
-      SpotifyHttpClient.loggingDetail = detail;
 }
