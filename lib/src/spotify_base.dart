@@ -44,9 +44,13 @@ abstract class SpotifyApiBase {
   late Shows _shows;
   Shows get shows => _shows;
   FutureOr<oauth2.Client> get client => _client;
+  interceptor.Client _interceptor;
 
-  SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
-    _client = client as FutureOr<oauth2.Client>;
+  SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
+    _client = client; // as FutureOr<oauth2.Client>;
+    _interceptor = interceptor.InterceptedClient.build(
+      interceptors: [SpotifyInterceptor(shouldIntercept: true)],
+      client: _client);
 
     _artists = Artists(this);
     _albums = Albums(this);
@@ -68,7 +72,7 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase(SpotifyApiCredentials credentials,
       [http.Client? httpClient, Function(SpotifyApiCredentials)? callBack])
-      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack) as FutureOr<http.BaseClient>);
+      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
 
   SpotifyApiBase.fromAuthCodeGrant(
       oauth2.AuthorizationCodeGrant grant, String responseUri)
@@ -89,7 +93,7 @@ abstract class SpotifyApiBase {
       callBack,
     );
 
-    return SpotifyApi.fromClient(client as FutureOr<oauth2.Client>);
+    return SpotifyApi.fromClient(client);
   }
 
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
@@ -114,7 +118,7 @@ abstract class SpotifyApiBase {
             : null);
   }
 
-  static FutureOr<http.Client> _getOauth2Client(
+  static FutureOr<oauth2.Client> _getOauth2Client(
       SpotifyApiCredentials credentials, http.Client? httpClient,
       [Function(SpotifyApiCredentials)? callBack]) async {
     if (credentials.fullyQualified) {
@@ -142,27 +146,20 @@ abstract class SpotifyApiBase {
         credentialRefreshedWrapperCallback(oauthCredentials);
       }
 
-      return interceptor.InterceptedClient.build(
-        interceptors: [SpotifyInterceptor(shouldIntercept: true, loggingDetail: LoggingDetail.simple)],
-        retryPolicy: ExpiredTokenRetryPolicy(retryLimit: 5),
-        client: oauth2.Client(
+      return oauth2.Client(
           oauthCredentials,
           identifier: credentials.clientId,
           onCredentialsRefreshed: credentialRefreshedWrapperCallback,
           secret: credentials.clientSecret,
-        ),
-      );
+        );
     }
 
-    return interceptor.InterceptedClient.build(
-      interceptors: [SpotifyInterceptor(shouldIntercept: true)],
-      client: await oauth2.clientCredentialsGrant(
+    return oauth2.clientCredentialsGrant(
         Uri.parse(SpotifyApiBase._tokenUrl),
         credentials.clientId,
         credentials.clientSecret,
         httpClient: httpClient,
-      ),
-    );
+      );
   }
 
   /// Expands shortened spotify [url]

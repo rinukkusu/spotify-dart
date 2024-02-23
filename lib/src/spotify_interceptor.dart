@@ -7,20 +7,28 @@ class SpotifyInterceptor implements interceptor.InterceptorContract {
 
   /// Set this to `true` to enable logging with the amount of
   /// [LoggingDetail]
-  bool shouldIntercept;
+  bool _shouldIntercept;
 
   /// Set this how detailed the logging should be.
   /// Default's to [LoggingDetail.full].
   LoggingDetail loggingDetail;
 
-  SpotifyInterceptor({required this.shouldIntercept, this.loggingDetail = LoggingDetail.full});
+  SpotifyInterceptor({required bool shouldIntercept, this.loggingDetail = LoggingDetail.full}) : _shouldIntercept = shouldIntercept;
 
+  set shouldIntercept(value) {
+    assert(() {
+      // This block only runs in debug mode.
+      _shouldIntercept = value;
+      return true;
+    }());
+    
+  }
 
   @override
-  Future<bool> shouldInterceptRequest() async => shouldIntercept;
+  Future<bool> shouldInterceptRequest() async => _shouldIntercept;
   
   @override
-  Future<bool> shouldInterceptResponse() async => shouldIntercept;
+  Future<bool> shouldInterceptResponse() async => _shouldIntercept;
   
   @override
   Future<http.BaseRequest> interceptRequest({required http.BaseRequest request}) async {
