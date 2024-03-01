@@ -10,40 +10,57 @@ abstract class SpotifyApiBase {
       'https://accounts.spotify.com/authorize';
 
   bool _shouldWait = false;
-  late FutureOr<oauth2.Client> _client;
+  
+  late FutureOr<oauth2.Client> _client;  
+  FutureOr<oauth2.Client> get client => _client;
+  
   late Artists _artists;
   Artists get artists => _artists;
+  
   late Albums _albums;
   Albums get albums => _albums;
+  
   late Browse _browse;
   Browse get browse => _browse;
+  
   late Tracks _tracks;
   Tracks get tracks => _tracks;
+  
   late Playlists _playlists;
   Playlists get playlists => _playlists;
+  
   late Episodes _episodes;
   Episodes get episodes => _episodes;
+  
   late RecommendationsEndpoint _recommendations;
   RecommendationsEndpoint get recommendations => _recommendations;
+  
   late Markets _markets;
   Markets get markets => _markets;
+  
   late Users _users;
   Users get users => _users;
+  
   late Search _search;
   Search get search => _search;
+  
   late AudioFeatures _audioFeatures;
   AudioFeatures get audioFeatures => _audioFeatures;
+  
   late AudioAnalysisEndpoint _audioAnalysis;
   AudioAnalysisEndpoint get audioAnalysis => _audioAnalysis;
+  
   late Categories _categories;
   Categories get categories => _categories;
+  
   late Me _me;
   Me get me => _me;
+  
   late PlayerEndpoint _player;
   PlayerEndpoint get player => _player;
+  
   late Shows _shows;
   Shows get shows => _shows;
-  FutureOr<oauth2.Client> get client => _client;
 
   SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
     _client = client as FutureOr<oauth2.Client>;
@@ -94,14 +111,16 @@ abstract class SpotifyApiBase {
 
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
       SpotifyApiCredentials credentials, http.Client httpClient,
-      [Function(SpotifyApiCredentials)? callBack]) {
+      {String? codeVerifier,
+      Function(SpotifyApiCredentials)? onCredentialsRefreshed}) {
     return oauth2.AuthorizationCodeGrant(
         credentials.clientId!,
         Uri.parse(SpotifyApiBase._authorizationUrl),
         Uri.parse(SpotifyApiBase._tokenUrl),
         secret: credentials.clientSecret,
+        codeVerifier: codeVerifier,
         httpClient: httpClient,
-        onCredentialsRefreshed: callBack != null
+        onCredentialsRefreshed: onCredentialsRefreshed != null
             ? (oauth2.Credentials cred) {
                 final newCredentials = SpotifyApiCredentials(
                     credentials.clientId, credentials.clientSecret,
@@ -109,7 +128,7 @@ abstract class SpotifyApiBase {
                     expiration: cred.expiration,
                     refreshToken: cred.refreshToken,
                     scopes: cred.scopes);
-                callBack(newCredentials);
+                onCredentialsRefreshed(newCredentials);
               }
             : null);
   }
