@@ -18,7 +18,7 @@ class Episode extends Object {
   String? description;
 
   /// The episode length in milliseconds.
-  @JsonKey(name: 'duration_ms')
+  @JsonKey(name: 'duration_ms', fromJson: convertToIntIfDoubleValue)
   int? durationMs;
 
   /// Whether or not the episode has explicit content
@@ -80,7 +80,6 @@ class Episode extends Object {
 /// Json representation of an episode with information about its show
 @JsonSerializable(createToJson: false)
 class EpisodeFull extends Episode {
-
   EpisodeFull();
 
   Show? show;

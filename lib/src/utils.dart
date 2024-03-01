@@ -27,3 +27,7 @@ int? convertToIntIfDoubleValue(dynamic jsonValue) {
       return null;
   }
 }
+
+int convertToIntIfDoubleValueWithoutNull(dynamic jsonValue) {
+  return convertToIntIfDoubleValue(jsonValue) ?? 0;
+}

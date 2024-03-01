@@ -27,7 +27,7 @@ class AudioFeature extends Object {
   double? danceability;
 
   /// The track length in milliseconds.
-  @JsonKey(name: 'duration_ms')
+  @JsonKey(name: 'duration_ms', fromJson: convertToIntIfDoubleValue)
   int? durationMs;
 
   /// The track length
@@ -55,6 +55,7 @@ class AudioFeature extends Object {
 
   /// The key the track is in. Integers map to pitches using standard Pitch
   /// Class notation. E.g. `0 = C`, `1 = C♯/D♭`, `2 = D`, and so on.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? key;
 
   /// Detects the presence of an audience in the recording. Higher liveness
@@ -72,6 +73,7 @@ class AudioFeature extends Object {
   /// Mode indicates the modality (major or minor) of a track, the type of scale
   /// from which its melodic content is derived. Major is represented by 1 and
   /// minor is `0`.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? mode;
 
   /// Speechiness detects the presence of spoken words in a track. The more
@@ -91,7 +93,7 @@ class AudioFeature extends Object {
   /// An estimated overall time signature of a track. The time signature (meter)
   /// is a notational convention to specify how many beats are in each bar (or
   /// measure).
-  @JsonKey(name: 'time_signature')
+  @JsonKey(name: 'time_signature', fromJson: convertToIntIfDoubleValue)
   int? timeSignature;
 
   /// A link to the Web API endpoint providing full details of the track.

@@ -12,13 +12,14 @@ class PlaybackState extends Object {
       _$PlaybackStateFromJson(json);
 
   /// Unix Millisecond Timestamp when data was fetched
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? timestamp;
 
   /// A [PlayerContext] Object. Can be `null`.
   PlayerContext? context;
 
   /// Progress into the currently playing track. Can be `null`.
-  @JsonKey(name: 'progress_ms')
+  @JsonKey(name: 'progress_ms', fromJson: convertToIntIfDoubleValue)
   int? progressMs;
 
   /// The currently playing track. Can be `null`.
@@ -123,7 +124,6 @@ abstract class StartOrResumeOptions extends Object {
 
 @JsonSerializable(createFactory: false)
 class StartWithContextOptions extends StartOrResumeOptions {
-
   StartWithContextOptions({this.contextUri, this.offset});
 
   /// Optional. Spotify URI of the context to play. Valid contexts are albums,
@@ -146,7 +146,6 @@ class StartWithContextOptions extends StartOrResumeOptions {
 
 @JsonSerializable(createFactory: false)
 class StartWithUrisOptions extends StartOrResumeOptions {
-
   StartWithUrisOptions({this.uris, this.positionMs});
 
   /// Optional. A JSON array of the Spotify track URIs to play.
@@ -161,12 +160,11 @@ class StartWithUrisOptions extends StartOrResumeOptions {
   List<String>? uris;
 
   /// Optional. The position in milliseconds to start playback.
-  @JsonKey(name: 'position_ms')
+  @JsonKey(name: 'position_ms', fromJson: convertToIntIfDoubleValue)
   int? positionMs;
 
   @override
   Map<String, dynamic> toJson() => _$StartWithUrisOptionsToJson(this);
-
 }
 
 abstract class Offset {
@@ -188,6 +186,7 @@ class UriOffset extends Offset {
 /// "position" is zero based and can’t be negative.
 @JsonSerializable(createFactory: false)
 class PositionOffset extends Offset {
+  @JsonKey(fromJson: convertToIntIfDoubleValueWithoutNull)
   final int position;
 
   PositionOffset(this.position) {

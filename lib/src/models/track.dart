@@ -27,12 +27,12 @@ class Track extends Object implements TrackSimple {
 
   /// The disc number
   /// (usually `1` unless the album consists of more than one disc)
-  @JsonKey(name: 'disc_number')
+  @JsonKey(name: 'disc_number', fromJson: convertToIntIfDoubleValue)
   @override
   int? discNumber;
 
   /// The track length in milliseconds.
-  @JsonKey(name: 'duration_ms')
+  @JsonKey(name: 'duration_ms', fromJson: convertToIntIfDoubleValue)
   @override
   int? durationMs;
 
@@ -106,7 +106,7 @@ class Track extends Object implements TrackSimple {
 
   /// The number of the track. If an album has several discs, the track number
   /// is the number on the specified disc.
-  @JsonKey(name: 'track_number')
+  @JsonKey(name: 'track_number', fromJson: convertToIntIfDoubleValue)
   @override
   int? trackNumber;
 
@@ -138,11 +138,11 @@ class TrackSimple extends Object {
 
   /// The disc number
   /// (usually `1` unless the album consists of more than one disc)
-  @JsonKey(name: 'disc_number')
+  @JsonKey(name: 'disc_number', fromJson: convertToIntIfDoubleValue)
   int? discNumber;
 
   /// The track length in milliseconds.
-  @JsonKey(name: 'duration_ms')
+  @JsonKey(name: 'duration_ms', fromJson: convertToIntIfDoubleValue)
   int? durationMs;
 
   /// The track length
@@ -185,7 +185,7 @@ class TrackSimple extends Object {
 
   /// The number of the track. If an album has several discs, the track number
   /// is the number on the specified disc.
-  @JsonKey(name: 'track_number')
+  @JsonKey(name: 'track_number', fromJson: convertToIntIfDoubleValue)
   int? trackNumber;
 
   /// The object type: "track".
@@ -247,5 +247,6 @@ class TracksLink extends Object {
   String? href;
 
   /// Total number of tracks in the playlist
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? total;
 }

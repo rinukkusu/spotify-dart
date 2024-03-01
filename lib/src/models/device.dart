@@ -38,7 +38,7 @@ class Device extends Object {
   DeviceType? type;
 
   /// The current volume in percent. This may be `null`.
-  @JsonKey(name: 'volume_percent')
+  @JsonKey(name: 'volume_percent', fromJson: convertToIntIfDoubleValue)
   int? volumePercent;
 }
 

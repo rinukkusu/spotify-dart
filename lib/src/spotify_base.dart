@@ -159,7 +159,8 @@ abstract class SpotifyApiBase {
   }
 
   /// Expands shortened spotify [url]
-  Future<String> expandLink(String url) async => _streamedHeadImpl(url, const {});
+  Future<String> expandLink(String url) async =>
+      _streamedHeadImpl(url, const {});
 
   Future<String> _get(String path) {
     return _getImpl('$_baseUrl/$path', const {});
@@ -225,13 +226,13 @@ abstract class SpotifyApiBase {
       }
       try {
         var response = await request();
-        
+
         // distinguish between url redirect responses and body responses
         // note, that any response that also contains a redirect url
         // will be chosen instead of its body contents
         // FIXME: in future releases of http2, the url is a part of the [http.Response] type
         if (response case http.BaseResponseWithUrl(:final url)) {
-            return url.toString();
+          return url.toString();
         }
         return handleResponseWithBody(response as http.Response);
       } on ApiRateException catch (ex) {
