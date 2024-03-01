@@ -25,11 +25,15 @@ class BasePaging<T> extends Object {
   /// Note this is the raw JSON value. Use a [Page]'s [Page.items] to get the
   /// requested data as a deserialized list.
   @JsonKey(
-      name: 'items', fromJson: itemsNativeFromJson, toJson: itemsNativeToJson)
+    name: 'items',
+    fromJson: itemsNativeFromJson,
+    toJson: itemsNativeToJson,
+  )
   Iterable<dynamic>? itemsNative;
 
   /// The maximum number of items in the response (as set in the query or by
   /// default).
+  @JsonKey(fromJson: convertToIntIfDoubleValueWithoutNull)
   int limit = 20;
 
   /// URL to the next page of items. (`null` if none)
@@ -44,12 +48,14 @@ class Paging<T> extends BasePaging<T> {
   factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
 
   /// The offset of the items returned (as set in the query or by default).
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? offset;
 
   /// URL to the previous page of items. (null if none)
   String? previous;
 
   /// The total number of items available to return.
+  @JsonKey(fromJson: convertToIntIfDoubleValueWithoutNull)
   int total = 0;
 }
 
