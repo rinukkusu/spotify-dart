@@ -12,13 +12,14 @@ class PlaybackState extends Object {
       _$PlaybackStateFromJson(json);
 
   /// Unix Millisecond Timestamp when data was fetched
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? timestamp;
 
   /// A [PlayerContext] Object. Can be `null`.
   PlayerContext? context;
 
   /// Progress into the currently playing track. Can be `null`.
-  @JsonKey(name: 'progress_ms')
+  @JsonKey(name: 'progress_ms', fromJson: convertToIntIfDoubleValue)
   int? progressMs;
 
   /// The currently playing track. Can be `null`.
@@ -159,7 +160,7 @@ class StartWithUrisOptions extends StartOrResumeOptions {
   List<String>? uris;
 
   /// Optional. The position in milliseconds to start playback.
-  @JsonKey(name: 'position_ms')
+  @JsonKey(name: 'position_ms', fromJson: convertToIntIfDoubleValue)
   int? positionMs;
 
   @override
@@ -185,6 +186,7 @@ class UriOffset extends Offset {
 /// "position" is zero based and can’t be negative.
 @JsonSerializable(createFactory: false)
 class PositionOffset extends Offset {
+  @JsonKey(fromJson: convertToIntIfDoubleValueWithoutNull)
   final int position;
 
   PositionOffset(this.position) {

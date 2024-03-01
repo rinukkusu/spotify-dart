@@ -61,7 +61,11 @@ class Show {
   String? uri;
 
   /// The number of total episodes in this show
-  @JsonKey(name: 'total_episodes', defaultValue: 0)
+  @JsonKey(
+    name: 'total_episodes',
+    defaultValue: 0,
+    fromJson: convertToIntIfDoubleValue,
+  )
   int? totalEpisodes;
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);

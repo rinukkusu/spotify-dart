@@ -26,9 +26,11 @@ class RecommendationsSeed extends Object {
 
   /// The number of tracks available after min_* and max_* filters
   /// have been applied.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? afterFilteringSize;
 
   /// The number of tracks available after relinking for regional availability.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? afterRelinkingSize;
 
   /// A link to the full track or artist data for this seed.
@@ -43,6 +45,7 @@ class RecommendationsSeed extends Object {
   String? id;
 
   /// The number of recommended tracks available for this seed.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? initialPoolSize;
 
   /// The entity type of this seed. One of artist, track or genre.

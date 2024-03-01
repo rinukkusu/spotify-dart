@@ -388,16 +388,17 @@ TrackAudioAnalysis _$TrackAudioAnalysisFromJson(Map<String, dynamic> json) =>
       ..loudness = (json['loudness'] as num?)?.toDouble()
       ..tempo = (json['tempo'] as num?)?.toDouble()
       ..tempoConfidence = (json['tempo_confidence'] as num?)?.toDouble()
-      ..key = json['key'] as int?
+      ..key = convertToIntIfDoubleValue(json['key'])
       ..keyConfidence = (json['key_confidence'] as num?)?.toDouble()
-      ..mode = json['mode'] as int?
+      ..mode = convertToIntIfDoubleValue(json['mode'])
       ..modeConfidence = (json['mode_confidence'] as num?)?.toDouble()
-      ..timeSignature = json['time_signature'] as int?
+      ..timeSignature = convertToIntIfDoubleValue(json['time_signature'])
       ..timeSignatureConfidence =
           (json['time_signature_confidence'] as num?)?.toDouble()
-      ..numSamples = json['num_samples'] as int?
-      ..analysisSampleRate = json['analysis_sample_rate'] as int?
-      ..analysisChannels = json['analysis_channels'] as int?
+      ..numSamples = convertToIntIfDoubleValue(json['num_samples'])
+      ..analysisSampleRate =
+          convertToIntIfDoubleValue(json['analysis_sample_rate'])
+      ..analysisChannels = convertToIntIfDoubleValue(json['analysis_channels'])
       ..endOfFadeIn = (json['end_of_fade_in'] as num?)?.toDouble()
       ..startOfFadeOut = (json['start_of_fade_out'] as num?)?.toDouble()
       ..synchString = json['synchstring'] as String?
@@ -413,11 +414,11 @@ Section _$SectionFromJson(Map<String, dynamic> json) => Section()
   ..loudness = (json['loudness'] as num?)?.toDouble()
   ..tempo = (json['tempo'] as num?)?.toDouble()
   ..tempoConfidence = (json['tempo_confidence'] as num?)?.toDouble()
-  ..key = json['key'] as int?
+  ..key = convertToIntIfDoubleValue(json['key'])
   ..keyConfidence = (json['key_confidence'] as num?)?.toDouble()
-  ..mode = json['mode'] as int?
+  ..mode = convertToIntIfDoubleValue(json['mode'])
   ..modeConfidence = (json['mode_confidence'] as num?)?.toDouble()
-  ..timeSignature = json['time_signature'] as int?
+  ..timeSignature = convertToIntIfDoubleValue(json['time_signature'])
   ..timeSignatureConfidence =
       (json['time_signature_confidence'] as num?)?.toDouble()
   ..start = (json['start'] as num?)?.toDouble();
@@ -446,17 +447,17 @@ AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) => AudioFeature()
   ..acousticness = (json['acousticness'] as num?)?.toDouble()
   ..analysisUrl = json['analysis_url'] as String?
   ..danceability = (json['danceability'] as num?)?.toDouble()
-  ..durationMs = json['duration_ms'] as int?
+  ..durationMs = convertToIntIfDoubleValue(json['duration_ms'])
   ..energy = (json['energy'] as num?)?.toDouble()
   ..id = json['id'] as String?
   ..instrumentalness = (json['instrumentalness'] as num?)?.toDouble()
-  ..key = json['key'] as int?
+  ..key = convertToIntIfDoubleValue(json['key'])
   ..liveness = (json['liveness'] as num?)?.toDouble()
   ..loudness = (json['loudness'] as num?)?.toDouble()
-  ..mode = json['mode'] as int?
+  ..mode = convertToIntIfDoubleValue(json['mode'])
   ..speechiness = (json['speechiness'] as num?)?.toDouble()
   ..tempo = (json['tempo'] as num?)?.toDouble()
-  ..timeSignature = json['time_signature'] as int?
+  ..timeSignature = convertToIntIfDoubleValue(json['time_signature'])
   ..trackHref = json['track_href'] as String?
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?
@@ -487,7 +488,7 @@ Device _$DeviceFromJson(Map<String, dynamic> json) => Device()
   ..name = json['name'] as String?
   ..type = $enumDecodeNullable(_$DeviceTypeEnumMap, json['type'],
       unknownValue: DeviceType.Unknown)
-  ..volumePercent = json['volume_percent'] as int?;
+  ..volumePercent = convertToIntIfDoubleValue(json['volume_percent']);
 
 const _$DeviceTypeEnumMap = {
   DeviceType.Computer: 'Computer',
@@ -506,7 +507,7 @@ const _$DeviceTypeEnumMap = {
 };
 
 SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) => SpotifyError()
-  ..status = json['status'] as int?
+  ..status = convertToIntIfDoubleValue(json['status'])
   ..message = json['message'] as String?;
 
 Followers _$FollowersFromJson(Map<String, dynamic> json) => Followers()
@@ -521,17 +522,17 @@ Image _$ImageFromJson(Map<String, dynamic> json) => Image()
 Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) => Paging<T>()
   ..href = json['href'] as String?
   ..itemsNative = itemsNativeFromJson(json['items'] as List)
-  ..limit = json['limit'] as int
+  ..limit = convertToIntIfDoubleValueWithoutNull(json['limit'])
   ..next = json['next'] as String?
-  ..offset = json['offset'] as int?
+  ..offset = convertToIntIfDoubleValue(json['offset'])
   ..previous = json['previous'] as String?
-  ..total = json['total'] as int;
+  ..total = convertToIntIfDoubleValueWithoutNull(json['total']);
 
 CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) =>
     CursorPaging<T>()
       ..href = json['href'] as String?
       ..itemsNative = itemsNativeFromJson(json['items'] as List)
-      ..limit = json['limit'] as int
+      ..limit = convertToIntIfDoubleValueWithoutNull(json['limit'])
       ..next = json['next'] as String?
       ..cursors = json['cursors'] == null
           ? null
@@ -542,11 +543,11 @@ Cursor _$CursorFromJson(Map<String, dynamic> json) =>
 
 PlaybackState _$PlaybackStateFromJson(Map<String, dynamic> json) =>
     PlaybackState()
-      ..timestamp = json['timestamp'] as int?
+      ..timestamp = convertToIntIfDoubleValue(json['timestamp'])
       ..context = json['context'] == null
           ? null
           : PlayerContext.fromJson(json['context'] as Map<String, dynamic>)
-      ..progressMs = json['progress_ms'] as int?
+      ..progressMs = convertToIntIfDoubleValue(json['progress_ms'])
       ..item = json['item'] == null
           ? null
           : Track.fromJson(json['item'] as Map<String, dynamic>)
@@ -695,11 +696,13 @@ Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) =>
 
 RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) =>
     RecommendationsSeed()
-      ..afterFilteringSize = json['afterFilteringSize'] as int?
-      ..afterRelinkingSize = json['afterRelinkingSize'] as int?
+      ..afterFilteringSize =
+          convertToIntIfDoubleValue(json['afterFilteringSize'])
+      ..afterRelinkingSize =
+          convertToIntIfDoubleValue(json['afterRelinkingSize'])
       ..href = json['href'] as String?
       ..id = json['id'] as String?
-      ..initialPoolSize = json['initialPoolSize'] as int?
+      ..initialPoolSize = convertToIntIfDoubleValue(json['initialPoolSize'])
       ..type = json['type'] as String?;
 
 Show _$ShowFromJson(Map<String, dynamic> json) => Show()
@@ -727,12 +730,14 @@ Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..publisher = json['publisher'] as String?
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?
-  ..totalEpisodes = json['total_episodes'] as int? ?? 0;
+  ..totalEpisodes = json['total_episodes'] == null
+      ? 0
+      : convertToIntIfDoubleValue(json['total_episodes']);
 
 Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
   ..audioPreviewUrl = json['audio_preview_url'] as String?
   ..description = json['description'] as String?
-  ..durationMs = json['duration_ms'] as int?
+  ..durationMs = convertToIntIfDoubleValue(json['duration_ms'])
   ..explicit = json['explicit'] as bool?
   ..externalUrls = json['external_urls'] == null
       ? null
@@ -758,7 +763,7 @@ Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
 EpisodeFull _$EpisodeFullFromJson(Map<String, dynamic> json) => EpisodeFull()
   ..audioPreviewUrl = json['audio_preview_url'] as String?
   ..description = json['description'] as String?
-  ..durationMs = json['duration_ms'] as int?
+  ..durationMs = convertToIntIfDoubleValue(json['duration_ms'])
   ..explicit = json['explicit'] as bool?
   ..externalUrls = json['external_urls'] == null
       ? null
@@ -794,8 +799,8 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
       ?.map((e) => $enumDecode(_$MarketEnumMap, e))
       .toList()
-  ..discNumber = json['disc_number'] as int?
-  ..durationMs = json['duration_ms'] as int?
+  ..discNumber = convertToIntIfDoubleValue(json['disc_number'])
+  ..durationMs = convertToIntIfDoubleValue(json['duration_ms'])
   ..explicit = json['explicit'] as bool?
   ..externalIds = json['external_ids'] == null
       ? null
@@ -812,7 +817,7 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..name = json['name'] as String?
   ..popularity = convertToIntIfDoubleValue(json['popularity'])
   ..previewUrl = json['preview_url'] as String?
-  ..trackNumber = json['track_number'] as int?
+  ..trackNumber = convertToIntIfDoubleValue(json['track_number'])
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
@@ -823,8 +828,8 @@ TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) => TrackSimple()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
       ?.map((e) => $enumDecode(_$MarketEnumMap, e))
       .toList()
-  ..discNumber = json['disc_number'] as int?
-  ..durationMs = json['duration_ms'] as int?
+  ..discNumber = convertToIntIfDoubleValue(json['disc_number'])
+  ..durationMs = convertToIntIfDoubleValue(json['duration_ms'])
   ..explicit = json['explicit'] as bool?
   ..externalUrls = json['external_urls'] == null
       ? null
@@ -837,7 +842,7 @@ TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) => TrackSimple()
       : TrackLink.fromJson(json['linked_from'] as Map<String, dynamic>)
   ..name = json['name'] as String?
   ..previewUrl = json['preview_url'] as String?
-  ..trackNumber = json['track_number'] as int?
+  ..trackNumber = convertToIntIfDoubleValue(json['track_number'])
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
@@ -860,7 +865,7 @@ TrackLink _$TrackLinkFromJson(Map<String, dynamic> json) => TrackLink()
 
 TracksLink _$TracksLinkFromJson(Map<String, dynamic> json) => TracksLink()
   ..href = json['href'] as String?
-  ..total = json['total'] as int?;
+  ..total = convertToIntIfDoubleValue(json['total']);
 
 User _$UserFromJson(Map<String, dynamic> json) => User()
   ..birthdate = json['birthdate'] as String?

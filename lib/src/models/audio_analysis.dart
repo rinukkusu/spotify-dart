@@ -49,6 +49,7 @@ abstract class _Section {
   /// The estimated overall key of the section. The values in this field
   /// ranging from `0 to `11` mapping to pitches using standard Pitch Class notation
   /// (E.g. `0 = C`, `1 = C♯/D♭`, `2 = D`, and so on). If no key was detected, the value is `-1`.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? key;
 
   /// The confidence, from 0.0 to 1.0, of the reliability of the key.
@@ -62,6 +63,7 @@ abstract class _Section {
   /// Note that the major key (e.g. C major) could more likely be confused
   /// with the minor key at `3` semitones lower (e.g. A minor) as both
   /// keys carry the same pitches.
+  @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? mode;
 
   /// The confidence, from `0.0` to `1.0`, of the reliability of the mode.
@@ -73,7 +75,7 @@ abstract class _Section {
   /// how many beats are in each bar (or measure).
   /// The time signature ranges from `3` to `7` indicating time signatures
   /// of “3/4”, to “7/4”.
-  @JsonKey(name: 'time_signature')
+  @JsonKey(name: 'time_signature', fromJson: convertToIntIfDoubleValue)
   int? timeSignature;
 
   /// The confidence, from `0.0` to `1.0`, of the reliability of the
@@ -93,16 +95,16 @@ class TrackAudioAnalysis extends _Section {
 
   /// The exact number of audio samples analyzed from this track.
   /// See also [analysisSampleRate].
-  @JsonKey(name: 'num_samples')
+  @JsonKey(name: 'num_samples', fromJson: convertToIntIfDoubleValue)
   int? numSamples;
 
   /// The sample rate used to decode and analyze this track.
   ///
   /// May differ from the actual sample rate of this track available on Spotify.
-  @JsonKey(name: 'analysis_sample_rate')
+  @JsonKey(name: 'analysis_sample_rate', fromJson: convertToIntIfDoubleValue)
   int? analysisSampleRate;
 
-  @JsonKey(name: 'analysis_channels')
+  @JsonKey(name: 'analysis_channels', fromJson: convertToIntIfDoubleValue)
   int? analysisChannels;
 
   /// The time, in seconds, at which the track's fade-in period ends.
