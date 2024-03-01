@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.2
+
+- add codeVerifier for oauth flow
+- add method to expand spotify's shortened URLs 
+  - e.g. `await spotify.expandLink('https://spotify.link/hRkBrwub9xb')`
+
 ## 0.13.1
 
 - fix empty playbackState returning 404
