@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.3
+
+- fix double/int serialization woes
+
 ## 0.13.2
 
 - add codeVerifier for oauth flow
