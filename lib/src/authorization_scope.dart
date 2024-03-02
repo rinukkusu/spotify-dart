@@ -1,7 +1,9 @@
 // Copyright (c) 2023, hayribakici. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+// ignore_for_file: deprecated_member_use_from_same_package
+
+part of '../spotify.dart';
 
 /// Class holding all available authorization scopes.
 /// See [Spotify scopes documentation](https://developer.spotify.com/documentation/web-api/concepts/scopes)

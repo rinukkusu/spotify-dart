@@ -1,7 +1,7 @@
 // Copyright (c) 2017, 'rinukkusu'. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+part of '../spotify.dart';
 
 /// Accesspoint for the spotify api
 ///
@@ -17,15 +17,13 @@ class SpotifyApi extends SpotifyApiBase {
       {Function(SpotifyApiCredentials)? onCredentialsRefreshed})
       : super(credentials, http.Client(), onCredentialsRefreshed);
 
-  SpotifyApi.fromClient(FutureOr<oauth2.Client> client)
-      : super.fromClient(client);
+  SpotifyApi.fromClient(FutureOr<oauth2.Client> super.client)
+      : super.fromClient();
 
-  SpotifyApi.fromAuthCodeGrant(
-      oauth2.AuthorizationCodeGrant grant, String responseUri)
-      : super.fromAuthCodeGrant(grant, responseUri);
+  SpotifyApi.fromAuthCodeGrant(super.grant, super.responseUri)
+      : super.fromAuthCodeGrant();
 
-  SpotifyApi.withAccessToken(String accessToken)
-      : super._withAccessToken(accessToken);
+  SpotifyApi.withAccessToken(super.accessToken) : super._withAccessToken();
 
   static Future<SpotifyApi> asyncFromCredentials(
     SpotifyApiCredentials credentials, {

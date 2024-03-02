@@ -1,4 +1,4 @@
-part of spotify.models;
+part of '_models.dart';
 
 /// Json representation of the recommendations
 @JsonSerializable(createToJson: false)

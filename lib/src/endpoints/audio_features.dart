@@ -1,14 +1,14 @@
 // Copyright (c) 2017, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+part of '../../spotify.dart';
 
 /// Endpoint of audio features `v1/audio-features`
 class AudioFeatures extends EndpointBase {
   @override
   String get _path => 'v1/audio-features';
 
-  AudioFeatures(SpotifyApiBase api) : super(api);
+  AudioFeatures(super.api);
 
   /// Returns audio features of a track with [trackId]
   Future<AudioFeature> get(String trackId) async {

@@ -1,14 +1,14 @@
 // Copyright (c) 2017, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+part of '../../spotify.dart';
 
 /// Endpoint for artists `v1/artists`
 class Artists extends EndpointPaging {
   @override
   String get _path => 'v1/artists';
 
-  Artists(SpotifyApiBase api) : super(api);
+  Artists(super.api);
 
   /// Retrieves an artist with its [artistId]
   Future<Artist> get(String artistId) async {
@@ -72,9 +72,9 @@ class Artists extends EndpointPaging {
     Market? country,
     List<String>? includeGroups,
   }) {
-    final _includeGroups = includeGroups?.join(',');
+    final includeGroups0 = includeGroups?.join(',');
     final query = _buildQuery({
-      'include_groups': _includeGroups,
+      'include_groups': includeGroups0,
       'country': country?.name,
     });
     return _getPages(
