@@ -103,11 +103,13 @@ class PlayerEndpoint extends _MeEndpointBase {
       {String? deviceId,
       StartOrResumeOptions? options,
       bool retrievePlaybackState = true}) async {
-    var body = options?.toJson();
-    var json = jsonEncode(body ?? '');
+    final body = options?.toJson();
+    final json = body != null ? jsonEncode(body) : null;
 
     await _api._put(
-        '$_path/play?${_buildQuery({'device_id': deviceId})}', json);
+      '$_path/play?${_buildQuery({'device_id': deviceId})}',
+      json,
+    );
 
     return retrievePlaybackState ? playbackState() : null;
   }
