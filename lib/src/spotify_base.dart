@@ -193,7 +193,7 @@ abstract class SpotifyApiBase {
     return _deleteImpl('$_baseUrl/$path', const {}, body);
   }
 
-  Future<String> _put(String path, [String body = '']) {
+  Future<String> _put(String path, [String? body]) {
     return _putImpl('$_baseUrl/$path', const {}, body);
   }
 
