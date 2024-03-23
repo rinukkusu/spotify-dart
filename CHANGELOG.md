@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.4
+
+- fix null objects being sent as empty string to the Spotify API
+
 ## 0.13.3
 
 - fix double/int serialization woes
