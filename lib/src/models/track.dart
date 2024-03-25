@@ -12,7 +12,7 @@ class Track extends Object implements TrackSimple {
 
   /// The album on which the track appears. The album object includes a link
   /// in [href] to full information about the album.
-  AlbumSimple? album;
+  Album? album;
 
   /// The artists who performed the track. Each artist object includes a link
   /// in [href] to more detailed information about the artist.
