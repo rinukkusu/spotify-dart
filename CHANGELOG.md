@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.5
+
+- fix scope name for user profile
+
 ## 0.13.4
 
 - fix null objects being sent as empty string to the Spotify API
