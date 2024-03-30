@@ -1,7 +1,9 @@
 // Copyright (c) 2020, hayribakici. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify.models;
+// ignore_for_file: constant_identifier_names
+
+part of '_models.dart';
 
 /// Json representation of a device
 @JsonSerializable(createToJson: false)
@@ -38,7 +40,7 @@ class Device extends Object {
   DeviceType? type;
 
   /// The current volume in percent. This may be `null`.
-  @JsonKey(name: 'volume_percent')
+  @JsonKey(name: 'volume_percent', fromJson: convertToIntIfDoubleValue)
   int? volumePercent;
 }
 

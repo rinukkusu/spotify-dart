@@ -1,7 +1,7 @@
 // Copyright (c) 2017, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify.models;
+part of '_models.dart';
 
 /// Json representation of a show
 @JsonSerializable(createToJson: false)
@@ -61,7 +61,11 @@ class Show {
   String? uri;
 
   /// The number of total episodes in this show
-  @JsonKey(name: 'total_episodes', defaultValue: 0)
+  @JsonKey(
+    name: 'total_episodes',
+    defaultValue: 0,
+    fromJson: convertToIntIfDoubleValue,
+  )
   int? totalEpisodes;
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);

@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.13.5
+
+- fix scope name for user profile
+
+## 0.13.4
+
+- fix null objects being sent as empty string to the Spotify API
+
+## 0.13.3
+
+- fix double/int serialization woes
+
+## 0.13.2
+
+- add codeVerifier for oauth flow
+- add method to expand spotify's shortened URLs 
+  - e.g. `await spotify.expandLink('https://spotify.link/hRkBrwub9xb')`
+
 ## 0.13.1
 
 - fix empty playbackState returning 404

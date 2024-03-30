@@ -1,14 +1,16 @@
 // Copyright (c) 2022, 2023, chances, rinukkusu, hayribakici. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+// ignore_for_file: deprecated_member_use_from_same_package
+
+part of '../../spotify.dart';
 
 /// Endpoint of the player
 class PlayerEndpoint extends _MeEndpointBase {
   @override
   String get _path => '${super._path}/player';
 
-  PlayerEndpoint(SpotifyApiBase api) : super(api);
+  PlayerEndpoint(super.api);
 
   /// Toggle Shuffle For User's Playback.
   ///
@@ -38,7 +40,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// and active device. Returns an empty [PlaybackState] object when
   /// no playback context has been started.
   Future<PlaybackState> playbackState([Market? market]) async {
-    var jsonString = await _api._get('$_path?${_buildQuery({'market': market?.name})}');
+    var jsonString =
+        await _api._get('$_path?${_buildQuery({'market': market?.name})}');
 
     if (jsonString.isEmpty) {
       return PlaybackState();
@@ -100,11 +103,13 @@ class PlayerEndpoint extends _MeEndpointBase {
       {String? deviceId,
       StartOrResumeOptions? options,
       bool retrievePlaybackState = true}) async {
-    var body = options?.toJson();
-    var json = jsonEncode(body ?? '');
+    final body = options?.toJson();
+    final json = body != null ? jsonEncode(body) : null;
 
     await _api._put(
-        '$_path/play?${_buildQuery({'device_id': deviceId})}', json);
+      '$_path/play?${_buildQuery({'device_id': deviceId})}',
+      json,
+    );
 
     return retrievePlaybackState ? playbackState() : null;
   }
@@ -141,14 +146,15 @@ class PlayerEndpoint extends _MeEndpointBase {
   ///
   /// Note: Before starting a new playback context check the [playbackState]
   /// if necessary before [resume]ing, otherwise you overwrite the current
-  /// context. 
+  /// context.
   Future<PlaybackState?> startWithContext(String contextUri,
       {String? deviceId,
       Offset? offset,
       bool retrievePlaybackState = true}) async {
     assert(
         contextUri.isNotEmpty, 'Cannot start playback with empty context uri');
-    var options = StartWithContextOptions(contextUri: contextUri, offset: offset);
+    var options =
+        StartWithContextOptions(contextUri: contextUri, offset: offset);
     return startOrResume(
         deviceId: deviceId,
         options: options,

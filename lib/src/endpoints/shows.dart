@@ -1,14 +1,14 @@
 // Copyright (c) 2020, deandreamatias, rinukkusu. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+part of '../../spotify.dart';
 
 /// Endpoint of shows `v1/shows`
 class Shows extends EndpointPaging {
   @override
   String get _path => 'v1/shows';
 
-  Shows(SpotifyApiBase api) : super(api);
+  Shows(super.api);
 
   /// Get a single show
   ///
@@ -16,7 +16,7 @@ class Shows extends EndpointPaging {
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
   Future<Show> get(String showId, {Market? market}) async {
-    var jsonString;
+    String jsonString;
     if (market != null) {
       var queryMap = {'market': market.name};
       var query = _buildQuery(queryMap);

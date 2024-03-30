@@ -1,7 +1,9 @@
 // Copyright (c) 2023, hayribakici. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of spotify;
+// ignore_for_file: deprecated_member_use_from_same_package
+
+part of '../spotify.dart';
 
 /// Class holding all available authorization scopes.
 /// See [Spotify scopes documentation](https://developer.spotify.com/documentation/web-api/concepts/scopes)
@@ -172,10 +174,10 @@ class UserAuthorizationScope extends _Scope {
 
   /// Read access to user’s subscription details (type of user account).
   ///
-  /// Endpoints that require the `user-read-profile` scope:
+  /// Endpoints that require the `user-read-private` scope:
   /// * [Search.get]
   /// * [Me.get]
-  String get readFollow => 'user-read-profile';
+  String get readPrivate => 'user-read-private';
 
   /// Read access to user’s email address.
   ///
@@ -185,7 +187,7 @@ class UserAuthorizationScope extends _Scope {
 
   /// Contains all properties of [AuthorizationScope.user]
   @override
-  List<String> get all => List.unmodifiable([readFollow, readEmail]);
+  List<String> get all => List.unmodifiable([readPrivate, readEmail]);
 }
 
 class PlaylistAuthorizationScope extends _Scope {
