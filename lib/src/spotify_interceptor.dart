@@ -1,4 +1,4 @@
-part of spotify;
+part of '../spotify.dart';
 
 
 class SpotifyInterceptor implements interceptor.InterceptorContract {

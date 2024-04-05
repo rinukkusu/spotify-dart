@@ -61,14 +61,11 @@ abstract class SpotifyApiBase {
 
   late Shows _shows;
   Shows get shows => _shows;
-  interceptor.Client _interceptor;
 
   SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
     _client = client; // as FutureOr<oauth2.Client>;
-    _interceptor = interceptor.InterceptedClient.build(
-      interceptors: [SpotifyInterceptor(shouldIntercept: true)],
-      client: _client);
-
+    
+    
     _artists = Artists(this);
     _albums = Albums(this);
     _browse = Browse(this);
@@ -179,6 +176,12 @@ abstract class SpotifyApiBase {
         credentials.clientSecret,
         httpClient: httpClient,
       );
+  }
+
+  void enableDebugMode(bool enable, {LoggingDetail loggingDetail = LoggingDetail.full}) async {
+    _client = interceptor.InterceptedClient.build(
+      interceptors: [SpotifyInterceptor(shouldIntercept: enable, loggingDetail: loggingDetail)],
+      client: await _client)) as FutureOr<oauth2.Client>;
   }
 
   /// Expands shortened spotify [url]

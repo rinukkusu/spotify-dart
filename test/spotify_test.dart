@@ -10,6 +10,10 @@ Future main() async {
     'clientId',
     'clientSecret',
   ));
+  
+  setUp(() async => {
+    spotify.enableDebugMode(true, loggingDetail: LoggingDetail.simple)
+  });
 
   tearDown(() {
     spotify.interceptor = null;
