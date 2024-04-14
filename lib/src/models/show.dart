@@ -4,7 +4,7 @@
 part of '_models.dart';
 
 /// Json representation of a show
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Show {
   Show();
 
@@ -69,4 +69,6 @@ class Show {
   int? totalEpisodes;
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ShowToJson(this);
 }

@@ -4,11 +4,13 @@
 part of '_models.dart';
 
 /// Json representation of an artist
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Artist extends Object implements ArtistSimple {
   Artist();
 
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ArtistToJson(this);
 
   /// Known external URLs for this artist.
   @JsonKey(name: 'external_urls')
@@ -56,12 +58,14 @@ class Artist extends Object implements ArtistSimple {
 }
 
 /// Json representation of a simplified artist
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class ArtistSimple extends Object {
   ArtistSimple();
 
   factory ArtistSimple.fromJson(Map<String, dynamic> json) =>
       _$ArtistSimpleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ArtistSimpleToJson(this);
 
   /// Known external URLs for this artist.
   @JsonKey(name: 'external_urls')

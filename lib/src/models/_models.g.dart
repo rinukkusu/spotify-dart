@@ -9,10 +9,22 @@ part of '_models.dart';
 ExternalUrls _$ExternalUrlsFromJson(Map<String, dynamic> json) =>
     ExternalUrls()..spotify = json['spotify'] as String?;
 
+Map<String, dynamic> _$ExternalUrlsToJson(ExternalUrls instance) =>
+    <String, dynamic>{
+      'spotify': instance.spotify,
+    };
+
 ExternalIds _$ExternalIdsFromJson(Map<String, dynamic> json) => ExternalIds()
   ..isrc = json['isrc'] as String?
   ..ean = json['ean'] as String?
   ..upc = json['upc'] as String?;
+
+Map<String, dynamic> _$ExternalIdsToJson(ExternalIds instance) =>
+    <String, dynamic>{
+      'isrc': instance.isrc,
+      'ean': instance.ean,
+      'upc': instance.upc,
+    };
 
 Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
   ..albumType = AlbumSimple._convertForAlbumType(json['album_type'] as String?)
@@ -47,6 +59,29 @@ Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
       (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList()
   ..label = json['label'] as String?
   ..popularity = convertToIntIfDoubleValue(json['popularity']);
+
+Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
+      'album_type': _$AlbumTypeEnumMap[instance.albumType],
+      'artists': instance.artists,
+      'available_markets':
+          instance.availableMarkets?.map((e) => _$MarketEnumMap[e]!).toList(),
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'name': instance.name,
+      'release_date': instance.releaseDate,
+      'release_date_precision':
+          _$DatePrecisionEnumMap[instance.releaseDatePrecision],
+      'type': instance.type,
+      'uri': instance.uri,
+      'tracks': instance.tracks?.toList(),
+      'copyrights': instance.copyrights,
+      'external_ids': instance.externalIds,
+      'genres': instance.genres,
+      'label': instance.label,
+      'popularity': instance.popularity,
+    };
 
 const _$MarketEnumMap = {
   Market.AD: 'AD',
@@ -307,6 +342,12 @@ const _$DatePrecisionEnumMap = {
   DatePrecision.year: 'year',
 };
 
+const _$AlbumTypeEnumMap = {
+  AlbumType.album: 'album',
+  AlbumType.single: 'single',
+  AlbumType.compilation: 'compilation',
+};
+
 AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) => AlbumSimple()
   ..albumType = AlbumSimple._convertForAlbumType(json['album_type'] as String?)
   ..artists = (json['artists'] as List<dynamic>?)
@@ -331,6 +372,25 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) => AlbumSimple()
   ..uri = json['uri'] as String?
   ..tracks = AlbumSimple._extractTracksFromPage(json['tracks']);
 
+Map<String, dynamic> _$AlbumSimpleToJson(AlbumSimple instance) =>
+    <String, dynamic>{
+      'album_type': _$AlbumTypeEnumMap[instance.albumType],
+      'artists': instance.artists,
+      'available_markets':
+          instance.availableMarkets?.map((e) => _$MarketEnumMap[e]!).toList(),
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'name': instance.name,
+      'release_date': instance.releaseDate,
+      'release_date_precision':
+          _$DatePrecisionEnumMap[instance.releaseDatePrecision],
+      'type': instance.type,
+      'uri': instance.uri,
+      'tracks': instance.tracks?.toList(),
+    };
+
 Artist _$ArtistFromJson(Map<String, dynamic> json) => Artist()
   ..externalUrls = json['external_urls'] == null
       ? null
@@ -350,6 +410,19 @@ Artist _$ArtistFromJson(Map<String, dynamic> json) => Artist()
       .toList()
   ..popularity = convertToIntIfDoubleValue(json['popularity']);
 
+Map<String, dynamic> _$ArtistToJson(Artist instance) => <String, dynamic>{
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'name': instance.name,
+      'type': instance.type,
+      'uri': instance.uri,
+      'followers': instance.followers,
+      'genres': instance.genres,
+      'images': instance.images,
+      'popularity': instance.popularity,
+    };
+
 ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) => ArtistSimple()
   ..externalUrls = json['external_urls'] == null
       ? null
@@ -359,6 +432,16 @@ ArtistSimple _$ArtistSimpleFromJson(Map<String, dynamic> json) => ArtistSimple()
   ..name = json['name'] as String?
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
+
+Map<String, dynamic> _$ArtistSimpleToJson(ArtistSimple instance) =>
+    <String, dynamic>{
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'name': instance.name,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
 
 AudioAnalysis _$AudioAnalysisFromJson(Map<String, dynamic> json) =>
     AudioAnalysis()
@@ -380,6 +463,16 @@ AudioAnalysis _$AudioAnalysisFromJson(Map<String, dynamic> json) =>
       ..tatums = (json['tatums'] as List<dynamic>?)
           ?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>))
           .toList();
+
+Map<String, dynamic> _$AudioAnalysisToJson(AudioAnalysis instance) =>
+    <String, dynamic>{
+      'track': instance.track,
+      'bars': instance.bars,
+      'beats': instance.beats,
+      'sections': instance.sections,
+      'segments': instance.segments,
+      'tatums': instance.tatums,
+    };
 
 TrackAudioAnalysis _$TrackAudioAnalysisFromJson(Map<String, dynamic> json) =>
     TrackAudioAnalysis()
@@ -408,6 +501,32 @@ TrackAudioAnalysis _$TrackAudioAnalysisFromJson(Map<String, dynamic> json) =>
       ..codeString = json['codestring'] as String?
       ..codeVersion = (json['code_version'] as num?)?.toDouble();
 
+Map<String, dynamic> _$TrackAudioAnalysisToJson(TrackAudioAnalysis instance) =>
+    <String, dynamic>{
+      'duration': instance.duration,
+      'confidence': instance.confidence,
+      'loudness': instance.loudness,
+      'tempo': instance.tempo,
+      'tempo_confidence': instance.tempoConfidence,
+      'key': instance.key,
+      'key_confidence': instance.keyConfidence,
+      'mode': instance.mode,
+      'mode_confidence': instance.modeConfidence,
+      'time_signature': instance.timeSignature,
+      'time_signature_confidence': instance.timeSignatureConfidence,
+      'num_samples': instance.numSamples,
+      'analysis_sample_rate': instance.analysisSampleRate,
+      'analysis_channels': instance.analysisChannels,
+      'end_of_fade_in': instance.endOfFadeIn,
+      'start_of_fade_out': instance.startOfFadeOut,
+      'synchstring': instance.synchString,
+      'synch_version': instance.synchVersion,
+      'rhythmstring': instance.rhythmString,
+      'rhythm_version': instance.rhythmVersion,
+      'codestring': instance.codeString,
+      'code_version': instance.codeVersion,
+    };
+
 Section _$SectionFromJson(Map<String, dynamic> json) => Section()
   ..duration = (json['duration'] as num?)?.toDouble()
   ..confidence = (json['confidence'] as num?)?.toDouble()
@@ -422,6 +541,21 @@ Section _$SectionFromJson(Map<String, dynamic> json) => Section()
   ..timeSignatureConfidence =
       (json['time_signature_confidence'] as num?)?.toDouble()
   ..start = (json['start'] as num?)?.toDouble();
+
+Map<String, dynamic> _$SectionToJson(Section instance) => <String, dynamic>{
+      'duration': instance.duration,
+      'confidence': instance.confidence,
+      'loudness': instance.loudness,
+      'tempo': instance.tempo,
+      'tempo_confidence': instance.tempoConfidence,
+      'key': instance.key,
+      'key_confidence': instance.keyConfidence,
+      'mode': instance.mode,
+      'mode_confidence': instance.modeConfidence,
+      'time_signature': instance.timeSignature,
+      'time_signature_confidence': instance.timeSignatureConfidence,
+      'start': instance.start,
+    };
 
 Segment _$SegmentFromJson(Map<String, dynamic> json) => Segment()
   ..start = (json['start'] as num?)?.toDouble()
@@ -438,10 +572,29 @@ Segment _$SegmentFromJson(Map<String, dynamic> json) => Segment()
       ?.map((e) => (e as num).toDouble())
       .toList();
 
+Map<String, dynamic> _$SegmentToJson(Segment instance) => <String, dynamic>{
+      'start': instance.start,
+      'duration': instance.duration,
+      'confidence': instance.confidence,
+      'loudness_start': instance.loudnessStart,
+      'loudness_max': instance.loudnessMax,
+      'loudness_max_time': instance.loudnessMaxTime,
+      'loudness_end': instance.loudnessEnd,
+      'pitches': instance.pitches,
+      'timbre': instance.timbre,
+    };
+
 TimeInterval _$TimeIntervalFromJson(Map<String, dynamic> json) => TimeInterval()
   ..confidence = (json['confidence'] as num?)?.toDouble()
   ..duration = (json['duration'] as num?)?.toDouble()
   ..start = (json['start'] as num?)?.toDouble();
+
+Map<String, dynamic> _$TimeIntervalToJson(TimeInterval instance) =>
+    <String, dynamic>{
+      'confidence': instance.confidence,
+      'duration': instance.duration,
+      'start': instance.start,
+    };
 
 AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) => AudioFeature()
   ..acousticness = (json['acousticness'] as num?)?.toDouble()
@@ -463,6 +616,28 @@ AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) => AudioFeature()
   ..uri = json['uri'] as String?
   ..valence = (json['valence'] as num?)?.toDouble();
 
+Map<String, dynamic> _$AudioFeatureToJson(AudioFeature instance) =>
+    <String, dynamic>{
+      'acousticness': instance.acousticness,
+      'analysis_url': instance.analysisUrl,
+      'danceability': instance.danceability,
+      'duration_ms': instance.durationMs,
+      'energy': instance.energy,
+      'id': instance.id,
+      'instrumentalness': instance.instrumentalness,
+      'key': instance.key,
+      'liveness': instance.liveness,
+      'loudness': instance.loudness,
+      'mode': instance.mode,
+      'speechiness': instance.speechiness,
+      'tempo': instance.tempo,
+      'time_signature': instance.timeSignature,
+      'track_href': instance.trackHref,
+      'type': instance.type,
+      'uri': instance.uri,
+      'valence': instance.valence,
+    };
+
 Category _$CategoryFromJson(Map<String, dynamic> json) => Category()
   ..href = json['href'] as String?
   ..icons = (json['icons'] as List<dynamic>?)
@@ -471,9 +646,21 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category()
   ..id = json['id'] as String?
   ..name = json['name'] as String?;
 
+Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
+      'href': instance.href,
+      'icons': instance.icons,
+      'id': instance.id,
+      'name': instance.name,
+    };
+
 Copyright _$CopyrightFromJson(Map<String, dynamic> json) => Copyright()
   ..text = json['text'] as String?
   ..type = $enumDecodeNullable(_$CopyrightTypeEnumMap, json['type']);
+
+Map<String, dynamic> _$CopyrightToJson(Copyright instance) => <String, dynamic>{
+      'text': instance.text,
+      'type': _$CopyrightTypeEnumMap[instance.type],
+    };
 
 const _$CopyrightTypeEnumMap = {
   CopyrightType.C: 'C',
@@ -489,6 +676,16 @@ Device _$DeviceFromJson(Map<String, dynamic> json) => Device()
   ..type = $enumDecodeNullable(_$DeviceTypeEnumMap, json['type'],
       unknownValue: DeviceType.Unknown)
   ..volumePercent = convertToIntIfDoubleValue(json['volume_percent']);
+
+Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
+      'id': instance.id,
+      'is_active': instance.isActive,
+      'is_private_session': instance.isPrivateSession,
+      'is_restricted': instance.isRestricted,
+      'name': instance.name,
+      'type': _$DeviceTypeEnumMap[instance.type],
+      'volume_percent': instance.volumePercent,
+    };
 
 const _$DeviceTypeEnumMap = {
   DeviceType.Computer: 'Computer',
@@ -510,14 +707,31 @@ SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) => SpotifyError()
   ..status = convertToIntIfDoubleValue(json['status'])
   ..message = json['message'] as String?;
 
+Map<String, dynamic> _$SpotifyErrorToJson(SpotifyError instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+    };
+
 Followers _$FollowersFromJson(Map<String, dynamic> json) => Followers()
   ..href = json['href'] as String?
   ..total = convertToIntIfDoubleValue(json['total']);
+
+Map<String, dynamic> _$FollowersToJson(Followers instance) => <String, dynamic>{
+      'href': instance.href,
+      'total': instance.total,
+    };
 
 Image _$ImageFromJson(Map<String, dynamic> json) => Image()
   ..height = convertToIntIfDoubleValue(json['height'])
   ..width = convertToIntIfDoubleValue(json['width'])
   ..url = json['url'] as String?;
+
+Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
+      'height': instance.height,
+      'width': instance.width,
+      'url': instance.url,
+    };
 
 Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) => Paging<T>()
   ..href = json['href'] as String?
@@ -527,6 +741,16 @@ Paging<T> _$PagingFromJson<T>(Map<String, dynamic> json) => Paging<T>()
   ..offset = convertToIntIfDoubleValue(json['offset'])
   ..previous = json['previous'] as String?
   ..total = convertToIntIfDoubleValueWithoutNull(json['total']);
+
+Map<String, dynamic> _$PagingToJson<T>(Paging<T> instance) => <String, dynamic>{
+      'href': instance.href,
+      'items': itemsNativeToJson(instance.itemsNative),
+      'limit': instance.limit,
+      'next': instance.next,
+      'offset': instance.offset,
+      'previous': instance.previous,
+      'total': instance.total,
+    };
 
 CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) =>
     CursorPaging<T>()
@@ -538,8 +762,21 @@ CursorPaging<T> _$CursorPagingFromJson<T>(Map<String, dynamic> json) =>
           ? null
           : Cursor.fromJson(json['cursors'] as Map<String, dynamic>);
 
+Map<String, dynamic> _$CursorPagingToJson<T>(CursorPaging<T> instance) =>
+    <String, dynamic>{
+      'href': instance.href,
+      'items': itemsNativeToJson(instance.itemsNative),
+      'limit': instance.limit,
+      'next': instance.next,
+      'cursors': instance.cursors,
+    };
+
 Cursor _$CursorFromJson(Map<String, dynamic> json) =>
     Cursor()..after = json['after'] as String?;
+
+Map<String, dynamic> _$CursorToJson(Cursor instance) => <String, dynamic>{
+      'after': instance.after,
+    };
 
 PlaybackState _$PlaybackStateFromJson(Map<String, dynamic> json) =>
     PlaybackState()
@@ -561,6 +798,20 @@ PlaybackState _$PlaybackStateFromJson(Map<String, dynamic> json) =>
       ..repeatState =
           $enumDecodeNullable(_$RepeatStateEnumMap, json['repeat_state']) ??
               RepeatState.off;
+
+Map<String, dynamic> _$PlaybackStateToJson(PlaybackState instance) =>
+    <String, dynamic>{
+      'timestamp': instance.timestamp,
+      'context': instance.context,
+      'progress_ms': instance.progressMs,
+      'item': instance.item,
+      'currently_playing_type':
+          _$CurrentlyPlayingTypeEnumMap[instance.currentlyPlayingType],
+      'actions': instance.actions,
+      'is_playing': instance.isPlaying,
+      'shuffle_state': instance.isShuffling,
+      'repeat_state': _$RepeatStateEnumMap[instance.repeatState],
+    };
 
 const _$CurrentlyPlayingTypeEnumMap = {
   CurrentlyPlayingType.track: 'track',
@@ -584,6 +835,14 @@ PlayerContext _$PlayerContextFromJson(Map<String, dynamic> json) =>
       ..type = json['type'] as String?
       ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$PlayerContextToJson(PlayerContext instance) =>
+    <String, dynamic>{
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions()
   ..interruptingPlayback = json['interrupting_playback'] as bool? ?? false
   ..pausing = json['pausing'] as bool? ?? false
@@ -595,6 +854,19 @@ Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions()
   ..togglingRepeatTrack = json['toggling_repeat_track'] as bool? ?? false
   ..togglingShuffle = json['toggling_shuffle'] as bool? ?? false
   ..transferringPlayback = json['transferring_playback'] as bool? ?? false;
+
+Map<String, dynamic> _$ActionsToJson(Actions instance) => <String, dynamic>{
+      'interrupting_playback': instance.interruptingPlayback,
+      'pausing': instance.pausing,
+      'resuming': instance.resuming,
+      'seeking': instance.seeking,
+      'skipping_next': instance.skippingNext,
+      'skipping_prev': instance.skippingPrev,
+      'toggling_repeat_context': instance.togglingRepeatContext,
+      'toggling_repeat_track': instance.togglingRepeatTrack,
+      'toggling_shuffle': instance.togglingShuffle,
+      'transferring_playback': instance.transferringPlayback,
+    };
 
 Map<String, dynamic> _$StartWithContextOptionsToJson(
         StartWithContextOptions instance) =>
@@ -645,6 +917,23 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) => Playlist()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
+      'collaborative': instance.collaborative,
+      'description': instance.description,
+      'external_urls': instance.externalUrls,
+      'followers': instance.followers,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'name': instance.name,
+      'owner': instance.owner,
+      'public': instance.public,
+      'snapshot_id': instance.snapshotId,
+      'tracks': instance.tracks,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) =>
     PlaylistSimple()
       ..collaborative = json['collaborative'] as bool?
@@ -669,8 +958,30 @@ PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) =>
       ..type = json['type'] as String?
       ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$PlaylistSimpleToJson(PlaylistSimple instance) =>
+    <String, dynamic>{
+      'collaborative': instance.collaborative,
+      'description': instance.description,
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'name': instance.name,
+      'owner': instance.owner,
+      'public': instance.public,
+      'snapshot_id': instance.snapshotId,
+      'tracks': instance.tracksLink,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 PlaylistsFeatured _$PlaylistsFeaturedFromJson(Map<String, dynamic> json) =>
     PlaylistsFeatured()..message = json['message'] as String?;
+
+Map<String, dynamic> _$PlaylistsFeaturedToJson(PlaylistsFeatured instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
 
 PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) =>
     PlaylistTrack()
@@ -685,6 +996,14 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) =>
           ? null
           : Track.fromJson(json['track'] as Map<String, dynamic>);
 
+Map<String, dynamic> _$PlaylistTrackToJson(PlaylistTrack instance) =>
+    <String, dynamic>{
+      'added_at': instance.addedAt?.toIso8601String(),
+      'added_by': instance.addedBy,
+      'is_local': instance.isLocal,
+      'track': instance.track,
+    };
+
 Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) =>
     Recommendations()
       ..seeds = (json['seeds'] as List<dynamic>?)
@@ -693,6 +1012,12 @@ Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) =>
       ..tracks = (json['tracks'] as List<dynamic>?)
           ?.map((e) => TrackSimple.fromJson(e as Map<String, dynamic>))
           .toList();
+
+Map<String, dynamic> _$RecommendationsToJson(Recommendations instance) =>
+    <String, dynamic>{
+      'seeds': instance.seeds,
+      'tracks': instance.tracks,
+    };
 
 RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) =>
     RecommendationsSeed()
@@ -704,6 +1029,17 @@ RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) =>
       ..id = json['id'] as String?
       ..initialPoolSize = convertToIntIfDoubleValue(json['initialPoolSize'])
       ..type = json['type'] as String?;
+
+Map<String, dynamic> _$RecommendationsSeedToJson(
+        RecommendationsSeed instance) =>
+    <String, dynamic>{
+      'afterFilteringSize': instance.afterFilteringSize,
+      'afterRelinkingSize': instance.afterRelinkingSize,
+      'href': instance.href,
+      'id': instance.id,
+      'initialPoolSize': instance.initialPoolSize,
+      'type': instance.type,
+    };
 
 Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..availableMarkets = (json['available_markets'] as List<dynamic>?)
@@ -734,6 +1070,26 @@ Show _$ShowFromJson(Map<String, dynamic> json) => Show()
       ? 0
       : convertToIntIfDoubleValue(json['total_episodes']);
 
+Map<String, dynamic> _$ShowToJson(Show instance) => <String, dynamic>{
+      'available_markets':
+          instance.availableMarkets?.map((e) => _$MarketEnumMap[e]!).toList(),
+      'copyrights': instance.copyrights,
+      'description': instance.description,
+      'explicit': instance.explicit,
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'is_externally_hosted': instance.isExternallyHosted,
+      'languages': instance.languages,
+      'media_type': instance.mediaType,
+      'name': instance.name,
+      'publisher': instance.publisher,
+      'type': instance.type,
+      'uri': instance.uri,
+      'total_episodes': instance.totalEpisodes,
+    };
+
 Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
   ..audioPreviewUrl = json['audio_preview_url'] as String?
   ..description = json['description'] as String?
@@ -759,6 +1115,26 @@ Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode()
   ..releaseDatePrecision = json['release_date_precision'] as String?
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
+
+Map<String, dynamic> _$EpisodeToJson(Episode instance) => <String, dynamic>{
+      'audio_preview_url': instance.audioPreviewUrl,
+      'description': instance.description,
+      'duration_ms': instance.durationMs,
+      'explicit': instance.explicit,
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'is_externally_hosted': instance.isExternallyHosted,
+      'is_playable': instance.isPlayable,
+      'language': instance.language,
+      'languages': instance.languages,
+      'name': instance.name,
+      'release_date': instance.releaseDate?.toIso8601String(),
+      'release_date_precision': instance.releaseDatePrecision,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
 
 EpisodeFull _$EpisodeFullFromJson(Map<String, dynamic> json) => EpisodeFull()
   ..audioPreviewUrl = json['audio_preview_url'] as String?
@@ -788,6 +1164,28 @@ EpisodeFull _$EpisodeFullFromJson(Map<String, dynamic> json) => EpisodeFull()
   ..show = json['show'] == null
       ? null
       : Show.fromJson(json['show'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$EpisodeFullToJson(EpisodeFull instance) =>
+    <String, dynamic>{
+      'audio_preview_url': instance.audioPreviewUrl,
+      'description': instance.description,
+      'duration_ms': instance.durationMs,
+      'explicit': instance.explicit,
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'is_externally_hosted': instance.isExternallyHosted,
+      'is_playable': instance.isPlayable,
+      'language': instance.language,
+      'languages': instance.languages,
+      'name': instance.name,
+      'release_date': instance.releaseDate?.toIso8601String(),
+      'release_date_precision': instance.releaseDatePrecision,
+      'type': instance.type,
+      'uri': instance.uri,
+      'show': instance.show,
+    };
 
 Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..album = json['album'] == null
@@ -821,6 +1219,28 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
+      'album': instance.album,
+      'artists': instance.artists,
+      'available_markets':
+          instance.availableMarkets?.map((e) => _$MarketEnumMap[e]!).toList(),
+      'disc_number': instance.discNumber,
+      'duration_ms': instance.durationMs,
+      'explicit': instance.explicit,
+      'external_ids': instance.externalIds,
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'is_playable': instance.isPlayable,
+      'linked_from': instance.linkedFrom,
+      'name': instance.name,
+      'popularity': instance.popularity,
+      'preview_url': instance.previewUrl,
+      'track_number': instance.trackNumber,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) => TrackSimple()
   ..artists = (json['artists'] as List<dynamic>?)
       ?.map((e) => Artist.fromJson(e as Map<String, dynamic>))
@@ -846,6 +1266,26 @@ TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) => TrackSimple()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$TrackSimpleToJson(TrackSimple instance) =>
+    <String, dynamic>{
+      'artists': instance.artists,
+      'available_markets':
+          instance.availableMarkets?.map((e) => _$MarketEnumMap[e]!).toList(),
+      'disc_number': instance.discNumber,
+      'duration_ms': instance.durationMs,
+      'explicit': instance.explicit,
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'is_playable': instance.isPlayable,
+      'linked_from': instance.linkedFrom,
+      'name': instance.name,
+      'preview_url': instance.previewUrl,
+      'track_number': instance.trackNumber,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 TrackSaved _$TrackSavedFromJson(Map<String, dynamic> json) => TrackSaved()
   ..addedAt = json['added_at'] == null
       ? null
@@ -853,6 +1293,12 @@ TrackSaved _$TrackSavedFromJson(Map<String, dynamic> json) => TrackSaved()
   ..track = json['track'] == null
       ? null
       : Track.fromJson(json['track'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$TrackSavedToJson(TrackSaved instance) =>
+    <String, dynamic>{
+      'added_at': instance.addedAt?.toIso8601String(),
+      'track': instance.track,
+    };
 
 TrackLink _$TrackLinkFromJson(Map<String, dynamic> json) => TrackLink()
   ..externalUrls = (json['external_urls'] as Map<String, dynamic>?)?.map(
@@ -863,9 +1309,23 @@ TrackLink _$TrackLinkFromJson(Map<String, dynamic> json) => TrackLink()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$TrackLinkToJson(TrackLink instance) => <String, dynamic>{
+      'external_urls': instance.externalUrls,
+      'href': instance.href,
+      'id': instance.id,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 TracksLink _$TracksLinkFromJson(Map<String, dynamic> json) => TracksLink()
   ..href = json['href'] as String?
   ..total = convertToIntIfDoubleValue(json['total']);
+
+Map<String, dynamic> _$TracksLinkToJson(TracksLink instance) =>
+    <String, dynamic>{
+      'href': instance.href,
+      'total': instance.total,
+    };
 
 User _$UserFromJson(Map<String, dynamic> json) => User()
   ..birthdate = json['birthdate'] as String?
@@ -884,6 +1344,20 @@ User _$UserFromJson(Map<String, dynamic> json) => User()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'birthdate': instance.birthdate,
+      'country': _$MarketEnumMap[instance.country],
+      'display_name': instance.displayName,
+      'email': instance.email,
+      'followers': instance.followers,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'product': instance.product,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 UserPublic _$UserPublicFromJson(Map<String, dynamic> json) => UserPublic()
   ..displayName = json['display_name'] as String?
   ..followers = json['followers'] == null
@@ -897,6 +1371,17 @@ UserPublic _$UserPublicFromJson(Map<String, dynamic> json) => UserPublic()
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
+Map<String, dynamic> _$UserPublicToJson(UserPublic instance) =>
+    <String, dynamic>{
+      'display_name': instance.displayName,
+      'followers': instance.followers,
+      'href': instance.href,
+      'id': instance.id,
+      'images': instance.images,
+      'type': instance.type,
+      'uri': instance.uri,
+    };
+
 PlayHistory _$PlayHistoryFromJson(Map<String, dynamic> json) => PlayHistory()
   ..track = json['track'] == null
       ? null
@@ -908,6 +1393,13 @@ PlayHistory _$PlayHistoryFromJson(Map<String, dynamic> json) => PlayHistory()
       ? null
       : PlayerContext.fromJson(json['context'] as Map<String, dynamic>);
 
+Map<String, dynamic> _$PlayHistoryToJson(PlayHistory instance) =>
+    <String, dynamic>{
+      'track': instance.track,
+      'played_at': instance.playedAt?.toIso8601String(),
+      'context': instance.context,
+    };
+
 Queue _$QueueFromJson(Map<String, dynamic> json) => Queue()
   ..currentlyPlaying = json['currently_playing'] == null
       ? null
@@ -915,3 +1407,8 @@ Queue _$QueueFromJson(Map<String, dynamic> json) => Queue()
   ..queue = (json['queue'] as List<dynamic>?)
       ?.map((e) => Track.fromJson(e as Map<String, dynamic>))
       .toList();
+
+Map<String, dynamic> _$QueueToJson(Queue instance) => <String, dynamic>{
+      'currently_playing': instance.currentlyPlaying,
+      'queue': instance.queue,
+    };

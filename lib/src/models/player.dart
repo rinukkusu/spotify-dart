@@ -4,12 +4,14 @@
 part of '_models.dart';
 
 /// Json representation of the playback state
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class PlaybackState extends Object {
   PlaybackState();
 
   factory PlaybackState.fromJson(Map<String, dynamic> json) =>
       _$PlaybackStateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlaybackStateToJson(this);
 
   /// Unix Millisecond Timestamp when data was fetched
   @JsonKey(fromJson: convertToIntIfDoubleValue)
@@ -49,12 +51,14 @@ class PlaybackState extends Object {
 }
 
 /// Json representation of the context of the playback state
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class PlayerContext extends Object {
   PlayerContext();
 
   factory PlayerContext.fromJson(Map<String, dynamic> json) =>
       _$PlayerContextFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlayerContextToJson(this);
 
   /// The external_urls of the context, or `null` if not available.
   @JsonKey(name: 'external_urls')
@@ -70,12 +74,14 @@ class PlayerContext extends Object {
   String? uri;
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Actions extends Object {
   Actions();
 
   factory Actions.fromJson(Map<String, dynamic> json) =>
       _$ActionsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ActionsToJson(this);
 
   /// Interrupting playback. Optional field.
   @JsonKey(name: 'interrupting_playback', defaultValue: false)

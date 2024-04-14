@@ -4,12 +4,14 @@
 part of '_models.dart';
 
 /// Json representation of an audio feature
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class AudioFeature extends Object {
   AudioFeature();
 
   factory AudioFeature.fromJson(Map<String, dynamic> json) =>
       _$AudioFeatureFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AudioFeatureToJson(this);
 
   /// A confidence measure from `0.0` to `1.0` of whether the track is acoustic.
   /// `1.0` represents high confidence the track is acoustic.
