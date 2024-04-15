@@ -10,6 +10,7 @@ class Album extends AlbumSimple {
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$AlbumToJson(this);
 
   /// The copyright statements of the album.

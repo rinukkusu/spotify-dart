@@ -10,6 +10,7 @@ class Artist extends Object implements ArtistSimple {
 
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ArtistToJson(this);
 
   /// Known external URLs for this artist.

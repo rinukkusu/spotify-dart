@@ -11,6 +11,7 @@ class Playlist extends Object implements PlaylistSimple {
   factory Playlist.fromJson(Map<String, dynamic> json) =>
       _$PlaylistFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$PlaylistToJson(this);
 
   /// true if the owner allows other users to modify the playlist.

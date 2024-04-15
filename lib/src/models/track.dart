@@ -10,6 +10,7 @@ class Track extends Object implements TrackSimple {
 
   factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$TrackToJson(this);
 
   /// The album on which the track appears. The album object includes a link

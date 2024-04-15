@@ -10,6 +10,7 @@ class User extends Object implements UserPublic {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   /// The user's date-of-birth.
