@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.6
+
+- add convenience `toJson` method for all serializable models
+
 ## 0.13.5
 
 - fix scope name for user profile
