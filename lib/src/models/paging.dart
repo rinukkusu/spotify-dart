@@ -41,11 +41,13 @@ class BasePaging<T> extends Object {
 }
 
 /// Json representation of a page with offset information
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Paging<T> extends BasePaging<T> {
   Paging();
 
   factory Paging.fromJson(Map<String, dynamic> json) => _$PagingFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PagingToJson(this);
 
   /// The offset of the items returned (as set in the query or by default).
   @JsonKey(fromJson: convertToIntIfDoubleValue)
@@ -60,20 +62,24 @@ class Paging<T> extends BasePaging<T> {
 }
 
 /// Json representation of a page with cursor information
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class CursorPaging<T> extends BasePaging<T> {
   CursorPaging();
 
   factory CursorPaging.fromJson(Map<String, dynamic> json) =>
       _$CursorPagingFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CursorPagingToJson(this);
+
   Cursor? cursors;
 }
 
 /// Json representation of a cursor
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Cursor extends Object {
   factory Cursor.fromJson(Map<String, dynamic> json) => _$CursorFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CursorToJson(this);
 
   Cursor();
   String? after;

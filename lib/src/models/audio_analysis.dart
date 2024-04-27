@@ -4,12 +4,14 @@
 part of '_models.dart';
 
 /// JSON representation of a track's analysis information
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class AudioAnalysis extends Object {
   AudioAnalysis();
 
   factory AudioAnalysis.fromJson(Map<String, dynamic> json) =>
       _$AudioAnalysisFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AudioAnalysisToJson(this);
 
   TrackAudioAnalysis? track;
 
@@ -86,12 +88,14 @@ abstract class _Section {
 }
 
 /// JSON representation of the track analysis summary
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class TrackAudioAnalysis extends _Section {
   TrackAudioAnalysis();
 
   factory TrackAudioAnalysis.fromJson(Map<String, dynamic> json) =>
       _$TrackAudioAnalysisFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TrackAudioAnalysisToJson(this);
 
   /// The exact number of audio samples analyzed from this track.
   /// See also [analysisSampleRate].
@@ -143,24 +147,26 @@ class TrackAudioAnalysis extends _Section {
 }
 
 /// JSON representation of track section in the analysis
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Section extends _Section {
   Section();
 
   factory Section.fromJson(Map<String, dynamic> json) =>
       _$SectionFromJson(json);
+  Map<String, dynamic> toJson() => _$SectionToJson(this);
 
   /// The starting point (in seconds) of the section.
   double? start;
 }
 
 /// JSON representation of track segment in the analysis
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Segment extends Object {
   Segment();
 
   factory Segment.fromJson(Map<String, dynamic> json) =>
       _$SegmentFromJson(json);
+  Map<String, dynamic> toJson() => _$SegmentToJson(this);
 
   /// The starting point (in seconds) of the segment.
   double? start;
@@ -215,12 +221,13 @@ class Segment extends Object {
 
 /// JSON representation of a time interval inside [AudioAnalysis.bars],
 /// [AudioAnalysis.beats] and [AudioAnalysis.tatums],
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class TimeInterval extends Object {
   TimeInterval();
 
   factory TimeInterval.fromJson(Map<String, dynamic> json) =>
       _$TimeIntervalFromJson(json);
+  Map<String, dynamic> toJson() => _$TimeIntervalToJson(this);
 
   /// The confidence, from `0.0` to `1.0`, of the reliability of the interval.
   double? confidence;

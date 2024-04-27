@@ -1,12 +1,14 @@
 part of '_models.dart';
 
 /// Json representation of a category
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Category extends Object {
   Category();
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
   /// A link to the Web API endpoint returning full details of the category.
   String? href;
