@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.6+1
+
+- fix serialization issue
+
 ## 0.13.6
 
 - add convenience `toJson` method for all serializable models
