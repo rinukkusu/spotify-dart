@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.7
+
+- add filter function for playlist endpoint to prevent deserialization of tracks that are `null` 
+
 ## 0.13.6+1
 
 - fix serialization issue
