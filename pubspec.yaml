@@ -10,6 +10,8 @@ dependencies:
   http: ^1.2.0
   json_annotation: ^4.8.1
   oauth2: ^2.0.2
+  http_interceptor: 2.0.0-beta.8
+  # http_interceptor_plus: ^0.0.1
 
 dev_dependencies:
   lints: ">=3.0.0 <5.0.0"

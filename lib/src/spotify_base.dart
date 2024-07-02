@@ -177,6 +177,13 @@ abstract class SpotifyApiBase {
     );
   }
 
+  void enableDebugMode(bool enable, {LoggingDetail loggingDetail = LoggingDetail.full}) async {
+    var intcptr = interceptor.InterceptedClient.build(
+      interceptors: [SpotifyInterceptor(shouldIntercept: enable, loggingDetail: loggingDetail)],
+      client: await _client);
+    _client = Future.value(intcptr);
+  }
+
   /// Expands shortened spotify [url]
   Future<String> expandLink(String url) async =>
       _streamedHeadImpl(url, const {});
