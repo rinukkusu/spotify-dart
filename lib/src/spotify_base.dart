@@ -183,8 +183,9 @@ abstract class SpotifyApiBase {
       );
   }
 
-  void enableDebugMode(bool enable) async {
+  void enableDebugMode(bool enable, [LoggingDetail loggingDetail = LoggingDetail.full]) async {
     _client.enableLogging = enable;
+    _client.logginDetail = loggingDetail;
   }
 
   /// Expands shortened spotify [url]

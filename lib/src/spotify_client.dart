@@ -1,3 +1,19 @@
+// Copyright (c) 2024 IT Path Solutions
+//
+// MIT-Licence
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
+// associated documentation files (the “Software”), to deal in the Software without restriction, 
+// including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+// and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+// subject to the following conditions:
+// The above copyright notice and this permission notice shall be included in all copies or substantial 
+// portions of the Software.
+// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
+// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+// OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 part of '../spotify.dart';
 
 /// A custom HTTP client with logging capabilities.
@@ -10,40 +26,61 @@ class SpotifyClient with http.BaseClient {
   get enableLogging => _enableLogging;
   set enableLogging(value) => _enableLogging = value;
 
+  LoggingDetail _detail = LoggingDetail.full;
+  get loggingDetail => _detail;
+  set logginDetail(value) => _detail = value;
+
   SpotifyClient(this._inner);
 
   @override
   Future<http.Response> get(Uri url, {Map<String, String>? headers}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner).get(url, headers: headers);
     }
+    var output = StringBuffer();
     try {
       // Log GET request details
       String headersLog = headers != null && headers.isNotEmpty
           ? '\n${headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n')}'
           : ': None';
-      _logger.i(
-          '🚀 🌐 Sending GET Request 🌐 🚀\n🔗 URL: $url\n📋 Headers$headersLog');
+          
+      output.writeln('Sending GET Request 🌐 🚀');
+      output.writeln('🔗 URL: $url');
+      if (_detail.index >= LoggingDetail.medium.index) {
+        output.write('📋 Headers$headersLog');
+      }
+      _logger.i(output);
 
       // Perform the GET request
       final response = await (await _inner).get(url, headers: headers);
-
-      // Log GET response details
-      String responseLog =
-          '✅ 🌐 GET Response 🌐 ✅\n🔗 URL: $url\n🔒 Status Code: ${response.statusCode}\n📋 Headers:\n${response.headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n')}\n📥 Response Data: ${response.body}';
-      _logger.i(responseLog);
+      
+      // Log GET response details based on the level of detail
+      output.clear();
+      output.writeln('✅ 🌐 GET Response 🌐 ✅\n');
+      output.writeln('🔗 URL: $url');
+      output.writeln('🔒 Status Code: ${response.statusCode}');
+      if (_detail.index >= LoggingDetail.medium.index) {
+        output.writeln('📋 Headers:');
+        output.writeln(response.headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n'));
+      }
+      if (_detail.index >= LoggingDetail.full.index) {
+        output.writeln('📥 Response Data: ${response.body}');
+      }
+      _logger.i(output);
 
       return response;
     } catch (error) {
       // Log GET error
-      _logger.e('❌ ❗ GET Request Failed ❗ ❌\n❗ Error Message: $error');
+      output.writeln('❌ ❗ GET Request Failed ❗ ❌');
+      output.writeln('❗ Error Message: $error');
+      _logger.e(output);
       rethrow; // Rethrow the error after logging
     }
   }
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner).send(request);
     }
     try {
@@ -86,7 +123,7 @@ class SpotifyClient with http.BaseClient {
   @override
   Future<http.Response> delete(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner)
           .delete(url, headers: headers, body: body, encoding: encoding);
     }
@@ -119,7 +156,7 @@ class SpotifyClient with http.BaseClient {
   @override
   Future<http.Response> post(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner)
           .post(url, headers: headers, body: body, encoding: encoding);
     }
@@ -154,7 +191,7 @@ class SpotifyClient with http.BaseClient {
   @override
   Future<http.Response> patch(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner).patch(url, headers: headers, body: body, encoding: encoding);
     }
     try {
@@ -188,7 +225,7 @@ class SpotifyClient with http.BaseClient {
   @override
   Future<http.Response> put(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner).put(url, headers: headers, body: body, encoding: encoding);
     }
     try {
@@ -221,7 +258,7 @@ class SpotifyClient with http.BaseClient {
 
   @override
   Future<http.Response> head(Uri url, {Map<String, String>? headers}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner).head(url, headers: headers);
     }
     try {
@@ -249,7 +286,7 @@ class SpotifyClient with http.BaseClient {
 
   @override
   Future<String> read(Uri url, {Map<String, String>? headers}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner).read(url, headers: headers);
     }
     try {
@@ -276,7 +313,7 @@ class SpotifyClient with http.BaseClient {
 
   @override
   Future<Uint8List> readBytes(Uri url, {Map<String, String>? headers}) async {
-    if (!enableLogging) {
+    if (!_enableLogging) {
       return await (await _inner).readBytes(url, headers: headers);
     }
     try {
@@ -303,4 +340,22 @@ class SpotifyClient with http.BaseClient {
 
   @override
   void close() async => (await _inner).close();
+}
+
+/// Sets how much information is displayed in the http logging
+enum LoggingDetail {
+  /// Simple tier logging:
+  /// Log the requests and responses with their corresponding status code
+  simple,
+
+  /// Medium tier logging:
+  /// Log the requests with their headers and responses with their
+  /// corresponding status codes and headers
+  medium,
+
+  /// Full tier logging:
+  /// Log the requests with headers and payload and responses with their
+  /// corresponding status codes, headers and payload.
+  /// Note that this may level of detail may be slower than usual.
+  full
 }
