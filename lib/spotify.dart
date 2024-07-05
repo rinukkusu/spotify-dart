@@ -6,19 +6,20 @@ library spotify;
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:spotify/spotify.dart';
+import 'package:meta/meta.dart';
+
 
 import 'src/models/_models.dart';
 
 export 'package:oauth2/oauth2.dart'
     show AuthorizationException, ExpirationException;
 
-import 'package:logging/logging.dart';
-
-import 'package:http_interceptor/http_interceptor.dart' as interceptor;
+import 'package:logger/logger.dart';
 
 export 'src/models/_models.dart';
 
@@ -46,4 +47,4 @@ part 'src/spotify_credentials.dart';
 part 'src/spotify_exception.dart';
 part 'src/utils.dart';
 part 'src/authorization_scope.dart';
-part 'src/spotify_interceptor.dart';
+part 'src/spotify_client.dart';

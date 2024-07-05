@@ -3,6 +3,7 @@
 
 part of '../spotify.dart';
 
+
 abstract class SpotifyApiBase {
   static const String _baseUrl = 'https://api.spotify.com';
   static const String _tokenUrl = 'https://accounts.spotify.com/api/token';
@@ -11,8 +12,11 @@ abstract class SpotifyApiBase {
 
   bool _shouldWait = false;
 
-  late FutureOr<oauth2.Client> _client;
-  FutureOr<oauth2.Client> get client => _client;
+  late SpotifyClient _client;
+  SpotifyClient get client => _client;
+
+  @visibleForTesting
+  FutureOr<oauth2.Client> get oauthClient => _client._inner;
 
   late Artists _artists;
   Artists get artists => _artists;
@@ -63,7 +67,8 @@ abstract class SpotifyApiBase {
   Shows get shows => _shows;
 
   SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
-    _client = client; // as FutureOr<oauth2.Client>;
+    // _client = client; // as FutureOr<oauth2.Client>;
+    _client = SpotifyClient(client);
     
     
     _artists = Artists(this);
@@ -178,10 +183,8 @@ abstract class SpotifyApiBase {
       );
   }
 
-  void enableDebugMode(bool enable, {LoggingDetail loggingDetail = LoggingDetail.full}) async {
-    _client = interceptor.InterceptedClient.build(
-      interceptors: [SpotifyInterceptor(shouldIntercept: enable, loggingDetail: loggingDetail)],
-      client: await _client)) as FutureOr<oauth2.Client>;
+  void enableDebugMode(bool enable) async {
+    _client.enableLogging = enable;
   }
 
   /// Expands shortened spotify [url]
@@ -209,18 +212,18 @@ abstract class SpotifyApiBase {
     return await _requestWrapper(() async {
       final request = http.Request('HEAD', Uri.parse(url));
       request.headers.addAll(headers);
-      return (await _client).send(request);
+      return (_client).send(request);
     });
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
     return await _requestWrapper(() async =>
-        await (await _client).get(Uri.parse(url), headers: headers));
+        await  _client.get(Uri.parse(url), headers: headers));
   }
 
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await (await _client)
+    return await _requestWrapper(() async => await _client
         .post(Uri.parse(url), headers: headers, body: body));
   }
 
@@ -231,13 +234,13 @@ abstract class SpotifyApiBase {
       request.headers.addAll(headers);
       request.body = body;
       return await http.Response.fromStream(
-          await (await _client).send(request));
+          await _client.send(request));
     });
   }
 
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await (await _client)
+    return await _requestWrapper(() async => await  _client
         .put(Uri.parse(url), headers: headers, body: body));
   }
 
@@ -274,7 +277,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async {
-    return SpotifyApiCredentials._fromClient(await _client);
+    return SpotifyApiCredentials._fromClient(await _client._inner);
   }
 
   String handleResponseWithBody(http.Response response) {

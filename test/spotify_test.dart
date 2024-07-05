@@ -6,14 +6,7 @@ import 'package:spotify/spotify.dart';
 // ignore_for_file: deprecated_member_use_from_same_package
 
 Future main() async {
-  var spotify = SpotifyApiMock(SpotifyApiCredentials(
-    'clientId',
-    'clientSecret',
-  ));
-  
-  setUp(() async => {
-    spotify.enableDebugMode(true, loggingDetail: LoggingDetail.simple)
-  });
+  var spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;

@@ -11,7 +11,8 @@ dependencies:
   json_annotation: ^4.8.1
   logging: ^1.2.0
   oauth2: ^2.0.2
-  http_interceptor: ^2.0.0-beta.8
+  logger: ^2.3.0
+  meta: ^1.15.0
 
 dev_dependencies:
   lints: ^3.0.0
