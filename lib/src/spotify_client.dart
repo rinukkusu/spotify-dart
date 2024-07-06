@@ -46,7 +46,7 @@ class SpotifyClient with http.BaseClient {
           
       output.writeln('Sending GET Request 🌐 🚀');
       output.writeln('🔗 URL: $url');
-      if (_detail.index >= LoggingDetail.medium.index) {
+      if (_loggingMedium) {
         output.write('📋 Headers$headersLog');
       }
       _logger.i(output);
@@ -56,14 +56,14 @@ class SpotifyClient with http.BaseClient {
       
       // Log GET response details based on the level of detail
       output.clear();
-      output.writeln('✅ 🌐 GET Response 🌐 ✅\n');
+      output.writeln('✅ 🌐 GET Response 🌐 ✅');
       output.writeln('🔗 URL: $url');
       output.writeln('🔒 Status Code: ${response.statusCode}');
-      if (_detail.index >= LoggingDetail.medium.index) {
+      if (_loggingMedium) {
         output.writeln('📋 Headers:');
         output.writeln(response.headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n'));
       }
-      if (_detail.index >= LoggingDetail.full.index) {
+      if (_loggingFull) {
         output.writeln('📥 Response Data: ${response.body}');
       }
       _logger.i(output);
@@ -83,32 +83,51 @@ class SpotifyClient with http.BaseClient {
     if (!_enableLogging) {
       return await (await _inner).send(request);
     }
+    var output = StringBuffer();
     try {
       // Log request details
       String requestData = (request is http.Request)
-          ? '\n📤 Request Data: ${request.body}'
-          : '\n📤 Request Data: Not applicable for this type of request';
-      _logger.i(
-          '🚀 🌐 Request 🌐 🚀\n🔗 URL: ${request.url}\n🤔 Method: ${request.method}\n📋 Headers: ${jsonEncode(request.headers)}\n🔍 Query Parameters: ${request.url.queryParameters}$requestData');
+          ? '📤 Request Data: ${request.body}'
+          : '📤 Request Data: Not applicable for this type of request';
+      
+      output.writeln('🚀 🌐 Request 🌐 🚀');
+      output.writeln('🔗 URL: ${request.url}');
+      output.writeln('🤔 Method: ${request.method}');
+    
+      if (_loggingMedium) {
+        output.writeln('📋 Headers: ${jsonEncode(request.headers)}');
+        output.writeln('🔍 Query Parameters: ${request.url.queryParameters}');
+      }
+      if (_loggingFull) {
+        output.writeln(requestData);
+      }
+      _logger.i(output);
+      output.clear();
 
       // Send the request and get the response
       final streamedResponse = await (await _inner).send(request);
 
       // Log response details
-      String responseData =
-          '\n🔗 URL: ${streamedResponse.request?.url}\n🔒 Status Code: ${streamedResponse.statusCode}\n📋 Headers: ${jsonEncode(streamedResponse.headers)}';
-      _logger.i('✅ 🌐 Response 🌐 ✅$responseData');
-
-      // Read the response stream and create a new http.Response
-      final body = await streamedResponse.stream.bytesToString();
-      final response = http.Response(
-        body,
-        streamedResponse.statusCode,
-        headers: streamedResponse.headers,
-        request: request as http.Request,
-      ); // Cast to http.Request
-
-      _logger.i('📥 Response Data: ${response.body}');
+      output.writeln('🔗 URL: ${streamedResponse.request?.url}');
+      output.writeln('🔒 Status Code: ${streamedResponse.statusCode}');
+      if (_loggingMedium) {
+        output.writeln('📋 Headers: ${jsonEncode(streamedResponse.headers)}');
+      }
+      
+      _logger.i('✅ 🌐 Response 🌐 ✅$output');
+      
+      if (_loggingFull) {
+        // Read the response stream and create a new http.Response
+        final body = await streamedResponse.stream.bytesToString();
+        final response = http.Response(
+          body,
+          streamedResponse.statusCode,
+          headers: streamedResponse.headers,
+          request: request as http.Request,
+        ); // Cast to http.Request
+        
+        _logger.i('📥 Response Data: ${response.body}');
+      }
 
       return streamedResponse;
     } catch (error) {
@@ -127,15 +146,27 @@ class SpotifyClient with http.BaseClient {
       return await (await _inner)
           .delete(url, headers: headers, body: body, encoding: encoding);
     }
+    var output = StringBuffer();
     try {
       // Log delete request details
       String headersLog = (headers != null)
-          ? '\n📋 Headers: ${jsonEncode(headers)}'
-          : '\n📋 Headers: None';
+          ? '📋 Headers: ${jsonEncode(headers)}'
+          : '📋 Headers: None';
       String bodyLog = (body != null)
-          ? '\n📤 Request Data: $body'
-          : '\n📤 Request Data: None';
-      _logger.i('🚀 🌐 Delete Request 🌐 🚀\n🔗 URL: $url$headersLog$bodyLog');
+          ? '📤 Request Data: $body'
+          : '📤 Request Data: None';
+      output.writeln('🚀 🌐 Delete Request 🌐 🚀');
+      output.writeln('🔗 URL: $url');
+
+      if (_loggingMedium) {
+        output.write(headersLog);
+      }
+      if (_loggingFull) {
+        output.write(bodyLog);
+      }
+      _logger.i(output);
+
+      output.clear();
 
       // Perform the delete request
       final response = await (await _inner)
@@ -340,6 +371,12 @@ class SpotifyClient with http.BaseClient {
 
   @override
   void close() async => (await _inner).close();
+
+  bool get _loggingSimple => _detail.index >= LoggingDetail.simple.index;
+
+  bool get _loggingMedium => _detail.index >= LoggingDetail.medium.index;
+
+  bool get _loggingFull => _detail.index >= LoggingDetail.full.index;
 }
 
 /// Sets how much information is displayed in the http logging

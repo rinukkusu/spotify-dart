@@ -3,7 +3,6 @@
 
 part of '../spotify.dart';
 
-
 abstract class SpotifyApiBase {
   static const String _baseUrl = 'https://api.spotify.com';
   static const String _tokenUrl = 'https://accounts.spotify.com/api/token';
@@ -67,10 +66,8 @@ abstract class SpotifyApiBase {
   Shows get shows => _shows;
 
   SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
-    // _client = client; // as FutureOr<oauth2.Client>;
     _client = SpotifyClient(client);
-    
-    
+
     _artists = Artists(this);
     _albums = Albums(this);
     _browse = Browse(this);
@@ -168,22 +165,26 @@ abstract class SpotifyApiBase {
       }
 
       return oauth2.Client(
-          oauthCredentials,
-          identifier: credentials.clientId,
-          onCredentialsRefreshed: credentialRefreshedWrapperCallback,
-          secret: credentials.clientSecret,
-        );
+        oauthCredentials,
+        identifier: credentials.clientId,
+        onCredentialsRefreshed: credentialRefreshedWrapperCallback,
+        secret: credentials.clientSecret,
+      );
     }
 
     return oauth2.clientCredentialsGrant(
-        Uri.parse(SpotifyApiBase._tokenUrl),
-        credentials.clientId,
-        credentials.clientSecret,
-        httpClient: httpClient,
-      );
+      Uri.parse(SpotifyApiBase._tokenUrl),
+      credentials.clientId,
+      credentials.clientSecret,
+      httpClient: httpClient,
+    );
   }
 
-  void enableDebugMode(bool enable, [LoggingDetail loggingDetail = LoggingDetail.full]) async {
+  /// [enable]s logging of the requests and responses on the debug console.
+  /// Use [loggingDetail] to control how much should be logged. Default's set 
+  /// to [LoggingDetail.simple].
+  void enableDebugMode(bool enable,
+      [LoggingDetail loggingDetail = LoggingDetail.simple]) async {
     _client.enableLogging = enable;
     _client.logginDetail = loggingDetail;
   }
@@ -213,19 +214,19 @@ abstract class SpotifyApiBase {
     return await _requestWrapper(() async {
       final request = http.Request('HEAD', Uri.parse(url));
       request.headers.addAll(headers);
-      return (_client).send(request);
+      return _client.send(request);
     });
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
-    return await _requestWrapper(() async =>
-        await  _client.get(Uri.parse(url), headers: headers));
+    return await _requestWrapper(
+        () async => await _client.get(Uri.parse(url), headers: headers));
   }
 
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await _client
-        .post(Uri.parse(url), headers: headers, body: body));
+    return await _requestWrapper(() async =>
+        await _client.post(Uri.parse(url), headers: headers, body: body));
   }
 
   Future<String> _deleteImpl(
@@ -234,15 +235,14 @@ abstract class SpotifyApiBase {
       final request = http.Request('DELETE', Uri.parse(url));
       request.headers.addAll(headers);
       request.body = body;
-      return await http.Response.fromStream(
-          await _client.send(request));
+      return await http.Response.fromStream(await _client.send(request));
     });
   }
 
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await  _client
-        .put(Uri.parse(url), headers: headers, body: body));
+    return await _requestWrapper(() async =>
+        await _client.put(Uri.parse(url), headers: headers, body: body));
   }
 
   // the reason we are using [http.BaseResponse] is because
@@ -256,13 +256,13 @@ abstract class SpotifyApiBase {
       }
       try {
         var response = await request();
-        
+
         // distinguish between url redirect responses and body responses
         // note, that any response that also contains a redirect url
         // will be chosen instead of its body contents
         // FIXME: in future releases of http2, the url is a part of the [http.Response] type
         if (response case http.BaseResponseWithUrl(:final url)) {
-            return url.toString();
+          return url.toString();
         }
         return handleResponseWithBody(response as http.Response);
       } on ApiRateException catch (ex) {
