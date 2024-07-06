@@ -40,14 +40,12 @@ class SpotifyClient with http.BaseClient {
     var output = StringBuffer();
     try {
       // Log GET request details
-      String headersLog = headers != null && headers.isNotEmpty
-          ? '\n${headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n')}'
-          : ': None';
+      String headersLog = _headersLog(headers);
           
       output.writeln('Sending GET Request 🌐 🚀');
       output.writeln('🔗 URL: $url');
       if (_loggingMedium) {
-        output.write('📋 Headers$headersLog');
+        output.write('📋 Headers:\n$headersLog');
       }
       _logger.i(output);
 
@@ -61,7 +59,7 @@ class SpotifyClient with http.BaseClient {
       output.writeln('🔒 Status Code: ${response.statusCode}');
       if (_loggingMedium) {
         output.writeln('📋 Headers:');
-        output.writeln(response.headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n'));
+        output.writeln(_headersLog(response.headers));
       }
       if (_loggingFull) {
         output.writeln('📥 Response Data: ${response.body}');
@@ -95,7 +93,8 @@ class SpotifyClient with http.BaseClient {
       output.writeln('🤔 Method: ${request.method}');
     
       if (_loggingMedium) {
-        output.writeln('📋 Headers: ${jsonEncode(request.headers)}');
+        output.writeln('📋 Headers:');
+        output.writeln(_headersLog(request.headers));
         output.writeln('🔍 Query Parameters: ${request.url.queryParameters}');
       }
       if (_loggingFull) {
@@ -149,9 +148,7 @@ class SpotifyClient with http.BaseClient {
     var output = StringBuffer();
     try {
       // Log delete request details
-      String headersLog = (headers != null)
-          ? '📋 Headers: ${jsonEncode(headers)}'
-          : '📋 Headers: None';
+      String headersLog = _headersLog(headers);
       String bodyLog = (body != null)
           ? '📤 Request Data: $body'
           : '📤 Request Data: None';
@@ -193,9 +190,7 @@ class SpotifyClient with http.BaseClient {
     }
     try {
       // Log post request details
-      String headersLog = (headers != null)
-          ? '\n📋 Headers: ${jsonEncode(headers)}'
-          : '\n📋 Headers: None';
+      String headersLog = _headersLog(headers);
       String bodyLog = (body != null)
           ? '\n📤 Request Data: $body'
           : '\n📤 Request Data: None';
@@ -227,9 +222,7 @@ class SpotifyClient with http.BaseClient {
     }
     try {
       // Log patch request details
-      String headersLog = (headers != null)
-          ? '\n📋 Headers: ${jsonEncode(headers)}'
-          : '\n📋 Headers: None';
+      String headersLog = _headersLog(headers);
       String bodyLog = (body != null)
           ? '\n📤 Request Data: $body'
           : '\n📤 Request Data: None';
@@ -261,9 +254,7 @@ class SpotifyClient with http.BaseClient {
     }
     try {
       // Log put request details
-      String headersLog = (headers != null)
-          ? '\n📋 Headers: ${jsonEncode(headers)}'
-          : '\n📋 Headers: None';
+      String headersLog = _headersLog(headers);
       String bodyLog = (body != null)
           ? '\n📤 Request Data: $body'
           : '\n📤 Request Data: None';
@@ -292,12 +283,16 @@ class SpotifyClient with http.BaseClient {
     if (!_enableLogging) {
       return await (await _inner).head(url, headers: headers);
     }
+    var output = StringBuffer();
     try {
       // Log head request details
-      String headersLog = (headers != null)
-          ? '\n📋 Headers: ${jsonEncode(headers)}'
-          : '\n📋 Headers: None';
-      _logger.i('🚀 🌐 Head Request 🌐 🚀\n🔗 URL: $url$headersLog');
+      output.writeln('🚀 🌐 Head Request 🌐 🚀');
+      output.writeln('🔗 URL: $url');
+      if (_loggingMedium){
+        output.write('📋 Headers:');
+        output.writeln(_headersLog(headers));
+      }
+      _logger.i(output);
 
       // Perform the head request
       final response = await (await _inner).head(url, headers: headers);
@@ -377,6 +372,10 @@ class SpotifyClient with http.BaseClient {
   bool get _loggingMedium => _detail.index >= LoggingDetail.medium.index;
 
   bool get _loggingFull => _detail.index >= LoggingDetail.full.index;
+
+  String _headersLog(Map<String, String>? headers) => headers != null && headers.isNotEmpty
+          ? headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n')
+          : 'None';
 }
 
 /// Sets how much information is displayed in the http logging
