@@ -1,17 +1,17 @@
 // Copyright (c) 2024 IT Path Solutions
 //
 // MIT-Licence
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
-// associated documentation files (the “Software”), to deal in the Software without restriction, 
-// including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-// and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the “Software”), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
 // subject to the following conditions:
-// The above copyright notice and this permission notice shall be included in all copies or substantial 
+// The above copyright notice and this permission notice shall be included in all copies or substantial
 // portions of the Software.
-// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
-// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
-// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 // OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 part of '../spotify.dart';
@@ -40,31 +40,16 @@ class SpotifyClient with http.BaseClient {
     var output = StringBuffer();
     try {
       // Log GET request details
-      String headersLog = _headersLog(headers);
-          
-      output.writeln('Sending GET Request 🌐 🚀');
-      output.writeln('🔗 URL: $url');
-      if (_loggingMedium) {
-        output.write('📋 Headers:\n$headersLog');
-      }
-      _logger.i(output);
+      _logger.i(_logString('🚀 🌐 GET Request 🌐 🚀', url));
 
       // Perform the GET request
       final response = await (await _inner).get(url, headers: headers);
-      
+
       // Log GET response details based on the level of detail
-      output.clear();
-      output.writeln('✅ 🌐 GET Response 🌐 ✅');
-      output.writeln('🔗 URL: $url');
-      output.writeln('🔒 Status Code: ${response.statusCode}');
-      if (_loggingMedium) {
-        output.writeln('📋 Headers:');
-        output.writeln(_headersLog(response.headers));
-      }
-      if (_loggingFull) {
-        output.writeln('📥 Response Data: ${response.body}');
-      }
-      _logger.i(output);
+      _logger.i(_logString('✅ 🌐 GET Response 🌐 ✅', url,
+          headers: response.headers,
+          body: response.body,
+          statusCode: response.statusCode));
 
       return response;
     } catch (error) {
@@ -83,24 +68,23 @@ class SpotifyClient with http.BaseClient {
     }
     var output = StringBuffer();
     try {
+      // not using the _logString method here on purpose
       // Log request details
-      String requestData = (request is http.Request)
-          ? '📤 Request Data: ${request.body}'
-          : '📤 Request Data: Not applicable for this type of request';
-      
       output.writeln('🚀 🌐 Request 🌐 🚀');
       output.writeln('🔗 URL: ${request.url}');
       output.writeln('🤔 Method: ${request.method}');
-    
+
       if (_loggingMedium) {
         output.writeln('📋 Headers:');
         output.writeln(_headersLog(request.headers));
         output.writeln('🔍 Query Parameters: ${request.url.queryParameters}');
       }
       if (_loggingFull) {
+        String requestData = (request is http.Request)
+            ? '📤 Request Data: ${request.body}'
+            : '📤 Request Data: Not applicable for this type of request';
         output.writeln(requestData);
       }
-      _logger.i(output);
       output.clear();
 
       // Send the request and get the response
@@ -110,11 +94,12 @@ class SpotifyClient with http.BaseClient {
       output.writeln('🔗 URL: ${streamedResponse.request?.url}');
       output.writeln('🔒 Status Code: ${streamedResponse.statusCode}');
       if (_loggingMedium) {
-        output.writeln('📋 Headers: ${jsonEncode(streamedResponse.headers)}');
+        output.writeln('📋 Headers:');
+        output.writeln(_headersLog(streamedResponse.headers));
       }
-      
+
       _logger.i('✅ 🌐 Response 🌐 ✅$output');
-      
+
       if (_loggingFull) {
         // Read the response stream and create a new http.Response
         final body = await streamedResponse.stream.bytesToString();
@@ -124,7 +109,7 @@ class SpotifyClient with http.BaseClient {
           headers: streamedResponse.headers,
           request: request as http.Request,
         ); // Cast to http.Request
-        
+
         _logger.i('📥 Response Data: ${response.body}');
       }
 
@@ -148,20 +133,8 @@ class SpotifyClient with http.BaseClient {
     var output = StringBuffer();
     try {
       // Log delete request details
-      String headersLog = _headersLog(headers);
-      String bodyLog = (body != null)
-          ? '📤 Request Data: $body'
-          : '📤 Request Data: None';
-      output.writeln('🚀 🌐 Delete Request 🌐 🚀');
-      output.writeln('🔗 URL: $url');
-
-      if (_loggingMedium) {
-        output.write(headersLog);
-      }
-      if (_loggingFull) {
-        output.write(bodyLog);
-      }
-      _logger.i(output);
+      _logger.i(_logString('🚀 🌐 DELETE Request 🌐 🚀', url,
+          headers: headers, body: body));
 
       output.clear();
 
@@ -169,14 +142,14 @@ class SpotifyClient with http.BaseClient {
       final response = await (await _inner)
           .delete(url, headers: headers, body: body, encoding: encoding);
       // Log delete response details
-      String responseData =
-          '\n🔗 URL: $url\n🔒 Status Code: ${response.statusCode}\n📋 Headers: ${jsonEncode(response.headers)}';
-      _logger.i(
-          '✅ 🌐 Delete Response 🌐 ✅$responseData\n📥 Response Data: ${response.body}');
+      _logger.i(_logString('✅ 🌐 DELETE Response 🌐 ✅', url,
+          statusCode: response.statusCode,
+          headers: response.headers,
+          body: response.body));
       return response;
     } catch (error) {
       // Log delete error
-      _logger.e('❌ ❗ Delete ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e('❌ ❗ DELETE ERROR ❗ ❌\n❗ Error Message: $error');
       rethrow; // Rethrow the error after logging
     }
   }
@@ -190,26 +163,23 @@ class SpotifyClient with http.BaseClient {
     }
     try {
       // Log post request details
-      String headersLog = _headersLog(headers);
-      String bodyLog = (body != null)
-          ? '\n📤 Request Data: $body'
-          : '\n📤 Request Data: None';
-      _logger.i('🚀 🌐 Post Request 🌐 🚀\n🔗 URL: $url$headersLog$bodyLog');
+      _logger.i(_logString('🚀 🌐 POST Request 🌐 🚀', url,
+          headers: headers, body: body));
 
       // Perform the post request
       final response = await (await _inner)
           .post(url, headers: headers, body: body, encoding: encoding);
 
       // Log post response details
-      String responseData =
-          '\n🔗 URL: $url\n🔒 Status Code: ${response.statusCode}\n📋 Headers: ${jsonEncode(response.headers)}';
-      _logger.i(
-          '✅ 🌐 Post Response 🌐 ✅$responseData\n📥 Response Data: ${response.body}');
+      _logger.i(_logString('✅ 🌐 POST Response 🌐 ✅', url,
+          headers: response.headers,
+          statusCode: response.statusCode,
+          body: response.body));
 
       return response;
     } catch (error) {
       // Log post error
-      _logger.e('❌ ❗ Post ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e('❌ ❗ POST ERROR ❗ ❌\n❗ Error Message: $error');
       rethrow; // Rethrow the error after logging
     }
   }
@@ -218,30 +188,28 @@ class SpotifyClient with http.BaseClient {
   Future<http.Response> patch(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     if (!_enableLogging) {
-      return await (await _inner).patch(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner)
+          .patch(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log patch request details
-      String headersLog = _headersLog(headers);
-      String bodyLog = (body != null)
-          ? '\n📤 Request Data: $body'
-          : '\n📤 Request Data: None';
-      _logger.i('🚀 🌐 Patch Request 🌐 🚀\n🔗 URL: $url$headersLog$bodyLog');
+      _logger.i(_logString('🚀 🌐 PATCH Request 🌐 🚀', url,
+          headers: headers, body: body));
 
       // Perform the patch request
       final response = await (await _inner)
           .patch(url, headers: headers, body: body, encoding: encoding);
 
       // Log patch response details
-      String responseData =
-          '\n🔗 URL: $url\n🔒 Status Code: ${response.statusCode}\n📋 Headers: ${jsonEncode(response.headers)}';
-      _logger.i(
-          '✅ 🌐 Patch Response 🌐 ✅$responseData\n📥 Response Data: ${response.body}');
+      _logger.i(_logString('✅ 🌐 PATCH Response 🌐 ✅', url,
+          statusCode: response.statusCode,
+          headers: response.headers,
+          body: response.body));
 
       return response;
     } catch (error) {
       // Log patch error
-      _logger.e('❌ ❗ Patch ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e('❌ ❗ PATCH ERROR ❗ ❌\n❗ Error Message: $error');
       rethrow; // Rethrow the error after logging
     }
   }
@@ -250,30 +218,28 @@ class SpotifyClient with http.BaseClient {
   Future<http.Response> put(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     if (!_enableLogging) {
-      return await (await _inner).put(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner)
+          .put(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log put request details
-      String headersLog = _headersLog(headers);
-      String bodyLog = (body != null)
-          ? '\n📤 Request Data: $body'
-          : '\n📤 Request Data: None';
-      _logger.i('🚀 🌐 Put Request 🌐 🚀\n🔗 URL: $url$headersLog$bodyLog');
+      _logger.i(_logString('🚀 🌐 PUT Request 🌐 🚀', url,
+          headers: headers, body: body));
 
       // Perform the put request
       final response = await (await _inner)
           .put(url, headers: headers, body: body, encoding: encoding);
 
       // Log put response details
-      String responseData =
-          '\n🔗 URL: $url\n🔒 Status Code: ${response.statusCode}\n📋 Headers: ${jsonEncode(response.headers)}';
-      _logger.i(
-          '✅ 🌐 Put Response 🌐 ✅$responseData\n📥 Response Data: ${response.body}');
+      _logger.i(_logString('✅ 🌐 PUT Response 🌐 ✅', url,
+          statusCode: response.statusCode,
+          headers: response.headers,
+          body: response.body));
 
       return response;
     } catch (error) {
       // Log put error
-      _logger.e('❌ ❗ Put ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e('❌ ❗ PUT ERROR ❗ ❌\n❗ Error Message: $error');
       rethrow; // Rethrow the error after logging
     }
   }
@@ -283,29 +249,21 @@ class SpotifyClient with http.BaseClient {
     if (!_enableLogging) {
       return await (await _inner).head(url, headers: headers);
     }
-    var output = StringBuffer();
     try {
       // Log head request details
-      output.writeln('🚀 🌐 Head Request 🌐 🚀');
-      output.writeln('🔗 URL: $url');
-      if (_loggingMedium){
-        output.write('📋 Headers:');
-        output.writeln(_headersLog(headers));
-      }
-      _logger.i(output);
+      _logger.i(_logString('🚀 🌐 HEAD Request 🌐 🚀', url, headers: headers));
 
       // Perform the head request
       final response = await (await _inner).head(url, headers: headers);
 
       // Log head response details
-      String responseData =
-          '\n🔗 URL: $url\n🔒 Status Code: ${response.statusCode}\n📋 Headers: ${jsonEncode(response.headers)}';
-      _logger.i('✅ 🌐 Head Response 🌐 ✅$responseData');
+      _logger.i(_logString('✅ 🌐 Head Response 🌐 ✅', url,
+          statusCode: response.statusCode, headers: response.headers));
 
       return response;
     } catch (error) {
       // Log head error
-      _logger.e('❌ ❗ Head ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e('❌ ❗ HEAD ERROR ❗ ❌\n❗ Error Message: $error');
       rethrow; // Rethrow the error after logging
     }
   }
@@ -317,22 +275,19 @@ class SpotifyClient with http.BaseClient {
     }
     try {
       // Log read request details
-      String headersLog = (headers != null)
-          ? '\n📋 Headers: ${jsonEncode(headers)}'
-          : '\n📋 Headers: None';
-      _logger.i('🚀 🌐 Read Request 🌐 🚀\n🔗 URL: $url$headersLog');
+      _logger.i(_logString('🚀 🌐 READ Request 🌐 🚀', url, headers: headers));
 
       // Perform the read request using the http package (replace this with your actual implementation)
       final response = await http.get(url, headers: headers);
 
       // Log read response details
-      _logger.i(
-          '✅ 🌐 Read Response 🌐 ✅\n🔗 URL: $url\n📥 Response Data: ${response.body}');
+      _logger.i(_logString('✅ 🌐 READ Response 🌐 ✅', url,
+          headers: response.headers, body: response.body));
 
       return response.body;
     } catch (error) {
       // Log read error
-      _logger.e('❌ ❗ Read ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e('❌ ❗ READ ERROR ❗ ❌\n❗ Error Message: $error');
       rethrow; // Rethrow the error after logging
     }
   }
@@ -344,17 +299,17 @@ class SpotifyClient with http.BaseClient {
     }
     try {
       // Log readBytes request details
-      String headersLog = (headers != null)
-          ? '\n📋 Headers: ${jsonEncode(headers)}'
-          : '\n📋 Headers: None';
-      _logger.i('🚀 🌐 ReadBytes Request 🌐 🚀\n🔗 URL: $url$headersLog');
+      _logger.i(
+          _logString('🚀 🌐 ReadBytes Request 🌐 🚀', url, headers: headers));
 
       // Perform the readBytes request using the http package (replace this with your actual implementation)
       final response = await http.get(url, headers: headers);
 
       // Log readBytes response details
-      _logger.i(
-          '✅ 🌐 ReadBytes Response 🌐 ✅\n🔗 URL: $url\n📥 Response Data: ${response.bodyBytes}');
+      _logger.i(_logString('✅ 🌐 ReadBytes Response 🌐 ✅', url,
+          statusCode: response.statusCode,
+          headers: response.headers,
+          body: response.bodyBytes));
 
       return response.bodyBytes;
     } catch (error) {
@@ -367,15 +322,35 @@ class SpotifyClient with http.BaseClient {
   @override
   void close() async => (await _inner).close();
 
-  bool get _loggingSimple => _detail.index >= LoggingDetail.simple.index;
-
   bool get _loggingMedium => _detail.index >= LoggingDetail.medium.index;
 
   bool get _loggingFull => _detail.index >= LoggingDetail.full.index;
 
-  String _headersLog(Map<String, String>? headers) => headers != null && headers.isNotEmpty
-          ? headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n')
+  String _headersLog(Map<String, String>? headers) =>
+      headers != null && headers.isNotEmpty
+          ? headers.entries
+              .map((entry) => '  • ${entry.key}: ${entry.value}')
+              .join('\n')
           : 'None';
+
+  String _logString(String title, Uri url,
+      {Map<String, String>? headers, int? statusCode, Object? body}) {
+    var buf = StringBuffer();
+    buf.writeln(title);
+    buf.writeln('🔗 URL: $url');
+    if (statusCode != null) {
+      buf.writeln('🔒 Status Code: $statusCode');
+    }
+    if (_loggingMedium) {
+      buf.writeln('📋 Headers:');
+      buf.writeln(_headersLog(headers));
+    }
+    if (_loggingFull) {
+      String bodyLog = (body != null) ? '📤 Data: $body' : '📤 Data: None';
+      buf.write(bodyLog);
+    }
+    return buf.toString();
+  }
 }
 
 /// Sets how much information is displayed in the http logging
