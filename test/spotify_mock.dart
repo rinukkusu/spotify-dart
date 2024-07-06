@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:spotify/spotify.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
@@ -18,7 +19,7 @@ class SpotifyApiMock extends SpotifyApiBase {
       (oauthClient as MockClient)._mockHttpErrors = errors;
 
   set interceptor(
-          Function(String method, String url, Map<String, String>? headers,
+          Function(HttpMethod method, String url, Map<String, String>? headers,
                   [String? body])?
               interceptor) =>
       (oauthClient as MockClient).interceptFunction = interceptor;
@@ -32,10 +33,10 @@ class MockClient implements oauth2.Client {
     _mockHttpErrors = mockHttpErrors;
   }
 
-  Function(String method, String url, Map<String, String>? headers,
+  Function(HttpMethod method, String url, Map<String, String>? headers,
       [String? body])? interceptFunction;
 
-  void _intercept(String method, String url, Map<String, String>? headers,
+  void _intercept(HttpMethod method, String url, Map<String, String>? headers,
       [String? body]) {
     if (interceptFunction != null) {
       interceptFunction!(method, url, headers, body);
@@ -83,7 +84,7 @@ class MockClient implements oauth2.Client {
 
   @override
   Future<http.Response> get(url, {Map<String, String>? headers}) async {
-    _intercept('GET', url.toString(), headers);
+    _intercept(HttpMethod.GET, url.toString(), headers);
     final err = _getMockError();
     if (err != null) {
       return createErrorResponse(err);
@@ -93,7 +94,7 @@ class MockClient implements oauth2.Client {
 
   @override
   Future<http.Response> head(url, {Map<String, String>? headers}) async {
-    _intercept('HEAD', url.toString(), headers);
+    _intercept(HttpMethod.HEAD, url.toString(), headers);
     return createSuccessResponse();
   }
 
@@ -106,7 +107,7 @@ class MockClient implements oauth2.Client {
   @override
   Future<http.Response> post(url,
       {Map<String, String>? headers, body, Encoding? encoding}) async {
-    _intercept('POST', url.toString(), headers, body.toString());
+    _intercept(HttpMethod.POST, url.toString(), headers, body.toString());
     final err = _getMockError();
     if (err != null) {
       return createErrorResponse(err);
@@ -117,7 +118,7 @@ class MockClient implements oauth2.Client {
   @override
   Future<http.Response> put(url,
       {Map<String, String>? headers, body, Encoding? encoding}) async {
-    _intercept('PUT', url.toString(), headers, body.toString());
+    _intercept(HttpMethod.PUT, url.toString(), headers, body.toString());
     return createSuccessResponse(_readPath(url));
   }
 

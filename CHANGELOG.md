@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.13.7
+
+- add filter function for playlist endpoint to prevent deserialization of tracks that are `null` 
+
+## 0.13.6+1
+
+- fix serialization issue
+
+## 0.13.6
+
+- add convenience `toJson` method for all serializable models
+
 ## 0.13.5
 
 - fix scope name for user profile

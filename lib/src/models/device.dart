@@ -6,11 +6,13 @@
 part of '_models.dart';
 
 /// Json representation of a device
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Device extends Object {
   Device();
 
   factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DeviceToJson(this);
 
   /// The device ID. This may be `null`.
   String? id;
