@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:http_interceptor/http_interceptor.dart';
 
 import 'spotify_mock.dart';
 import 'package:test/test.dart';
@@ -500,8 +499,8 @@ Future main() async {
       spotify.interceptor = (method, url, headers, [body]) {
         // checking sincce startWithContext makes a PUT and a GET request
         // to retrieve the current playbackstate
-        if (method == HttpMethod.PUT) {
-          expect(method, HttpMethod.PUT);
+        if (method == 'PUT') {
+          expect(method, 'PUT');
           expect(body, isNotNull);
           expect(body,
               '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}');
@@ -515,8 +514,8 @@ Future main() async {
       spotify.interceptor = (method, url, headers, [body]) {
         // checking sincce startWithTracks makes a PUT and a GET request
         // to retrieve the current playbackstate
-        if (method == HttpMethod.PUT) {
-          expect(method, HttpMethod.PUT);
+        if (method == 'PUT') {
+          expect(method, 'PUT');
           expect(body, isNotNull);
           expect(body, '{"uris":["track1"],"position_ms":10}');
         }
