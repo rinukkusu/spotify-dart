@@ -15,7 +15,7 @@ abstract class SpotifyApiBase {
   SpotifyClient get spotifyClient => _spotifyClient;
 
   @visibleForTesting
-  FutureOr<oauth2.Client> get client async => _spotifyClient._inner;
+  FutureOr<oauth2.Client> get client => _spotifyClient._inner;
 
   late Artists _artists;
   Artists get artists => _artists;
