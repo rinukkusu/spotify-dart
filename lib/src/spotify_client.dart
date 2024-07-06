@@ -1,4 +1,4 @@
-// Copyright (c) 2024 IT Path Solutions
+// Copyright (c) 2024 IT Path Solutions, hayribakici
 //
 // MIT-Licence
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
