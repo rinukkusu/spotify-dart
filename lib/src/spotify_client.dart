@@ -72,19 +72,22 @@ class SpotifyClient with http.BaseClient {
       // Log request details
       output.writeln('🚀 🌐 Request 🌐 🚀');
       output.writeln('🔗 URL: ${request.url}');
-      output.writeln('🤔 Method: ${request.method}');
+      output.write('🤔 Method: ${request.method}');
 
       if (_loggingMedium) {
+        output.writeln();
         output.writeln('📋 Headers:');
         output.writeln(_headersLog(request.headers));
-        output.writeln('🔍 Query Parameters: ${request.url.queryParameters}');
+        output.write('🔍 Query Parameters: ${request.url.queryParameters}');
       }
       if (_loggingFull) {
+        output.writeln();
         String requestData = (request is http.Request)
             ? '📤 Request Data: ${request.body}'
             : '📤 Request Data: Not applicable for this type of request';
-        output.writeln(requestData);
+        output.write(requestData);
       }
+      _logger.i(output);
       output.clear();
 
       // Send the request and get the response
@@ -92,13 +95,14 @@ class SpotifyClient with http.BaseClient {
 
       // Log response details
       output.writeln('🔗 URL: ${streamedResponse.request?.url}');
-      output.writeln('🔒 Status Code: ${streamedResponse.statusCode}');
+      output.write('🔒 Status Code: ${streamedResponse.statusCode}');
       if (_loggingMedium) {
+        output.writeln();
         output.writeln('📋 Headers:');
         output.writeln(_headersLog(streamedResponse.headers));
       }
 
-      _logger.i('✅ 🌐 Response 🌐 ✅$output');
+      _logger.i('✅ 🌐 Response 🌐 ✅\n$output');
 
       if (_loggingFull) {
         // Read the response stream and create a new http.Response
@@ -337,15 +341,18 @@ class SpotifyClient with http.BaseClient {
       {Map<String, String>? headers, int? statusCode, Object? body}) {
     var buf = StringBuffer();
     buf.writeln(title);
-    buf.writeln('🔗 URL: $url');
+    buf.write('🔗 URL: $url');
     if (statusCode != null) {
-      buf.writeln('🔒 Status Code: $statusCode');
+      buf.writeln();
+      buf.write('🔒 Status Code: $statusCode');
     }
     if (_loggingMedium) {
+      buf.writeln();
       buf.writeln('📋 Headers:');
-      buf.writeln(_headersLog(headers));
+      buf.write(_headersLog(headers));
     }
     if (_loggingFull) {
+      buf.writeln();
       String bodyLog = (body != null) ? '📤 Data: $body' : '📤 Data: None';
       buf.write(bodyLog);
     }
