@@ -181,10 +181,10 @@ abstract class SpotifyApiBase {
   }
 
   /// [enable]s logging of the requests and responses on the debug console.
-  /// Use [loggingDetail] to control how much should be logged. Default's set 
+  /// Use [loggingDetail] to control how much should be logged. Default's set
   /// to [LoggingDetail.simple].
   void enableDebugMode(bool enable,
-      [LoggingDetail loggingDetail = LoggingDetail.simple]) async {
+      [LoggingDetail loggingDetail = LoggingDetail.simple]) {
     _client.enableLogging = enable;
     _client.logginDetail = loggingDetail;
   }
