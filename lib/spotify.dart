@@ -13,7 +13,6 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:spotify/spotify.dart';
 import 'package:meta/meta.dart';
 
-
 import 'src/models/_models.dart';
 
 export 'package:oauth2/oauth2.dart'
