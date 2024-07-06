@@ -13,7 +13,7 @@ abstract class SpotifyApiBase {
 
   late SpotifyClient _spotifyClient;
   SpotifyClient get spotifyClient => _spotifyClient;
-  
+
   @visibleForTesting
   FutureOr<oauth2.Client> get client async => _spotifyClient._inner;
 
@@ -225,8 +225,8 @@ abstract class SpotifyApiBase {
 
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async =>
-        await _spotifyClient.post(Uri.parse(url), headers: headers, body: body));
+    return await _requestWrapper(() async => await _spotifyClient
+        .post(Uri.parse(url), headers: headers, body: body));
   }
 
   Future<String> _deleteImpl(
