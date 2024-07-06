@@ -11,11 +11,11 @@ abstract class SpotifyApiBase {
 
   bool _shouldWait = false;
 
-  late SpotifyClient _client;
-  SpotifyClient get client => _client;
-
+  late SpotifyClient _spotifyClient;
+  SpotifyClient get spotifyClient => _spotifyClient;
+  
   @visibleForTesting
-  FutureOr<oauth2.Client> get oauthClient => _client._inner;
+  FutureOr<oauth2.Client> get client async => _spotifyClient._inner;
 
   late Artists _artists;
   Artists get artists => _artists;
@@ -66,7 +66,7 @@ abstract class SpotifyApiBase {
   Shows get shows => _shows;
 
   SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
-    _client = SpotifyClient(client);
+    _spotifyClient = SpotifyClient(client);
 
     _artists = Artists(this);
     _albums = Albums(this);
@@ -185,8 +185,8 @@ abstract class SpotifyApiBase {
   /// to [LoggingDetail.simple].
   void enableDebugMode(bool enable,
       [LoggingDetail loggingDetail = LoggingDetail.simple]) {
-    _client.enableLogging = enable;
-    _client.logginDetail = loggingDetail;
+    _spotifyClient.enableLogging = enable;
+    _spotifyClient.logginDetail = loggingDetail;
   }
 
   /// Expands shortened spotify [url]
@@ -214,19 +214,19 @@ abstract class SpotifyApiBase {
     return await _requestWrapper(() async {
       final request = http.Request('HEAD', Uri.parse(url));
       request.headers.addAll(headers);
-      return _client.send(request);
+      return _spotifyClient.send(request);
     });
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
     return await _requestWrapper(
-        () async => await _client.get(Uri.parse(url), headers: headers));
+        () async => await _spotifyClient.get(Uri.parse(url), headers: headers));
   }
 
   Future<String> _postImpl(
       String url, Map<String, String> headers, dynamic body) async {
     return await _requestWrapper(() async =>
-        await _client.post(Uri.parse(url), headers: headers, body: body));
+        await _spotifyClient.post(Uri.parse(url), headers: headers, body: body));
   }
 
   Future<String> _deleteImpl(
@@ -235,14 +235,14 @@ abstract class SpotifyApiBase {
       final request = http.Request('DELETE', Uri.parse(url));
       request.headers.addAll(headers);
       request.body = body;
-      return await http.Response.fromStream(await _client.send(request));
+      return await http.Response.fromStream(await _spotifyClient.send(request));
     });
   }
 
   Future<String> _putImpl(
       String url, Map<String, String> headers, dynamic body) async {
     return await _requestWrapper(() async =>
-        await _client.put(Uri.parse(url), headers: headers, body: body));
+        await _spotifyClient.put(Uri.parse(url), headers: headers, body: body));
   }
 
   // the reason we are using [http.BaseResponse] is because
@@ -278,7 +278,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async {
-    return SpotifyApiCredentials._fromClient(await _client._inner);
+    return SpotifyApiCredentials._fromClient(await client);
   }
 
   String handleResponseWithBody(http.Response response) {

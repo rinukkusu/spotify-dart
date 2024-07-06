@@ -14,13 +14,13 @@ class SpotifyApiMock extends SpotifyApiBase {
       : super.fromClient(MockClient(credentials));
 
   set mockHttpErrors(Iterator<MockHttpError> errors) =>
-      (oauthClient as MockClient)._mockHttpErrors = errors;
+      (client as MockClient)._mockHttpErrors = errors;
 
   set interceptor(
           Function(String method, String url, Map<String, String>? headers,
                   [String? body])?
               interceptor) =>
-      (oauthClient as MockClient).interceptFunction = interceptor;
+      (client as MockClient).interceptFunction = interceptor;
 }
 
 class MockClient implements oauth2.Client {
