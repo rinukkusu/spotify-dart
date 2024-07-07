@@ -23,9 +23,9 @@ class SpotifyClient with http.BaseClient {
   late Logger _logger;
 
   bool _enableLogging = false;
-  void enableLogging(bool enable, {Logger? logger}){
-     _enableLogging = enable;
-     _logger = logger ?? Logger();
+  void enableLogging(bool enable, {Logger? logger}) {
+    _enableLogging = enable;
+    _logger = logger ?? Logger();
   }
 
   LoggingDetail _detail = LoggingDetail.full;
