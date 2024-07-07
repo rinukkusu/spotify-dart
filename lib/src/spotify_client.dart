@@ -28,9 +28,9 @@ class SpotifyClient with http.BaseClient {
     _logger = logger ?? Logger();
   }
 
-  LoggingDetail _detail = LoggingDetail.full;
+  LoggingDetail _detail = LoggingDetail.simple;
   get loggingDetail => _detail;
-  set logginDetail(value) => _detail = value;
+  set loggingDetail(value) => _detail = value;
 
   SpotifyClient(this._inner);
 

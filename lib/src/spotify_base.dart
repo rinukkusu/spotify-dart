@@ -187,7 +187,7 @@ abstract class SpotifyApiBase {
   void enableLogging(bool enable,
       {LoggingDetail loggingDetail = LoggingDetail.simple, Logger? logger}) {
     _spotifyClient.enableLogging(enable, logger: logger);
-    _spotifyClient.logginDetail = loggingDetail;
+    _spotifyClient.loggingDetail = loggingDetail;
   }
 
   /// Expands shortened spotify [url]
