@@ -20,11 +20,13 @@ part of '../spotify.dart';
 class SpotifyClient with http.BaseClient {
   final FutureOr<oauth2.Client> _inner;
 
-  final Logger _logger = Logger();
+  late Logger _logger;
 
   bool _enableLogging = false;
-  get enableLogging => _enableLogging;
-  set enableLogging(value) => _enableLogging = value;
+  void enableLogging(bool enable, {Logger? logger}){
+     _enableLogging = enable;
+     _logger = logger ?? Logger();
+  }
 
   LoggingDetail _detail = LoggingDetail.full;
   get loggingDetail => _detail;

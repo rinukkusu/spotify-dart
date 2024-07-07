@@ -181,11 +181,12 @@ abstract class SpotifyApiBase {
   }
 
   /// [enable]s logging of the requests and responses on the debug console.
-  /// Use [loggingDetail] to control how much should be logged. Default's set
-  /// to [LoggingDetail.simple].
-  void enableDebugMode(bool enable,
-      [LoggingDetail loggingDetail = LoggingDetail.simple]) {
-    _spotifyClient.enableLogging = enable;
+  /// [loggingDetail] controls the logging verbosity. Default's set
+  /// to [LoggingDetail.simple]. 
+  /// Use own [logger] is also possible for e.g. saving logs into a file etc.
+  void enableLogging(bool enable,
+      {LoggingDetail loggingDetail = LoggingDetail.simple, Logger? logger}) {
+    _spotifyClient.enableLogging(enable, logger: logger);
     _spotifyClient.logginDetail = loggingDetail;
   }
 
