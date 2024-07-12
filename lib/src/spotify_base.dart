@@ -186,8 +186,9 @@ abstract class SpotifyApiBase {
   /// Use own [logger] is also possible for e.g. saving logs into a file etc.
   void enableLogging(bool enable,
       {LoggingDetail loggingDetail = LoggingDetail.simple, Logger? logger}) {
-    _spotifyClient.enableLogging(enable, logger: logger);
+    _spotifyClient.enableLogging(enable);
     _spotifyClient.loggingDetail = loggingDetail;
+    _spotifyClient.logger = logger;
   }
 
   /// Expands shortened spotify [url]

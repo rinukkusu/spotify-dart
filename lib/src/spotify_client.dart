@@ -20,16 +20,28 @@ part of '../spotify.dart';
 class SpotifyClient with http.BaseClient {
   final FutureOr<oauth2.Client> _inner;
 
-  late Logger _logger;
-
   bool _enableLogging = false;
-  void enableLogging(bool enable, {Logger? logger}) {
+
+  /// [entable]s logging of the reuqests and responses with the Spotify-API.
+  void enableLogging(bool enable) {
     _enableLogging = enable;
-    _logger = logger ?? Logger();
+  }
+
+  late Logger _logger;
+  set logger(value) {
+    // don't allow to initialize a Logger when logging is disabled.
+    if (!_enableLogging) {
+      throw StateError('[enableLogging] must be set to [true]');
+    }
+    logger = value ?? Logger();
   }
 
   LoggingDetail _detail = LoggingDetail.simple;
+
+  /// Retrieve how verbose the logging currently is. Default's to [LoggingDetail.simple].
   get loggingDetail => _detail;
+
+  /// Set the level of verbosity of the logging.
   set loggingDetail(value) => _detail = value;
 
   SpotifyClient(this._inner);
@@ -39,7 +51,6 @@ class SpotifyClient with http.BaseClient {
     if (!_enableLogging) {
       return await (await _inner).get(url, headers: headers);
     }
-    var output = StringBuffer();
     try {
       // Log GET request details
       _logger.i(_logString('🚀 🌐 GET Request 🌐 🚀', url));
@@ -56,9 +67,7 @@ class SpotifyClient with http.BaseClient {
       return response;
     } catch (error) {
       // Log GET error
-      output.writeln('❌ ❗ GET Request Failed ❗ ❌');
-      output.writeln('❗ Error Message: $error');
-      _logger.e(output);
+      _logger.e(_logError('GET', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -136,13 +145,10 @@ class SpotifyClient with http.BaseClient {
       return await (await _inner)
           .delete(url, headers: headers, body: body, encoding: encoding);
     }
-    var output = StringBuffer();
     try {
       // Log delete request details
       _logger.i(_logString('🚀 🌐 DELETE Request 🌐 🚀', url,
           headers: headers, body: body));
-
-      output.clear();
 
       // Perform the delete request
       final response = await (await _inner)
@@ -155,7 +161,7 @@ class SpotifyClient with http.BaseClient {
       return response;
     } catch (error) {
       // Log delete error
-      _logger.e('❌ ❗ DELETE ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e(_logError('DELETE', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -185,7 +191,7 @@ class SpotifyClient with http.BaseClient {
       return response;
     } catch (error) {
       // Log post error
-      _logger.e('❌ ❗ POST ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e(_logError('POST', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -215,7 +221,7 @@ class SpotifyClient with http.BaseClient {
       return response;
     } catch (error) {
       // Log patch error
-      _logger.e('❌ ❗ PATCH ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e(_logError('PATCH', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -245,7 +251,7 @@ class SpotifyClient with http.BaseClient {
       return response;
     } catch (error) {
       // Log put error
-      _logger.e('❌ ❗ PUT ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e(_logError('PUT', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -269,7 +275,7 @@ class SpotifyClient with http.BaseClient {
       return response;
     } catch (error) {
       // Log head error
-      _logger.e('❌ ❗ HEAD ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e(_logError('HEAD', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -293,7 +299,7 @@ class SpotifyClient with http.BaseClient {
       return response.body;
     } catch (error) {
       // Log read error
-      _logger.e('❌ ❗ READ ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e(_logError("READ", error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -320,7 +326,7 @@ class SpotifyClient with http.BaseClient {
       return response.bodyBytes;
     } catch (error) {
       // Log readBytes error
-      _logger.e('❌ ❗ ReadBytes ERROR ❗ ❌\n❗ Error Message: $error');
+      _logger.e(_logError('ReadBytes', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -361,6 +367,9 @@ class SpotifyClient with http.BaseClient {
     return buf.toString();
   }
 }
+
+String _logError(String request, Object error) =>
+    '❌ ❗ $request Request Failed ❗ ❌\n❗ Error Message: $error';
 
 /// Sets how much information is displayed in the http logging
 enum LoggingDetail {
