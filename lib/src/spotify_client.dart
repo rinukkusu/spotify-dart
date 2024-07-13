@@ -26,13 +26,8 @@ class SpotifyClient with http.BaseClient {
   set enableLogging(enable) => _enableLogging = enable;
 
   late Logger _logger;
-  set logger(value) {
-    // don't allow to initialize a Logger when logging is disabled.
-    if (!_enableLogging) {
-      return;
-    }
-    _logger = value ?? Logger();
-  }
+  /// sets a custom logger
+  set logger(value) => _logger = value ?? Logger();
 
   LoggingDetail _detail = LoggingDetail.simple;
 
