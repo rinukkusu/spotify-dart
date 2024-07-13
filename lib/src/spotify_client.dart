@@ -29,7 +29,7 @@ class SpotifyClient with http.BaseClient {
   set logger(value) {
     // don't allow to initialize a Logger when logging is disabled.
     if (!_enableLogging) {
-      throw StateError('[enableLogging] must be set to [true]');
+      return;
     }
     _logger = value ?? Logger();
   }
