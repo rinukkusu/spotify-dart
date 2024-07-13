@@ -22,10 +22,8 @@ class SpotifyClient with http.BaseClient {
 
   bool _enableLogging = false;
 
-  /// [entable]s logging of the reuqests and responses with the Spotify-API.
-  void enableLogging(bool enable) {
-    _enableLogging = enable;
-  }
+  /// [enable]s logging of the reuqests and responses with the Spotify-API.
+  set enableLogging(enable) => _enableLogging = enable;
 
   late Logger _logger;
   set logger(value) {
@@ -33,7 +31,7 @@ class SpotifyClient with http.BaseClient {
     if (!_enableLogging) {
       throw StateError('[enableLogging] must be set to [true]');
     }
-    logger = value ?? Logger();
+    _logger = value ?? Logger();
   }
 
   LoggingDetail _detail = LoggingDetail.simple;

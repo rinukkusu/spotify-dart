@@ -13,8 +13,7 @@ void main() async {
 
   var credentials = SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   var spotify = SpotifyApi(credentials);
-  spotify.enableLogging(true, loggingDetail: LoggingDetail.simple);
-  // spotify.loggingDetail = LoggingDetail.simple;
+  spotify.enableLogging(enable: true);
 
   print('\nExpannd shortened spotify link of https://spotify.link/hRkBrwub9xb');
   var longLink = await spotify.expandLink('https://spotify.link/hRkBrwub9xb');
