@@ -26,6 +26,7 @@ class SpotifyClient with http.BaseClient {
   set enableLogging(enable) => _enableLogging = enable;
 
   late Logger _logger;
+
   /// sets a custom logger
   set logger(value) => _logger = value ?? Logger();
 
