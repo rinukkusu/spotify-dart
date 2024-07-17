@@ -10,7 +10,6 @@ dependencies:
   http: ^1.2.0
   json_annotation: ^4.8.1
   oauth2: ^2.0.2
-  logger: ^2.3.0
   meta: ^1.15.0
 
 dev_dependencies:

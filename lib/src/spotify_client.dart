@@ -25,10 +25,10 @@ class SpotifyClient with http.BaseClient {
   /// [enable]s logging of the reuqests and responses with the Spotify-API.
   set enableLogging(enable) => _enableLogging = enable;
 
-  late Logger _logger;
+  late SpotifyLogger _logger;
 
   /// sets a custom logger
-  set logger(value) => _logger = value ?? Logger();
+  set logger(value) => _logger = value ?? DefaultLogger();
 
   LoggingDetail _detail = LoggingDetail.simple;
 
@@ -92,7 +92,7 @@ class SpotifyClient with http.BaseClient {
             : '📤 Request Data: Not applicable for this type of request';
         output.write(requestData);
       }
-      _logger.i(output);
+      _logger.i(output.toString());
       output.clear();
 
       // Send the request and get the response

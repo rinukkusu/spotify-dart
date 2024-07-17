@@ -187,7 +187,7 @@ abstract class SpotifyApiBase {
   void enableLogging(
       {required bool enable,
       LoggingDetail loggingDetail = LoggingDetail.simple,
-      Logger? logger}) {
+      SpotifyLogger? logger}) {
     _spotifyClient.enableLogging = enable;
     _spotifyClient.loggingDetail = loggingDetail;
     _spotifyClient.logger = logger;
