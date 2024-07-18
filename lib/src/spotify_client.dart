@@ -17,7 +17,7 @@
 part of '../spotify.dart';
 
 /// A custom HTTP client with logging capabilities.
-class SpotifyClient with http.BaseClient {
+final class SpotifyClient with http.BaseClient {
   final FutureOr<oauth2.Client> _inner;
 
   bool _enableLogging = false;
