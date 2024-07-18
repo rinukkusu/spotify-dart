@@ -26,7 +26,7 @@ abstract class SpotifyLogger {
 }
 
 /// Default Logger, that emits when in debug mode
-class DefaultLogger implements SpotifyLogger {
+class _DefaultLogger implements SpotifyLogger {
   @override
   void d(String message,
       {DateTime? time, Object? error, StackTrace? stackTrace}) {
