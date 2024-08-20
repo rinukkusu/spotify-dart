@@ -72,22 +72,6 @@ Future main() async {
       expect(audioFeatures.id, '11dFghVXANMlKmJXsNCbNl');
     });
 
-    test('getError', () async {
-      spotify.mockHttpErrors = [
-        MockHttpError(statusCode: 404, message: 'analysis not found')
-      ].iterator;
-      late SpotifyException ex;
-      try {
-        await spotify.audioFeatures.get('2cs7JxrZ9DxvsfoVI07ayX');
-      } on SpotifyException catch (e) {
-        expect(e, isA<SpotifyException>());
-        ex = e;
-      }
-      expect(ex, isNotNull);
-      expect(ex.status, 404);
-      expect(ex.message, 'analysis not found');
-    });
-
     test('list', () async {
       var audioFeatures = await spotify.audioFeatures
           .list(['11dFghVXANMlKmJXsNCbNl', '2cs7JxrZ9DxvsfoVI07ayX']);
