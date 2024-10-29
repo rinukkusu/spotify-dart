@@ -57,6 +57,6 @@ abstract class EndpointBase {
       required T Function(Map<String, dynamic>) fromJson}) async {
     var jsonString = await _api._get(path);
     final tJson = jsonDecode(jsonString)[jsonKey] as Iterable<dynamic>;
-    return tJson.map((json) => fromJson(json));
+    return tJson.where((e) => e != null).map((json) => fromJson(json));
   }
 }

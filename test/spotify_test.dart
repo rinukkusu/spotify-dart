@@ -64,6 +64,22 @@ Future main() async {
     });
   });
 
+  group('Audio Features', () {
+    test('get', () async {
+      var audioFeatures =
+          await spotify.audioFeatures.get('11dFghVXANMlKmJXsNCbNl');
+
+      expect(audioFeatures.id, '11dFghVXANMlKmJXsNCbNl');
+    });
+
+    test('list', () async {
+      var audioFeatures = await spotify.audioFeatures
+          .list(['11dFghVXANMlKmJXsNCbNl', '2cs7JxrZ9DxvsfoVI07ayX']);
+
+      expect(audioFeatures.length, 1);
+    });
+  });
+
   group('Audio Analysis', () {
     test('get', () async {
       var result = await spotify.audioAnalysis.get('xyz123');
