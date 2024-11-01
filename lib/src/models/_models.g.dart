@@ -1010,7 +1010,7 @@ Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) =>
           ?.map((e) => RecommendationsSeed.fromJson(e as Map<String, dynamic>))
           .toList()
       ..tracks = (json['tracks'] as List<dynamic>?)
-          ?.map((e) => TrackSimple.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Track.fromJson(e as Map<String, dynamic>))
           .toList();
 
 Map<String, dynamic> _$RecommendationsToJson(Recommendations instance) =>
@@ -1190,7 +1190,7 @@ Map<String, dynamic> _$EpisodeFullToJson(EpisodeFull instance) =>
 Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..album = json['album'] == null
       ? null
-      : AlbumSimple.fromJson(json['album'] as Map<String, dynamic>)
+      : Album.fromJson(json['album'] as Map<String, dynamic>)
   ..artists = (json['artists'] as List<dynamic>?)
       ?.map((e) => Artist.fromJson(e as Map<String, dynamic>))
       .toList()
