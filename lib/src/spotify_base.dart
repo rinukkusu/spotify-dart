@@ -193,9 +193,14 @@ abstract class SpotifyApiBase {
     _spotifyClient.logger = logger;
   }
 
+set loggingDetail(LoggingDetail value) {
+  if (_spotifyClient._enableLogging) {
+    _spotifyClient.loggingDetail = value;
+  }
+}
+
   /// Expands shortened spotify [url]
-  Future<String> expandLink(String url) async =>
-      _streamedHeadImpl(url, const {});
+  Future<String> expandLink(String url) async => _streamedHeadImpl(url, const {});
 
   Future<String> _get(String path) {
     return _getImpl('$_baseUrl/$path', const {});

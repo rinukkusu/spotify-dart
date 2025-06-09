@@ -23,20 +23,20 @@ final class SpotifyClient with http.BaseClient {
   bool _enableLogging = false;
 
   /// [enable]s logging of the reuqests and responses with the Spotify-API.
-  set enableLogging(enable) => _enableLogging = enable;
+  set enableLogging(bool enable) => _enableLogging = enable;
 
   late SpotifyLogger _logger;
 
   /// sets a custom logger
-  set logger(value) => _logger = value ?? _DefaultLogger();
+  set logger(SpotifyLogger? value) => _logger = value ?? _DefaultLogger();
 
   LoggingDetail _detail = LoggingDetail.simple;
 
   /// Retrieve how verbose the logging currently is. Default's to [LoggingDetail.simple].
-  get loggingDetail => _detail;
+  LoggingDetail get loggingDetail => _detail;
 
   /// Set the level of verbosity of the logging.
-  set loggingDetail(value) => _detail = value;
+  set loggingDetail(LoggingDetail value) => _detail = value;
 
   SpotifyClient(this._inner);
 
