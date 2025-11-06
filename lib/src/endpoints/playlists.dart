@@ -36,12 +36,12 @@ class Playlists extends EndpointPaging {
   }
 
   /// Returns `track`s from a given spotify [playlistId]
-  Pages<Track> getTracksByPlaylistId(playlistId) {
+  Pages<PlaylistTrack> getTracksByPlaylistId(playlistId) {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
       'v1/playlists/$playlistId/tracks?$query',
-      (json) => Track.fromJson(json['track']),
+      (json) => PlaylistTrack.fromJson(json),
       null,
       null,
       (json) => json['track'] != null,

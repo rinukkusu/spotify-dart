@@ -236,8 +236,16 @@ Future main() async {
           .all();
 
       expect(tracks, hasLength(2));
-      expect(tracks.elementAt(0).id, 'track-1');
-      expect(tracks.elementAt(1).id, 'track-3');
+      expect(
+        tracks.elementAt(0),
+        isA<PlaylistTrack>().having((p) => p.track, 'track',
+            isA<Track>().having((t) => t.id, 'id', 'track-1')),
+      );
+      expect(
+        tracks.elementAt(1),
+        isA<PlaylistTrack>().having((p) => p.track, 'track',
+            isA<Track>().having((t) => t.id, 'id', 'track-3')),
+      );
     });
   });
 
