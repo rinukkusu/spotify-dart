@@ -41,7 +41,7 @@ abstract class EndpointBase {
     assert(ids.isNotEmpty, 'No id\'s were provided');
 
     // filling the params
-    var params = <String, dynamic>{'ids': ids.join(',')};
+    final params = <String, dynamic>{'ids': ids.join(',')};
     params.addAll(optionalParams ?? {});
 
     return _list(
@@ -58,7 +58,7 @@ abstract class EndpointBase {
     required String jsonKey,
     required T Function(Map<String, dynamic>) fromJson,
   }) async {
-    var jsonString = await _api._get(path);
+    final jsonString = await _api._get(path);
     final tJson = jsonDecode(jsonString)[jsonKey] as Iterable<dynamic>;
     return tJson.where((e) => e != null).map((json) => fromJson(json));
   }

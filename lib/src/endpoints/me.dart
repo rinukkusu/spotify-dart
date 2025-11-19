@@ -172,7 +172,7 @@ class Me extends _MeEndpointBase {
   /// specified, only content that is available in that market will be returned.
   Future<void> removeShows(List<String> ids, [Market? market]) async {
     assert(ids.isNotEmpty, 'No show ids were provided for removing');
-    var queryMap = {
+    final queryMap = {
       'ids': ids.join(','),
       'market': market?.name,
     };
@@ -185,9 +185,9 @@ class Me extends _MeEndpointBase {
   Future<Map<String, bool>> containsSavedShows(List<String> ids) async {
     assert(
         ids.isNotEmpty, 'No show ids were provided for checking saved shows');
-    var query = _buildQuery({'ids': ids.join(',')});
-    var jsonString = await _api._get('$_path/shows/contains?$query');
-    var response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
+    final query = _buildQuery({'ids': ids.join(',')});
+    final jsonString = await _api._get('$_path/shows/contains?$query');
+    final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
 
     return Map.fromIterables(ids, response);
   }

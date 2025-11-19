@@ -11,10 +11,10 @@ class Markets extends EndpointBase {
   /// A result of `null` means that the country is not mapped
   /// in this library.
   Future<Iterable<Market?>> get availableMarkets async {
-    var jsonString = await _api._get(_path);
-    var map = json.decode(jsonString);
-    var markets = map['markets'] as Iterable<dynamic>;
-    var marketsMap = Market.values.asNameMap();
+    final jsonString = await _api._get(_path);
+    final map = json.decode(jsonString);
+    final markets = map['markets'] as Iterable<dynamic>;
+    final marketsMap = Market.values.asNameMap();
     return markets.map((market) => marketsMap[market]);
   }
 }

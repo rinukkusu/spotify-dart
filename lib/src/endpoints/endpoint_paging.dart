@@ -107,13 +107,13 @@ class Page<T> extends BasePage<T> {
 
   @override
   bool get isLast {
-    var paging = _paging as Paging<T>;
+    final paging = _paging as Paging<T>;
     return (paging.offset ?? 0) + paging.limit >= paging.total;
   }
 
   @override
   dynamic get _next {
-    var paging = _paging as Paging<T>;
+    final paging = _paging as Paging<T>;
     return (paging.offset ?? 0) + paging.limit;
   }
 
@@ -283,18 +283,18 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
 
   @override
   Future<Page<T>> getPage(int limit, [int offset = 0]) async {
-    var pathDelimiter = _path.contains('?') ? '&' : '?';
-    var newPath = '$_path${pathDelimiter}limit=$limit&offset=$offset';
+    final pathDelimiter = _path.contains('?') ? '&' : '?';
+    final newPath = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
-    var jsonString = await _api._get(newPath);
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get(newPath);
+    final map = json.decode(jsonString);
 
     if (_pageContainerParser == null) {
-      var paging = Paging<T>.fromJson(map);
+      final paging = Paging<T>.fromJson(map);
       return Page<T>(paging, _pageParser, null, _pageItemFilter);
     } else {
-      var paging = Paging<T>.fromJson(map[_pageKey]);
-      var container = _pageContainerParser!(map);
+      final paging = Paging<T>.fromJson(map[_pageKey]);
+      final container = _pageContainerParser!(map);
       return Page<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
@@ -327,21 +327,21 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
 
   @override
   Future<CursorPage<T>> getPage(int limit, [String after = '']) async {
-    var pathDelimiter = _path.contains('?') ? '&' : '?';
+    final pathDelimiter = _path.contains('?') ? '&' : '?';
     var newPath = '$_path${pathDelimiter}limit=$limit';
     if (after.isNotEmpty) {
       newPath += '&after=$after';
     }
 
-    var jsonString = await _api._get(newPath);
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get(newPath);
+    final map = json.decode(jsonString);
 
     if (_pageContainerParser == null) {
-      var paging = CursorPaging<T>.fromJson(map);
+      final paging = CursorPaging<T>.fromJson(map);
       return CursorPage<T>(paging, _pageParser, null, _pageItemFilter);
     } else {
-      var paging = CursorPaging<T>.fromJson(map[_pageKey]);
-      var container = _pageContainerParser!(map);
+      final paging = CursorPaging<T>.fromJson(map[_pageKey]);
+      final container = _pageContainerParser!(map);
       return CursorPage<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
@@ -362,23 +362,23 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
 
   @override
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
-    var pathDelimiter = _path.contains('?') ? '&' : '?';
-    var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
+    final pathDelimiter = _path.contains('?') ? '&' : '?';
+    final path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
     return _api._get(path).then(_parseBundledPage);
   }
 
   List<Page<dynamic>> _parseBundledPage(String jsonString) {
-    var map = json.decode(jsonString);
-    var pages = <Page<dynamic>>[];
+    final map = json.decode(jsonString);
+    final pages = <Page<dynamic>>[];
     _pageMappers.forEach((key, value) {
       if (map[key] != null) {
-        var paging = Paging.fromJson(map[key]);
+        final paging = Paging.fromJson(map[key]);
         Page page;
         if (_pageContainerParser == null) {
           page = Page(paging, value, null, _pageItemFilter);
         } else {
-          var container = _pageContainerParser!(map[key]);
+          final container = _pageContainerParser!(map[key]);
           page = Page(paging, value, container, _pageItemFilter);
         }
         pages.add(page);

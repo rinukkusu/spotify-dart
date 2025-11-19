@@ -34,7 +34,7 @@ class RecommendationsEndpoint extends EndpointBase {
       'seed_tracks': seedTracks
     }.forEach((key, list) => _addList(parameters, key, list!));
     if (market != null) parameters['market'] = market.name;
-    for (var map in [min, max, target]) {
+    for (final map in [min, max, target]) {
       _addTunableTrackMap(parameters, map);
     }
     final pathQuery = Uri(path: _path, queryParameters: parameters)

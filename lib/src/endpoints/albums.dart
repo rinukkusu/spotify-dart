@@ -12,8 +12,8 @@ class Albums extends EndpointPaging {
 
   /// Retrieves an album with its [albumId]
   Future<Album> get(String albumId) async {
-    var jsonString = await _get('$_path/$albumId');
-    var map = json.decode(jsonString);
+    final jsonString = await _get('$_path/$albumId');
+    final map = json.decode(jsonString);
 
     return Album.fromJson(map);
   }

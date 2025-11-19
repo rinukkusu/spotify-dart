@@ -19,10 +19,10 @@ final _scopes = [
 ];
 
 void main() async {
-  var keyMap = await _getApiKeys();
+  final keyMap = await _getApiKeys();
 
-  var credentials = SpotifyApiCredentials(keyMap.key, keyMap.value);
-  var spotify = await _getUserAuthenticatedSpotifyApi(credentials);
+  final credentials = SpotifyApiCredentials(keyMap.key, keyMap.value);
+  final spotify = await _getUserAuthenticatedSpotifyApi(credentials);
   if (spotify == null) {
     exit(0);
   }
@@ -52,8 +52,8 @@ void main() async {
 }
 
 Future<MapEntry<String, String>> _getApiKeys() async {
-  var keyJson = await File('example/.apikeys').readAsString();
-  var keyMap = json.decode(keyJson);
+  final keyJson = await File('example/.apikeys').readAsString();
+  final keyMap = json.decode(keyJson);
   return MapEntry(keyMap['id'], keyMap['secret']);
 }
 
@@ -61,23 +61,23 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
     SpotifyApiCredentials credentials) async {
   print(
       'Please paste your redirect url (from your spotify application\'s redirect url):');
-  var redirect = stdin.readLineSync();
+  final redirect = stdin.readLineSync();
 
-  var grant = SpotifyApi.authorizationCodeGrant(credentials);
-  var authUri =
+  final grant = SpotifyApi.authorizationCodeGrant(credentials);
+  final authUri =
       grant.getAuthorizationUrl(Uri.parse(redirect!), scopes: _scopes);
 
   print(
       'Please paste this url \n\n$authUri\n\nto your browser and enter the redirected url:');
 
   Uri? redirectUrl;
-  var userInput = stdin.readLineSync();
+  final userInput = stdin.readLineSync();
   if (userInput == null || (redirectUrl = Uri.tryParse(userInput)) == null) {
     print('Invalid redirect url');
     return null;
   }
 
-  var client =
+  final client =
       await grant.handleAuthorizationResponse(redirectUrl!.queryParameters);
   return SpotifyApi.fromClient(client);
 }
@@ -94,7 +94,7 @@ Future<void> _currentlyPlaying(SpotifyApi spotify) async =>
 Future<void> _user(SpotifyApi spotify) async {
   print('User\'s data:');
   await spotify.me.get().then((user) {
-    var buffer = StringBuffer();
+    final buffer = StringBuffer();
     buffer.write('id:');
     buffer.writeln(user.id);
     buffer.write('name:');
@@ -126,7 +126,7 @@ Future<void> _devices(SpotifyApi spotify) async =>
     }).catchError(_prettyPrintError);
 
 Future<void> _followingArtists(SpotifyApi spotify) async {
-  var cursorPage = spotify.me.following(FollowingType.artist);
+  final cursorPage = spotify.me.following(FollowingType.artist);
   await cursorPage.first().then((cursorPage) {
     print(cursorPage.items!.map((artist) => artist.name).join(', '));
   }).catchError((ex) => _prettyPrintError(ex));
@@ -140,35 +140,35 @@ Future<void> _shuffle(bool state, SpotifyApi spotify) async {
 
 Future<void> _playlists(SpotifyApi spotify) async {
   await spotify.playlists.me.all(1).then((playlists) {
-    var lists = playlists.map((playlist) => playlist.name).join(', ');
+    final lists = playlists.map((playlist) => playlist.name).join(', ');
     print('Playlists: $lists');
   }).catchError(_prettyPrintError);
 }
 
 Future<void> _savedTracks(SpotifyApi spotify) async {
-  var stream = spotify.tracks.me.saved.stream();
+  final stream = spotify.tracks.me.saved.stream();
   print('Saved Tracks:\n');
   await for (final page in stream) {
-    var items = page.items?.map((e) => e.track?.name).join(', ');
+    final items = page.items?.map((e) => e.track?.name).join(', ');
     print(items);
   }
 }
 
 Future<void> _recentlyPlayed(SpotifyApi spotify) async {
-  var stream = spotify.me.recentlyPlayed().stream();
+  final stream = spotify.me.recentlyPlayed().stream();
   await for (final page in stream) {
-    var items = page.items?.map((e) => e.track?.name).join(', ');
+    final items = page.items?.map((e) => e.track?.name).join(', ');
     print(items);
   }
 }
 
 Future<void> _getShow(SpotifyApi spotify) async {
-  var response = await spotify.shows.get('3kbLJJLzRGsAKESODPSbiB');
+  final response = await spotify.shows.get('3kbLJJLzRGsAKESODPSbiB');
   print(response.name);
 }
 
 Future<void> _listShows(SpotifyApi spotify) async {
-  var response = await spotify.shows.list(['3kbLJJLzRGsAKESODPSbiB']);
+  final response = await spotify.shows.list(['3kbLJJLzRGsAKESODPSbiB']);
   for (final show in response) {
     print(show.name);
   }
@@ -176,9 +176,9 @@ Future<void> _listShows(SpotifyApi spotify) async {
 
 Future<void> _savedShows(SpotifyApi spotify) async {
   print('Users saved shows');
-  var response = spotify.me.savedShows().stream();
+  final response = spotify.me.savedShows().stream();
   await for (final page in response) {
-    var names = page.items?.map((e) => e.name).join(', ');
+    final names = page.items?.map((e) => e.name).join(', ');
     print(names);
   }
 }
@@ -198,14 +198,14 @@ Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
 
 Future<void> _getEpisode(SpotifyApi spotify) async {
   print('\nRetriving Information about episode with id 2TkVS48EgJwFUMiH8UwqGL');
-  var episode = await spotify.episodes.get('2TkVS48EgJwFUMiH8UwqGL');
+  final episode = await spotify.episodes.get('2TkVS48EgJwFUMiH8UwqGL');
   print('${episode.name} - ${episode.show?.name}');
 }
 
 Future<void> _listEpisodes(SpotifyApi spotify) async {
   print(
       '\nRetriving Information about episodes 2TkVS48EgJwFUMiH8UwqGL, 4Bje2xtE4VxqO2HO1PQdsG');
-  var episodes = await spotify.episodes
+  final episodes = await spotify.episodes
       .list(['2TkVS48EgJwFUMiH8UwqGL', '4Bje2xtE4VxqO2HO1PQdsG']);
   for (final episode in episodes) {
     print('${episode.name} - ${episode.show?.name}');
@@ -215,9 +215,9 @@ Future<void> _listEpisodes(SpotifyApi spotify) async {
 Future<void> _savedEpisodes(SpotifyApi spotify) async {
   print('Users saved episodes:');
 
-  var episodes = spotify.me.savedEpisodes().stream();
+  final episodes = spotify.me.savedEpisodes().stream();
   await for (final page in episodes) {
-    var names = page.items?.map((e) => e.name).join(', ');
+    final names = page.items?.map((e) => e.name).join(', ');
     print(names);
   }
 }
@@ -236,11 +236,11 @@ Future<void> _saveAndRemoveEpisode(SpotifyApiBase spotify) async {
 }
 
 Future<Playlist> _createPrivatePlaylist(SpotifyApi spotify) async {
-  var userId = (await spotify.me.get()).id;
-  var name = 'My awesome playlist';
+  final userId = (await spotify.me.get()).id;
+  final name = 'My awesome playlist';
   print('Creating dummy Playlist with name \'$name\'');
 
-  var playlist =
+  final playlist =
       await spotify.playlists.createPlaylist(userId ?? '', name, public: false);
   await spotify.playlists.addTracks([
     'spotify:track:34HKskUook8LY2JFy6e4Ob',
@@ -257,7 +257,7 @@ Future<void> _removePrivatePlaylist(
 
 Future<void> _clearPlaylist(SpotifyApi spotify) async {
   print('Clearing Playlist');
-  var playlist = await _createPrivatePlaylist(spotify);
+  final playlist = await _createPrivatePlaylist(spotify);
   var playlistTracks = await _getPlaylistTracks(spotify, playlist.id ?? '');
   print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
@@ -271,8 +271,8 @@ Future<void> _clearPlaylist(SpotifyApi spotify) async {
 
 Future<void> _reorderItemsInPlaylist(SpotifyApi spotify) async {
   print('Reordering Playlist');
-  var playlist = await _createPrivatePlaylist(spotify);
-  var playlistId = playlist.id ?? '';
+  final playlist = await _createPrivatePlaylist(spotify);
+  final playlistId = playlist.id ?? '';
   var playlistTracks = await _getPlaylistTracks(spotify, playlistId);
   print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
@@ -288,8 +288,8 @@ Future<void> _reorderItemsInPlaylist(SpotifyApi spotify) async {
 
 Future<void> _replaceItemsInPlaylist(SpotifyApi spotify) async {
   print('Replacing Playlist');
-  var playlist = await _createPrivatePlaylist(spotify);
-  var playlistId = playlist.id ?? '';
+  final playlist = await _createPrivatePlaylist(spotify);
+  final playlistId = playlist.id ?? '';
   var playlistTracks = await _getPlaylistTracks(spotify, playlistId);
   print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
@@ -307,7 +307,7 @@ Future<Iterable<PlaylistTrack>> _getPlaylistTracks(
   SpotifyApi spotify,
   String playlistId,
 ) async {
-  var tracksPage = spotify.playlists.getPlaylistTracks(playlistId);
+  final tracksPage = spotify.playlists.getPlaylistTracks(playlistId);
   return (await tracksPage.first()).items ?? [];
 }
 
@@ -321,7 +321,7 @@ Future<PlaybackState?> _play(SpotifyApi spotify) async {
   sleep(Duration(seconds: 10));
   print('Pausing...');
   spotify.player.pause();
-  var album = await spotify.albums.get('0rwbMKjNkp4ehQTwf9V2Jk');
+  final album = await spotify.albums.get('0rwbMKjNkp4ehQTwf9V2Jk');
   track = await spotify.tracks.get('4VnDmjYCZkyeqeb0NIKqdA');
   print(
       'Playing album "${album.name} - ${album.artists?.first.name}" with uri context');

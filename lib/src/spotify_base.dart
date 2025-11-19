@@ -246,7 +246,7 @@ abstract class SpotifyApiBase {
         await Future.delayed(Duration(milliseconds: 500));
       }
       try {
-        var response = await request();
+        final response = await request();
 
         // distinguish between url redirect responses and body responses
         // note, that any response that also contains a redirect url

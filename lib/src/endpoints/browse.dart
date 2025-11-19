@@ -24,7 +24,7 @@ class Browse extends EndpointPaging {
   /// relevant to a particular country. If omitted, the returned items will be
   /// globally relevant.
   Pages<AlbumSimple> newReleases({Market? country}) {
-    var params = _buildQuery({'country': country?.name});
+    final params = _buildQuery({'country': country?.name});
 
     return _getPages(
         '$_path/new-releases?$params',

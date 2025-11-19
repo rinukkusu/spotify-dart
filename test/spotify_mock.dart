@@ -55,14 +55,14 @@ class MockClient implements oauth2.Client {
   }
 
   String _readPath(Uri url) {
-    var regexString = url.host.contains('api.spotify.com')
+    final regexString = url.host.contains('api.spotify.com')
         ? r'api.spotify.com\/([A-Za-z0-9/\-]+)\??'
         : r'api/([A-Za-z0-9/\-]+)\??';
 
-    var regex = RegExp(regexString);
-    var urlString = url.toString();
-    var partialPath = regex.firstMatch(urlString)!.group(1);
-    var file = File('test/data/$partialPath.json');
+    final regex = RegExp(regexString);
+    final urlString = url.toString();
+    final partialPath = regex.firstMatch(urlString)!.group(1);
+    final file = File('test/data/$partialPath.json');
     return file.readAsStringSync();
   }
 

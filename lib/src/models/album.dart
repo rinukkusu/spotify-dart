@@ -56,7 +56,7 @@ class AlbumSimple extends Object {
       return json.map((trackJson) => TrackSimple.fromJson(trackJson));
     }
 
-    var items = Paging.fromJson(json).itemsNative;
+    final items = Paging.fromJson(json).itemsNative;
     return json.isEmpty || (items == null)
         ? []
         : items.map((trackJson) => TrackSimple.fromJson(trackJson));

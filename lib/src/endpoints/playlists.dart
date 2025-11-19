@@ -229,7 +229,7 @@ class Playlists extends EndpointPaging {
 
   /// internal replace method
   Future<String> _replace(String playlistId, List<String> uris) async {
-    var body = jsonEncode({
+    final body = jsonEncode({
       'uris': uris,
     });
     return _reorderOrReplace(playlistId, body);
@@ -257,7 +257,7 @@ class Playlists extends EndpointPaging {
       int rangeLength = 1,
       String? snapshotId}) async {
     assert(rangeStart >= 0, 'rangeStart out of bounds');
-    var body = <String, dynamic>{
+    final body = <String, dynamic>{
       'range_start': rangeStart,
       'insert_before': insertBefore,
       'range_length': rangeLength,
@@ -350,7 +350,7 @@ class Playlists extends EndpointPaging {
   /// Returns the cover images of [playlistId]
   Future<Iterable<Image>> images(String playlistId) async {
     assert(playlistId.isNotEmpty, 'PlaylistId cannot be empty');
-    var jsonString = await _api._get('v1/playlists/$playlistId/images');
+    final jsonString = await _api._get('v1/playlists/$playlistId/images');
     final items = json.decode(jsonString) as Iterable<dynamic>;
     return items.map((item) => Image.fromJson(item));
   }

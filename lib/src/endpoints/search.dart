@@ -24,9 +24,9 @@ class Search extends EndpointPaging {
     Iterable<SearchType> types = SearchType.values,
     Market? market,
   }) {
-    var type = types.map((type) => type._key).join(',');
+    final type = types.map((type) => type._key).join(',');
 
-    var query = _buildQuery({
+    final query = _buildQuery({
       'q': searchQuery,
       'type': type,
       'market': market?.name,

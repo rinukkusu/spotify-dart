@@ -10,8 +10,8 @@ class Users extends EndpointPaging {
   Users(super.api);
 
   Future<UserPublic> get(String userId) async {
-    var jsonString = await _api._get('$_path/$userId');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$userId');
+    final map = json.decode(jsonString);
 
     return UserPublic.fromJson(map);
   }
@@ -24,8 +24,8 @@ class Users extends EndpointPaging {
   }
 
   Future<Playlist> playlist(String userId, String playlistId) async {
-    var jsonString = await _api._get('$_path/$userId/playlists/$playlistId');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$userId/playlists/$playlistId');
+    final map = json.decode(jsonString);
 
     return Playlist.fromJson(map);
   }

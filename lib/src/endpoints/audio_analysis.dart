@@ -11,8 +11,8 @@ class AudioAnalysisEndpoint extends EndpointBase {
   AudioAnalysisEndpoint(super.api);
 
   Future<AudioAnalysis> get(String trackId) async {
-    var jsonString = await _api._get('$_path/$trackId');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$trackId');
+    final map = json.decode(jsonString);
 
     return AudioAnalysis.fromJson(map);
   }

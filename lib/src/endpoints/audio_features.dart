@@ -12,8 +12,8 @@ class AudioFeatures extends EndpointBase {
 
   /// Returns audio features of a track with [trackId]
   Future<AudioFeature> get(String trackId) async {
-    var jsonString = await _api._get('$_path/$trackId');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$trackId');
+    final map = json.decode(jsonString);
 
     return AudioFeature.fromJson(map);
   }
