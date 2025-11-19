@@ -304,8 +304,10 @@ Future<void> _replaceItemsInPlaylist(SpotifyApi spotify) async {
 }
 
 Future<Iterable<PlaylistTrack>> _getPlaylistTracks(
-    SpotifyApi spotify, String playlistId) async {
-  var tracksPage = spotify.playlists.getTracksByPlaylistId(playlistId);
+  SpotifyApi spotify,
+  String playlistId,
+) async {
+  var tracksPage = spotify.playlists.getPlaylistTracks(playlistId);
   return (await tracksPage.first()).items ?? [];
 }
 
