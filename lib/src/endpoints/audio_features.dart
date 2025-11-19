@@ -21,8 +21,9 @@ class AudioFeatures extends EndpointBase {
   /// Retrieve multiple audio features of tracks with [trackIds]
   Future<Iterable<AudioFeature>> list(List<String> trackIds) async =>
       _listWithIds(
-          path: _path,
-          ids: trackIds,
-          jsonKey: 'audio_features',
-          fromJson: AudioFeature.fromJson);
+        path: _path,
+        ids: trackIds,
+        jsonKey: 'audio_features',
+        fromJson: AudioFeature.fromJson,
+      );
 }

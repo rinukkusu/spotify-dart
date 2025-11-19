@@ -24,7 +24,11 @@ class Tracks extends EndpointBase {
   }
 
   Future<Iterable<Track>> list(List<String> trackIds) async => _listWithIds(
-      path: _path, ids: trackIds, jsonKey: 'tracks', fromJson: Track.fromJson);
+        path: _path,
+        ids: trackIds,
+        jsonKey: 'tracks',
+        fromJson: Track.fromJson,
+      );
 
   /// queries track batches of size [queryLimit] from [trackIds] and yields Track object Iterables
   Stream<Iterable<Track>> listInBatches(Iterable<String> trackIds,

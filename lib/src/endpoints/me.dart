@@ -37,8 +37,12 @@ class Me extends _MeEndpointBase {
     // since 'artists' is the container, there is no
     // containerParse necessary. Adding json to make the
     // CursorPages-Object happy.
-    return _getCursorPages('$_path/following?type=${type._key}',
-        (json) => Artist.fromJson(json), 'artists', (json) => json);
+    return _getCursorPages(
+      '$_path/following?type=${type._key}',
+      (json) => Artist.fromJson(json),
+      'artists',
+      (json) => json,
+    );
   }
 
   /// Check to see if the current user is following one or more artists or
@@ -103,12 +107,13 @@ class Me extends _MeEndpointBase {
         'Cannot specify both after and before.');
 
     return _getCursorPages(
-        '$_path/player/recently-played?${_buildQuery({
-              'limit': limit,
-              'after': after?.millisecondsSinceEpoch,
-              'before': before?.millisecondsSinceEpoch
-            })}',
-        (json) => PlayHistory.fromJson(json));
+      '$_path/player/recently-played?${_buildQuery({
+            'limit': limit,
+            'after': after?.millisecondsSinceEpoch,
+            'before': before?.millisecondsSinceEpoch,
+          })}',
+      (json) => PlayHistory.fromJson(json),
+    );
   }
 
   /// Toggle Shuffle For User's Playback.
@@ -230,7 +235,9 @@ class Me extends _MeEndpointBase {
   /// Returns the current user's saved episodes. Requires the `user-library-read`
   /// scope.
   Pages<EpisodeFull> savedEpisodes() => _getPages(
-      '$_path/episodes', (json) => EpisodeFull.fromJson(json['episode']));
+        '$_path/episodes',
+        (json) => EpisodeFull.fromJson(json['episode']),
+      );
 
   /// Saves episodes for the current user. Requires the `user-library-modify`
   /// scope.

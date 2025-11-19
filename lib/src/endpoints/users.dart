@@ -18,7 +18,9 @@ class Users extends EndpointPaging {
 
   Pages<PlaylistSimple> playlists(String userId) {
     return _getPages(
-        '$_path/$userId/playlists', (json) => PlaylistSimple.fromJson(json));
+      '$_path/$userId/playlists',
+      (json) => PlaylistSimple.fromJson(json),
+    );
   }
 
   Future<Playlist> playlist(String userId, String playlistId) async {
@@ -29,7 +31,9 @@ class Users extends EndpointPaging {
   }
 
   Pages<PlaylistTrack> playlistTracks(String userId, String playlistId) {
-    return _getPages('$_path/$userId/playlists/$playlistId/tracks',
-        (json) => PlaylistTrack.fromJson(json));
+    return _getPages(
+      '$_path/$userId/playlists/$playlistId/tracks',
+      (json) => PlaylistTrack.fromJson(json),
+    );
   }
 }

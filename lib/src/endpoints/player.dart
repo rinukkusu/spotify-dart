@@ -22,7 +22,7 @@ class PlayerEndpoint extends _MeEndpointBase {
       {String? deviceId, bool retrievePlaybackState = true}) async {
     await _api._put('$_path/shuffle?${_buildQuery({
           'state': state,
-          'deviceId': deviceId
+          'deviceId': deviceId,
         })}');
 
     return retrievePlaybackState ? playbackState() : null;
@@ -217,7 +217,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     assert(positionMs >= 0, 'positionMs must be greater or equal to 0');
     await _api._put('$_path/seek?${_buildQuery({
           'position_ms': positionMs,
-          'device_id': deviceId
+          'device_id': deviceId,
         })}');
 
     return retrievePlaybackState ? playbackState() : null;
@@ -234,7 +234,7 @@ class PlayerEndpoint extends _MeEndpointBase {
       {String? deviceId, bool retrievePlaybackState = true}) async {
     await _api._put('$_path/repeat?${_buildQuery({
           'state': state.toString().split('.').last,
-          'device_id': deviceId
+          'device_id': deviceId,
         })}');
 
     return retrievePlaybackState ? playbackState() : null;
@@ -253,7 +253,7 @@ class PlayerEndpoint extends _MeEndpointBase {
         'Volume must be between 0 and 100');
     await _api._put('$_path/volume?${_buildQuery({
           'volume_percent': volumePercent,
-          'device_id': deviceId
+          'device_id': deviceId,
         })}');
 
     return retrievePlaybackState ? playbackState() : null;

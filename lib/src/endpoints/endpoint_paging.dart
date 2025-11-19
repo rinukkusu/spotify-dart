@@ -9,28 +9,53 @@ typedef FilterFunction = bool Function(dynamic json);
 abstract class EndpointPaging extends EndpointBase {
   EndpointPaging(super.api);
 
-  Pages<T> _getPages<T>(String path, ParserFunction<T> pageItemParser,
-          [String? pageKey,
-          ParserFunction<Object>? pageContainerParser,
-          FilterFunction? pageItemFilter]) =>
-      Pages(_api, path, pageItemParser, pageKey, pageContainerParser,
-          pageItemFilter);
+  Pages<T> _getPages<T>(
+    String path,
+    ParserFunction<T> pageItemParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) =>
+      Pages(
+        _api,
+        path,
+        pageItemParser,
+        pageKey,
+        pageContainerParser,
+        pageItemFilter,
+      );
 
   CursorPages<T> _getCursorPages<T>(
-          String path, ParserFunction<T> pageItemParser,
-          [String? pageKey,
-          ParserFunction<Object>? pageContainerParser,
-          FilterFunction? pageItemFilter]) =>
-      CursorPages(_api, path, pageItemParser, pageKey, pageContainerParser,
-          pageItemFilter);
+    String path,
+    ParserFunction<T> pageItemParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) =>
+      CursorPages(
+        _api,
+        path,
+        pageItemParser,
+        pageKey,
+        pageContainerParser,
+        pageItemFilter,
+      );
 
   BundledPages _getBundledPages<T>(
-          String path, Map<String, ParserFunction<T>> pageItemParsers,
-          [String? pageKey,
-          ParserFunction<Object>? pageContainerParser,
-          FilterFunction? pageItemFilter]) =>
-      BundledPages(_api, path, pageItemParsers, pageKey, pageContainerParser,
-          pageItemFilter);
+    String path,
+    Map<String, ParserFunction<T>> pageItemParsers, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) =>
+      BundledPages(
+        _api,
+        path,
+        pageItemParsers,
+        pageKey,
+        pageContainerParser,
+        pageItemFilter,
+      );
 }
 
 const defaultLimit = 20;
@@ -168,11 +193,14 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
   final ParserFunction<T> _pageParser;
   final List<V> _bufferedPages = [];
 
-  SinglePages(SpotifyApiBase api, String path, this._pageParser,
-      [String? pageKey,
-      ParserFunction<Object>? pageContainerMapper,
-      FilterFunction? pageItemFilter])
-      : super(api, path, pageKey, pageContainerMapper, pageItemFilter);
+  SinglePages(
+    SpotifyApiBase api,
+    String path,
+    this._pageParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerMapper,
+    FilterFunction? pageItemFilter,
+  ]) : super(api, path, pageKey, pageContainerMapper, pageItemFilter);
 
   Future<Iterable<T>> all([int limit = defaultLimit]) {
     return stream(limit)
@@ -181,7 +209,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
         .then((pages) => pages.expand((page) => page!));
   }
 
-  Stream<V> stream([limit = defaultLimit]) {
+  Stream<V> stream([int limit = defaultLimit]) {
     late StreamController<V> stream;
 
     void handlePageAndGetNext(V page) {
@@ -232,15 +260,23 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
 
 /// Handles retrieval of a page through an offset
 class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
-  Pages(super.api, super.path, super.pageParser,
-      [super.pageKey, super.pageContainerMapper, super.pageItemFilter]);
+  Pages(
+    super.api,
+    super.path,
+    super.pageParser, [
+    super.pageKey,
+    super.pageContainerMapper,
+    super.pageItemFilter,
+  ]);
 
   Pages.fromPaging(
-      SpotifyApiBase api, Paging<T> paging, ParserFunction<T> pageParser,
-      [String? pageKey,
-      ParserFunction<Object>? pageContainerMapper,
-      FilterFunction? pageItemFilter])
-      : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
+    SpotifyApiBase api,
+    Paging<T> paging,
+    ParserFunction<T> pageParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerMapper,
+    FilterFunction? pageItemFilter,
+  ]) : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
             pageKey, pageContainerMapper, pageItemFilter) {
     _bufferedPages.add(Page<T>(paging, _pageParser, null, _pageItemFilter));
   }
@@ -267,15 +303,23 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
 /// Handles retrieval of a page through a cursor
 class CursorPages<T> extends SinglePages<T, CursorPage<T>>
     with CursorStrategy<CursorPage<T>> {
-  CursorPages(super.api, super.path, super.pageParser,
-      [super.pageKey, super.pageContainerMapper, super.pageItemFilter]);
+  CursorPages(
+    super.api,
+    super.path,
+    super.pageParser, [
+    super.pageKey,
+    super.pageContainerMapper,
+    super.pageItemFilter,
+  ]);
 
   CursorPages.fromCursorPaging(
-      SpotifyApiBase api, CursorPaging<T> paging, ParserFunction<T> pageParser,
-      [String? pageKey,
-      ParserFunction<Object>? pageContainerMapper,
-      FilterFunction? pageItemFilter])
-      : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
+    SpotifyApiBase api,
+    CursorPaging<T> paging,
+    ParserFunction<T> pageParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerMapper,
+    FilterFunction? pageItemFilter,
+  ]) : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
             pageKey, pageContainerMapper, pageItemFilter) {
     _bufferedPages
         .add(CursorPage<T>(paging, _pageParser, null, _pageItemFilter));
@@ -307,11 +351,14 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
 class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
   final Map<String, ParserFunction<dynamic>> _pageMappers;
 
-  BundledPages(SpotifyApiBase api, String path, this._pageMappers,
-      [String? pageKey,
-      ParserFunction<dynamic>? pageContainerParser,
-      FilterFunction? pageItemFilter])
-      : super(api, path, pageKey, pageContainerParser, pageItemFilter);
+  BundledPages(
+    SpotifyApiBase api,
+    String path,
+    this._pageMappers, [
+    String? pageKey,
+    ParserFunction<dynamic>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) : super(api, path, pageKey, pageContainerParser, pageItemFilter);
 
   @override
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {

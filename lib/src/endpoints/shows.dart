@@ -32,7 +32,11 @@ class Shows extends EndpointPaging {
 
   /// Get one or several shows
   Future<Iterable<Show>> list(List<String> showsId) async => _listWithIds(
-      path: _path, ids: showsId, jsonKey: 'shows', fromJson: Show.fromJson);
+        path: _path,
+        ids: showsId,
+        jsonKey: 'shows',
+        fromJson: Show.fromJson,
+      );
 
   /// Get a Show's Episodes
   ///
@@ -45,7 +49,9 @@ class Shows extends EndpointPaging {
     });
     var queryString = query.isNotEmpty ? '?$query' : '';
 
-    return _getPages('$_path/$showId/episodes$queryString',
-        (json) => Episode.fromJson(json));
+    return _getPages(
+      '$_path/$showId/episodes$queryString',
+      (json) => Episode.fromJson(json),
+    );
   }
 }

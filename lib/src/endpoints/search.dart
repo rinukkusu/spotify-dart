@@ -38,7 +38,7 @@ class Search extends EndpointPaging {
       'artists': (json) => Artist.fromJson(json),
       'tracks': (json) => Track.fromJson(json),
       'shows': (json) => Show.fromJson(json),
-      'episodes': (json) => Episode.fromJson(json)
+      'episodes': (json) => Episode.fromJson(json),
     });
   }
 }

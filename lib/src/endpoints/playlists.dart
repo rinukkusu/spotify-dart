@@ -16,15 +16,24 @@ class Playlists extends EndpointPaging {
   }
 
   /// Returns the featuerd playlists
-  Pages<PlaylistSimple> get featured => _getPages(
-      '$_path/featured-playlists',
-      (json) => PlaylistSimple.fromJson(json),
-      'playlists',
-      (json) => PlaylistsFeatured.fromJson(json));
+  Pages<PlaylistSimple> get featured {
+    return _getPages(
+        '$_path/featured-playlists',
+        (json) => PlaylistSimple.fromJson(json),
+        'playlists',
+        (json) => PlaylistsFeatured.fromJson(json));
+  }
+
+  // Pages<PlaylistSimple> get me {
+  //   return _getPages(
+  //       'v1/me/playlists', (json) => PlaylistSimple.fromJson(json));
+  // }
 
   Pages<PlaylistSimple> get me {
     return _getPages(
-        'v1/me/playlists', (json) => PlaylistSimple.fromJson(json));
+      'v1/me/playlists',
+      (json) => PlaylistSimple.fromJson(json),
+    );
   }
 
   /// Returns a playlist of a user with [userId]
@@ -32,12 +41,14 @@ class Playlists extends EndpointPaging {
       [int limit = defaultLimit, int offset = 0]) {
     assert(userId.isNotEmpty, 'UserId cannot be empty');
     return _getPages(
-        'v1/users/$userId/playlists', (json) => PlaylistSimple.fromJson(json));
+      'v1/users/$userId/playlists',
+      (json) => PlaylistSimple.fromJson(json),
+    );
   }
 
   /// Returns `track`s from a given spotify [playlistId].
   @Deprecated('Use `getPlaylistTracks` instead')
-  Pages<Track> getTracksByPlaylistId(playlistId) {
+  Pages<Track> getTracksByPlaylistId(String playlistId) {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
@@ -149,10 +160,11 @@ class Playlists extends EndpointPaging {
     }
 
     await _api._post(
-        url,
-        jsonEncode({
-          'uris': [trackUri]
-        }));
+      url,
+      jsonEncode({
+        'uris': [trackUri],
+      }),
+    );
   }
 
   /// Adds a collection of [uris] (i.e each list
@@ -282,10 +294,11 @@ class Playlists extends EndpointPaging {
     final query = _buildQuery({'country': country?.name, 'locale': locale});
 
     return _getPages(
-        '$_path/categories/$categoryId/playlists?$query',
-        (json) => PlaylistSimple.fromJson(json),
-        'playlists',
-        (json) => PlaylistsFeatured.fromJson(json));
+      '$_path/categories/$categoryId/playlists?$query',
+      (json) => PlaylistSimple.fromJson(json),
+      'playlists',
+      (json) => PlaylistsFeatured.fromJson(json),
+    );
   }
 
   /// [playlistId] - the playlist ID
