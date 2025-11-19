@@ -30,17 +30,23 @@ class Tracks extends EndpointBase {
         fromJson: Track.fromJson,
       );
 
-  /// queries track batches of size [queryLimit] from [trackIds] and yields Track object Iterables
-  Stream<Iterable<Track>> listInBatches(Iterable<String> trackIds,
-      [int batchSize = 50]) async* {
+  /// queries track batches of size [queryLimit] from [trackIds] and yields
+  /// [Track] object [Iterable].
+  Stream<Iterable<Track>> listInBatches(
+    Iterable<String> trackIds, [
+    int batchSize = 50,
+  ]) async* {
     for (final batch in batches(trackIds, batchSize)) {
       yield await list(batch);
     }
   }
 
-  /// queries track batches of size [queryLimit] from [trackIds] and yields the Track objects
-  Stream<Track> tracksStream(Iterable<String> trackIds,
-      [int queryLimit = 50]) async* {
+  /// queries track batches of size [queryLimit] from [trackIds] and yields the
+  /// [Track] objects
+  Stream<Track> tracksStream(
+    Iterable<String> trackIds, [
+    int queryLimit = 50,
+  ]) async* {
     await for (final batch in listInBatches(trackIds)) {
       yield* Stream.fromIterable(batch);
     }

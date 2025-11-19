@@ -13,9 +13,10 @@ part of '../spotify.dart';
 ///   ...
 /// ```
 class SpotifyApi extends SpotifyApiBase {
-  SpotifyApi(SpotifyApiCredentials credentials,
-      {Function(SpotifyApiCredentials)? onCredentialsRefreshed})
-      : super(credentials, http.Client(), onCredentialsRefreshed);
+  SpotifyApi(
+    SpotifyApiCredentials credentials, {
+    Function(SpotifyApiCredentials)? onCredentialsRefreshed,
+  }) : super(credentials, http.Client(), onCredentialsRefreshed);
 
   SpotifyApi.fromClient(FutureOr<oauth2.Client> super.client)
       : super.fromClient();
@@ -37,11 +38,15 @@ class SpotifyApi extends SpotifyApiBase {
   }
 
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
-      SpotifyApiCredentials credentials,
-      {String? codeVerifier,
-      Function(SpotifyApiCredentials)? onCredentialsRefreshed}) {
-    return SpotifyApiBase.authorizationCodeGrant(credentials, http.Client(),
-        codeVerifier: codeVerifier,
-        onCredentialsRefreshed: onCredentialsRefreshed);
+    SpotifyApiCredentials credentials, {
+    String? codeVerifier,
+    Function(SpotifyApiCredentials)? onCredentialsRefreshed,
+  }) {
+    return SpotifyApiBase.authorizationCodeGrant(
+      credentials,
+      http.Client(),
+      codeVerifier: codeVerifier,
+      onCredentialsRefreshed: onCredentialsRefreshed,
+    );
   }
 }

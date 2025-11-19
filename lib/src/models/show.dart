@@ -9,8 +9,8 @@ class Show {
   Show();
 
   /// The markets in which the show is available: ISO 3166-1 alpha-2 country
-  /// codes. Note that an album is considered available in a market when at least
-  /// 1 of its tracks is available in that market.
+  /// codes. Note that an album is considered available in a market when at
+  /// least 1 of its tracks is available in that market.
   @JsonKey(name: 'available_markets')
   List<Market>? availableMarkets;
 
@@ -41,7 +41,8 @@ class Show {
   @JsonKey(name: 'is_externally_hosted')
   bool? isExternallyHosted;
 
-  /// A list of the languages used in the show, identified by their ISO 639 code.
+  /// A list of the languages used in the show, identified by their ISO 639
+  /// code.
   List<String>? languages;
 
   /// The media type of the show.

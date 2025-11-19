@@ -39,7 +39,7 @@ class AuthorizationScope {
     ...connect.all,
     ...library.all,
     ...listen.all,
-    ...follow.all
+    ...follow.all,
   ]);
 }
 
@@ -136,7 +136,8 @@ class ConnectAuthorizationScope extends _Scope {
 
   @override
   List<String> get all => List.unmodifiable(
-      [readCurrentlyPlaying, readPlaybackState, modifyPlaybackState]);
+        [readCurrentlyPlaying, readPlaybackState, modifyPlaybackState],
+      );
 }
 
 class LibraryAuthorizationScope extends _Scope {
@@ -247,7 +248,8 @@ class PlaylistAuthorizationScope extends _Scope {
   /// Contains all properties of [AuthorizationScope.playlist]
   @override
   List<String> get all => List.unmodifiable(
-      [readPrivate, readCollaborative, modifyPrivate, modifyPublic]);
+        [readPrivate, readCollaborative, modifyPrivate, modifyPublic],
+      );
 }
 
 class ImagesAuthorizationScope extends _Scope {

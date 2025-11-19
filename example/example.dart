@@ -1,7 +1,10 @@
-// Copyright (c) 2017, 2020 rinukkusu, hayribakici. All rights reserved. Use of this source code
-// is governed by a BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2017, 2020 rinukkusu, hayribakici. All rights reserved. Use of
+// this source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 // ignore_for_file: deprecated_member_use_from_same_package
+
+// cspell: disable
 
 import 'dart:io';
 import 'dart:convert';
@@ -14,7 +17,9 @@ void main() async {
   var credentials = SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   final spotify = SpotifyApi(credentials);
 
-  print('\nExpannd shortened spotify link of https://spotify.link/hRkBrwub9xb');
+  print(
+    '\nExpanding shortened spotify link of https://spotify.link/hRkBrwub9xb',
+  );
   final longLink = await spotify.expandLink('https://spotify.link/hRkBrwub9xb');
   print(longLink);
 
@@ -23,12 +28,14 @@ void main() async {
       .get('4rOoJ6Egrf8K2IrywzwOMk')
       .then((podcast) => print(podcast.name))
       .onError(
-          (error, stackTrace) => print((error as SpotifyException).message));
+        (error, stackTrace) => print((error as SpotifyException).message),
+      );
 
   print('\nPodcast episode:');
   final episodes = spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
   await episodes.first().then((first) => print(first.items!.first)).onError(
-      (error, stackTrace) => print((error as SpotifyException).message));
+        (error, stackTrace) => print((error as SpotifyException).message),
+      );
 
   print('\nArtists:');
   final artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);

@@ -83,14 +83,20 @@ abstract class SpotifyApiBase {
     _shows = Shows(this);
   }
 
-  SpotifyApiBase(SpotifyApiCredentials credentials,
-      [http.Client? httpClient, Function(SpotifyApiCredentials)? callBack])
-      : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
+  SpotifyApiBase(
+    SpotifyApiCredentials credentials, [
+    http.Client? httpClient,
+    Function(SpotifyApiCredentials)? callBack,
+  ]) : this.fromClient(_getOauth2Client(credentials, httpClient, callBack));
 
   SpotifyApiBase.fromAuthCodeGrant(
-      oauth2.AuthorizationCodeGrant grant, String responseUri)
-      : this.fromClient(grant.handleAuthorizationResponse(
-            Uri.parse(responseUri).queryParameters));
+    oauth2.AuthorizationCodeGrant grant,
+    String responseUri,
+  ) : this.fromClient(
+          grant.handleAuthorizationResponse(
+            Uri.parse(responseUri).queryParameters,
+          ),
+        );
 
   SpotifyApiBase._withAccessToken(String accessToken)
       : this.fromClient(oauth2.Client(oauth2.Credentials(accessToken)));
@@ -110,32 +116,39 @@ abstract class SpotifyApiBase {
   }
 
   static oauth2.AuthorizationCodeGrant authorizationCodeGrant(
-      SpotifyApiCredentials credentials, http.Client httpClient,
-      {String? codeVerifier,
-      Function(SpotifyApiCredentials)? onCredentialsRefreshed}) {
+    SpotifyApiCredentials credentials,
+    http.Client httpClient, {
+    String? codeVerifier,
+    Function(SpotifyApiCredentials)? onCredentialsRefreshed,
+  }) {
     return oauth2.AuthorizationCodeGrant(
-        credentials.clientId!,
-        Uri.parse(SpotifyApiBase._authorizationUrl),
-        Uri.parse(SpotifyApiBase._tokenUrl),
-        secret: credentials.clientSecret,
-        codeVerifier: codeVerifier,
-        httpClient: httpClient,
-        onCredentialsRefreshed: onCredentialsRefreshed != null
-            ? (oauth2.Credentials cred) {
-                final newCredentials = SpotifyApiCredentials(
-                    credentials.clientId, credentials.clientSecret,
-                    accessToken: cred.accessToken,
-                    expiration: cred.expiration,
-                    refreshToken: cred.refreshToken,
-                    scopes: cred.scopes);
-                onCredentialsRefreshed(newCredentials);
-              }
-            : null);
+      credentials.clientId!,
+      Uri.parse(SpotifyApiBase._authorizationUrl),
+      Uri.parse(SpotifyApiBase._tokenUrl),
+      secret: credentials.clientSecret,
+      codeVerifier: codeVerifier,
+      httpClient: httpClient,
+      onCredentialsRefreshed: onCredentialsRefreshed != null
+          ? (oauth2.Credentials cred) {
+              final newCredentials = SpotifyApiCredentials(
+                credentials.clientId,
+                credentials.clientSecret,
+                accessToken: cred.accessToken,
+                expiration: cred.expiration,
+                refreshToken: cred.refreshToken,
+                scopes: cred.scopes,
+              );
+              onCredentialsRefreshed(newCredentials);
+            }
+          : null,
+    );
   }
 
   static FutureOr<oauth2.Client> _getOauth2Client(
-      SpotifyApiCredentials credentials, http.Client? httpClient,
-      [Function(SpotifyApiCredentials)? callBack]) async {
+    SpotifyApiCredentials credentials,
+    http.Client? httpClient, [
+    Function(SpotifyApiCredentials)? callBack,
+  ]) async {
     if (credentials.fullyQualified) {
       var oauthCredentials = credentials._toOauth2Credentials();
 
@@ -198,7 +211,9 @@ abstract class SpotifyApiBase {
   }
 
   Future<String> _streamedHeadImpl(
-      String url, Map<String, String> headers) async {
+    String url,
+    Map<String, String> headers,
+  ) async {
     return await _requestWrapper(() async {
       final request = http.Request('HEAD', Uri.parse(url));
       request.headers.addAll(headers);
@@ -207,31 +222,46 @@ abstract class SpotifyApiBase {
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
-    return await _requestWrapper(() async =>
-        await (await _client).get(Uri.parse(url), headers: headers));
+    return await _requestWrapper(
+      () async => await (await _client).get(Uri.parse(url), headers: headers),
+    );
   }
 
   Future<String> _postImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await (await _client)
-        .post(Uri.parse(url), headers: headers, body: body));
+    String url,
+    Map<String, String> headers,
+    dynamic body,
+  ) async {
+    return await _requestWrapper(
+      () async => await (await _client)
+          .post(Uri.parse(url), headers: headers, body: body),
+    );
   }
 
   Future<String> _deleteImpl(
-      String url, Map<String, String> headers, body) async {
+    String url,
+    Map<String, String> headers,
+    body,
+  ) async {
     return await _requestWrapper(() async {
       final request = http.Request('DELETE', Uri.parse(url));
       request.headers.addAll(headers);
       request.body = body;
       return await http.Response.fromStream(
-          await (await _client).send(request));
+        await (await _client).send(request),
+      );
     });
   }
 
   Future<String> _putImpl(
-      String url, Map<String, String> headers, dynamic body) async {
-    return await _requestWrapper(() async => await (await _client)
-        .put(Uri.parse(url), headers: headers, body: body));
+    String url,
+    Map<String, String> headers,
+    dynamic body,
+  ) async {
+    return await _requestWrapper(
+      () async => await (await _client)
+          .put(Uri.parse(url), headers: headers, body: body),
+    );
   }
 
   // the reason we are using [http.BaseResponse] is because
@@ -260,10 +290,13 @@ abstract class SpotifyApiBase {
       } on ApiRateException catch (ex) {
         if (i == retryLimit - 1) rethrow;
         print(
-            'Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds');
+          'Spotify API rate exceeded. waiting for ${ex.retryAfter} seconds',
+        );
         _shouldWait = true;
-        unawaited(Future.delayed(Duration(seconds: ex.retryAfter.toInt()))
-            .then((v) => _shouldWait = false));
+        unawaited(
+          Future.delayed(Duration(seconds: ex.retryAfter.toInt()))
+              .then((v) => _shouldWait = false),
+        );
       }
     }
     throw SpotifyException('Could not complete request');
@@ -280,7 +313,9 @@ abstract class SpotifyApiBase {
       final error = SpotifyError.fromJson(jsonMap['error']);
       if (response.statusCode == 429) {
         throw ApiRateException.fromSpotify(
-            error, num.parse(response.headers['retry-after']!));
+          error,
+          num.parse(response.headers['retry-after']!),
+        );
       }
       throw SpotifyException.fromSpotify(
         error,

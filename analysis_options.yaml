@@ -1,8 +1,13 @@
 include: package:lints/recommended.yaml
 
 analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
+  exclude:
+    - '**/*.g.dart'
+    - 'build/**'
+
+formatter:
+  page_width: 80
+  trailing_commas: preserve
 
 # Lint rules and documentation, see https://dart.dev/tools/linter-rules
 linter:
@@ -16,3 +21,6 @@ linter:
     - prefer_final_fields
     - prefer_final_in_for_each
     - prefer_final_locals
+    - lines_longer_than_80_chars
+    - require_trailing_commas
+    - prefer_single_quotes

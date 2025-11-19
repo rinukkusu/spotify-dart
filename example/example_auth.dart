@@ -7,6 +7,8 @@ import 'dart:io';
 
 import 'package:spotify/spotify.dart';
 
+// cspell: disable
+
 final _scopes = [
   AuthorizationScope.playlist.modifyPrivate,
   AuthorizationScope.playlist.modifyPublic,
@@ -15,7 +17,7 @@ final _scopes = [
   AuthorizationScope.connect.readPlaybackState,
   AuthorizationScope.connect.modifyPlaybackState,
   AuthorizationScope.listen.readRecentlyPlayed,
-  AuthorizationScope.follow.read
+  AuthorizationScope.follow.read,
 ];
 
 void main() async {
@@ -58,9 +60,12 @@ Future<MapEntry<String, String>> _getApiKeys() async {
 }
 
 Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
-    SpotifyApiCredentials credentials) async {
+  SpotifyApiCredentials credentials,
+) async {
   print(
-      'Please paste your redirect url (from your spotify application\'s redirect url):');
+    'Please paste your redirect url (from your spotify application\'s '
+    'redirect url):',
+  );
   final redirect = stdin.readLineSync();
 
   final grant = SpotifyApi.authorizationCodeGrant(credentials);
@@ -68,7 +73,9 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
       grant.getAuthorizationUrl(Uri.parse(redirect!), scopes: _scopes);
 
   print(
-      'Please paste this url \n\n$authUri\n\nto your browser and enter the redirected url:');
+    'Please paste this url \n\n$authUri\n\nto your browser and '
+    'enter the redirected url:',
+  );
 
   Uri? redirectUrl;
   final userInput = stdin.readLineSync();
@@ -197,16 +204,21 @@ Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
 }
 
 Future<void> _getEpisode(SpotifyApi spotify) async {
-  print('\nRetriving Information about episode with id 2TkVS48EgJwFUMiH8UwqGL');
+  print(
+    '\nRetrieving Information about episode with id 2TkVS48EgJwFUMiH8UwqGL',
+  );
   final episode = await spotify.episodes.get('2TkVS48EgJwFUMiH8UwqGL');
   print('${episode.name} - ${episode.show?.name}');
 }
 
 Future<void> _listEpisodes(SpotifyApi spotify) async {
   print(
-      '\nRetriving Information about episodes 2TkVS48EgJwFUMiH8UwqGL, 4Bje2xtE4VxqO2HO1PQdsG');
+    '\nRetrieving Information about episodes 2TkVS48EgJwFUMiH8UwqGL, '
+    '4Bje2xtE4VxqO2HO1PQdsG',
+  );
   final episodes = await spotify.episodes
       .list(['2TkVS48EgJwFUMiH8UwqGL', '4Bje2xtE4VxqO2HO1PQdsG']);
+
   for (final episode in episodes) {
     print('${episode.name} - ${episode.show?.name}');
   }
@@ -242,15 +254,22 @@ Future<Playlist> _createPrivatePlaylist(SpotifyApi spotify) async {
 
   final playlist =
       await spotify.playlists.createPlaylist(userId ?? '', name, public: false);
-  await spotify.playlists.addTracks([
-    'spotify:track:34HKskUook8LY2JFy6e4Ob',
-    'spotify:track:0F0MA0ns8oXwGw66B2BSXm'
-  ], playlist.id ?? '');
+
+  await spotify.playlists.addTracks(
+    [
+      'spotify:track:34HKskUook8LY2JFy6e4Ob',
+      'spotify:track:0F0MA0ns8oXwGw66B2BSXm',
+    ],
+    playlist.id ?? '',
+  );
+
   return playlist;
 }
 
 Future<void> _removePrivatePlaylist(
-    SpotifyApi spotify, String playlistId) async {
+  SpotifyApi spotify,
+  String playlistId,
+) async {
   print('Removing playlist $playlistId');
   await spotify.playlists.unfollowPlaylist(playlistId);
 }
@@ -314,22 +333,32 @@ Future<Iterable<PlaylistTrack>> _getPlaylistTracks(
 Future<PlaybackState?> _play(SpotifyApi spotify) async {
   var track = await spotify.tracks.get('6zW80jVqLtgSF1yCtGHiiD');
   print(
-      'Playing "${track.name} - ${track.artists?.first.name}" with track context for 10 s');
+    'Playing "${track.name} - ${track.artists?.first.name}" '
+    'with track context for 10 s',
+  );
   var result = await spotify.player.startWithTracks(
-      ['spotify:track:6zW80jVqLtgSF1yCtGHiiD?si=99fd66ccb2464bad'],
-      positionMs: 10000);
+    ['spotify:track:6zW80jVqLtgSF1yCtGHiiD?si=99fd66ccb2464bad'],
+    positionMs: 10000,
+  );
   sleep(Duration(seconds: 10));
   print('Pausing...');
   spotify.player.pause();
   final album = await spotify.albums.get('0rwbMKjNkp4ehQTwf9V2Jk');
+
   track = await spotify.tracks.get('4VnDmjYCZkyeqeb0NIKqdA');
   print(
-      'Playing album "${album.name} - ${album.artists?.first.name}" with uri context');
+    'Playing album "${album.name} - ${album.artists?.first.name}" '
+    'with uri context',
+  );
   print(
-      'and offset to "${track.name} - ${track.artists?.first.name}" for 10 s');
+    'and offset to "${track.name} - ${track.artists?.first.name}" for 10 s',
+  );
+
   result = await spotify.player.startWithContext(
-      'spotify:album:0rwbMKjNkp4ehQTwf9V2Jk?si=HA-mX2mPQ1CUp7ExfdDt2g',
-      offset: UriOffset('spotify:track:4VnDmjYCZkyeqeb0NIKqdA'));
+    'spotify:album:0rwbMKjNkp4ehQTwf9V2Jk?si=HA-mX2mPQ1CUp7ExfdDt2g',
+    offset: UriOffset('spotify:track:4VnDmjYCZkyeqeb0NIKqdA'),
+  );
+
   sleep(Duration(seconds: 10));
 
   return result;

@@ -27,8 +27,9 @@ class PlaybackState extends Object {
   /// The currently playing track. Can be `null`.
   Track? item;
 
-  /// The object type of the currently playing item. Can be one of [CurrentlyPlayingType.track],
-  /// [CurrentlyPlayingType.episode], [CurrentlyPlayingType.ad] or [CurrentlyPlayingType.unknown].
+  /// The object type of the currently playing item. Can be one of
+  /// [CurrentlyPlayingType.track], [CurrentlyPlayingType.episode],
+  /// [CurrentlyPlayingType.ad] or [CurrentlyPlayingType.unknown].
   @JsonKey(name: 'currently_playing_type')
   CurrentlyPlayingType? currentlyPlayingType;
 
@@ -40,7 +41,8 @@ class PlaybackState extends Object {
   @JsonKey(name: 'is_playing', defaultValue: false)
   bool? isPlaying;
 
-  /// The shuffle state. `true` if shuffle is turned on, `false` if its turned off
+  /// The shuffle state. `true` if shuffle is turned on, `false` if its turned
+  /// off.
   @JsonKey(name: 'shuffle_state', defaultValue: false)
   bool? isShuffling;
 
@@ -67,7 +69,8 @@ class PlayerContext extends Object {
   /// The href of the context, or `null` if not available.
   String? href;
 
-  /// The object type of the item’s context. Can be one of album, artist or playlist.
+  /// The object type of the item’s context. Can be one of album, artist or
+  /// playlist.
   String? type;
 
   /// The uri of the context.
@@ -139,7 +142,8 @@ class StartWithContextOptions extends StartOrResumeOptions {
   String? contextUri;
 
   /// Optional. Indicates from where in the context playback should start.
-  /// Only available when [contextUri] corresponds to an album or playlist object
+  /// Only available when [contextUri] corresponds to an album or playlist
+  /// object
   @JsonKey(toJson: _offsetToJson)
   Offset? offset;
 

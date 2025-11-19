@@ -1,5 +1,6 @@
-// Copyright (c) 2017, 2018, hayribakici, chances. All rights reserved. Use of this source code
-// is governed by a BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2017, 2018, hayribakici, chances. All rights reserved. Use of
+// this source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 part of '../../spotify.dart';
 
@@ -66,8 +67,12 @@ abstract class BasePage<T> {
   Iterable<T>? _items;
   Object? _container;
 
-  BasePage(this._paging, ParserFunction<T> pageItemParser,
-      [Object? pageContainer, FilterFunction? pageItemFilter]) {
+  BasePage(
+    this._paging,
+    ParserFunction<T> pageItemParser, [
+    Object? pageContainer,
+    FilterFunction? pageItemFilter,
+  ]) {
     final filteredItems = pageItemFilter != null
         ? _paging.itemsNative!.where(pageItemFilter)
         : _paging.itemsNative!;
@@ -102,8 +107,12 @@ abstract class BasePage<T> {
 
 /// A page that uses an offset to get to the next page.
 class Page<T> extends BasePage<T> {
-  Page(Paging<T> super._paging, super.pageItemParser,
-      [super.pageContainer, super.pageItemFilter]);
+  Page(
+    Paging<T> super._paging,
+    super.pageItemParser, [
+    super.pageContainer,
+    super.pageItemFilter,
+  ]);
 
   @override
   bool get isLast {
@@ -123,8 +132,12 @@ class Page<T> extends BasePage<T> {
 
 /// A page that uses a cursor to get to the next page
 class CursorPage<T> extends BasePage<T> {
-  CursorPage(CursorPaging<T> super._paging, super.pageItemParser,
-      [super.pageContainer, super.pageItemFilter]);
+  CursorPage(
+    CursorPaging<T> super._paging,
+    super.pageItemParser, [
+    super.pageContainer,
+    super.pageItemFilter,
+  ]);
 
   @override
   dynamic get _next => (_paging as CursorPaging<T>).cursors?.after ?? '';
@@ -175,8 +188,13 @@ abstract class _Pages {
   final ParserFunction<dynamic>? _pageContainerParser;
   final FilterFunction? _pageItemFilter;
 
-  _Pages(this._api, this._path, this._pageKey, this._pageContainerParser,
-      this._pageItemFilter) {
+  _Pages(
+    this._api,
+    this._path,
+    this._pageKey,
+    this._pageContainerParser,
+    this._pageItemFilter,
+  ) {
     if (_pageKey != null && _pageContainerParser == null) {
       throw ArgumentError.notNull('pageContainerParser');
     } else if (_pageKey == null && _pageContainerParser != null) {
@@ -236,24 +254,28 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
       _getPage(limit, page._next).then(handlePageAndGetNext);
     }
 
-    stream = StreamController<V>(onListen: () {
-      Future<V> firstPage;
-      if (_bufferedPages.length == 1) {
-        firstPage = Future.value(_bufferedPages.removeAt(0));
-      } else {
-        firstPage = first(limit);
-      }
-      firstPage.then(handlePageAndGetNext);
-    }, onCancel: () {
-      _cancelled = true;
-      return;
-    }, onResume: () {
-      _bufferedPages.forEach(stream.add);
-      if (_bufferedPages.last.isLast) {
-        stream.close();
-      }
-      _bufferedPages.clear();
-    });
+    stream = StreamController<V>(
+      onListen: () {
+        Future<V> firstPage;
+        if (_bufferedPages.length == 1) {
+          firstPage = Future.value(_bufferedPages.removeAt(0));
+        } else {
+          firstPage = first(limit);
+        }
+        firstPage.then(handlePageAndGetNext);
+      },
+      onCancel: () {
+        _cancelled = true;
+        return;
+      },
+      onResume: () {
+        _bufferedPages.forEach(stream.add);
+        if (_bufferedPages.last.isLast) {
+          stream.close();
+        }
+        _bufferedPages.clear();
+      },
+    );
     return stream.stream;
   }
 }
@@ -276,8 +298,14 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
     String? pageKey,
     ParserFunction<Object>? pageContainerMapper,
     FilterFunction? pageItemFilter,
-  ]) : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
-            pageKey, pageContainerMapper, pageItemFilter) {
+  ]) : super(
+          api,
+          Uri.parse(paging.href!).path.substring(1),
+          pageParser,
+          pageKey,
+          pageContainerMapper,
+          pageItemFilter,
+        ) {
     _bufferedPages.add(Page<T>(paging, _pageParser, null, _pageItemFilter));
   }
 
@@ -319,8 +347,14 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
     String? pageKey,
     ParserFunction<Object>? pageContainerMapper,
     FilterFunction? pageItemFilter,
-  ]) : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
-            pageKey, pageContainerMapper, pageItemFilter) {
+  ]) : super(
+          api,
+          Uri.parse(paging.href!).path.substring(1),
+          pageParser,
+          pageKey,
+          pageContainerMapper,
+          pageItemFilter,
+        ) {
     _bufferedPages
         .add(CursorPage<T>(paging, _pageParser, null, _pageItemFilter));
   }

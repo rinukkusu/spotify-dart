@@ -17,8 +17,10 @@ class Episodes extends EndpointBase {
     return EpisodeFull.fromJson(jsonDecode(jsonString));
   }
 
-  Future<Iterable<EpisodeFull>> list(List<String> ids,
-          [Market? market]) async =>
+  Future<Iterable<EpisodeFull>> list(
+    List<String> ids, [
+    Market? market,
+  ]) async =>
       _listWithIds(
         path: _path,
         ids: ids,

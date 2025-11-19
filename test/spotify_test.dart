@@ -6,10 +6,12 @@ import 'package:spotify/spotify.dart';
 // ignore_for_file: deprecated_member_use_from_same_package
 
 Future main() async {
-  final spotify = SpotifyApiMock(SpotifyApiCredentials(
-    'clientId',
-    'clientSecret',
-  ));
+  final spotify = SpotifyApiMock(
+    SpotifyApiCredentials(
+      'clientId',
+      'clientSecret',
+    ),
+  );
 
   tearDown(() {
     spotify.interceptor = null;
@@ -38,15 +40,21 @@ Future main() async {
       expect(trackOne.type, 'track');
       expect(trackOne.uri, 'spotify:track:6OmhkSOpvYBokMKQxpIGx2');
       expect(trackOne.explicit, true);
-      expect(trackOne.href,
-          'https://api.spotify.com/v1/tracks/6OmhkSOpvYBokMKQxpIGx2');
-      expect(trackOne.previewUrl,
-          'https://p.scdn.co/mp3-preview/81b57845f672fa5a0af749489e311ffb9fd552fe?cid=0b297fa8a249464ba34f5861d4140e58');
+      expect(
+        trackOne.href,
+        'https://api.spotify.com/v1/tracks/6OmhkSOpvYBokMKQxpIGx2',
+      );
+      expect(
+        trackOne.previewUrl,
+        'https://p.scdn.co/mp3-preview/81b57845f672fa5a0af749489e311ffb9fd552fe?cid=0b297fa8a249464ba34f5861d4140e58',
+      );
       expect(trackOne.name, 'Global Warming (feat. Sensato)');
 
       expect(trackOne.externalUrls != null, true);
-      expect(trackOne.externalUrls!.spotify,
-          'https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2');
+      expect(
+        trackOne.externalUrls!.spotify,
+        'https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2',
+      );
       expect(trackOne.availableMarkets, isNotNull);
       expect(trackOne.availableMarkets?.first, Market.AT);
 
@@ -162,8 +170,10 @@ Future main() async {
           await spotify.artists.relatedArtists('0TnOYISbd1XYRBk9myaseg');
       final first = relatedArtists.first;
       expect(first.id, '0jnsk9HBra6NMjO2oANoPY');
-      expect(first.href,
-          'https://api.spotify.com/v1/artists/0jnsk9HBra6NMjO2oANoPY');
+      expect(
+        first.href,
+        'https://api.spotify.com/v1/artists/0jnsk9HBra6NMjO2oANoPY',
+      );
       expect(first.name, 'Flo Rida');
     });
 
@@ -200,13 +210,17 @@ Future main() async {
     test('getUsersPlaylists', () async {
       final playlists = spotify.playlists.getUsersPlaylists('X123Y');
       final firstPage = (await playlists.first());
-      expect(firstPage.metadata.href,
-          'https://api.spotify.com/v1/users/superinteressante/playlists?offset=0&limit=20');
+      expect(
+        firstPage.metadata.href,
+        'https://api.spotify.com/v1/users/superinteressante/playlists?offset=0&limit=20',
+      );
       final items = firstPage.items!;
       expect(items.length, 2);
       expect(items.first.id, '1XIAxOGAEK2h4ravpNTmYF');
-      expect(items.first.href,
-          'https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF');
+      expect(
+        items.first.href,
+        'https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF',
+      );
       expect(items.first.name, 'Hot News @ Melhores Eletrônicas 2022');
     });
 
@@ -214,8 +228,10 @@ Future main() async {
       final images = await spotify.playlists.images('1XIAxOGAEK2h4ravpNTmYF');
       expect(images.length, 1);
       final firstImage = images.first;
-      expect(firstImage.url,
-          'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228');
+      expect(
+        firstImage.url,
+        'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
+      );
       expect(firstImage.height, 300);
       expect(firstImage.width, 300);
     });
@@ -238,13 +254,19 @@ Future main() async {
       expect(tracks, hasLength(2));
       expect(
         tracks.elementAt(0),
-        isA<PlaylistTrack>().having((p) => p.track, 'track',
-            isA<Track>().having((t) => t.id, 'id', 'track-1')),
+        isA<PlaylistTrack>().having(
+          (p) => p.track,
+          'track',
+          isA<Track>().having((t) => t.id, 'id', 'track-1'),
+        ),
       );
       expect(
         tracks.elementAt(1),
-        isA<PlaylistTrack>().having((p) => p.track, 'track',
-            isA<Track>().having((t) => t.id, 'id', 'track-3')),
+        isA<PlaylistTrack>().having(
+          (p) => p.track,
+          'track',
+          isA<Track>().having((t) => t.id, 'id', 'track-3'),
+        ),
       );
     });
   });
@@ -380,7 +402,7 @@ Future main() async {
       final result = await spotify.me.checkFollowing(FollowingType.artist, [
         '2CIMQHirSU0MQqyYHq0eOx',
         '57dN52uHvrHOxijzpIgu3E',
-        '1vCWHaC5f2uS3yhpwWbIA6'
+        '1vCWHaC5f2uS3yhpwWbIA6',
       ]);
       expect(result.isNotEmpty, isTrue);
       expect(result['2CIMQHirSU0MQqyYHq0eOx'], isTrue);
@@ -442,7 +464,7 @@ Future main() async {
         final albumIds = [
           '382ObEPsp2rxGrESizN5TX',
           '1A2GTWGtFfWp7KSQTwWOyo',
-          '2noRn2Aes5aoNVsU6iWThc'
+          '2noRn2Aes5aoNVsU6iWThc',
         ];
 
         final list = await spotify.me.containsSavedAlbums(albumIds);
@@ -471,7 +493,7 @@ Future main() async {
         final episodeIds = [
           '5Xt5DXGzch68nYYamXrNxZ',
           '1A2GTWGtFfWp7KSQTwWOyo',
-          '2noRn2Aes5aoNVsU6iWThc'
+          '2noRn2Aes5aoNVsU6iWThc',
         ];
 
         final list = await spotify.me.containsSavedEpisodes(episodeIds);
@@ -490,16 +512,26 @@ Future main() async {
 
       expect(result.durationMs, 1686230);
       expect(result.explicit, true);
-      expect(result.audioPreviewUrl,
-          'https://p.scdn.co/mp3-preview/2f37da1d4221f40b9d1a98cd191f4d6f1646ad17');
-      expect(result.href,
-          'https://api.spotify.com/v1/episodes/5Xt5DXGzch68nYYamXrNxZ');
-      expect(result.name,
-          'Starting Your Own Podcast: Tips, Tricks, and Advice From Anchor Creators');
+      expect(
+        result.audioPreviewUrl,
+        'https://p.scdn.co/mp3-preview/2f37da1d4221f40b9d1a98cd191f4d6f1646ad17',
+      );
+      expect(
+        result.href,
+        'https://api.spotify.com/v1/episodes/5Xt5DXGzch68nYYamXrNxZ',
+      );
+      expect(
+        result.name,
+        'Starting Your Own Podcast: Tips, Tricks, and '
+        'Advice From Anchor Creators',
+      );
       expect(result.releaseDate, DateTime(1981, 12, 15));
       expect(result.type, 'episode');
-      expect(result.description,
-          'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.');
+      expect(
+        result.description,
+        // ignore: lines_longer_than_80_chars
+        'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.',
+      );
       expect(result.show == null, false);
 
       final show = result.show;
@@ -528,8 +560,10 @@ Future main() async {
         if (method == 'PUT') {
           expect(method, 'PUT');
           expect(body, isNotNull);
-          expect(body,
-              '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}');
+          expect(
+            body,
+            '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}',
+          );
         }
       };
       await spotify.player
@@ -590,11 +624,13 @@ Future main() async {
   group('Errors', () {
     test('apiRateErrorSuccess', () async {
       spotify.mockHttpErrors = List.generate(
-          4,
-          (i) => MockHttpError(
-              statusCode: 429,
-              message: 'API Rate exceeded',
-              headers: {'retry-after': '1'})).iterator;
+        4,
+        (i) => MockHttpError(
+          statusCode: 429,
+          message: 'API Rate exceeded',
+          headers: {'retry-after': '1'},
+        ),
+      ).iterator;
       final artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
       expect(artist.type, 'artist');
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
@@ -602,11 +638,13 @@ Future main() async {
     });
     test('apiRateErrorFail', () async {
       spotify.mockHttpErrors = List.generate(
-          10,
-          (i) => MockHttpError(
-              statusCode: 429,
-              message: 'API Rate exceeded',
-              headers: {'retry-after': '1'})).iterator;
+        10,
+        (i) => MockHttpError(
+          statusCode: 429,
+          message: 'API Rate exceeded',
+          headers: {'retry-after': '1'},
+        ),
+      ).iterator;
       late ApiRateException ex;
       try {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');

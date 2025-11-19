@@ -12,22 +12,19 @@ class Playlists extends EndpointPaging {
 
   Future<Playlist> get(String playlistId) async {
     return Playlist.fromJson(
-        jsonDecode(await _api._get('v1/playlists/$playlistId')));
+      jsonDecode(await _api._get('v1/playlists/$playlistId')),
+    );
   }
 
-  /// Returns the featuerd playlists
+  /// Returns the featured playlists.
   Pages<PlaylistSimple> get featured {
     return _getPages(
-        '$_path/featured-playlists',
-        (json) => PlaylistSimple.fromJson(json),
-        'playlists',
-        (json) => PlaylistsFeatured.fromJson(json));
+      '$_path/featured-playlists',
+      (json) => PlaylistSimple.fromJson(json),
+      'playlists',
+      (json) => PlaylistsFeatured.fromJson(json),
+    );
   }
-
-  // Pages<PlaylistSimple> get me {
-  //   return _getPages(
-  //       'v1/me/playlists', (json) => PlaylistSimple.fromJson(json));
-  // }
 
   Pages<PlaylistSimple> get me {
     return _getPages(
@@ -37,8 +34,11 @@ class Playlists extends EndpointPaging {
   }
 
   /// Returns a playlist of a user with [userId]
-  Pages<PlaylistSimple> getUsersPlaylists(String userId,
-      [int limit = defaultLimit, int offset = 0]) {
+  Pages<PlaylistSimple> getUsersPlaylists(
+    String userId, [
+    int limit = defaultLimit,
+    int offset = 0,
+  ]) {
     assert(userId.isNotEmpty, 'UserId cannot be empty');
     return _getPages(
       'v1/users/$userId/playlists',
@@ -84,8 +84,13 @@ class Playlists extends EndpointPaging {
   /// be collaborative.
   ///
   /// [description] - the description of the new playlist
-  Future<Playlist> createPlaylist(String userId, String playlistName,
-      {bool? public, bool? collaborative, String? description}) async {
+  Future<Playlist> createPlaylist(
+    String userId,
+    String playlistName, {
+    bool? public,
+    bool? collaborative,
+    String? description,
+  }) async {
     final url = 'v1/users/$userId/playlists';
     final json = <String, dynamic>{'name': playlistName};
 
@@ -151,8 +156,11 @@ class Playlists extends EndpointPaging {
 
   /// Adds a track with [trackUri] (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
   /// to a playlist with [playlistId]
-  Future<void> addTrack(String trackUri, String playlistId,
-      {int position = -1}) async {
+  Future<void> addTrack(
+    String trackUri,
+    String playlistId, {
+    int position = -1,
+  }) async {
     var url = 'v1/playlists/$playlistId/tracks';
 
     if (position >= 0) {
@@ -180,9 +188,13 @@ class Playlists extends EndpointPaging {
   /// Removes a track with [trackUri] in the playlist with [playlistId]
   ///
   /// [trackUri] - the Spotify track uri
-  /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
-  Future<void> removeTrack(String trackUri, String playlistId,
-      [List<int>? positions]) async {
+  /// (i.e each list item in the format of
+  /// "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
+  Future<void> removeTrack(
+    String trackUri,
+    String playlistId, [
+    List<int>? positions,
+  ]) async {
     assert(playlistId.isNotEmpty, 'No playlist id was provided');
     final url = 'v1/playlists/$playlistId/tracks';
     final track = <String, dynamic>{'uri': trackUri};
@@ -191,14 +203,15 @@ class Playlists extends EndpointPaging {
     }
 
     final body = jsonEncode({
-      'tracks': [track]
+      'tracks': [track],
     });
     await _api._delete(url, body);
   }
 
   /// Removes multiple tracks from a playlist wish [playlistId]
   /// [trackUris] - the Spotify track uris
-  /// (i.e each list item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
+  /// (i.e each list item in the format of
+  /// "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
   Future<void> removeTracks(List<String> trackUris, String playlistId) async {
     assert(trackUris.isNotEmpty, 'No trackUris are provided');
     assert(playlistId.isNotEmpty, 'No playlist id was provided');
@@ -241,21 +254,23 @@ class Playlists extends EndpointPaging {
   /// [rangeStart] is the position of the first item to be reordered.
   ///
   /// [insertBefore] is the position where the item(s) should be inserted.
-  /// To reorder the item(s) to the end of the playlist, simply set [insertBefore]
-  /// to the position after the last item.
+  /// To reorder the item(s) to the end of the playlist, simply set
+  /// [insertBefore] to the position after the last item.
   ///
-  /// [rangeLength] is the amount of items to be reordered. Defaults to `1` if not set.
-  /// The range of items to be reordered begins from the [rangeStart] position,
-  /// and includes the [rangeLength] subsequent items.
+  /// [rangeLength] is the amount of items to be reordered. Defaults to `1` if
+  /// not set. The range of items to be reordered begins from the [rangeStart]
+  /// position, and includes the [rangeLength] subsequent items.
   ///
   /// If [snapshotId] is `null`, the current id is used.
   ///
   /// Returns a new `snapshotId` for the playlist.
-  Future<String> reorder(String playlistId,
-      {required int rangeStart,
-      required int insertBefore,
-      int rangeLength = 1,
-      String? snapshotId}) async {
+  Future<String> reorder(
+    String playlistId, {
+    required int rangeStart,
+    required int insertBefore,
+    int rangeLength = 1,
+    String? snapshotId,
+  }) async {
     assert(rangeStart >= 0, 'rangeStart out of bounds');
     final body = <String, dynamic>{
       'range_start': rangeStart,
@@ -289,8 +304,11 @@ class Playlists extends EndpointPaging {
   /// (American English).
   ///
   /// [categoryId] - the Spotify category ID for the category.
-  Pages<PlaylistSimple> getByCategoryId(String categoryId,
-      {Market? country, String? locale}) {
+  Pages<PlaylistSimple> getByCategoryId(
+    String categoryId, {
+    Market? country,
+    String? locale,
+  }) {
     final query = _buildQuery({'country': country?.name, 'locale': locale});
 
     return _getPages(
@@ -338,7 +356,9 @@ class Playlists extends EndpointPaging {
   /// Returns the list of [userIds] mapped with whether they are following or
   /// not
   Future<Map<String, bool>> followedByUsers(
-      String playlistId, List<String> userIds) async {
+    String playlistId,
+    List<String> userIds,
+  ) async {
     assert(userIds.isNotEmpty, 'No user id was provided for checking');
     final jsonString = await _api._get(
       'v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',

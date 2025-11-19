@@ -1,6 +1,6 @@
-// Copyright (c) 2019, chances, rinukkusu. All rights reserved. Use of this source code
-// is governed by a BSD-style license that can be found in the LICENSE file.
-
+// Copyright (c) 2019, chances, rinukkusu. All rights reserved. Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 part of '../../spotify.dart';
 
 abstract class _MeEndpointBase extends EndpointPaging {
@@ -31,9 +31,11 @@ class Me extends _MeEndpointBase {
   /// Needs `user-follow-read` scope
   CursorPages<Artist> following(FollowingType type) {
     assert(
-        type == FollowingType.artist,
-        'Only [FollowingType.artist] supported for now. Check the spotify documentation: '
-        'https://developer.spotify.com/documentation/web-api/reference/get-followed');
+      type == FollowingType.artist,
+      'Only [FollowingType.artist] supported for now. '
+      'Check the spotify documentation: '
+      'https://developer.spotify.com/documentation/web-api/reference/get-followed',
+    );
     // since 'artists' is the container, there is no
     // containerParse necessary. Adding json to make the
     // CursorPages-Object happy.
@@ -58,7 +60,9 @@ class Me extends _MeEndpointBase {
   /// Returns the list of [ids] mapped with the response whether it has been
   /// followed or not
   Future<Map<String, bool>> checkFollowing(
-      FollowingType type, List<String> ids) async {
+    FollowingType type,
+    List<String> ids,
+  ) async {
     assert(ids.isNotEmpty, 'No user/artist id was provided');
 
     final jsonString =
@@ -101,10 +105,15 @@ class Me extends _MeEndpointBase {
 
   /// Get tracks from the current user’s recently played tracks.
   /// Note: Currently doesn’t support podcast episodes.
-  CursorPages<PlayHistory> recentlyPlayed(
-      {int? limit, DateTime? after, DateTime? before}) {
-    assert(after == null || before == null,
-        'Cannot specify both after and before.');
+  CursorPages<PlayHistory> recentlyPlayed({
+    int? limit,
+    DateTime? after,
+    DateTime? before,
+  }) {
+    assert(
+      after == null || before == null,
+      'Cannot specify both after and before.',
+    );
 
     return _getCursorPages(
       '$_path/player/recently-played?${_buildQuery({
@@ -141,12 +150,16 @@ class Me extends _MeEndpointBase {
       _top(_TopItemsType.artists, (item) => Artist.fromJson(item), timeRange);
 
   Pages<T> _top<T>(
-          _TopItemsType type, T Function(dynamic) parser, TimeRange range) =>
+    _TopItemsType type,
+    T Function(dynamic) parser,
+    TimeRange range,
+  ) =>
       _getPages(
-          '$_path/top/${type.name}?${_buildQuery({
-                'time_range': range._key,
-              })}',
-          parser);
+        '$_path/top/${type.name}?${_buildQuery({
+              'time_range': range._key,
+            })}',
+        parser,
+      );
 
   /// Get information about a user’s available devices.
   @Deprecated('Use [spotify.player.devices()]')
@@ -181,10 +194,13 @@ class Me extends _MeEndpointBase {
 
   /// Check if passed albums (ids) are saved by current user.
   /// [ids] - list of id's to check
-  /// Returns the list of id's mapped with the response whether it has been saved
+  /// Returns the list of id's mapped with the response whether it has been
+  /// saved.
   Future<Map<String, bool>> containsSavedShows(List<String> ids) async {
     assert(
-        ids.isNotEmpty, 'No show ids were provided for checking saved shows');
+      ids.isNotEmpty,
+      'No show ids were provided for checking saved shows',
+    );
     final query = _buildQuery({'ids': ids.join(',')});
     final jsonString = await _api._get('$_path/shows/contains?$query');
     final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
@@ -215,14 +231,15 @@ class Me extends _MeEndpointBase {
 
   /// Check if passed albums (ids) are saved by current user. The output
   /// [bool] list is in the same order as the provided album ids list
-  @Deprecated('Use [containsSavedAbums(ids)]')
+  @Deprecated('Use [containsSavedAlbums(ids)]')
   Future<List<bool>> isSavedAlbums(List<String> ids) async {
     final result = await containsSavedAlbums(ids);
     return result.values.toList();
   }
 
   /// Check if passed albums (ids) are saved by current user.
-  /// Returns the list of id's mapped with the response whether it has been saved
+  /// Returns the list of id's mapped with the response whether it has been
+  /// saved.
   Future<Map<String, bool>> containsSavedAlbums(List<String> ids) async {
     assert(ids.isNotEmpty, 'No album ids were provided for checking');
     final jsonString =
@@ -232,12 +249,15 @@ class Me extends _MeEndpointBase {
     return Map.fromIterables(ids, result);
   }
 
-  /// Returns the current user's saved episodes. Requires the `user-library-read`
+  /// Returns the current user's saved episodes. Requires the
+  /// `user-library-read` scope.
   /// scope.
-  Pages<EpisodeFull> savedEpisodes() => _getPages(
-        '$_path/episodes',
-        (json) => EpisodeFull.fromJson(json['episode']),
-      );
+  Pages<EpisodeFull> savedEpisodes() {
+    return _getPages(
+      '$_path/episodes',
+      (json) => EpisodeFull.fromJson(json['episode']),
+    );
+  }
 
   /// Saves episodes for the current user. Requires the `user-library-modify`
   /// scope.
@@ -257,11 +277,13 @@ class Me extends _MeEndpointBase {
   }
 
   /// Check if passed episode [ids] are saved by current user.
-  /// Returns the list of id's mapped with the response whether it has been saved
+  /// Returns the list of id's mapped with the response whether it has been
+  /// saved.
   Future<Map<String, bool>> containsSavedEpisodes(List<String> ids) async {
     assert(ids.isNotEmpty, 'No episode ids were provided for checking');
     final jsonString = await _api._get(
-        '$_path/episodes/contains?${_buildQuery({'ids': ids.join(',')})}');
+      '$_path/episodes/contains?${_buildQuery({'ids': ids.join(',')})}',
+    );
     final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
 
     return Map.fromIterables(ids, result);
@@ -278,13 +300,14 @@ enum FollowingType {
 }
 
 enum TimeRange {
-  /// Consists of several years of data and including all new data as it becomes available
+  /// Consists of several years of data and including all new data as it becomes
+  /// available.
   longTerm(key: 'long_term'),
 
-  /// Consists of approximately last 6 months
+  /// Consists of approximately last 6 months.
   mediumTerm(key: 'medium_term'),
 
-  /// Consists of approximately last 4 weeks
+  /// Consists of approximately last 4 weeks.
   shortTerm(key: 'short_term');
 
   const TimeRange({required String key}) : _key = key;

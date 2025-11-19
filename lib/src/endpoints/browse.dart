@@ -27,9 +27,10 @@ class Browse extends EndpointPaging {
     final params = _buildQuery({'country': country?.name});
 
     return _getPages(
-        '$_path/new-releases?$params',
-        (json) => AlbumSimple.fromJson(json),
-        'albums',
-        (json) => AlbumSimple.fromJson(json));
+      '$_path/new-releases?$params',
+      (json) => AlbumSimple.fromJson(json),
+      'albums',
+      (json) => AlbumSimple.fromJson(json),
+    );
   }
 }

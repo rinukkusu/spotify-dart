@@ -1,5 +1,6 @@
-// Copyright (c) 2018 hayribakici, ebarnsli. All rights reserved. Use of this source code
-// is governed by a BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2018 hayribakici, ebarnsli. All rights reserved. Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 part of '../../spotify.dart';
 
@@ -13,8 +14,8 @@ class Search extends EndpointPaging {
   /// Get Spotify Catalog information about albums, artists, playlists,
   /// tracks, shows or episodes that match a keyword string.
   ///
-  /// [types]: Valid types are: album , artist, playlist, track, show and episode.
-  /// Search results include hits from all the specified item types.
+  /// [types]: Valid types are: album , artist, playlist, track, show and
+  /// episode. Search results include hits from all the specified item types.
   ///
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with

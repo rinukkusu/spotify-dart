@@ -23,11 +23,9 @@ abstract class EndpointBase {
       value: (key) => query[key],
     );
 
-    return List.generate(
-      filteredQuery.keys.length,
-      (i) =>
-          '${filteredQuery.keys.toList()[i]}=${filteredQuery.values.toList()[i]}',
-    ).join('&');
+    return filteredQuery.entries
+        .map((entry) => '${entry.key}=${entry.value}')
+        .join('&');
   }
 
   /// Generic method that requests a set of [T]'s with their given [ids].

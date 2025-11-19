@@ -1,6 +1,6 @@
 name: Publish to Pub.dev
 
-on: 
+on:
   push:
     branches:
       - master
@@ -9,10 +9,10 @@ jobs:
   publishing:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
+      - name: "Checkout"
         uses: actions/checkout@v2 # required!
-        
-      - name: '>> Dart package <<'
+
+      - name: ">> Dart package <<"
         uses: k-paxian/dart-package-publisher@master
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
