@@ -166,7 +166,7 @@ class MockClient implements oauth2.Client {
   }
 
   String _wrapMessageToJson(int statusCode, String message) =>
-      '{ "error": {"status":$statusCode,"message": "$message"}}';
+      '{ "error": {"status":$statusCode, "message": "$message"}}';
 }
 
 class MockHttpError {
