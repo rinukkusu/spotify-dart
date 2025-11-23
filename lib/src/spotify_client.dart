@@ -32,9 +32,6 @@ final class SpotifyClient with http.BaseClient {
 
   LoggingDetail _detail = LoggingDetail.simple;
 
-  /// Retrieve how verbose the logging currently is. Default's to [LoggingDetail.simple].
-  LoggingDetail get loggingDetail => _detail;
-
   /// Set the level of verbosity of the logging.
   set loggingDetail(LoggingDetail value) => _detail = value;
 
