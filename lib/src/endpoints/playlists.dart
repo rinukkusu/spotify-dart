@@ -35,13 +35,27 @@ class Playlists extends EndpointPaging {
         'v1/users/$userId/playlists', (json) => PlaylistSimple.fromJson(json));
   }
 
-  /// Returns `track`s from a given spotify [playlistId]
+  /// Returns `track`s from a given spotify [playlistId].
+  @Deprecated('Use `getPlaylistTracks` instead')
   Pages<Track> getTracksByPlaylistId(playlistId) {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
       'v1/playlists/$playlistId/tracks?$query',
       (json) => Track.fromJson(json['track']),
+      null,
+      null,
+      (json) => json['track'] != null,
+    );
+  }
+
+  /// Returns [PlaylistTrack]s for a given [playlistId].
+  Pages<PlaylistTrack> getPlaylistTracks(String playlistId) {
+    // restricting the return items to `track`
+    final query = _buildQuery({'additional_types': 'track'});
+    return _getPages(
+      'v1/playlists/$playlistId/tracks?$query',
+      (json) => PlaylistTrack.fromJson(json),
       null,
       null,
       (json) => json['track'] != null,
