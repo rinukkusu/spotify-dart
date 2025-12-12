@@ -128,8 +128,12 @@ class PlayerEndpoint extends _MeEndpointBase {
       {String? deviceId,
       int positionMs = 0,
       bool retrievePlaybackState = true}) async {
-    assert(trackUris.isNotEmpty, 'Cannot start playback with empty track uris');
-    assert(positionMs >= 0, 'Position must be greater than or equal to 0');
+    if (trackUris.isEmpty) {
+      throw ArgumentError('Cannot start playback with empty track uris');
+    }
+    if (positionMs < 0) {
+      throw RangeError.range(positionMs, 0, null, 'positionMs');
+    }
 
     var options = StartWithUrisOptions(uris: trackUris, positionMs: positionMs);
     return startOrResume(
@@ -151,8 +155,9 @@ class PlayerEndpoint extends _MeEndpointBase {
       {String? deviceId,
       Offset? offset,
       bool retrievePlaybackState = true}) async {
-    assert(
-        contextUri.isNotEmpty, 'Cannot start playback with empty context uri');
+    if (contextUri.isEmpty) {
+      throw ArgumentError('Cannot start playback with empty context uri');
+    }
     var options =
         StartWithContextOptions(contextUri: contextUri, offset: offset);
     return startOrResume(
@@ -206,7 +211,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     return retrievePlaybackState ? playbackState() : null;
   }
 
-  /// Seeks to the given position in the user’s currently playing track.
+  /// Seeks to the given position in the user's currently playing track.
   /// [positionMs] is required. The position in milliseconds to seek to.
   /// [deviceId] is optional. If not provided, the user's currently active device
   /// is the target.
@@ -214,7 +219,9 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Defaults to true.
   Future<PlaybackState?> seek(int positionMs,
       {String? deviceId, bool retrievePlaybackState = true}) async {
-    assert(positionMs >= 0, 'positionMs must be greater or equal to 0');
+    if (positionMs < 0) {
+      throw RangeError.range(positionMs, 0, null, 'positionMs');
+    }
     await _api._put('$_path/seek?${_buildQuery({
           'position_ms': positionMs,
           'device_id': deviceId
@@ -240,7 +247,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     return retrievePlaybackState ? playbackState() : null;
   }
 
-  /// Set the volume for the user’s current playback device.
+  /// Set the volume for the user's current playback device.
   /// [volumePercent] is required. The volume to set. Must be a value from `0` to
   /// `100` inclusive.
   /// [deviceId] is optional. If not provided, the user's currently active device
@@ -249,8 +256,9 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Defaults to `true`.
   Future<PlaybackState?> volume(int volumePercent,
       {String? deviceId, bool retrievePlaybackState = true}) async {
-    assert(volumePercent >= 0 && volumePercent <= 100,
-        'Volume must be between 0 and 100');
+    if (volumePercent < 0 || volumePercent > 100) {
+      throw RangeError.range(volumePercent, 0, 100, 'volumePercent');
+    }
     await _api._put('$_path/volume?${_buildQuery({
           'volume_percent': volumePercent,
           'device_id': deviceId
@@ -267,7 +275,9 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// will be retrieved. Defaults to `true`.
   Future<PlaybackState?> transfer(String deviceId,
       [bool play = true, bool retrievePlaybackState = true]) async {
-    assert(deviceId.isNotEmpty, 'No deviceId provided');
+    if (deviceId.isEmpty) {
+      throw ArgumentError('No deviceId provided');
+    }
     var jsonBody = jsonEncode({
       'device_ids': [deviceId],
       'play': play
