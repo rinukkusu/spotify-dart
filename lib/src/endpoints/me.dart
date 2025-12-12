@@ -35,7 +35,7 @@ class Me extends _MeEndpointBase {
           type,
           'type',
           'Only [FollowingType.artist] supported for now. Check the spotify documentation: '
-          'https://developer.spotify.com/documentation/web-api/reference/get-followed');
+              'https://developer.spotify.com/documentation/web-api/reference/get-followed');
     }
     // since 'artists' is the container, there is no
     // containerParse necessary. Adding json to make the

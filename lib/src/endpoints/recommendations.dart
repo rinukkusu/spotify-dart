@@ -32,7 +32,7 @@ class RecommendationsEndpoint extends EndpointBase {
           5,
           'Total seed values',
           'Up to 5 seed values may be provided in any combination of seed_artists,'
-          ' seed_tracks and seed_genres.');
+              ' seed_tracks and seed_genres.');
     }
     final parameters = <String, String>{'limit': limit.toString()};
     final _ = {
