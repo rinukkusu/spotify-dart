@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.8
+
+- fix playlist tracks endpoint to return PlaylistTrack instead of Track
+- add null check for audio features endpoint
+
 ## 0.13.7
 
 - add filter function for playlist endpoint to prevent deserialization of tracks that are `null` 
