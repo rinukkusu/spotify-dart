@@ -37,7 +37,7 @@ class Playlists extends EndpointPaging {
 
   /// Returns `track`s from a given spotify [playlistId].
   @Deprecated('Use `getPlaylistTracks` instead')
-  Pages<Track> getTracksByPlaylistId(playlistId) {
+  Pages<Track> getTracksByPlaylistId(String playlistId) {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(

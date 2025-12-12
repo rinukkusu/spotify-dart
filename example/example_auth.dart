@@ -222,7 +222,7 @@ Future<void> _savedEpisodes(SpotifyApi spotify) async {
   }
 }
 
-Future<void> _saveAndRemoveEpisode(spotify) async {
+Future<void> _saveAndRemoveEpisode(SpotifyApi spotify) async {
   print('Saving episode with id 4Bje2xtE4VxqO2HO1PQdsG');
   await spotify.me.saveShows(['4Bje2xtE4VxqO2HO1PQdsG']);
   var saved = await spotify.me.containsSavedShows(['4Bje2xtE4VxqO2HO1PQdsG']);
