@@ -4,7 +4,6 @@ import 'spotify_mock.dart';
 import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
 
-
 Future main() async {
   var spotify = SpotifyApiMock.create();
 
