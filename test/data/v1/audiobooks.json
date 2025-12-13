@@ -1,0 +1,46 @@
+{
+  "audiobooks": [
+    {
+      "authors": [{"name": "Author One"}],
+      "available_markets": ["US", "CA"],
+      "copyrights": [{"text": "2023 Publisher", "type": "C"}],
+      "description": "First audiobook",
+      "html_description": "<p>First audiobook</p>",
+      "edition": "Unabridged",
+      "explicit": false,
+      "external_urls": {"spotify": "https://open.spotify.com/show/audiobook1"},
+      "href": "https://api.spotify.com/v1/audiobooks/audiobook1",
+      "id": "audiobook1",
+      "images": [{"height": 640, "url": "https://i.scdn.co/image/1", "width": 640}],
+      "languages": ["en"],
+      "media_type": "audio",
+      "name": "Audiobook 1",
+      "narrators": [{"name": "Narrator One"}],
+      "publisher": "Publisher One",
+      "total_chapters": 10,
+      "type": "audiobook",
+      "uri": "spotify:show:audiobook1"
+    },
+    {
+      "authors": [{"name": "Author Two"}],
+      "available_markets": ["US", "GB"],
+      "copyrights": [{"text": "2023 Publisher Two", "type": "C"}],
+      "description": "Second audiobook",
+      "html_description": "<p>Second audiobook</p>",
+      "edition": "Unabridged",
+      "explicit": false,
+      "external_urls": {"spotify": "https://open.spotify.com/show/audiobook2"},
+      "href": "https://api.spotify.com/v1/audiobooks/audiobook2",
+      "id": "audiobook2",
+      "images": [{"height": 640, "url": "https://i.scdn.co/image/2", "width": 640}],
+      "languages": ["en"],
+      "media_type": "audio",
+      "name": "Audiobook 2",
+      "narrators": [{"name": "Narrator Two"}],
+      "publisher": "Publisher Two",
+      "total_chapters": 15,
+      "type": "audiobook",
+      "uri": "spotify:show:audiobook2"
+    }
+  ]
+}
