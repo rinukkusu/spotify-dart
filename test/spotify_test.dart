@@ -686,6 +686,13 @@ Future main() async {
       expect(chapter.resumePoint!.fullyPlayed, false);
       expect(chapter.resumePoint!.resumePositionMs, 12000);
     });
+
+    test('get throws on empty id', () async {
+      expect(
+        () => spotify.audiobooks.get(''),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
   });
 
   group('Chapters', () {
@@ -718,6 +725,13 @@ Future main() async {
       expect(chapters.elementAt(1).name, 'Chapter 2');
       expect(chapters.elementAt(1).chapterNumber, 2);
     });
+
+    test('get throws on empty id', () async {
+      expect(
+        () => spotify.chapters.get(''),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
   });
 
   group('Audiobooks Me', () {
@@ -747,5 +761,49 @@ Future main() async {
       expect(result['audiobook3'], true);
     });
 
+    test('contains throws on empty list', () async {
+      expect(
+        () => spotify.audiobooks.me.contains([]),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('contains throws on >50 ids', () async {
+      var tooManyIds = List.generate(51, (i) => 'id$i');
+      expect(
+        () => spotify.audiobooks.me.contains(tooManyIds),
+        throwsA(isA<RangeError>()),
+      );
+    });
+
+    test('save throws on empty list', () async {
+      expect(
+        () => spotify.audiobooks.me.save([]),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('save throws on >50 ids', () async {
+      var tooManyIds = List.generate(51, (i) => 'id$i');
+      expect(
+        () => spotify.audiobooks.me.save(tooManyIds),
+        throwsA(isA<RangeError>()),
+      );
+    });
+
+    test('remove throws on empty list', () async {
+      expect(
+        () => spotify.audiobooks.me.remove([]),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('remove throws on >50 ids', () async {
+      var tooManyIds = List.generate(51, (i) => 'id$i');
+      expect(
+        () => spotify.audiobooks.me.remove(tooManyIds),
+        throwsA(isA<RangeError>()),
+      );
+    });
   });
 }

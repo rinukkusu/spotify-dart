@@ -26,6 +26,9 @@ class Audiobooks extends EndpointPaging {
   /// [market] : An ISO 3166-1 alpha-2 country code. If a country code is
   /// specified, only content that is available in that market will be returned
   Future<Audiobook> get(String audiobookId, {Market? market}) async {
+    if (audiobookId.isEmpty) {
+      throw ArgumentError('No audiobook id was provided');
+    }
     final queryMap = {'market': market?.name};
     final query = _buildQuery(queryMap);
     final queryString = query.isNotEmpty ? '?$query' : '';
@@ -97,8 +100,11 @@ class AudiobooksMe extends EndpointPaging {
     if (ids.isEmpty) {
       throw ArgumentError('No audiobook ids were provided');
     }
-    final limit = ids.length < 50 ? ids.length : 50;
-    final idsParam = ids.sublist(0, limit).join(',');
+    if (ids.length > 50) {
+      throw RangeError.range(ids.length, 0, 50, 'ids',
+          'Maximum of 50 audiobook IDs allowed per request');
+    }
+    final idsParam = ids.join(',');
     final jsonString = await _api._get('$_path/contains?ids=$idsParam');
     final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
     return Map.fromIterables(ids, list);
@@ -125,8 +131,11 @@ class AudiobooksMe extends EndpointPaging {
     if (ids.isEmpty) {
       throw ArgumentError('No audiobook ids were provided');
     }
-    final limit = ids.length < 50 ? ids.length : 50;
-    final idsParam = ids.sublist(0, limit).join(',');
+    if (ids.length > 50) {
+      throw RangeError.range(ids.length, 0, 50, 'ids',
+          'Maximum of 50 audiobook IDs allowed per request');
+    }
+    final idsParam = ids.join(',');
     await _api._put('$_path?ids=$idsParam', '');
   }
 
@@ -146,8 +155,11 @@ class AudiobooksMe extends EndpointPaging {
     if (ids.isEmpty) {
       throw ArgumentError('No audiobook ids were provided');
     }
-    final limit = ids.length < 50 ? ids.length : 50;
-    final idsParam = ids.sublist(0, limit).join(',');
+    if (ids.length > 50) {
+      throw RangeError.range(ids.length, 0, 50, 'ids',
+          'Maximum of 50 audiobook IDs allowed per request');
+    }
+    final idsParam = ids.join(',');
     await _api._delete('$_path?ids=$idsParam');
   }
 
