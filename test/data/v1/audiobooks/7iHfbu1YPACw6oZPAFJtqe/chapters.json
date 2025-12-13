@@ -1,0 +1,74 @@
+{
+  "href": "https://api.spotify.com/v1/audiobooks/7iHfbu1YPACw6oZPAFJtqe/chapters?offset=0&limit=20",
+  "items": [
+    {
+      "audio_preview_url": "https://p.scdn.co/mp3-preview/chapter1",
+      "available_markets": ["US", "CA", "GB", "IE", "AU", "NZ"],
+      "chapter_number": 1,
+      "description": "The first chapter",
+      "html_description": "<p>The first chapter</p>",
+      "duration_ms": 360000,
+      "explicit": false,
+      "external_urls": {
+        "spotify": "https://open.spotify.com/episode/chapter1"
+      },
+      "href": "https://api.spotify.com/v1/chapters/chapter1",
+      "id": "chapter1",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/chapter1",
+          "width": 640
+        }
+      ],
+      "is_playable": true,
+      "languages": ["en"],
+      "name": "Chapter 1: The Beginning",
+      "release_date": "2023-01-01",
+      "release_date_precision": "day",
+      "resume_point": {
+        "fully_played": false,
+        "resume_position_ms": 12000
+      },
+      "type": "episode",
+      "uri": "spotify:episode:chapter1"
+    },
+    {
+      "audio_preview_url": "https://p.scdn.co/mp3-preview/chapter2",
+      "available_markets": ["US", "CA", "GB", "IE", "AU", "NZ"],
+      "chapter_number": 2,
+      "description": "The second chapter",
+      "html_description": "<p>The second chapter</p>",
+      "duration_ms": 420000,
+      "explicit": false,
+      "external_urls": {
+        "spotify": "https://open.spotify.com/episode/chapter2"
+      },
+      "href": "https://api.spotify.com/v1/chapters/chapter2",
+      "id": "chapter2",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/chapter2",
+          "width": 640
+        }
+      ],
+      "is_playable": true,
+      "languages": ["en"],
+      "name": "Chapter 2: The Journey",
+      "release_date": "2023-01-01",
+      "release_date_precision": "day",
+      "resume_point": {
+        "fully_played": true,
+        "resume_position_ms": 420000
+      },
+      "type": "episode",
+      "uri": "spotify:episode:chapter2"
+    }
+  ],
+  "limit": 20,
+  "next": null,
+  "offset": 0,
+  "previous": null,
+  "total": 2
+}
