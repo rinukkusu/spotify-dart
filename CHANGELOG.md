@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.14.0
+
+- update dependencies: http (^1.6.0), json_annotation (^4.9.0), oauth2 (^2.0.5), lints (^6.0.0), test (^1.28.0), build_runner (^2.10.4), json_serializable (^6.11.3)
+- fix lint issues from lints 6.0.0
+
+## 0.13.8
+
+- fix playlist tracks endpoint to return PlaylistTrack instead of Track
+- add null check for audio features endpoint
+
 ## 0.13.7
 
 - add filter function for playlist endpoint to prevent deserialization of tracks that are `null` 

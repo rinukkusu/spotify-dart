@@ -228,14 +228,40 @@ Future main() async {
       expect(result['3'], isTrue);
     });
 
-    test('get playlist tracks', () async {
-      var tracks = await spotify.playlists
+    test('getTracksByPlaylistId', () async {
+      final tracks = await spotify.playlists
           .getTracksByPlaylistId('1XIAxOGAEK2h4ravpNTmYF')
           .all();
 
       expect(tracks, hasLength(2));
-      expect(tracks.elementAt(0).id, 'track-1');
-      expect(tracks.elementAt(1).id, 'track-3');
+      expect(
+        tracks.elementAt(0),
+        isA<Track>().having((t) => t.id, 'id', 'track-1'),
+      );
+      expect(
+        tracks.elementAt(1),
+        isA<Track>().having((t) => t.id, 'id', 'track-3'),
+      );
+    });
+
+    test('getPlaylistTracks', () async {
+      final tracks = await spotify.playlists
+          .getPlaylistTracks('1XIAxOGAEK2h4ravpNTmYF')
+          .all();
+      expect(tracks, hasLength(2));
+      expect(
+        tracks.elementAt(0),
+        isA<PlaylistTrack>().having(
+          (p) => p.track,
+          'track',
+          isA<Track>().having((t) => t.id, 'id', 'track-1'),
+        ),
+      );
+      expect(
+        tracks.elementAt(1),
+        isA<PlaylistTrack>().having((p) => p.track, 'track',
+            isA<Track>().having((t) => t.id, 'id', 'track-3')),
+      );
     });
   });
 

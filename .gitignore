@@ -16,3 +16,7 @@ doc/api/
 *.ipr
 *.iws
 .idea/
+
+# MacOS
+.DS_Store
+Thumbs.db

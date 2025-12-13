@@ -222,7 +222,7 @@ Future<void> _savedEpisodes(SpotifyApi spotify) async {
   }
 }
 
-Future<void> _saveAndRemoveEpisode(spotify) async {
+Future<void> _saveAndRemoveEpisode(SpotifyApi spotify) async {
   print('Saving episode with id 4Bje2xtE4VxqO2HO1PQdsG');
   await spotify.me.saveShows(['4Bje2xtE4VxqO2HO1PQdsG']);
   var saved = await spotify.me.containsSavedShows(['4Bje2xtE4VxqO2HO1PQdsG']);
@@ -258,13 +258,13 @@ Future<void> _removePrivatePlaylist(
 Future<void> _clearPlaylist(SpotifyApi spotify) async {
   print('Clearing Playlist');
   var playlist = await _createPrivatePlaylist(spotify);
-  var tracks = await _getPlaylistTracks(spotify, playlist.id ?? '');
-  print('Tracks before: ${tracks.map((e) => e.name)}');
+  var playlistTracks = await _getPlaylistTracks(spotify, playlist.id ?? '');
+  print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
   await spotify.playlists.clear(playlist.id ?? '');
 
-  tracks = await _getPlaylistTracks(spotify, playlist.id ?? '');
-  print('Tracks after: ${tracks.map((e) => e.name)}');
+  playlistTracks = await _getPlaylistTracks(spotify, playlist.id ?? '');
+  print('Tracks after: ${playlistTracks.map((e) => e.track!.name)}');
 
   await _removePrivatePlaylist(spotify, playlist.id ?? '');
 }
@@ -273,15 +273,15 @@ Future<void> _reorderItemsInPlaylist(SpotifyApi spotify) async {
   print('Reordering Playlist');
   var playlist = await _createPrivatePlaylist(spotify);
   var playlistId = playlist.id ?? '';
-  var tracks = await _getPlaylistTracks(spotify, playlistId);
-  print('Tracks before: ${tracks.map((e) => e.name)}');
+  var playlistTracks = await _getPlaylistTracks(spotify, playlistId);
+  print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
   // reorders the first element to the end of the playlist
   await spotify.playlists
-      .reorder(playlistId, rangeStart: 0, insertBefore: tracks.length);
+      .reorder(playlistId, rangeStart: 0, insertBefore: playlistTracks.length);
 
-  tracks = await _getPlaylistTracks(spotify, playlistId);
-  print('Tracks after: ${tracks.map((e) => e.name)}');
+  playlistTracks = await _getPlaylistTracks(spotify, playlistId);
+  print('Tracks after: ${playlistTracks.map((e) => e.track!.name)}');
 
   await _removePrivatePlaylist(spotify, playlist.id ?? '');
 }
@@ -290,21 +290,24 @@ Future<void> _replaceItemsInPlaylist(SpotifyApi spotify) async {
   print('Replacing Playlist');
   var playlist = await _createPrivatePlaylist(spotify);
   var playlistId = playlist.id ?? '';
-  var tracks = await _getPlaylistTracks(spotify, playlistId);
-  print('Tracks before: ${tracks.map((e) => e.name)}');
+  var playlistTracks = await _getPlaylistTracks(spotify, playlistId);
+  print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
   // replaces the whole playlist with only the first item
-  await spotify.playlists.replace(playlistId, [tracks.first.uri ?? '']);
+  await spotify.playlists
+      .replace(playlistId, [playlistTracks.first.track!.uri ?? '']);
 
-  tracks = await _getPlaylistTracks(spotify, playlistId);
-  print('Tracks after: ${tracks.map((e) => e.name)}');
+  playlistTracks = await _getPlaylistTracks(spotify, playlistId);
+  print('Tracks after: ${playlistTracks.map((e) => e.track!.name)}');
 
   await _removePrivatePlaylist(spotify, playlist.id ?? '');
 }
 
-Future<Iterable<Track>> _getPlaylistTracks(
-    SpotifyApi spotify, String playlistId) async {
-  var tracksPage = spotify.playlists.getTracksByPlaylistId(playlistId);
+Future<Iterable<PlaylistTrack>> _getPlaylistTracks(
+  SpotifyApi spotify,
+  String playlistId,
+) async {
+  var tracksPage = spotify.playlists.getPlaylistTracks(playlistId);
   return (await tracksPage.first()).items ?? [];
 }
 

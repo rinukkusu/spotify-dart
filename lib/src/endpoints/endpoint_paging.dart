@@ -181,7 +181,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
         .then((pages) => pages.expand((page) => page!));
   }
 
-  Stream<V> stream([limit = defaultLimit]) {
+  Stream<V> stream([int limit = defaultLimit]) {
     late StreamController<V> stream;
 
     void handlePageAndGetNext(V page) {
