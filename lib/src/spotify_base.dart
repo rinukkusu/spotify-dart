@@ -35,7 +35,9 @@ abstract class SpotifyApiBase {
   late Episodes _episodes;
   Episodes get episodes => _episodes;
 
+  // ignore: deprecated_member_use_from_same_package
   late RecommendationsEndpoint _recommendations;
+  // ignore: deprecated_member_use_from_same_package
   RecommendationsEndpoint get recommendations => _recommendations;
 
   late Markets _markets;
@@ -47,10 +49,14 @@ abstract class SpotifyApiBase {
   late Search _search;
   Search get search => _search;
 
+  // ignore: deprecated_member_use_from_same_package
   late AudioFeatures _audioFeatures;
+  // ignore: deprecated_member_use_from_same_package
   AudioFeatures get audioFeatures => _audioFeatures;
 
+  // ignore: deprecated_member_use_from_same_package
   late AudioAnalysisEndpoint _audioAnalysis;
+  // ignore: deprecated_member_use_from_same_package
   AudioAnalysisEndpoint get audioAnalysis => _audioAnalysis;
 
   late Categories _categories;
@@ -74,13 +80,16 @@ abstract class SpotifyApiBase {
     _tracks = Tracks(this);
     _episodes = Episodes(this);
     _playlists = Playlists(this);
+    // ignore: deprecated_member_use_from_same_package
     _recommendations = RecommendationsEndpoint(this);
     _markets = Markets(this);
     _player = PlayerEndpoint(this);
     _me = Me(this, _player);
     _users = Users(this);
     _search = Search(this);
+    // ignore: deprecated_member_use_from_same_package
     _audioFeatures = AudioFeatures(this);
+    // ignore: deprecated_member_use_from_same_package
     _audioAnalysis = AudioAnalysisEndpoint(this);
     _categories = Categories(this);
     _shows = Shows(this);

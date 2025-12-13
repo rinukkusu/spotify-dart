@@ -1,5 +1,9 @@
 part of '../../spotify.dart';
 
+@Deprecated(
+  'The Spotify Recommendations endpoint has been officially deprecated by Spotify. '
+  'This functionality may be removed in a future version of this library.',
+)
 class RecommendationsEndpoint extends EndpointBase {
   @override
   String get _path => 'v1/recommendations';
@@ -10,6 +14,10 @@ class RecommendationsEndpoint extends EndpointBase {
   /// [seedArtists], [seedGenres], [seedTracks] spotify IDs
   /// [min] [max] and [target] sets Tunable Track attributes limitations
   /// (see https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/)
+  @Deprecated(
+    'The Spotify Recommendations endpoint has been officially deprecated by Spotify. '
+    'This functionality may be removed in a future version of this library.',
+  )
   Future<Recommendations> get(
       {Iterable<String>? seedArtists,
       Iterable<String>? seedGenres,
