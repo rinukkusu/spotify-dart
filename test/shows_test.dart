@@ -1,0 +1,48 @@
+import 'dart:async';
+import 'spotify_mock.dart';
+import 'package:test/test.dart';
+import 'package:spotify/spotify.dart';
+
+// ignore_for_file: deprecated_member_use_from_same_package
+
+Future main() async {
+  var spotify = SpotifyApiMock(SpotifyApiCredentials(
+    'clientId',
+    'clientSecret',
+  ));
+
+  tearDown(() {
+    spotify.interceptor = null;
+    spotify.mockHttpErrors = <MockHttpError>[].iterator;
+  });
+
+  group('Shows', () {
+    test('get', () async {
+      var show = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
+
+      expect(show.type, 'show');
+      expect(show.id, '4AlxqGkkrqe0mfIx3Mi7Xt');
+      expect(show.name, 'Universo Flutter');
+      expect(show.totalEpisodes, 26);
+      expect(show.availableMarkets, isNotEmpty);
+      expect(show.availableMarkets?.first, Market.AD);
+    });
+
+    test('list', () async {
+      var shows = await spotify.shows
+          .list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
+
+      expect(shows.length, 2);
+    });
+  });
+
+  group('Show episodes', () {
+    test('list', () async {
+      var episodes = spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
+      var firstEpisode = (await episodes.first()).items!.first;
+
+      expect(firstEpisode.type, 'episode');
+      expect(firstEpisode.explicit, false);
+    });
+  });
+}

@@ -1,0 +1,58 @@
+import 'dart:async';
+import 'spotify_mock.dart';
+import 'package:test/test.dart';
+import 'package:spotify/spotify.dart';
+
+// ignore_for_file: deprecated_member_use_from_same_package
+
+Future main() async {
+  var spotify = SpotifyApiMock(SpotifyApiCredentials(
+    'clientId',
+    'clientSecret',
+  ));
+
+  tearDown(() {
+    spotify.interceptor = null;
+    spotify.mockHttpErrors = <MockHttpError>[].iterator;
+  });
+
+  group('Player', () {
+    test('player', () async {
+      var result = await spotify.player.playbackState();
+      expect(result.isShuffling, true);
+      expect(result.isPlaying, true);
+      expect(result.currentlyPlayingType, CurrentlyPlayingType.track);
+      expect(result.repeatState, RepeatState.off);
+      expect(result.actions?.resuming, false);
+      expect(result.actions?.pausing, true);
+    });
+
+    test('startWithContext', () async {
+      spotify.interceptor = (method, url, headers, [body]) {
+        // checking sincce startWithContext makes a PUT and a GET request
+        // to retrieve the current playbackstate
+        if (method == 'PUT') {
+          expect(method, 'PUT');
+          expect(body, isNotNull);
+          expect(body,
+              '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}');
+        }
+      };
+      await spotify.player
+          .startWithContext('contextUri', offset: UriOffset('urioffset'));
+    });
+
+    test('startWithUris', () async {
+      spotify.interceptor = (method, url, headers, [body]) {
+        // checking sincce startWithTracks makes a PUT and a GET request
+        // to retrieve the current playbackstate
+        if (method == 'PUT') {
+          expect(method, 'PUT');
+          expect(body, isNotNull);
+          expect(body, '{"uris":["track1"],"position_ms":10}');
+        }
+      };
+      await spotify.player.startWithTracks(['track1'], positionMs: 10);
+    });
+  });
+}
