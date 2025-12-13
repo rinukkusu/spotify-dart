@@ -3,7 +3,6 @@ import 'dart:async';
 import 'spotify_mock.dart';
 import 'package:test/test.dart';
 
-// ignore_for_file: deprecated_member_use_from_same_package
 
 Future main() async {
   var spotify = SpotifyApiMock.create();
