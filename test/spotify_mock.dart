@@ -7,6 +7,9 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 
 /// Mock class for making requests
 class SpotifyApiMock extends SpotifyApiBase {
+  factory SpotifyApiMock.create() =>
+      SpotifyApiMock(SpotifyApiCredentials('clientId', 'clientSecret'));
+
   SpotifyApiMock(SpotifyApiCredentials credentials)
       : super.fromClient(MockClient(credentials));
 
@@ -163,7 +166,7 @@ class MockClient implements oauth2.Client {
   }
 
   String _wrapMessageToJson(int statusCode, String message) =>
-      '{ "error": {"status":$statusCode,"message": "$message"}}';
+      '{ "error": {"status":$statusCode, "message": "$message"}}';
 }
 
 class MockHttpError {

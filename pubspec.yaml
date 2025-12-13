@@ -10,6 +10,7 @@ dependencies:
   http: ^1.6.0
   json_annotation: ^4.9.0
   oauth2: ^2.0.5
+  meta: ^1.17.0
 
 dev_dependencies:
   lints: ^6.0.0
