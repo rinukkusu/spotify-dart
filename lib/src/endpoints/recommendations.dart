@@ -27,14 +27,21 @@ class RecommendationsEndpoint extends EndpointBase {
       Map<String, num>? max,
       Map<String, num>? min,
       Map<String, num>? target}) async {
-    assert(limit >= 1 && limit <= 100, 'limit should be 1 <= limit <= 100');
+    if (limit < 1 || limit > 100) {
+      throw RangeError.range(limit, 1, 100, 'limit');
+    }
     final seedsNum = (seedArtists?.length ?? 0) +
         (seedGenres?.length ?? 0) +
         (seedTracks?.length ?? 0);
-    assert(
-        seedsNum >= 1 && seedsNum <= 5,
-        'Up to 5 seed values may be provided in any combination of seed_artists,'
-        ' seed_tracks and seed_genres.');
+    if (seedsNum < 1 || seedsNum > 5) {
+      throw RangeError.range(
+          seedsNum,
+          1,
+          5,
+          'Total seed values',
+          'Up to 5 seed values may be provided in any combination of seed_artists,'
+              ' seed_tracks and seed_genres.');
+    }
     final parameters = <String, String>{'limit': limit.toString()};
     final _ = {
       'seed_artists': seedArtists,
