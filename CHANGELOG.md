@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.0
+
+- use Track instead of TrackSimple in PlayHistory and Recommendations for more complete track information
+- replace assert statements with ArgumentError and RangeError for better production safety
+- add deprecation annotations for Spotify-deprecated endpoints
+- split test suite by endpoint for better organization and maintainability
+
 ## 0.14.0
 
 - update dependencies: http (^1.6.0), json_annotation (^4.9.0), oauth2 (^2.0.5), lints (^6.0.0), test (^1.28.0), build_runner (^2.10.4), json_serializable (^6.11.3)
