@@ -18,8 +18,10 @@ abstract class EndpointBase {
   Future<String> _post(String path, String body) => _api._post(path, body);
 
   String _buildQuery(Map<String, dynamic> query) {
-    final filteredQuery = {...query}
-      ..removeWhere((key, value) => value == null);
+    final filteredQuery = {
+      for (final MapEntry(:key, :value) in query.entries)
+        if (value != null) key: value.toString(),
+    };
 
     return Uri(queryParameters: filteredQuery).query;
   }

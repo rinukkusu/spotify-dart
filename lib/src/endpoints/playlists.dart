@@ -142,8 +142,7 @@ class Playlists extends EndpointPaging {
   /// you are simply unfollowing it. Although this behavior may sound strange,
   /// it means that other users who are already following the playlist
   /// can keep enjoying it.
-  Future<void> removePlaylist(String playlistId) async =>
-      unfollowPlaylist(playlistId);
+  Future<void> removePlaylist(String playlistId) async => unfollowPlaylist(playlistId);
 
   /// [playlistId] - the ID of the playlist to update
   ///
@@ -228,8 +227,7 @@ class Playlists extends EndpointPaging {
       throw ArgumentError('No playlist id was provided');
     }
     final url = 'v1/playlists/$playlistId/tracks';
-    final tracks =
-        trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
+    final tracks = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
 
     final body = jsonEncode({
       'tracks': tracks,

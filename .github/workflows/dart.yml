@@ -3,7 +3,6 @@ name: Dart CI
 on: [push, pull_request]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -21,4 +20,3 @@ jobs:
         run: dart analyze --fatal-infos --fatal-warnings .
       - name: Run tests
         run: dart run test
-

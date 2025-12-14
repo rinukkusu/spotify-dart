@@ -35,8 +35,7 @@ Future main() async {
           );
         }
       };
-      await spotify.player
-          .startWithContext('contextUri', offset: UriOffset('urioffset'));
+      await spotify.player.startWithContext('contextUri', offset: UriOffset('urioffset'));
     });
 
     test('startWithUris', () async {

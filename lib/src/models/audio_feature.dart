@@ -8,8 +8,7 @@ part of '_models.dart';
 class AudioFeature extends Object {
   AudioFeature();
 
-  factory AudioFeature.fromJson(Map<String, dynamic> json) =>
-      _$AudioFeatureFromJson(json);
+  factory AudioFeature.fromJson(Map<String, dynamic> json) => _$AudioFeatureFromJson(json);
 
   Map<String, dynamic> toJson() => _$AudioFeatureToJson(this);
 

@@ -44,8 +44,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// and active device. Returns an empty [PlaybackState] object when
   /// no playback context has been started.
   Future<PlaybackState> playbackState([Market? market]) async {
-    final jsonString =
-        await _api._get('$_path?${_buildQuery({'market': market?.name})}');
+    final jsonString = await _api._get('$_path?${_buildQuery({'market': market?.name})}');
 
     if (jsonString.isEmpty) {
       return PlaybackState();
@@ -146,8 +145,7 @@ class PlayerEndpoint extends _MeEndpointBase {
       throw RangeError.range(positionMs, 0, null, 'positionMs');
     }
 
-    final options =
-        StartWithUrisOptions(uris: trackUris, positionMs: positionMs);
+    final options = StartWithUrisOptions(uris: trackUris, positionMs: positionMs);
     return startOrResume(
       deviceId: deviceId,
       options: options,
@@ -174,8 +172,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     if (contextUri.isEmpty) {
       throw ArgumentError('Cannot start playback with empty context uri');
     }
-    final options =
-        StartWithContextOptions(contextUri: contextUri, offset: offset);
+    final options = StartWithContextOptions(contextUri: contextUri, offset: offset);
     return startOrResume(
       deviceId: deviceId,
       options: options,

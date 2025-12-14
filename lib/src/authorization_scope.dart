@@ -14,8 +14,7 @@ class AuthorizationScope {
   static const UserAuthorizationScope user = UserAuthorizationScope();
 
   /// Scope regarding playback
-  static PlaylistAuthorizationScope playlist =
-      const PlaylistAuthorizationScope();
+  static PlaylistAuthorizationScope playlist = const PlaylistAuthorizationScope();
 
   /// Scope regarding images (e.g. playlist images)
   static ImagesAuthorizationScope images = const ImagesAuthorizationScope();
@@ -27,8 +26,7 @@ class AuthorizationScope {
   static LibraryAuthorizationScope library = LibraryAuthorizationScope();
 
   /// Scope regarding the user's listening history
-  static ListeningHistoryAuthorizationScope listen =
-      const ListeningHistoryAuthorizationScope();
+  static ListeningHistoryAuthorizationScope listen = const ListeningHistoryAuthorizationScope();
 
   /// Scope regarding following artists or users
   static FollowAuthorizationScope follow = const FollowAuthorizationScope();
@@ -99,8 +97,7 @@ class ListeningHistoryAuthorizationScope extends _Scope {
   String get readRecentlyPlayed => 'user-read-recently-played';
 
   @override
-  List<String> get all =>
-      List.unmodifiable([readPlaybackPosition, readTop, readRecentlyPlayed]);
+  List<String> get all => List.unmodifiable([readPlaybackPosition, readTop, readRecentlyPlayed]);
 }
 
 class ConnectAuthorizationScope extends _Scope {

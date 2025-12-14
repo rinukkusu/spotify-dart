@@ -20,8 +20,7 @@ class SpotifyApi extends SpotifyApiBase {
 
   SpotifyApi.fromClient(super.client) : super.fromClient();
 
-  SpotifyApi.fromAuthCodeGrant(super.grant, super.responseUri)
-      : super.fromAuthCodeGrant();
+  SpotifyApi.fromAuthCodeGrant(super.grant, super.responseUri) : super.fromAuthCodeGrant();
 
   SpotifyApi.withAccessToken(super.accessToken) : super._withAccessToken();
 

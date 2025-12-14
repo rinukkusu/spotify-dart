@@ -71,8 +71,7 @@ class Me extends _MeEndpointBase {
       throw ArgumentError('No user/artist id was provided');
     }
 
-    final jsonString =
-        await _api._get('$_path/following/contains?${_buildQuery({
+    final jsonString = await _api._get('$_path/following/contains?${_buildQuery({
           'type': type._key,
           'ids': ids.join(','),
         })}');
@@ -97,8 +96,7 @@ class Me extends _MeEndpointBase {
     if (ids.isEmpty) {
       throw ArgumentError('No user/artist id was provided');
     }
-    await _api
-        ._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
+    await _api._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
   }
 
   /// Get the object currently being played on the user’s Spotify account.
@@ -141,12 +139,10 @@ class Me extends _MeEndpointBase {
   /// Returns the current player state by making another request.
   /// See [player];
   @Deprecated('Use [spotify.player.shuffle()]')
-  Future<PlaybackState?> shuffle(bool state, [String? deviceId]) async =>
-      _player.shuffle(state, deviceId: deviceId);
+  Future<PlaybackState?> shuffle(bool state, [String? deviceId]) async => _player.shuffle(state, deviceId: deviceId);
 
   @Deprecated('Use [spotify.player.playbackState()]')
-  Future<PlaybackState> player([String? market]) async =>
-      _player.playbackState(Market.values.asNameMap()[market]);
+  Future<PlaybackState> player([String? market]) async => _player.playbackState(Market.values.asNameMap()[market]);
 
   /// Get the current user's top tracks, spanning over a [timeRange].
   /// The [timeRange]'s default is [TimeRange.mediumTerm].
@@ -259,8 +255,7 @@ class Me extends _MeEndpointBase {
     if (ids.isEmpty) {
       throw ArgumentError('No album ids were provided for checking');
     }
-    final jsonString =
-        await _api._get('$_path/albums/contains?ids=${ids.join(",")}');
+    final jsonString = await _api._get('$_path/albums/contains?ids=${ids.join(",")}');
     final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
 
     return Map.fromIterables(ids, result);
@@ -290,8 +285,7 @@ class Me extends _MeEndpointBase {
     if (ids.isEmpty) {
       throw ArgumentError('No episode ids were provided for removing');
     }
-    await _api
-        ._delete('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
+    await _api._delete('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
   }
 
   /// Check if passed episode [ids] are saved by current user.

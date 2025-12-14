@@ -41,8 +41,7 @@ class Album extends AlbumSimple {
 class AlbumSimple extends Object {
   AlbumSimple();
 
-  factory AlbumSimple.fromJson(Map<String, dynamic> json) =>
-      _$AlbumSimpleFromJson(json);
+  factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
 
   Map<String, dynamic> toJson() => _$AlbumSimpleToJson(this);
 
@@ -57,9 +56,7 @@ class AlbumSimple extends Object {
     }
 
     final items = Paging.fromJson(json).itemsNative;
-    return json.isEmpty || (items == null)
-        ? []
-        : items.map((trackJson) => TrackSimple.fromJson(trackJson));
+    return json.isEmpty || (items == null) ? [] : items.map((trackJson) => TrackSimple.fromJson(trackJson));
   }
 
   static AlbumType? _convertForAlbumType(String? json) {

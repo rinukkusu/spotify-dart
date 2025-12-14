@@ -6,8 +6,7 @@ part of '../spotify.dart';
 abstract class SpotifyApiBase {
   static const String _baseUrl = 'https://api.spotify.com';
   static const String _tokenUrl = 'https://accounts.spotify.com/api/token';
-  static const String _authorizationUrl =
-      'https://accounts.spotify.com/authorize';
+  static const String _authorizationUrl = 'https://accounts.spotify.com/authorize';
 
   bool _shouldWait = false;
 
@@ -110,8 +109,7 @@ abstract class SpotifyApiBase {
           ),
         );
 
-  SpotifyApiBase._withAccessToken(String accessToken)
-      : this.fromClient(oauth2.Client(oauth2.Credentials(accessToken)));
+  SpotifyApiBase._withAccessToken(String accessToken) : this.fromClient(oauth2.Client(oauth2.Credentials(accessToken)));
 
   static Future<SpotifyApi> _asyncFromCredentials(
     SpotifyApiCredentials credentials, [
@@ -224,8 +222,7 @@ abstract class SpotifyApiBase {
   }
 
   /// Expands shortened spotify [url]
-  Future<String> expandLink(String url) async =>
-      _streamedHeadImpl(url, const {});
+  Future<String> expandLink(String url) async => _streamedHeadImpl(url, const {});
 
   Future<String> _get(String path) {
     return _getImpl('$_baseUrl/$path', const {});
@@ -331,8 +328,7 @@ abstract class SpotifyApiBase {
         );
         _shouldWait = true;
         unawaited(
-          Future.delayed(Duration(seconds: ex.retryAfter.toInt()))
-              .then((v) => _shouldWait = false),
+          Future.delayed(Duration(seconds: ex.retryAfter.toInt())).then((v) => _shouldWait = false),
         );
       }
     }

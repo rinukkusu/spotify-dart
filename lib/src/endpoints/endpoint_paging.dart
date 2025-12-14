@@ -73,9 +73,7 @@ abstract class BasePage<T> {
     Object? pageContainer,
     FilterFunction? pageItemFilter,
   ]) {
-    final filteredItems = pageItemFilter != null
-        ? _paging.itemsNative!.where(pageItemFilter)
-        : _paging.itemsNative!;
+    final filteredItems = pageItemFilter != null ? _paging.itemsNative!.where(pageItemFilter) : _paging.itemsNative!;
     _items = filteredItems.map(pageItemParser);
     _container = pageContainer;
   }
@@ -205,8 +203,7 @@ abstract class _Pages {
 
 /// Base class that handles retrieval of pages with one type
 /// (e.g. [Artist], [Playlist] etc.)
-abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
-    implements NextStrategy<V> {
+abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements NextStrategy<V> {
   bool _cancelled = false;
   final ParserFunction<T> _pageParser;
   final List<V> _bufferedPages = [];
@@ -221,10 +218,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
   ]) : super(api, path, pageKey, pageContainerMapper, pageItemFilter);
 
   Future<Iterable<T>> all([int limit = defaultLimit]) {
-    return stream(limit)
-        .map((page) => page.items)
-        .toList()
-        .then((pages) => pages.expand((page) => page!));
+    return stream(limit).map((page) => page.items).toList().then((pages) => pages.expand((page) => page!));
   }
 
   Stream<V> stream([int limit = defaultLimit]) {
@@ -329,8 +323,7 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
 }
 
 /// Handles retrieval of a page through a cursor
-class CursorPages<T> extends SinglePages<T, CursorPage<T>>
-    with CursorStrategy<CursorPage<T>> {
+class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<CursorPage<T>> {
   CursorPages(
     super.api,
     super.path,
@@ -355,8 +348,7 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
           pageContainerMapper,
           pageItemFilter,
         ) {
-    _bufferedPages
-        .add(CursorPage<T>(paging, _pageParser, null, _pageItemFilter));
+    _bufferedPages.add(CursorPage<T>(paging, _pageParser, null, _pageItemFilter));
   }
 
   @override

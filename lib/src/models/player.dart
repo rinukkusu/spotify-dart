@@ -8,8 +8,7 @@ part of '_models.dart';
 class PlaybackState extends Object {
   PlaybackState();
 
-  factory PlaybackState.fromJson(Map<String, dynamic> json) =>
-      _$PlaybackStateFromJson(json);
+  factory PlaybackState.fromJson(Map<String, dynamic> json) => _$PlaybackStateFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaybackStateToJson(this);
 
@@ -57,8 +56,7 @@ class PlaybackState extends Object {
 class PlayerContext extends Object {
   PlayerContext();
 
-  factory PlayerContext.fromJson(Map<String, dynamic> json) =>
-      _$PlayerContextFromJson(json);
+  factory PlayerContext.fromJson(Map<String, dynamic> json) => _$PlayerContextFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlayerContextToJson(this);
 
@@ -81,8 +79,7 @@ class PlayerContext extends Object {
 class Actions extends Object {
   Actions();
 
-  factory Actions.fromJson(Map<String, dynamic> json) =>
-      _$ActionsFromJson(json);
+  factory Actions.fromJson(Map<String, dynamic> json) => _$ActionsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ActionsToJson(this);
 
@@ -150,8 +147,7 @@ class StartWithContextOptions extends StartOrResumeOptions {
   @override
   Map<String, dynamic> toJson() => _$StartWithContextOptionsToJson(this);
 
-  static Map<String, dynamic>? _offsetToJson(Offset? offset) =>
-      offset?.toJson();
+  static Map<String, dynamic>? _offsetToJson(Offset? offset) => offset?.toJson();
 }
 
 @JsonSerializable(createFactory: false)

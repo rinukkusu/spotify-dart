@@ -75,8 +75,7 @@ class Episode extends Object {
   /// The Spotify ID for the episode.
   String? uri;
 
-  factory Episode.fromJson(Map<String, dynamic> json) =>
-      _$EpisodeFromJson(json);
+  factory Episode.fromJson(Map<String, dynamic> json) => _$EpisodeFromJson(json);
 
   Map<String, dynamic> toJson() => _$EpisodeToJson(this);
 }
@@ -88,8 +87,7 @@ class EpisodeFull extends Episode {
 
   Show? show;
 
-  factory EpisodeFull.fromJson(Map<String, dynamic> json) =>
-      _$EpisodeFullFromJson(json);
+  factory EpisodeFull.fromJson(Map<String, dynamic> json) => _$EpisodeFullFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$EpisodeFullToJson(this);

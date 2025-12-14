@@ -7,14 +7,11 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 
 /// Mock class for making requests
 class SpotifyApiMock extends SpotifyApiBase {
-  factory SpotifyApiMock.create() =>
-      SpotifyApiMock(SpotifyApiCredentials('clientId', 'clientSecret'));
+  factory SpotifyApiMock.create() => SpotifyApiMock(SpotifyApiCredentials('clientId', 'clientSecret'));
 
-  SpotifyApiMock(SpotifyApiCredentials credentials)
-      : super.fromClient(MockClient(credentials));
+  SpotifyApiMock(SpotifyApiCredentials credentials) : super.fromClient(MockClient(credentials));
 
-  set mockHttpErrors(Iterator<MockHttpError> errors) =>
-      (client as MockClient)._mockHttpErrors = errors;
+  set mockHttpErrors(Iterator<MockHttpError> errors) => (client as MockClient)._mockHttpErrors = errors;
 
   set interceptor(
     Function(
@@ -72,9 +69,8 @@ class MockClient implements oauth2.Client {
   }
 
   String _readPath(Uri url) {
-    final regexString = url.host.contains('api.spotify.com')
-        ? r'api.spotify.com\/([A-Za-z0-9/\-]+)\??'
-        : r'api/([A-Za-z0-9/\-]+)\??';
+    final regexString =
+        url.host.contains('api.spotify.com') ? r'api.spotify.com\/([A-Za-z0-9/\-]+)\??' : r'api/([A-Za-z0-9/\-]+)\??';
 
     final regex = RegExp(regexString);
     final urlString = url.toString();

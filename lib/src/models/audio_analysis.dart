@@ -8,8 +8,7 @@ part of '_models.dart';
 class AudioAnalysis extends Object {
   AudioAnalysis();
 
-  factory AudioAnalysis.fromJson(Map<String, dynamic> json) =>
-      _$AudioAnalysisFromJson(json);
+  factory AudioAnalysis.fromJson(Map<String, dynamic> json) => _$AudioAnalysisFromJson(json);
 
   Map<String, dynamic> toJson() => _$AudioAnalysisToJson(this);
 
@@ -97,8 +96,7 @@ abstract class _Section {
 class TrackAudioAnalysis extends _Section {
   TrackAudioAnalysis();
 
-  factory TrackAudioAnalysis.fromJson(Map<String, dynamic> json) =>
-      _$TrackAudioAnalysisFromJson(json);
+  factory TrackAudioAnalysis.fromJson(Map<String, dynamic> json) => _$TrackAudioAnalysisFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackAudioAnalysisToJson(this);
 
@@ -156,8 +154,7 @@ class TrackAudioAnalysis extends _Section {
 class Section extends _Section {
   Section();
 
-  factory Section.fromJson(Map<String, dynamic> json) =>
-      _$SectionFromJson(json);
+  factory Section.fromJson(Map<String, dynamic> json) => _$SectionFromJson(json);
   Map<String, dynamic> toJson() => _$SectionToJson(this);
 
   /// The starting point (in seconds) of the section.
@@ -169,8 +166,7 @@ class Section extends _Section {
 class Segment extends Object {
   Segment();
 
-  factory Segment.fromJson(Map<String, dynamic> json) =>
-      _$SegmentFromJson(json);
+  factory Segment.fromJson(Map<String, dynamic> json) => _$SegmentFromJson(json);
   Map<String, dynamic> toJson() => _$SegmentToJson(this);
 
   /// The starting point (in seconds) of the segment.
@@ -231,8 +227,7 @@ class Segment extends Object {
 class TimeInterval extends Object {
   TimeInterval();
 
-  factory TimeInterval.fromJson(Map<String, dynamic> json) =>
-      _$TimeIntervalFromJson(json);
+  factory TimeInterval.fromJson(Map<String, dynamic> json) => _$TimeIntervalFromJson(json);
   Map<String, dynamic> toJson() => _$TimeIntervalToJson(this);
 
   /// The confidence, from `0.0` to `1.0`, of the reliability of the interval.

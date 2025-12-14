@@ -14,15 +14,13 @@ Future main() async {
 
   group('Audio Features', () {
     test('get', () async {
-      final audioFeatures =
-          await spotify.audioFeatures.get('11dFghVXANMlKmJXsNCbNl');
+      final audioFeatures = await spotify.audioFeatures.get('11dFghVXANMlKmJXsNCbNl');
 
       expect(audioFeatures.id, '11dFghVXANMlKmJXsNCbNl');
     });
 
     test('list', () async {
-      final audioFeatures = await spotify.audioFeatures
-          .list(['11dFghVXANMlKmJXsNCbNl', '2cs7JxrZ9DxvsfoVI07ayX']);
+      final audioFeatures = await spotify.audioFeatures.list(['11dFghVXANMlKmJXsNCbNl', '2cs7JxrZ9DxvsfoVI07ayX']);
 
       expect(audioFeatures.length, 1);
     });

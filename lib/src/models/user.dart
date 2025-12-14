@@ -80,8 +80,7 @@ class User extends Object implements UserPublic {
 class UserPublic extends Object {
   UserPublic();
 
-  factory UserPublic.fromJson(Map<String, dynamic> json) =>
-      _$UserPublicFromJson(json);
+  factory UserPublic.fromJson(Map<String, dynamic> json) => _$UserPublicFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserPublicToJson(this);
 
@@ -117,8 +116,7 @@ class UserPublic extends Object {
 class PlayHistory extends Object {
   PlayHistory();
 
-  factory PlayHistory.fromJson(Map<String, dynamic> json) =>
-      _$PlayHistoryFromJson(json);
+  factory PlayHistory.fromJson(Map<String, dynamic> json) => _$PlayHistoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlayHistoryToJson(this);
 

@@ -67,8 +67,7 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
   final redirect = stdin.readLineSync();
 
   final grant = SpotifyApi.authorizationCodeGrant(credentials);
-  final authUri =
-      grant.getAuthorizationUrl(Uri.parse(redirect!), scopes: _scopes);
+  final authUri = grant.getAuthorizationUrl(Uri.parse(redirect!), scopes: _scopes);
 
   print(
     'Please paste this URL \n\n$authUri\n\nto your browser and enter the '
@@ -82,8 +81,7 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
     return null;
   }
 
-  final client =
-      await grant.handleAuthorizationResponse(redirectUrl!.queryParameters);
+  final client = await grant.handleAuthorizationResponse(redirectUrl!.queryParameters);
   return SpotifyApi.fromClient(client);
 }
 
@@ -120,8 +118,7 @@ Future<void> _user(SpotifyApi spotify) async {
   });
 }
 
-Future<void> _devices(SpotifyApi spotify) async =>
-    await spotify.player.devices().then((Iterable<Device>? devices) {
+Future<void> _devices(SpotifyApi spotify) async => await spotify.player.devices().then((Iterable<Device>? devices) {
       if (devices == null || devices.isEmpty) {
         print('No devices currently playing.');
         return;
@@ -298,8 +295,7 @@ Future<void> _reorderItemsInPlaylist(SpotifyApi spotify) async {
   print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
   // reorders the first element to the end of the playlist
-  await spotify.playlists
-      .reorder(playlistId, rangeStart: 0, insertBefore: playlistTracks.length);
+  await spotify.playlists.reorder(playlistId, rangeStart: 0, insertBefore: playlistTracks.length);
 
   playlistTracks = await _getPlaylistTracks(spotify, playlistId);
   print('Tracks after: ${playlistTracks.map((e) => e.track!.name)}');
@@ -315,8 +311,7 @@ Future<void> _replaceItemsInPlaylist(SpotifyApi spotify) async {
   print('Tracks before: ${playlistTracks.map((e) => e.track!.name)}');
 
   // replaces the whole playlist with only the first item
-  await spotify.playlists
-      .replace(playlistId, [playlistTracks.first.track!.uri ?? '']);
+  await spotify.playlists.replace(playlistId, [playlistTracks.first.track!.uri ?? '']);
 
   playlistTracks = await _getPlaylistTracks(spotify, playlistId);
   print('Tracks after: ${playlistTracks.map((e) => e.track!.name)}');

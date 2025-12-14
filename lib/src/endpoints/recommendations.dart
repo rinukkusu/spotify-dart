@@ -33,9 +33,7 @@ class RecommendationsEndpoint extends EndpointBase {
     if (limit < 1 || limit > 100) {
       throw RangeError.range(limit, 1, 100, 'limit');
     }
-    final seedsNum = (seedArtists?.length ?? 0) +
-        (seedGenres?.length ?? 0) +
-        (seedTracks?.length ?? 0);
+    final seedsNum = (seedArtists?.length ?? 0) + (seedGenres?.length ?? 0) + (seedTracks?.length ?? 0);
     if (seedsNum < 1 || seedsNum > 5) {
       throw RangeError.range(
         seedsNum,
@@ -56,9 +54,7 @@ class RecommendationsEndpoint extends EndpointBase {
     for (final map in [min, max, target]) {
       _addTunableTrackMap(parameters, map);
     }
-    final pathQuery = Uri(path: _path, queryParameters: parameters)
-        .toString()
-        .replaceAll(RegExp(r'%2C'), ',');
+    final pathQuery = Uri(path: _path, queryParameters: parameters).toString().replaceAll(RegExp(r'%2C'), ',');
     final result = jsonDecode(await _api._get(pathQuery));
     return Recommendations.fromJson(result);
   }

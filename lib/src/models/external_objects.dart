@@ -8,8 +8,7 @@ part of '_models.dart';
 class ExternalUrls extends Object {
   ExternalUrls();
 
-  factory ExternalUrls.fromJson(Map<String, dynamic> json) =>
-      _$ExternalUrlsFromJson(json);
+  factory ExternalUrls.fromJson(Map<String, dynamic> json) => _$ExternalUrlsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ExternalUrlsToJson(this);
 
@@ -22,8 +21,7 @@ class ExternalUrls extends Object {
 class ExternalIds extends Object {
   ExternalIds();
 
-  factory ExternalIds.fromJson(Map<String, dynamic> json) =>
-      _$ExternalIdsFromJson(json);
+  factory ExternalIds.fromJson(Map<String, dynamic> json) => _$ExternalIdsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ExternalIdsToJson(this);
 

@@ -127,8 +127,7 @@ class Track extends Object implements TrackSimple {
 class TrackSimple extends Object {
   TrackSimple();
 
-  factory TrackSimple.fromJson(Map<String, dynamic> json) =>
-      _$TrackSimpleFromJson(json);
+  factory TrackSimple.fromJson(Map<String, dynamic> json) => _$TrackSimpleFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackSimpleToJson(this);
 
@@ -205,8 +204,7 @@ class TrackSimple extends Object {
 class TrackSaved extends Object {
   TrackSaved();
 
-  factory TrackSaved.fromJson(Map<String, dynamic> json) =>
-      _$TrackSavedFromJson(json);
+  factory TrackSaved.fromJson(Map<String, dynamic> json) => _$TrackSavedFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackSavedToJson(this);
 
@@ -222,8 +220,7 @@ class TrackSaved extends Object {
 class TrackLink extends Object {
   TrackLink();
 
-  factory TrackLink.fromJson(Map<String, dynamic> json) =>
-      _$TrackLinkFromJson(json);
+  factory TrackLink.fromJson(Map<String, dynamic> json) => _$TrackLinkFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackLinkToJson(this);
 
@@ -248,8 +245,7 @@ class TrackLink extends Object {
 class TracksLink extends Object {
   TracksLink();
 
-  factory TracksLink.fromJson(Map<String, dynamic> json) =>
-      _$TracksLinkFromJson(json);
+  factory TracksLink.fromJson(Map<String, dynamic> json) => _$TracksLinkFromJson(json);
 
   Map<String, dynamic> toJson() => _$TracksLinkToJson(this);
 

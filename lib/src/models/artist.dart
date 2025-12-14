@@ -63,8 +63,7 @@ class Artist extends Object implements ArtistSimple {
 class ArtistSimple extends Object {
   ArtistSimple();
 
-  factory ArtistSimple.fromJson(Map<String, dynamic> json) =>
-      _$ArtistSimpleFromJson(json);
+  factory ArtistSimple.fromJson(Map<String, dynamic> json) => _$ArtistSimpleFromJson(json);
 
   Map<String, dynamic> toJson() => _$ArtistSimpleToJson(this);
 

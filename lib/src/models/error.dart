@@ -8,8 +8,7 @@ part of '_models.dart';
 class SpotifyError extends Object {
   SpotifyError();
 
-  factory SpotifyError.fromJson(Map<String, dynamic> json) =>
-      _$SpotifyErrorFromJson(json);
+  factory SpotifyError.fromJson(Map<String, dynamic> json) => _$SpotifyErrorFromJson(json);
 
   Map<String, dynamic> toJson() => _$SpotifyErrorToJson(this);
 

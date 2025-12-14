@@ -46,8 +46,7 @@ class Artists extends EndpointPaging {
 
   /// Returns related artists based on the artist with its [artistId]
   @Deprecated('Use relatedArtists instead')
-  Future<Iterable<Artist>> getRelatedArtists(String artistId) async =>
-      relatedArtists(artistId);
+  Future<Iterable<Artist>> getRelatedArtists(String artistId) async => relatedArtists(artistId);
 
   /// Retrieves multiple artists with [artistIds]
   Future<Iterable<Artist>> list(List<String> artistIds) async => _listWithIds(

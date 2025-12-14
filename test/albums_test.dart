@@ -59,8 +59,7 @@ Future main() async {
     });
 
     test('list', () async {
-      final albums = await spotify.albums
-          .list(['4aawyAB9vmqN3uQ7FjRGTy', '4aawyAB9vmqN3uQ7FjRGTy']);
+      final albums = await spotify.albums.list(['4aawyAB9vmqN3uQ7FjRGTy', '4aawyAB9vmqN3uQ7FjRGTy']);
 
       expect(albums.length, 2);
     });

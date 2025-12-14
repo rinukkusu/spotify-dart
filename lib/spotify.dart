@@ -13,8 +13,7 @@ import 'dart:developer';
 
 import 'src/models/_models.dart';
 
-export 'package:oauth2/oauth2.dart'
-    show AuthorizationException, ExpirationException;
+export 'package:oauth2/oauth2.dart' show AuthorizationException, ExpirationException;
 
 export 'src/models/_models.dart';
 part 'src/spotify_logger.dart';

@@ -34,8 +34,7 @@ class AudioFeatures extends EndpointBase {
     'by Spotify. '
     'This functionality may be removed in a future version of this library.',
   )
-  Future<Iterable<AudioFeature>> list(List<String> trackIds) async =>
-      _listWithIds(
+  Future<Iterable<AudioFeature>> list(List<String> trackIds) async => _listWithIds(
         path: _path,
         ids: trackIds,
         jsonKey: 'audio_features',

@@ -36,9 +36,7 @@ Future main() async {
 
     test('recentlyPlayed', () async {
       // the parameters don't do anything. They are just dummies
-      final result = await spotify.me
-          .recentlyPlayed(limit: 3, before: DateTime.now())
-          .all();
+      final result = await spotify.me.recentlyPlayed(limit: 3, before: DateTime.now()).all();
       expect(result.length, 2);
       final first = result.first;
       expect(first.track != null, true);

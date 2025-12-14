@@ -22,15 +22,13 @@ Future main() async {
     });
 
     test('list', () async {
-      final artists = await spotify.artists
-          .list(['0TnOYISbd1XYRBk9myaseg', '0TnOYISbd1XYRBk9myaseg']);
+      final artists = await spotify.artists.list(['0TnOYISbd1XYRBk9myaseg', '0TnOYISbd1XYRBk9myaseg']);
 
       expect(artists.length, 2);
     });
 
     test('getRelatedArtists', () async {
-      final relatedArtists =
-          await spotify.artists.relatedArtists('0TnOYISbd1XYRBk9myaseg');
+      final relatedArtists = await spotify.artists.relatedArtists('0TnOYISbd1XYRBk9myaseg');
       final first = relatedArtists.first;
       expect(first.id, '0jnsk9HBra6NMjO2oANoPY');
       expect(
@@ -41,8 +39,7 @@ Future main() async {
     });
 
     test('getError', () async {
-      spotify.mockHttpErrors =
-          [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
+      spotify.mockHttpErrors = [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
       late SpotifyException ex;
       try {
         await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');

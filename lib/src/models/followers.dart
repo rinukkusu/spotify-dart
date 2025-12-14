@@ -8,8 +8,7 @@ part of '_models.dart';
 class Followers extends Object {
   Followers();
 
-  factory Followers.fromJson(Map<String, dynamic> json) =>
-      _$FollowersFromJson(json);
+  factory Followers.fromJson(Map<String, dynamic> json) => _$FollowersFromJson(json);
 
   Map<String, dynamic> toJson() => _$FollowersToJson(this);
 

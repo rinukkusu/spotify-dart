@@ -44,8 +44,7 @@ Future main() async {
     });
 
     test('followedByUsers', () async {
-      final result = await spotify.playlists
-          .followedByUsers('1XIAxOGAEK2h4ravpNTmYF', ['1', '2', '3']);
+      final result = await spotify.playlists.followedByUsers('1XIAxOGAEK2h4ravpNTmYF', ['1', '2', '3']);
 
       expect(result.length, 3);
       expect(result['1'], isTrue);
@@ -54,9 +53,7 @@ Future main() async {
     });
 
     test('getTracksByPlaylistId', () async {
-      final tracks = await spotify.playlists
-          .getTracksByPlaylistId('1XIAxOGAEK2h4ravpNTmYF')
-          .all();
+      final tracks = await spotify.playlists.getTracksByPlaylistId('1XIAxOGAEK2h4ravpNTmYF').all();
 
       expect(tracks, hasLength(2));
       expect(
@@ -70,9 +67,7 @@ Future main() async {
     });
 
     test('getPlaylistTracks', () async {
-      final tracks = await spotify.playlists
-          .getPlaylistTracks('1XIAxOGAEK2h4ravpNTmYF')
-          .all();
+      final tracks = await spotify.playlists.getPlaylistTracks('1XIAxOGAEK2h4ravpNTmYF').all();
       expect(tracks, hasLength(2));
       expect(
         tracks.elementAt(0),

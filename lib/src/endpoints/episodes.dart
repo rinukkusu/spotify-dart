@@ -14,8 +14,7 @@ class Episodes extends EndpointBase {
     if (id.isEmpty) {
       throw ArgumentError('No episode id was provided');
     }
-    final jsonString =
-        await _api._get('$_path/$id?${_buildQuery({'market': market?.name})}');
+    final jsonString = await _api._get('$_path/$id?${_buildQuery({'market': market?.name})}');
     return EpisodeFull.fromJson(jsonDecode(jsonString));
   }
 

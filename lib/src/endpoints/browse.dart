@@ -14,8 +14,7 @@ class Browse extends EndpointPaging {
   /// relevant to a particular country. If omitted, the returned items will be
   /// globally relevant.
   @Deprecated('Use [newReleases] instead')
-  Pages<AlbumSimple> getNewReleases({String? country}) =>
-      newReleases(country: Market.values.asNameMap()[country]);
+  Pages<AlbumSimple> getNewReleases({String? country}) => newReleases(country: Market.values.asNameMap()[country]);
 
   /// Returns the new releases.
   ///

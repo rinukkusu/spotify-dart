@@ -130,8 +130,7 @@ final class SpotifyClient with http.BaseClient {
       return streamedResponse;
     } catch (error) {
       // Log request error
-      final String requestErrorData =
-          (request is http.Request) ? '\n❗ Request Data: ${request.body}' : '';
+      final String requestErrorData = (request is http.Request) ? '\n❗ Request Data: ${request.body}' : '';
       _logger.e('❌ ❗ ERROR ❗ ❌\n❗ Error Message: $error$requestErrorData');
       rethrow; // Rethrow the error after logging
     }
@@ -145,8 +144,7 @@ final class SpotifyClient with http.BaseClient {
     Encoding? encoding,
   }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .delete(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).delete(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log delete request details
@@ -160,8 +158,7 @@ final class SpotifyClient with http.BaseClient {
       );
 
       // Perform the delete request
-      final response = await (await _inner)
-          .delete(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).delete(url, headers: headers, body: body, encoding: encoding);
       // Log delete response details
       _logger.i(
         _logString(
@@ -188,8 +185,7 @@ final class SpotifyClient with http.BaseClient {
     Encoding? encoding,
   }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .post(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).post(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log post request details
@@ -203,8 +199,7 @@ final class SpotifyClient with http.BaseClient {
       );
 
       // Perform the post request
-      final response = await (await _inner)
-          .post(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).post(url, headers: headers, body: body, encoding: encoding);
 
       // Log post response details
       _logger.i(
@@ -233,8 +228,7 @@ final class SpotifyClient with http.BaseClient {
     Encoding? encoding,
   }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .patch(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).patch(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log patch request details
@@ -248,8 +242,7 @@ final class SpotifyClient with http.BaseClient {
       );
 
       // Perform the patch request
-      final response = await (await _inner)
-          .patch(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).patch(url, headers: headers, body: body, encoding: encoding);
 
       // Log patch response details
       _logger.i(
@@ -278,8 +271,7 @@ final class SpotifyClient with http.BaseClient {
     Encoding? encoding,
   }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .put(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).put(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log put request details
@@ -293,8 +285,7 @@ final class SpotifyClient with http.BaseClient {
       );
 
       // Perform the put request
-      final response = await (await _inner)
-          .put(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).put(url, headers: headers, body: body, encoding: encoding);
 
       // Log put response details
       _logger.i(
@@ -415,12 +406,9 @@ final class SpotifyClient with http.BaseClient {
 
   bool get _loggingFull => _detail.index >= LoggingDetail.full.index;
 
-  String _headersLog(Map<String, String>? headers) =>
-      headers != null && headers.isNotEmpty
-          ? headers.entries
-              .map((entry) => '  • ${entry.key}: ${entry.value}')
-              .join('\n')
-          : 'None';
+  String _headersLog(Map<String, String>? headers) => headers != null && headers.isNotEmpty
+      ? headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n')
+      : 'None';
 
   String _logString(
     String title,
@@ -443,16 +431,14 @@ final class SpotifyClient with http.BaseClient {
     }
     if (_loggingFull) {
       buf.writeln();
-      final String bodyLog =
-          (body != null) ? '📤 Data: $body' : '📤 Data: None';
+      final String bodyLog = (body != null) ? '📤 Data: $body' : '📤 Data: None';
       buf.write(bodyLog);
     }
     return buf.toString();
   }
 }
 
-String _logError(String request, Object error) =>
-    '❌ ❗ $request Request Failed ❗ ❌\n❗ Error Message: $error';
+String _logError(String request, Object error) => '❌ ❗ $request Request Failed ❗ ❌\n❗ Error Message: $error';
 
 /// Sets how much information is displayed in the http logging
 enum LoggingDetail {

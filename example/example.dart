@@ -21,10 +21,7 @@ void main() async {
   print(longLink);
 
   print('\nPodcast:');
-  await spotify.shows
-      .get('4rOoJ6Egrf8K2IrywzwOMk')
-      .then((podcast) => print(podcast.name))
-      .onError(
+  await spotify.shows.get('4rOoJ6Egrf8K2IrywzwOMk').then((podcast) => print(podcast.name)).onError(
         (error, stackTrace) => print((error as SpotifyException).message),
       );
 
@@ -63,8 +60,7 @@ void main() async {
   }
 
   print('\nUser\'s playlists:');
-  final usersPlaylists =
-      await spotify.playlists.getUsersPlaylists('superinteressante').all();
+  final usersPlaylists = await spotify.playlists.getUsersPlaylists('superinteressante').all();
   for (final playlist in usersPlaylists) {
     print(playlist.name);
   }
@@ -137,8 +133,7 @@ void main() async {
     }
   }
 
-  final relatedArtists =
-      await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
+  final relatedArtists = await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
   print('\nRelated Artists: ${relatedArtists.length}');
 
   credentials = await spotify.getCredentials();

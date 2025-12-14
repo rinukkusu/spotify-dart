@@ -24,8 +24,7 @@ Future main() async {
     });
 
     test('list', () async {
-      final shows = await spotify.shows
-          .list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
+      final shows = await spotify.shows.list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
 
       expect(shows.length, 2);
     });

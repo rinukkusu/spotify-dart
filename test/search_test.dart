@@ -18,8 +18,7 @@ Future main() async {
     });
 
     test('getError', () async {
-      spotify.mockHttpErrors =
-          [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
+      spotify.mockHttpErrors = [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
       late SpotifyException ex;
       try {
         await spotify.search.get('metallica').first();
