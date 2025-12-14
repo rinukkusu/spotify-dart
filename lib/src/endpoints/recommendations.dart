@@ -1,5 +1,10 @@
 part of '../../spotify.dart';
 
+@Deprecated(
+  'The Spotify Recommendations endpoint has been officially deprecated '
+  'by Spotify. '
+  'This functionality may be removed in a future version of this library.',
+)
 class RecommendationsEndpoint extends EndpointBase {
   @override
   String get _path => 'v1/recommendations';
@@ -10,6 +15,11 @@ class RecommendationsEndpoint extends EndpointBase {
   /// [seedArtists], [seedGenres], [seedTracks] spotify IDs
   /// [min] [max] and [target] sets Tunable Track attributes limitations
   /// (see https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/)
+  @Deprecated(
+    'The Spotify Recommendations endpoint has been officially deprecated '
+    'by Spotify. '
+    'This functionality may be removed in a future version of this library.',
+  )
   Future<Recommendations> get({
     Iterable<String>? seedArtists,
     Iterable<String>? seedGenres,
@@ -20,14 +30,22 @@ class RecommendationsEndpoint extends EndpointBase {
     Map<String, num>? min,
     Map<String, num>? target,
   }) async {
-    assert(limit >= 1 && limit <= 100, 'limit should be 1 <= limit <= 100');
+    if (limit < 1 || limit > 100) {
+      throw RangeError.range(limit, 1, 100, 'limit');
+    }
     final seedsNum = (seedArtists?.length ?? 0) +
         (seedGenres?.length ?? 0) +
         (seedTracks?.length ?? 0);
-    assert(
-        seedsNum >= 1 && seedsNum <= 5,
+    if (seedsNum < 1 || seedsNum > 5) {
+      throw RangeError.range(
+        seedsNum,
+        1,
+        5,
+        'Total seed values',
         'Up to 5 seed values may be provided in any combination of '
-        'seed_artists,  seed_tracks and seed_genres.');
+            'seed_artists, seed_tracks and seed_genres.',
+      );
+    }
     final parameters = <String, String>{'limit': limit.toString()};
     final _ = {
       'seed_artists': seedArtists,

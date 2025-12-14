@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'spotify_mock.dart';
 import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
@@ -6,12 +7,7 @@ import 'package:spotify/spotify.dart';
 // ignore_for_file: deprecated_member_use_from_same_package
 
 Future main() async {
-  final spotify = SpotifyApiMock(
-    SpotifyApiCredentials(
-      'clientId',
-      'clientSecret',
-    ),
-  );
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -378,6 +374,12 @@ Future main() async {
       expect(firstTrack.artists!.length, 1);
       expect(firstTrack.artists!.first.name, 'Tame Impala');
 
+      // test album and popularity fields (Track instead of TrackSimple)
+      expect(firstTrack.album != null, true);
+      expect(firstTrack.album!.name, 'Currents');
+      expect(firstTrack.album!.id, '79dL7FLiJFOO0EoehUHQBv');
+      expect(firstTrack.popularity, 75);
+
       final second = result.last;
       expect(second.playedAt, DateTime.tryParse('2016-12-13T20:42:17.016Z'));
       expect(second.context!.uri, 'spotify:artist:5INjqkS1o8h1imAzPqGZBb');
@@ -537,15 +539,17 @@ Future main() async {
       );
       expect(
         result.name,
-        'Starting Your Own Podcast: Tips, Tricks, and '
-        'Advice From Anchor Creators',
+        'Starting Your Own Podcast: Tips, Tricks, '
+        'and Advice From Anchor Creators',
       );
       expect(result.releaseDate, DateTime(1981, 12, 15));
       expect(result.type, 'episode');
       expect(
         result.description,
-        // ignore: lines_longer_than_80_chars
-        'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.',
+        'A Spotify podcast sharing fresh insights on important topics of the '
+        'moment—in a way only Spotify can. You’ll hear from experts in '
+        'the music, podcast and tech industries as we discover and uncover '
+        'stories about our work and the world around us.',
       );
       expect(result.show == null, false);
 

@@ -1,6 +1,7 @@
 // Copyright (c) 2019, chances, rinukkusu. All rights reserved. Use of this
 // source code is governed by a BSD-style license that can be found in the
 // LICENSE file.
+
 part of '../../spotify.dart';
 
 abstract class _MeEndpointBase extends EndpointPaging {
@@ -30,12 +31,15 @@ class Me extends _MeEndpointBase {
   ///
   /// Needs `user-follow-read` scope
   CursorPages<Artist> following(FollowingType type) {
-    assert(
-      type == FollowingType.artist,
-      'Only [FollowingType.artist] supported for now. '
-      'Check the spotify documentation: '
-      'https://developer.spotify.com/documentation/web-api/reference/get-followed',
-    );
+    if (type != FollowingType.artist) {
+      throw ArgumentError.value(
+        type,
+        'type',
+        'Only [FollowingType.artist] supported for now. '
+            'Check the spotify documentation: '
+            'https://developer.spotify.com/documentation/web-api/reference/get-followed',
+      );
+    }
     // since 'artists' is the container, there is no
     // containerParse necessary. Adding json to make the
     // CursorPages-Object happy.
@@ -63,7 +67,9 @@ class Me extends _MeEndpointBase {
     FollowingType type,
     List<String> ids,
   ) async {
-    assert(ids.isNotEmpty, 'No user/artist id was provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No user/artist id was provided');
+    }
 
     final jsonString =
         await _api._get('$_path/following/contains?${_buildQuery({
@@ -78,7 +84,9 @@ class Me extends _MeEndpointBase {
   /// [type] - Type of Follow\
   /// [ids] - user/artist
   Future<void> follow(FollowingType type, List<String> ids) async {
-    assert(ids.isNotEmpty, 'No user/artist id was provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No user/artist id was provided');
+    }
     await _api._put("$_path/following?type=${type._key}&ids=${ids.join(",")}");
   }
 
@@ -86,7 +94,9 @@ class Me extends _MeEndpointBase {
   /// [type] - Type of Follow\
   /// [ids] - user/artist
   Future<void> unfollow(FollowingType type, List<String> ids) async {
-    assert(ids.isNotEmpty, 'No user/artist id was provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No user/artist id was provided');
+    }
     await _api
         ._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
   }
@@ -103,17 +113,16 @@ class Me extends _MeEndpointBase {
   @Deprecated('Use [spotify.player.addToQueue()]')
   Future<void> addToQueue(String trackId) async => _player.addToQueue(trackId);
 
-  /// Get tracks from the current user’s recently played tracks.
-  /// Note: Currently doesn’t support podcast episodes.
+  /// Get tracks from the current user's recently played tracks.
+  /// Note: Currently doesn't support podcast episodes.
   CursorPages<PlayHistory> recentlyPlayed({
     int? limit,
     DateTime? after,
     DateTime? before,
   }) {
-    assert(
-      after == null || before == null,
-      'Cannot specify both after and before.',
-    );
+    if (after != null && before != null) {
+      throw ArgumentError('Cannot specify both after and before.');
+    }
 
     return _getCursorPages(
       '$_path/player/recently-played?${_buildQuery({
@@ -174,7 +183,9 @@ class Me extends _MeEndpointBase {
   /// scope.
   /// [ids] - the ids of the shows to save
   Future<void> saveShows(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No show ids were provided for saving');
+    if (ids.isEmpty) {
+      throw ArgumentError('No show ids were provided for saving');
+    }
     await _api._put('$_path/shows?${_buildQuery({'ids': ids.join(',')})}');
   }
 
@@ -184,7 +195,9 @@ class Me extends _MeEndpointBase {
   /// [market] - An ISO 3166-1 alpha-2 country code. If a country code is
   /// specified, only content that is available in that market will be returned.
   Future<void> removeShows(List<String> ids, [Market? market]) async {
-    assert(ids.isNotEmpty, 'No show ids were provided for removing');
+    if (ids.isEmpty) {
+      throw ArgumentError('No show ids were provided for removing');
+    }
     final queryMap = {
       'ids': ids.join(','),
       'market': market?.name,
@@ -193,14 +206,12 @@ class Me extends _MeEndpointBase {
   }
 
   /// Check if passed albums (ids) are saved by current user.
-  /// [ids] - list of id's to check
-  /// Returns the list of id's mapped with the response whether it has been
-  /// saved.
+  /// [ids] - list of IDs to check
+  /// Returns the list of IDs mapped with the response whether it has been saved
   Future<Map<String, bool>> containsSavedShows(List<String> ids) async {
-    assert(
-      ids.isNotEmpty,
-      'No show ids were provided for checking saved shows',
-    );
+    if (ids.isEmpty) {
+      throw ArgumentError('No show ids were provided for checking saved shows');
+    }
     final query = _buildQuery({'ids': ids.join(',')});
     final jsonString = await _api._get('$_path/shows/contains?$query');
     final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
@@ -217,7 +228,9 @@ class Me extends _MeEndpointBase {
   /// `user-library-modify` scope of Spotify WebSDK\
   /// [ids] - the ids of the albums
   Future<void> saveAlbums(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No album ids were provided for saving');
+    if (ids.isEmpty) {
+      throw ArgumentError('No album ids were provided for saving');
+    }
     await _api._put('$_path/albums?ids=${ids.join(",")}');
   }
 
@@ -225,23 +238,27 @@ class Me extends _MeEndpointBase {
   /// `user-library-modify` scope of Spotify WebSDK\
   /// [ids] - the ids of the albums
   Future<void> removeAlbums(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No album ids were provided for removing');
+    if (ids.isEmpty) {
+      throw ArgumentError('No album ids were provided for removing');
+    }
     await _api._delete('$_path/albums?ids=${ids.join(",")}');
   }
 
   /// Check if passed albums (ids) are saved by current user. The output
   /// [bool] list is in the same order as the provided album ids list
-  @Deprecated('Use [containsSavedAlbums(ids)]')
+  @Deprecated('Use [containsSavedAbums(ids)]')
   Future<List<bool>> isSavedAlbums(List<String> ids) async {
     final result = await containsSavedAlbums(ids);
     return result.values.toList();
   }
 
   /// Check if passed albums (ids) are saved by current user.
-  /// Returns the list of id's mapped with the response whether it has been
+  /// Returns the list of IDs mapped with the response whether it has been
   /// saved.
   Future<Map<String, bool>> containsSavedAlbums(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No album ids were provided for checking');
+    if (ids.isEmpty) {
+      throw ArgumentError('No album ids were provided for checking');
+    }
     final jsonString =
         await _api._get('$_path/albums/contains?ids=${ids.join(",")}');
     final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
@@ -251,19 +268,18 @@ class Me extends _MeEndpointBase {
 
   /// Returns the current user's saved episodes. Requires the
   /// `user-library-read` scope.
-  /// scope.
-  Pages<EpisodeFull> savedEpisodes() {
-    return _getPages(
-      '$_path/episodes',
-      (json) => EpisodeFull.fromJson(json['episode']),
-    );
-  }
+  Pages<EpisodeFull> savedEpisodes() => _getPages(
+        '$_path/episodes',
+        (json) => EpisodeFull.fromJson(json['episode']),
+      );
 
   /// Saves episodes for the current user. Requires the `user-library-modify`
   /// scope.
   /// [ids] - the ids of the episodes
   Future<void> saveEpisodes(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No episode ids were provided for saving');
+    if (ids.isEmpty) {
+      throw ArgumentError('No episode ids were provided for saving');
+    }
     await _api._put('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
   }
 
@@ -271,16 +287,20 @@ class Me extends _MeEndpointBase {
   /// scope.
   /// [ids] - the ids of the episodes
   Future<void> removeEpisodes(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No episode ids were provided for removing');
+    if (ids.isEmpty) {
+      throw ArgumentError('No episode ids were provided for removing');
+    }
     await _api
         ._delete('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
   }
 
   /// Check if passed episode [ids] are saved by current user.
-  /// Returns the list of id's mapped with the response whether it has been
+  /// Returns the list of IDs mapped with the response whether it has been
   /// saved.
   Future<Map<String, bool>> containsSavedEpisodes(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No episode ids were provided for checking');
+    if (ids.isEmpty) {
+      throw ArgumentError('No episode ids were provided for checking');
+    }
     final jsonString = await _api._get(
       '$_path/episodes/contains?${_buildQuery({'ids': ids.join(',')})}',
     );
@@ -304,10 +324,10 @@ enum TimeRange {
   /// available.
   longTerm(key: 'long_term'),
 
-  /// Consists of approximately last 6 months.
+  /// Consists of approximately last 6 months
   mediumTerm(key: 'medium_term'),
 
-  /// Consists of approximately last 4 weeks.
+  /// Consists of approximately last 4 weeks
   shortTerm(key: 'short_term');
 
   const TimeRange({required String key}) : _key = key;

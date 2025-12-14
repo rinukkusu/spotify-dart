@@ -22,10 +22,13 @@ class Artists extends EndpointPaging {
   @Deprecated('Use [topTracks] instead')
   Future<Iterable<Track>> getTopTracks(String artistId, String country) {
     final contains = Market.values.asNameMap().containsKey(country);
-    assert(
-      contains == true,
-      'The country code $country does not match with any Market enum value',
-    );
+    if (contains != true) {
+      throw ArgumentError.value(
+        country,
+        'country',
+        'The country code does not match with any Market enum value',
+      );
+    }
     return topTracks(artistId, Market.values.asNameMap()[country]!);
   }
 

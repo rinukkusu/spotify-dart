@@ -99,15 +99,13 @@ class PlayerEndpoint extends _MeEndpointBase {
   ///
   /// [deviceId] is optional. If not provided, the user's currently active
   /// device is the target.
-  ///
   /// [options] is optional. If not provided, playback will start
   /// from the context's current track.
-  ///
   /// [retrievePlaybackState] is optional. If true, the current playback state
   /// will be retrieved. Defaults to true.
   @Deprecated(
     'Use `startWithTracks()` or `startWithContext()` to start a new context '
-    'and resume() instead',
+    'and `resume()` instead',
   )
   Future<PlaybackState?> startOrResume({
     String? deviceId,
@@ -126,25 +124,27 @@ class PlayerEndpoint extends _MeEndpointBase {
   }
 
   /// Start a new playback context with given [trackUris] and with given
-  /// optional [deviceId].
-  ///
-  /// If not provided, the user's currently active device is the target.
-  /// Playback can also start at [positionMs], which is set to `0` by default.
+  /// optional [deviceId]. If not provided, the user's currently active device
+  /// is the target. Playback can also start at [positionMs], which is set to
+  /// `0` by default.
   ///
   /// [retrievePlaybackState] is optional. If `true`, the current
-  /// [PlaybackState] will be retrieved. Defaults to `true`.
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   ///
-  /// Note: Before starting a new playback context check the [playbackState]
-  /// if necessary before [resume]ing, otherwise you overwrite the current
-  /// context.
+  /// Note: Before starting a new playback context check the [playbackState] if
+  /// necessary before [resume]ing, otherwise you overwrite the current context.
   Future<PlaybackState?> startWithTracks(
     List<String> trackUris, {
     String? deviceId,
     int positionMs = 0,
     bool retrievePlaybackState = true,
   }) async {
-    assert(trackUris.isNotEmpty, 'Cannot start playback with empty track uris');
-    assert(positionMs >= 0, 'Position must be greater than or equal to 0');
+    if (trackUris.isEmpty) {
+      throw ArgumentError('Cannot start playback with empty track uris');
+    }
+    if (positionMs < 0) {
+      throw RangeError.range(positionMs, 0, null, 'positionMs');
+    }
 
     final options =
         StartWithUrisOptions(uris: trackUris, positionMs: positionMs);
@@ -157,26 +157,23 @@ class PlayerEndpoint extends _MeEndpointBase {
 
   /// Start a new playback context (album, playlist) with given a [contextUri].
   /// and given optional [deviceId]. If not provided, the user's currently
-  /// active device is the target.
-  ///
-  /// Set [Offset] to start playback at a specific point.
+  /// active device is the target. Set [Offset] to start playback at a specific
+  /// point.
   ///
   /// [retrievePlaybackState] is optional. If `true`, the current
-  /// [PlaybackState] will be retrieved. Defaults to `true`.
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   ///
-  /// Note: Before starting a new playback context check the [playbackState]
-  /// if necessary before [resume]ing, otherwise you overwrite the current
-  /// context.
+  /// Note: Before starting a new playback context check the [playbackState] if
+  /// necessary before [resume]ing, otherwise you overwrite the current context.
   Future<PlaybackState?> startWithContext(
     String contextUri, {
     String? deviceId,
     Offset? offset,
     bool retrievePlaybackState = true,
   }) async {
-    assert(
-      contextUri.isNotEmpty,
-      'Cannot start playback with empty context uri',
-    );
+    if (contextUri.isEmpty) {
+      throw ArgumentError('Cannot start playback with empty context uri');
+    }
     final options =
         StartWithContextOptions(contextUri: contextUri, offset: offset);
     return startOrResume(
@@ -188,10 +185,10 @@ class PlayerEndpoint extends _MeEndpointBase {
 
   /// Resume current playback on the user's active device if not specifically
   /// set with [deviceId].
-  /// [retrievePlaybackState] is optional. If `true`, the current
-  /// [PlaybackState] will be retrieved.
   ///
-  /// Defaults to `true`.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
+  /// will be retrieved. Default's to `true`.
   Future<PlaybackState?> resume({
     String? deviceId,
     bool retrievePlaybackState = true,
@@ -206,8 +203,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// [deviceId] is optional. If not provided, the user's currently active
   /// device is the target.
   ///
-  /// [retrievePlaybackState] is optional. If true, the current playback state
-  /// will be retrieved. Defaults to true.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   Future<PlaybackState?> pause({
     String? deviceId,
     bool retrievePlaybackState = true,
@@ -222,8 +219,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// [deviceId] is optional. If not provided, the user's currently active
   /// device is the target.
   ///
-  /// [retrievePlaybackState] is optional. If true, the current playback state
-  /// will be retrieved. Defaults to true.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   Future<PlaybackState?> previous({
     String? deviceId,
     bool retrievePlaybackState = true,
@@ -238,8 +235,8 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// [deviceId] is optional. If not provided, the user's currently active
   /// device is the target.
   ///
-  /// [retrievePlaybackState] is optional. If true, the current playback state
-  /// will be retrieved. Defaults to true.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   Future<PlaybackState?> next({
     String? deviceId,
     bool retrievePlaybackState = true,
@@ -249,21 +246,22 @@ class PlayerEndpoint extends _MeEndpointBase {
     return retrievePlaybackState ? playbackState() : null;
   }
 
-  /// Seeks to the given position in the user’s currently playing track.
-  ///
+  /// Seeks to the given position in the user's currently playing track.
   /// [positionMs] is required. The position in milliseconds to seek to.
   ///
   /// [deviceId] is optional. If not provided, the user's currently active
   /// device is the target.
   ///
-  /// [retrievePlaybackState] is optional. If true, the current playback state
-  /// will be retrieved. Defaults to true.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   Future<PlaybackState?> seek(
     int positionMs, {
     String? deviceId,
     bool retrievePlaybackState = true,
   }) async {
-    assert(positionMs >= 0, 'positionMs must be greater or equal to 0');
+    if (positionMs < 0) {
+      throw RangeError.range(positionMs, 0, null, 'positionMs');
+    }
     await _api._put('$_path/seek?${_buildQuery({
           'position_ms': positionMs,
           'device_id': deviceId,
@@ -273,14 +271,14 @@ class PlayerEndpoint extends _MeEndpointBase {
   }
 
   /// Set the repeat mode for the user’s playback.
-  /// [state] is required. Options are: [RepeatState.off], [RepeatState.track],
-  /// [RepeatState.context].
+  /// [state] is required. Options are: [RepeatState.off],
+  /// [RepeatState.track], [RepeatState.context].
   ///
   /// [deviceId] is optional. If not provided, the user's currently active
   /// device is the target.
   ///
-  /// [retrievePlaybackState] is optional. If true, the current playback state
-  /// will be retrieved. Defaults to true.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   Future<PlaybackState?> repeat(
     RepeatState state, {
     String? deviceId,
@@ -294,24 +292,24 @@ class PlayerEndpoint extends _MeEndpointBase {
     return retrievePlaybackState ? playbackState() : null;
   }
 
-  /// Set the volume for the user’s current playback device.
+  /// Set the volume for the user's current playback device.
+  ///
   /// [volumePercent] is required. The volume to set. Must be a value from `0`
   /// to `100` inclusive.
   ///
   /// [deviceId] is optional. If not provided, the user's currently active
   /// device is the target.
   ///
-  /// [retrievePlaybackState] is optional. If `true`, the current playback state
-  /// will be retrieved. Defaults to `true`.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   Future<PlaybackState?> volume(
     int volumePercent, {
     String? deviceId,
     bool retrievePlaybackState = true,
   }) async {
-    assert(
-      volumePercent >= 0 && volumePercent <= 100,
-      'Volume must be between 0 and 100',
-    );
+    if (volumePercent < 0 || volumePercent > 100) {
+      throw RangeError.range(volumePercent, 0, 100, 'volumePercent');
+    }
     await _api._put('$_path/volume?${_buildQuery({
           'volume_percent': volumePercent,
           'device_id': deviceId,
@@ -324,14 +322,16 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// it should start [play]ing. Default is `true`.
   ///
   /// The `AuthorizationScope.connect.modifyPlaybackState` needs to be set.
-  /// [retrievePlaybackState] is optional. If `true`, the current playback state
-  /// will be retrieved. Defaults to `true`.
+  /// [retrievePlaybackState] is optional. If `true`, the current
+  /// [PlaybackState] will be retrieved. Default's to `true`.
   Future<PlaybackState?> transfer(
     String deviceId, [
     bool play = true,
     bool retrievePlaybackState = true,
   ]) async {
-    assert(deviceId.isNotEmpty, 'No deviceId provided');
+    if (deviceId.isEmpty) {
+      throw ArgumentError('No deviceId provided');
+    }
     final jsonBody = jsonEncode({
       'device_ids': [deviceId],
       'play': play,

@@ -11,8 +11,11 @@ abstract class SpotifyApiBase {
 
   bool _shouldWait = false;
 
-  late FutureOr<oauth2.Client> _client;
-  FutureOr<oauth2.Client> get client => _client;
+  late SpotifyClient _spotifyClient;
+  SpotifyClient get spotifyClient => _spotifyClient;
+
+  @visibleForTesting
+  FutureOr<oauth2.Client> get client => _spotifyClient._inner;
 
   late Artists _artists;
   Artists get artists => _artists;
@@ -32,7 +35,9 @@ abstract class SpotifyApiBase {
   late Episodes _episodes;
   Episodes get episodes => _episodes;
 
+  // ignore: deprecated_member_use_from_same_package
   late RecommendationsEndpoint _recommendations;
+  // ignore: deprecated_member_use_from_same_package
   RecommendationsEndpoint get recommendations => _recommendations;
 
   late Markets _markets;
@@ -44,10 +49,14 @@ abstract class SpotifyApiBase {
   late Search _search;
   Search get search => _search;
 
+  // ignore: deprecated_member_use_from_same_package
   late AudioFeatures _audioFeatures;
+  // ignore: deprecated_member_use_from_same_package
   AudioFeatures get audioFeatures => _audioFeatures;
 
+  // ignore: deprecated_member_use_from_same_package
   late AudioAnalysisEndpoint _audioAnalysis;
+  // ignore: deprecated_member_use_from_same_package
   AudioAnalysisEndpoint get audioAnalysis => _audioAnalysis;
 
   late Categories _categories;
@@ -62,8 +71,8 @@ abstract class SpotifyApiBase {
   late Shows _shows;
   Shows get shows => _shows;
 
-  SpotifyApiBase.fromClient(FutureOr<http.BaseClient> client) {
-    _client = client as FutureOr<oauth2.Client>;
+  SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
+    _spotifyClient = SpotifyClient(client);
 
     _artists = Artists(this);
     _albums = Albums(this);
@@ -71,13 +80,16 @@ abstract class SpotifyApiBase {
     _tracks = Tracks(this);
     _episodes = Episodes(this);
     _playlists = Playlists(this);
+    // ignore: deprecated_member_use_from_same_package
     _recommendations = RecommendationsEndpoint(this);
     _markets = Markets(this);
     _player = PlayerEndpoint(this);
     _me = Me(this, _player);
     _users = Users(this);
     _search = Search(this);
+    // ignore: deprecated_member_use_from_same_package
     _audioFeatures = AudioFeatures(this);
+    // ignore: deprecated_member_use_from_same_package
     _audioAnalysis = AudioAnalysisEndpoint(this);
     _categories = Categories(this);
     _shows = Shows(this);
@@ -190,6 +202,27 @@ abstract class SpotifyApiBase {
     );
   }
 
+  /// [enable]s logging of the requests and responses on the debug console.
+  /// [loggingDetail] controls the logging verbosity. Default's set
+  /// to [LoggingDetail.simple].
+  /// If required [logger] is also possible for e.g. saving logs into a file
+  /// etc.
+  void enableLogging({
+    required bool enable,
+    LoggingDetail loggingDetail = LoggingDetail.simple,
+    SpotifyLogger? logger,
+  }) {
+    _spotifyClient.enableLogging = enable;
+    _spotifyClient.loggingDetail = loggingDetail;
+    _spotifyClient.logger = logger;
+  }
+
+  set loggingDetail(LoggingDetail value) {
+    if (_spotifyClient._enableLogging) {
+      _spotifyClient.loggingDetail = value;
+    }
+  }
+
   /// Expands shortened spotify [url]
   Future<String> expandLink(String url) async =>
       _streamedHeadImpl(url, const {});
@@ -217,13 +250,13 @@ abstract class SpotifyApiBase {
     return await _requestWrapper(() async {
       final request = http.Request('HEAD', Uri.parse(url));
       request.headers.addAll(headers);
-      return (await _client).send(request);
+      return _spotifyClient.send(request);
     });
   }
 
   Future<String> _getImpl(String url, Map<String, String> headers) async {
     return await _requestWrapper(
-      () async => await (await _client).get(Uri.parse(url), headers: headers),
+      () async => await _spotifyClient.get(Uri.parse(url), headers: headers),
     );
   }
 
@@ -233,8 +266,11 @@ abstract class SpotifyApiBase {
     dynamic body,
   ) async {
     return await _requestWrapper(
-      () async => await (await _client)
-          .post(Uri.parse(url), headers: headers, body: body),
+      () async => await _spotifyClient.post(
+        Uri.parse(url),
+        headers: headers,
+        body: body,
+      ),
     );
   }
 
@@ -247,9 +283,7 @@ abstract class SpotifyApiBase {
       final request = http.Request('DELETE', Uri.parse(url));
       request.headers.addAll(headers);
       request.body = body;
-      return await http.Response.fromStream(
-        await (await _client).send(request),
-      );
+      return await http.Response.fromStream(await _spotifyClient.send(request));
     });
   }
 
@@ -259,8 +293,11 @@ abstract class SpotifyApiBase {
     dynamic body,
   ) async {
     return await _requestWrapper(
-      () async => await (await _client)
-          .put(Uri.parse(url), headers: headers, body: body),
+      () async => await _spotifyClient.put(
+        Uri.parse(url),
+        headers: headers,
+        body: body,
+      ),
     );
   }
 
@@ -273,7 +310,7 @@ abstract class SpotifyApiBase {
   }) async {
     for (var i = 0; i < retryLimit; i++) {
       while (_shouldWait) {
-        await Future.delayed(Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 500));
       }
       try {
         final response = await request();
@@ -303,7 +340,7 @@ abstract class SpotifyApiBase {
   }
 
   Future<SpotifyApiCredentials> getCredentials() async {
-    return SpotifyApiCredentials._fromClient(await _client);
+    return SpotifyApiCredentials._fromClient(await client);
   }
 
   String handleResponseWithBody(http.Response response) {

@@ -74,7 +74,9 @@ class TracksMe extends EndpointPaging {
   }
 
   Future<Map<String, bool>> containsTracks(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No track ids were provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No track ids were provided');
+    }
     final limit = ids.length < 50 ? ids.length : 50;
     final idsParam = ids.sublist(0, limit).join(',');
     final jsonString = await _api._get('$_path/contains?ids=$idsParam');
@@ -85,7 +87,9 @@ class TracksMe extends EndpointPaging {
   Future<void> saveOne(String id) => save([id]);
 
   Future<void> save(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No track ids were provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No track ids were provided');
+    }
     final limit = ids.length < 50 ? ids.length : 50;
     final idsParam = ids.sublist(0, limit).join(',');
     await _api._put('$_path?ids=$idsParam', '');
@@ -96,7 +100,9 @@ class TracksMe extends EndpointPaging {
   }
 
   Future<void> remove(List<String> ids) async {
-    assert(ids.isNotEmpty, 'No track ids were provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No track ids were provided');
+    }
     final limit = ids.length < 50 ? ids.length : 50;
     final idsParam = ids.sublist(0, limit).join(',');
     await _api._delete('$_path?ids=$idsParam');

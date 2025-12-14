@@ -16,15 +16,13 @@ class Playlists extends EndpointPaging {
     );
   }
 
-  /// Returns the featured playlists.
-  Pages<PlaylistSimple> get featured {
-    return _getPages(
-      '$_path/featured-playlists',
-      (json) => PlaylistSimple.fromJson(json),
-      'playlists',
-      (json) => PlaylistsFeatured.fromJson(json),
-    );
-  }
+  /// Returns the featuerd playlists
+  Pages<PlaylistSimple> get featured => _getPages(
+        '$_path/featured-playlists',
+        (json) => PlaylistSimple.fromJson(json),
+        'playlists',
+        (json) => PlaylistsFeatured.fromJson(json),
+      );
 
   Pages<PlaylistSimple> get me {
     return _getPages(
@@ -39,7 +37,9 @@ class Playlists extends EndpointPaging {
     int limit = defaultLimit,
     int offset = 0,
   ]) {
-    assert(userId.isNotEmpty, 'UserId cannot be empty');
+    if (userId.isEmpty) {
+      throw ArgumentError('UserId cannot be empty');
+    }
     return _getPages(
       'v1/users/$userId/playlists',
       (json) => PlaylistSimple.fromJson(json),
@@ -179,8 +179,12 @@ class Playlists extends EndpointPaging {
   /// item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh") to a
   /// playlist with [playlistId]
   Future<void> addTracks(List<String> uris, String playlistId) async {
-    assert(playlistId.isNotEmpty, 'No playlist id was provided');
-    assert(uris.isNotEmpty, 'No uris provided');
+    if (playlistId.isEmpty) {
+      throw ArgumentError('No playlist id was provided');
+    }
+    if (uris.isEmpty) {
+      throw ArgumentError('No uris provided');
+    }
     final url = 'v1/playlists/$playlistId/tracks';
     await _api._post(url, jsonEncode({'uris': uris}));
   }
@@ -190,12 +194,16 @@ class Playlists extends EndpointPaging {
   /// [trackUri] - the Spotify track uri
   /// (i.e each list item in the format of
   /// "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
+  ///
+  /// [positions] - the positions of the tracks to remove.
   Future<void> removeTrack(
     String trackUri,
     String playlistId, [
     List<int>? positions,
   ]) async {
-    assert(playlistId.isNotEmpty, 'No playlist id was provided');
+    if (playlistId.isEmpty) {
+      throw ArgumentError('No playlist id was provided');
+    }
     final url = 'v1/playlists/$playlistId/tracks';
     final track = <String, dynamic>{'uri': trackUri};
     if (positions != null) {
@@ -213,8 +221,12 @@ class Playlists extends EndpointPaging {
   /// (i.e each list item in the format of
   /// "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
   Future<void> removeTracks(List<String> trackUris, String playlistId) async {
-    assert(trackUris.isNotEmpty, 'No trackUris are provided');
-    assert(playlistId.isNotEmpty, 'No playlist id was provided');
+    if (trackUris.isEmpty) {
+      throw ArgumentError('No trackUris are provided');
+    }
+    if (playlistId.isEmpty) {
+      throw ArgumentError('No playlist id was provided');
+    }
     final url = 'v1/playlists/$playlistId/tracks';
     final tracks =
         trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
@@ -231,7 +243,9 @@ class Playlists extends EndpointPaging {
   ///
   /// Returns a new `snapshotId` for the playlist.
   Future<String> replace(String playlistId, List<String> uris) async {
-    assert(uris.isNotEmpty, 'No uris provided');
+    if (uris.isEmpty) {
+      throw ArgumentError('No uris provided');
+    }
     return _replace(playlistId, uris);
   }
 
@@ -271,7 +285,9 @@ class Playlists extends EndpointPaging {
     int rangeLength = 1,
     String? snapshotId,
   }) async {
-    assert(rangeStart >= 0, 'rangeStart out of bounds');
+    if (rangeStart < 0) {
+      throw RangeError.range(rangeStart, 0, null, 'rangeStart');
+    }
     final body = <String, dynamic>{
       'range_start': rangeStart,
       'insert_before': insertBefore,
@@ -288,7 +304,9 @@ class Playlists extends EndpointPaging {
   ///
   /// Returns a new `snapshotId` of the playlist.
   Future<String> _reorderOrReplace(String playlistId, String body) async {
-    assert(playlistId.isNotEmpty, 'No playlist id was provided');
+    if (playlistId.isEmpty) {
+      throw ArgumentError('No playlist id was provided');
+    }
     return await _api._put('v1/playlists/$playlistId/tracks', body);
   }
 
@@ -359,7 +377,9 @@ class Playlists extends EndpointPaging {
     String playlistId,
     List<String> userIds,
   ) async {
-    assert(userIds.isNotEmpty, 'No user id was provided for checking');
+    if (userIds.isEmpty) {
+      throw ArgumentError('No user id was provided for checking');
+    }
     final jsonString = await _api._get(
       'v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',
     );
@@ -369,7 +389,9 @@ class Playlists extends EndpointPaging {
 
   /// Returns the cover images of [playlistId]
   Future<Iterable<Image>> images(String playlistId) async {
-    assert(playlistId.isNotEmpty, 'PlaylistId cannot be empty');
+    if (playlistId.isEmpty) {
+      throw ArgumentError('PlaylistId cannot be empty');
+    }
     final jsonString = await _api._get('v1/playlists/$playlistId/images');
     final items = json.decode(jsonString) as Iterable<dynamic>;
     return items.map((item) => Image.fromJson(item));

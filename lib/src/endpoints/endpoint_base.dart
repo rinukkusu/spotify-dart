@@ -18,14 +18,10 @@ abstract class EndpointBase {
   Future<String> _post(String path, String body) => _api._post(path, body);
 
   String _buildQuery(Map<String, dynamic> query) {
-    final filteredQuery = Map.fromIterable(
-      query.keys.where((key) => query[key] != null),
-      value: (key) => query[key],
-    );
+    final filteredQuery = {...query}
+      ..removeWhere((key, value) => value == null);
 
-    return filteredQuery.entries
-        .map((entry) => '${entry.key}=${entry.value}')
-        .join('&');
+    return Uri(queryParameters: filteredQuery).query;
   }
 
   /// Generic method that requests a set of [T]'s with their given [ids].
@@ -36,7 +32,9 @@ abstract class EndpointBase {
     required T Function(Map<String, dynamic>) fromJson,
     Map<String, dynamic>? optionalParams,
   }) async {
-    assert(ids.isNotEmpty, 'No id\'s were provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No id\'s were provided');
+    }
 
     // filling the params
     final params = <String, dynamic>{'ids': ids.join(',')};

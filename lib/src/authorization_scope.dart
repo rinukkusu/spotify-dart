@@ -14,23 +14,24 @@ class AuthorizationScope {
   static const UserAuthorizationScope user = UserAuthorizationScope();
 
   /// Scope regarding playback
-  static PlaylistAuthorizationScope playlist = PlaylistAuthorizationScope();
+  static PlaylistAuthorizationScope playlist =
+      const PlaylistAuthorizationScope();
 
   /// Scope regarding images (e.g. playlist images)
-  static ImagesAuthorizationScope images = ImagesAuthorizationScope();
+  static ImagesAuthorizationScope images = const ImagesAuthorizationScope();
 
   /// Scope regarding Spotify Connect
-  static ConnectAuthorizationScope connect = ConnectAuthorizationScope();
+  static ConnectAuthorizationScope connect = const ConnectAuthorizationScope();
 
   /// Scope regarding the user's library
   static LibraryAuthorizationScope library = LibraryAuthorizationScope();
 
   /// Scope regarding the user's listening history
   static ListeningHistoryAuthorizationScope listen =
-      ListeningHistoryAuthorizationScope();
+      const ListeningHistoryAuthorizationScope();
 
   /// Scope regarding following artists or users
-  static FollowAuthorizationScope follow = FollowAuthorizationScope();
+  static FollowAuthorizationScope follow = const FollowAuthorizationScope();
 
   static final all = List.unmodifiable([
     ...user.all,

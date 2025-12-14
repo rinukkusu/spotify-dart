@@ -24,3 +24,7 @@ linter:
     - lines_longer_than_80_chars
     - require_trailing_commas
     - prefer_single_quotes
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables

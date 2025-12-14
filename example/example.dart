@@ -4,8 +4,6 @@
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-// cspell: disable
-
 import 'dart:io';
 import 'dart:convert';
 import 'package:spotify/spotify.dart';
@@ -16,10 +14,9 @@ void main() async {
 
   var credentials = SpotifyApiCredentials(keyMap['id'], keyMap['secret']);
   final spotify = SpotifyApi(credentials);
+  spotify.enableLogging(enable: true);
 
-  print(
-    '\nExpanding shortened spotify link of https://spotify.link/hRkBrwub9xb',
-  );
+  print('\nExpannd shortened spotify link of https://spotify.link/hRkBrwub9xb');
   final longLink = await spotify.expandLink('https://spotify.link/hRkBrwub9xb');
   print(longLink);
 
