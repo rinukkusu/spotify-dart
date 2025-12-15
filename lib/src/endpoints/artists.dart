@@ -12,8 +12,8 @@ class Artists extends EndpointPaging {
 
   /// Retrieves an artist with its [artistId]
   Future<Artist> get(String artistId) async {
-    var jsonString = await _api._get('$_path/$artistId');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$artistId');
+    final map = json.decode(jsonString);
 
     return Artist.fromJson(map);
   }
@@ -21,43 +21,47 @@ class Artists extends EndpointPaging {
   /// Returns the top tracks of an artist with its [artistId] inside a [country]
   @Deprecated('Use [topTracks] instead')
   Future<Iterable<Track>> getTopTracks(String artistId, String country) {
-    var contains = Market.values.asNameMap().containsKey(country);
+    final contains = Market.values.asNameMap().containsKey(country);
     if (contains != true) {
-      throw ArgumentError.value(country, 'country',
-          'The country code does not match with any Market enum value');
+      throw ArgumentError.value(
+        country,
+        'country',
+        'The country code does not match with any Market enum value',
+      );
     }
     return topTracks(artistId, Market.values.asNameMap()[country]!);
   }
 
   /// Returns the top tracks of an artist with its [artistId] inside a [country]
   Future<Iterable<Track>> topTracks(String artistId, Market country) async {
-    var query = _buildQuery({
+    final query = _buildQuery({
       'country': country.name,
     });
-    var jsonString = await _api._get('$_path/$artistId/top-tracks?$query');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$artistId/top-tracks?$query');
+    final map = json.decode(jsonString);
 
-    var topTracks = map['tracks'] as Iterable<dynamic>;
+    final topTracks = map['tracks'] as Iterable<dynamic>;
     return topTracks.map((m) => Track.fromJson(m));
   }
 
   /// Returns related artists based on the artist with its [artistId]
   @Deprecated('Use relatedArtists instead')
-  Future<Iterable<Artist>> getRelatedArtists(String artistId) async =>
-      relatedArtists(artistId);
+  Future<Iterable<Artist>> getRelatedArtists(String artistId) async => relatedArtists(artistId);
 
   /// Retrieves multiple artists with [artistIds]
   Future<Iterable<Artist>> list(List<String> artistIds) async => _listWithIds(
-      path: _path,
-      ids: artistIds,
-      jsonKey: 'artists',
-      fromJson: Artist.fromJson);
+        path: _path,
+        ids: artistIds,
+        jsonKey: 'artists',
+        fromJson: Artist.fromJson,
+      );
 
   /// Returns related artists based on the artist with its [artistId]
   Future<Iterable<Artist>> relatedArtists(String artistId) async => _list(
-      path: '$_path/$artistId/related-artists',
-      jsonKey: 'artists',
-      fromJson: Artist.fromJson);
+        path: '$_path/$artistId/related-artists',
+        jsonKey: 'artists',
+        fromJson: Artist.fromJson,
+      );
 
   /// [includeGroups] - A comma-separated list of keywords that will be used to
   /// filter the response. If not supplied, all album types will be returned.
@@ -80,6 +84,8 @@ class Artists extends EndpointPaging {
       'country': country?.name,
     });
     return _getPages(
-        '$_path/$artistId/albums?$query', (json) => Album.fromJson(json));
+      '$_path/$artistId/albums?$query',
+      (json) => Album.fromJson(json),
+    );
   }
 }

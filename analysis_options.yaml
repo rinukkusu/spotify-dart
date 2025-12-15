@@ -1,15 +1,31 @@
 include: package:lints/recommended.yaml
 
 analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
+  exclude:
+    - '**/*.g.dart'
+    - 'build/**'
+
+formatter:
+  page_width: 120
+  trailing_commas: preserve
 
 # Lint rules and documentation, see https://dart.dev/tools/linter-rules
 linter:
   rules:
-    - cancel_subscriptions
-    - close_sinks
-    - hash_and_equals
-    - test_types_in_equals
-    - unrelated_type_equality_checks
-    - valid_regexps
+    cancel_subscriptions: true
+    close_sinks: true
+    hash_and_equals: true
+    test_types_in_equals: true
+    unrelated_type_equality_checks: true
+    valid_regexps: true
+    prefer_final_fields: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    require_trailing_commas: true
+    prefer_single_quotes: true
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+
+    lines_longer_than_80_chars: false

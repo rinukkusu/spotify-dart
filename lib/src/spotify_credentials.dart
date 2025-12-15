@@ -71,8 +71,7 @@ class SpotifyApiCredentials {
   /// Note that it's possible the credentials will expire shortly after this is
   /// called. However, since the client's expiration date is kept a few seconds
   /// earlier than the server's, there should be enough leeway to rely on this.
-  bool get isExpired =>
-      expiration != null && DateTime.now().isAfter(expiration!);
+  bool get isExpired => expiration != null && DateTime.now().isAfter(expiration!);
 
   /// Whether it's possible to refresh these credentials.
   bool get canRefresh => refreshToken != null && tokenEndpoint != null;

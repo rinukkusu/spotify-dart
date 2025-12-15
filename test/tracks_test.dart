@@ -4,7 +4,7 @@ import 'spotify_mock.dart';
 import 'package:test/test.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -12,7 +12,7 @@ Future main() async {
 
   group('Tracks', () {
     test('containsTracks', () async {
-      var result = await spotify.tracks.me.containsTracks(['1', '2', '3']);
+      final result = await spotify.tracks.me.containsTracks(['1', '2', '3']);
 
       expect(result.length, 3);
       expect(result['1'], isTrue);

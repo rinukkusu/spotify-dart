@@ -1,18 +1,21 @@
 // Copyright (c) 2024 IT Path Solutions, hayribakici
 //
 // MIT-Licence
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-// associated documentation files (the “Software”), to deal in the Software without restriction,
-// including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
-// subject to the following conditions:
-// The above copyright notice and this permission notice shall be included in all copies or substantial
-// portions of the Software.
-// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
-// OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the “Software”), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 part of '../spotify.dart';
 
@@ -50,10 +53,15 @@ final class SpotifyClient with http.BaseClient {
       final response = await (await _inner).get(url, headers: headers);
 
       // Log GET response details based on the level of detail
-      _logger.i(_logString('✅ 🌐 GET Response 🌐 ✅', url,
+      _logger.i(
+        _logString(
+          '✅ 🌐 GET Response 🌐 ✅',
+          url,
           headers: response.headers,
           body: response.body,
-          statusCode: response.statusCode));
+          statusCode: response.statusCode,
+        ),
+      );
 
       return response;
     } catch (error) {
@@ -68,7 +76,7 @@ final class SpotifyClient with http.BaseClient {
     if (!_enableLogging) {
       return await (await _inner).send(request);
     }
-    var output = StringBuffer();
+    final output = StringBuffer();
     try {
       // not using the _logString method here on purpose
       // Log request details
@@ -84,7 +92,7 @@ final class SpotifyClient with http.BaseClient {
       }
       if (_loggingFull) {
         output.writeln();
-        String requestData = (request is http.Request)
+        final String requestData = (request is http.Request)
             ? '📤 Request Data: ${request.body}'
             : '📤 Request Data: Not applicable for this type of request';
         output.write(requestData);
@@ -122,33 +130,45 @@ final class SpotifyClient with http.BaseClient {
       return streamedResponse;
     } catch (error) {
       // Log request error
-      String requestErrorData =
-          (request is http.Request) ? '\n❗ Request Data: ${request.body}' : '';
+      final String requestErrorData = (request is http.Request) ? '\n❗ Request Data: ${request.body}' : '';
       _logger.e('❌ ❗ ERROR ❗ ❌\n❗ Error Message: $error$requestErrorData');
       rethrow; // Rethrow the error after logging
     }
   }
 
   @override
-  Future<http.Response> delete(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+  Future<http.Response> delete(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .delete(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).delete(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log delete request details
-      _logger.i(_logString('🚀 🌐 DELETE Request 🌐 🚀', url,
-          headers: headers, body: body));
+      _logger.i(
+        _logString(
+          '🚀 🌐 DELETE Request 🌐 🚀',
+          url,
+          headers: headers,
+          body: body,
+        ),
+      );
 
       // Perform the delete request
-      final response = await (await _inner)
-          .delete(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).delete(url, headers: headers, body: body, encoding: encoding);
       // Log delete response details
-      _logger.i(_logString('✅ 🌐 DELETE Response 🌐 ✅', url,
+      _logger.i(
+        _logString(
+          '✅ 🌐 DELETE Response 🌐 ✅',
+          url,
           statusCode: response.statusCode,
           headers: response.headers,
-          body: response.body));
+          body: response.body,
+        ),
+      );
       return response;
     } catch (error) {
       // Log delete error
@@ -158,26 +178,39 @@ final class SpotifyClient with http.BaseClient {
   }
 
   @override
-  Future<http.Response> post(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+  Future<http.Response> post(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .post(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).post(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log post request details
-      _logger.i(_logString('🚀 🌐 POST Request 🌐 🚀', url,
-          headers: headers, body: body));
+      _logger.i(
+        _logString(
+          '🚀 🌐 POST Request 🌐 🚀',
+          url,
+          headers: headers,
+          body: body,
+        ),
+      );
 
       // Perform the post request
-      final response = await (await _inner)
-          .post(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).post(url, headers: headers, body: body, encoding: encoding);
 
       // Log post response details
-      _logger.i(_logString('✅ 🌐 POST Response 🌐 ✅', url,
+      _logger.i(
+        _logString(
+          '✅ 🌐 POST Response 🌐 ✅',
+          url,
           headers: response.headers,
           statusCode: response.statusCode,
-          body: response.body));
+          body: response.body,
+        ),
+      );
 
       return response;
     } catch (error) {
@@ -188,26 +221,39 @@ final class SpotifyClient with http.BaseClient {
   }
 
   @override
-  Future<http.Response> patch(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+  Future<http.Response> patch(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .patch(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).patch(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log patch request details
-      _logger.i(_logString('🚀 🌐 PATCH Request 🌐 🚀', url,
-          headers: headers, body: body));
+      _logger.i(
+        _logString(
+          '🚀 🌐 PATCH Request 🌐 🚀',
+          url,
+          headers: headers,
+          body: body,
+        ),
+      );
 
       // Perform the patch request
-      final response = await (await _inner)
-          .patch(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).patch(url, headers: headers, body: body, encoding: encoding);
 
       // Log patch response details
-      _logger.i(_logString('✅ 🌐 PATCH Response 🌐 ✅', url,
+      _logger.i(
+        _logString(
+          '✅ 🌐 PATCH Response 🌐 ✅',
+          url,
           statusCode: response.statusCode,
           headers: response.headers,
-          body: response.body));
+          body: response.body,
+        ),
+      );
 
       return response;
     } catch (error) {
@@ -218,26 +264,39 @@ final class SpotifyClient with http.BaseClient {
   }
 
   @override
-  Future<http.Response> put(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+  Future<http.Response> put(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     if (!_enableLogging) {
-      return await (await _inner)
-          .put(url, headers: headers, body: body, encoding: encoding);
+      return await (await _inner).put(url, headers: headers, body: body, encoding: encoding);
     }
     try {
       // Log put request details
-      _logger.i(_logString('🚀 🌐 PUT Request 🌐 🚀', url,
-          headers: headers, body: body));
+      _logger.i(
+        _logString(
+          '🚀 🌐 PUT Request 🌐 🚀',
+          url,
+          headers: headers,
+          body: body,
+        ),
+      );
 
       // Perform the put request
-      final response = await (await _inner)
-          .put(url, headers: headers, body: body, encoding: encoding);
+      final response = await (await _inner).put(url, headers: headers, body: body, encoding: encoding);
 
       // Log put response details
-      _logger.i(_logString('✅ 🌐 PUT Response 🌐 ✅', url,
+      _logger.i(
+        _logString(
+          '✅ 🌐 PUT Response 🌐 ✅',
+          url,
           statusCode: response.statusCode,
           headers: response.headers,
-          body: response.body));
+          body: response.body,
+        ),
+      );
 
       return response;
     } catch (error) {
@@ -260,8 +319,14 @@ final class SpotifyClient with http.BaseClient {
       final response = await (await _inner).head(url, headers: headers);
 
       // Log head response details
-      _logger.i(_logString('✅ 🌐 Head Response 🌐 ✅', url,
-          statusCode: response.statusCode, headers: response.headers));
+      _logger.i(
+        _logString(
+          '✅ 🌐 Head Response 🌐 ✅',
+          url,
+          statusCode: response.statusCode,
+          headers: response.headers,
+        ),
+      );
 
       return response;
     } catch (error) {
@@ -280,17 +345,23 @@ final class SpotifyClient with http.BaseClient {
       // Log read request details
       _logger.i(_logString('🚀 🌐 READ Request 🌐 🚀', url, headers: headers));
 
-      // Perform the read request using the http package (replace this with your actual implementation)
+      // Perform the read request using the http package
       final response = await http.get(url, headers: headers);
 
       // Log read response details
-      _logger.i(_logString('✅ 🌐 READ Response 🌐 ✅', url,
-          headers: response.headers, body: response.body));
+      _logger.i(
+        _logString(
+          '✅ 🌐 READ Response 🌐 ✅',
+          url,
+          headers: response.headers,
+          body: response.body,
+        ),
+      );
 
       return response.body;
     } catch (error) {
       // Log read error
-      _logger.e(_logError("READ", error));
+      _logger.e(_logError('READ', error));
       rethrow; // Rethrow the error after logging
     }
   }
@@ -303,16 +374,22 @@ final class SpotifyClient with http.BaseClient {
     try {
       // Log readBytes request details
       _logger.i(
-          _logString('🚀 🌐 ReadBytes Request 🌐 🚀', url, headers: headers));
+        _logString('🚀 🌐 ReadBytes Request 🌐 🚀', url, headers: headers),
+      );
 
-      // Perform the readBytes request using the http package (replace this with your actual implementation)
+      // Perform the readBytes request using the http package
       final response = await http.get(url, headers: headers);
 
       // Log readBytes response details
-      _logger.i(_logString('✅ 🌐 ReadBytes Response 🌐 ✅', url,
+      _logger.i(
+        _logString(
+          '✅ 🌐 ReadBytes Response 🌐 ✅',
+          url,
           statusCode: response.statusCode,
           headers: response.headers,
-          body: response.bodyBytes));
+          body: response.bodyBytes,
+        ),
+      );
 
       return response.bodyBytes;
     } catch (error) {
@@ -329,16 +406,18 @@ final class SpotifyClient with http.BaseClient {
 
   bool get _loggingFull => _detail.index >= LoggingDetail.full.index;
 
-  String _headersLog(Map<String, String>? headers) =>
-      headers != null && headers.isNotEmpty
-          ? headers.entries
-              .map((entry) => '  • ${entry.key}: ${entry.value}')
-              .join('\n')
-          : 'None';
+  String _headersLog(Map<String, String>? headers) => headers != null && headers.isNotEmpty
+      ? headers.entries.map((entry) => '  • ${entry.key}: ${entry.value}').join('\n')
+      : 'None';
 
-  String _logString(String title, Uri url,
-      {Map<String, String>? headers, int? statusCode, Object? body}) {
-    var buf = StringBuffer();
+  String _logString(
+    String title,
+    Uri url, {
+    Map<String, String>? headers,
+    int? statusCode,
+    Object? body,
+  }) {
+    final buf = StringBuffer();
     buf.writeln(title);
     buf.write('🔗 URL: $url');
     if (statusCode != null) {
@@ -352,15 +431,14 @@ final class SpotifyClient with http.BaseClient {
     }
     if (_loggingFull) {
       buf.writeln();
-      String bodyLog = (body != null) ? '📤 Data: $body' : '📤 Data: None';
+      final String bodyLog = (body != null) ? '📤 Data: $body' : '📤 Data: None';
       buf.write(bodyLog);
     }
     return buf.toString();
   }
 }
 
-String _logError(String request, Object error) =>
-    '❌ ❗ $request Request Failed ❗ ❌\n❗ Error Message: $error';
+String _logError(String request, Object error) => '❌ ❗ $request Request Failed ❗ ❌\n❗ Error Message: $error';
 
 /// Sets how much information is displayed in the http logging
 enum LoggingDetail {

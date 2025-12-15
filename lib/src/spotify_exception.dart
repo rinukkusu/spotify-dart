@@ -22,6 +22,5 @@ class SpotifyException implements Exception {
 class ApiRateException extends SpotifyException {
   final num retryAfter;
 
-  ApiRateException.fromSpotify(super.error, this.retryAfter)
-      : super.fromSpotify();
+  ApiRateException.fromSpotify(super.error, this.retryAfter) : super.fromSpotify();
 }

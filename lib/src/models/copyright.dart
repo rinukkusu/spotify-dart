@@ -8,8 +8,7 @@ part of '_models.dart';
 class Copyright extends Object {
   Copyright();
 
-  factory Copyright.fromJson(Map<String, dynamic> json) =>
-      _$CopyrightFromJson(json);
+  factory Copyright.fromJson(Map<String, dynamic> json) => _$CopyrightFromJson(json);
 
   Map<String, dynamic> toJson() => _$CopyrightToJson(this);
 

@@ -5,8 +5,7 @@ part of '_models.dart';
 class Recommendations extends Object {
   Recommendations();
 
-  factory Recommendations.fromJson(Map<String, dynamic> json) =>
-      _$RecommendationsFromJson(json);
+  factory Recommendations.fromJson(Map<String, dynamic> json) => _$RecommendationsFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecommendationsToJson(this);
 
@@ -23,8 +22,7 @@ class Recommendations extends Object {
 class RecommendationsSeed extends Object {
   RecommendationsSeed();
 
-  factory RecommendationsSeed.fromJson(Map<String, dynamic> json) =>
-      _$RecommendationsSeedFromJson(json);
+  factory RecommendationsSeed.fromJson(Map<String, dynamic> json) => _$RecommendationsSeedFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecommendationsSeedToJson(this);
 

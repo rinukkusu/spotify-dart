@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -13,13 +13,13 @@ Future main() async {
 
   group('User', () {
     test('currentlyPlaying', () async {
-      var result = await spotify.player.currentlyPlaying();
+      final result = await spotify.player.currentlyPlaying();
 
       expect(result.item!.name, 'As I Am');
     });
 
     test('Devices', () async {
-      var result = await spotify.player.devices();
+      final result = await spotify.player.devices();
       expect(result.length, 2);
       expect(result.first.id, '5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e');
       expect(result.first.isActive, true);
@@ -36,15 +36,13 @@ Future main() async {
 
     test('recentlyPlayed', () async {
       // the parameters don't do anything. They are just dummies
-      var result = await spotify.me
-          .recentlyPlayed(limit: 3, before: DateTime.now())
-          .all();
+      final result = await spotify.me.recentlyPlayed(limit: 3, before: DateTime.now()).all();
       expect(result.length, 2);
-      var first = result.first;
+      final first = result.first;
       expect(first.track != null, true);
 
       // just testing some sample attributes
-      var firstTrack = first.track;
+      final firstTrack = first.track;
       expect(firstTrack!.durationMs, 108546);
       expect(firstTrack.explicit, false);
       expect(firstTrack.id, '2gNfxysfBRfl9Lvi9T3v6R');
@@ -57,13 +55,13 @@ Future main() async {
       expect(firstTrack.album!.id, '79dL7FLiJFOO0EoehUHQBv');
       expect(firstTrack.popularity, 75);
 
-      var second = result.last;
+      final second = result.last;
       expect(second.playedAt, DateTime.tryParse('2016-12-13T20:42:17.016Z'));
       expect(second.context!.uri, 'spotify:artist:5INjqkS1o8h1imAzPqGZBb');
     });
 
     test('getQueue', () async {
-      var result = await spotify.player.queue();
+      final result = await spotify.player.queue();
       final currentlyPlaying = result.currentlyPlaying;
       final queue = result.queue;
 
@@ -81,12 +79,12 @@ Future main() async {
     });
 
     test('following', () async {
-      var result = spotify.me.following(FollowingType.artist);
+      final result = spotify.me.following(FollowingType.artist);
 
-      var first = await result.first();
+      final first = await result.first();
       expect(first.items!.length, 1);
 
-      var firstArtist = first.items!.first;
+      final firstArtist = first.items!.first;
       expect(firstArtist.name, 'Afasi & Filthy');
       expect(firstArtist.popularity, 54);
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
@@ -96,7 +94,7 @@ Future main() async {
       final result = await spotify.me.checkFollowing(FollowingType.artist, [
         '2CIMQHirSU0MQqyYHq0eOx',
         '57dN52uHvrHOxijzpIgu3E',
-        '1vCWHaC5f2uS3yhpwWbIA6'
+        '1vCWHaC5f2uS3yhpwWbIA6',
       ]);
       expect(result.isNotEmpty, isTrue);
       expect(result['2CIMQHirSU0MQqyYHq0eOx'], isTrue);
@@ -109,7 +107,7 @@ Future main() async {
         final result = await spotify.me.topTracks().first();
         expect(result.items?.length, 2);
 
-        var firstItem = result.items?.first;
+        final firstItem = result.items?.first;
         expect(firstItem?.album?.albumType, AlbumType.album);
         expect(firstItem?.album?.name, 'Ali');
         expect(firstItem?.album?.uri, 'spotify:album:4dfAJiDQHQf4dGX0ZdtxPh');
@@ -121,25 +119,25 @@ Future main() async {
         final result = await spotify.me.topArtists().first();
         expect(result.items?.length, 2);
 
-        var firstItem = result.items?.first;
+        final firstItem = result.items?.first;
         expect(firstItem?.name, 'Porcupine Tree');
       });
     });
 
     group('me/shows', () {
       test('savedShows', () async {
-        var pages = spotify.me.savedShows();
-        var result = await pages.first(2);
+        final pages = spotify.me.savedShows();
+        final result = await pages.first(2);
         expect(result.items!.length, 2);
 
-        var firstShow = result.items!.first;
+        final firstShow = result.items!.first;
         expect(firstShow.type, 'show');
         expect(firstShow.name != null, true);
         expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
       });
 
       test('containsShows', () async {
-        var response = await spotify.me.containsSavedShows(['one', 'two']);
+        final response = await spotify.me.containsSavedShows(['one', 'two']);
         expect(response.isNotEmpty, true);
         expect(response['one'], true);
         expect(response['two'], false);
@@ -158,7 +156,7 @@ Future main() async {
         final albumIds = [
           '382ObEPsp2rxGrESizN5TX',
           '1A2GTWGtFfWp7KSQTwWOyo',
-          '2noRn2Aes5aoNVsU6iWThc'
+          '2noRn2Aes5aoNVsU6iWThc',
         ];
 
         final list = await spotify.me.containsSavedAlbums(albumIds);
@@ -172,11 +170,11 @@ Future main() async {
 
     group('me/episodes', () {
       test('savedEpisodes', () async {
-        var pages = spotify.me.savedEpisodes();
-        var result = await pages.first(2);
+        final pages = spotify.me.savedEpisodes();
+        final result = await pages.first(2);
         expect(result.items!.length, 1);
 
-        var firstEpisode = result.items!.first;
+        final firstEpisode = result.items!.first;
         expect(firstEpisode.type, 'episode');
         expect(firstEpisode.name, isNotNull);
         expect(firstEpisode.id, '5Xt5DXGzch68nYYamXrNxZ');
@@ -187,7 +185,7 @@ Future main() async {
         final episodeIds = [
           '5Xt5DXGzch68nYYamXrNxZ',
           '1A2GTWGtFfWp7KSQTwWOyo',
-          '2noRn2Aes5aoNVsU6iWThc'
+          '2noRn2Aes5aoNVsU6iWThc',
         ];
 
         final list = await spotify.me.containsSavedEpisodes(episodeIds);

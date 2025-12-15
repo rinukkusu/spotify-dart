@@ -1,5 +1,6 @@
-// Copyright (c) 2017, 2018, hayribakici, chances. All rights reserved. Use of this source code
-// is governed by a BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2017, 2018, hayribakici, chances. All rights reserved. Use of
+// this source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 part of '../../spotify.dart';
 
@@ -9,28 +10,53 @@ typedef FilterFunction = bool Function(dynamic json);
 abstract class EndpointPaging extends EndpointBase {
   EndpointPaging(super.api);
 
-  Pages<T> _getPages<T>(String path, ParserFunction<T> pageItemParser,
-          [String? pageKey,
-          ParserFunction<Object>? pageContainerParser,
-          FilterFunction? pageItemFilter]) =>
-      Pages(_api, path, pageItemParser, pageKey, pageContainerParser,
-          pageItemFilter);
+  Pages<T> _getPages<T>(
+    String path,
+    ParserFunction<T> pageItemParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) =>
+      Pages(
+        _api,
+        path,
+        pageItemParser,
+        pageKey,
+        pageContainerParser,
+        pageItemFilter,
+      );
 
   CursorPages<T> _getCursorPages<T>(
-          String path, ParserFunction<T> pageItemParser,
-          [String? pageKey,
-          ParserFunction<Object>? pageContainerParser,
-          FilterFunction? pageItemFilter]) =>
-      CursorPages(_api, path, pageItemParser, pageKey, pageContainerParser,
-          pageItemFilter);
+    String path,
+    ParserFunction<T> pageItemParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) =>
+      CursorPages(
+        _api,
+        path,
+        pageItemParser,
+        pageKey,
+        pageContainerParser,
+        pageItemFilter,
+      );
 
   BundledPages _getBundledPages<T>(
-          String path, Map<String, ParserFunction<T>> pageItemParsers,
-          [String? pageKey,
-          ParserFunction<Object>? pageContainerParser,
-          FilterFunction? pageItemFilter]) =>
-      BundledPages(_api, path, pageItemParsers, pageKey, pageContainerParser,
-          pageItemFilter);
+    String path,
+    Map<String, ParserFunction<T>> pageItemParsers, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) =>
+      BundledPages(
+        _api,
+        path,
+        pageItemParsers,
+        pageKey,
+        pageContainerParser,
+        pageItemFilter,
+      );
 }
 
 const defaultLimit = 20;
@@ -41,11 +67,13 @@ abstract class BasePage<T> {
   Iterable<T>? _items;
   Object? _container;
 
-  BasePage(this._paging, ParserFunction<T> pageItemParser,
-      [Object? pageContainer, FilterFunction? pageItemFilter]) {
-    final filteredItems = pageItemFilter != null
-        ? _paging.itemsNative!.where(pageItemFilter)
-        : _paging.itemsNative!;
+  BasePage(
+    this._paging,
+    ParserFunction<T> pageItemParser, [
+    Object? pageContainer,
+    FilterFunction? pageItemFilter,
+  ]) {
+    final filteredItems = pageItemFilter != null ? _paging.itemsNative!.where(pageItemFilter) : _paging.itemsNative!;
     _items = filteredItems.map(pageItemParser);
     _container = pageContainer;
   }
@@ -77,18 +105,22 @@ abstract class BasePage<T> {
 
 /// A page that uses an offset to get to the next page.
 class Page<T> extends BasePage<T> {
-  Page(Paging<T> super._paging, super.pageItemParser,
-      [super.pageContainer, super.pageItemFilter]);
+  Page(
+    Paging<T> super._paging,
+    super.pageItemParser, [
+    super.pageContainer,
+    super.pageItemFilter,
+  ]);
 
   @override
   bool get isLast {
-    var paging = _paging as Paging<T>;
+    final paging = _paging as Paging<T>;
     return (paging.offset ?? 0) + paging.limit >= paging.total;
   }
 
   @override
   dynamic get _next {
-    var paging = _paging as Paging<T>;
+    final paging = _paging as Paging<T>;
     return (paging.offset ?? 0) + paging.limit;
   }
 
@@ -98,8 +130,12 @@ class Page<T> extends BasePage<T> {
 
 /// A page that uses a cursor to get to the next page
 class CursorPage<T> extends BasePage<T> {
-  CursorPage(CursorPaging<T> super._paging, super.pageItemParser,
-      [super.pageContainer, super.pageItemFilter]);
+  CursorPage(
+    CursorPaging<T> super._paging,
+    super.pageItemParser, [
+    super.pageContainer,
+    super.pageItemFilter,
+  ]);
 
   @override
   dynamic get _next => (_paging as CursorPaging<T>).cursors?.after ?? '';
@@ -150,8 +186,13 @@ abstract class _Pages {
   final ParserFunction<dynamic>? _pageContainerParser;
   final FilterFunction? _pageItemFilter;
 
-  _Pages(this._api, this._path, this._pageKey, this._pageContainerParser,
-      this._pageItemFilter) {
+  _Pages(
+    this._api,
+    this._path,
+    this._pageKey,
+    this._pageContainerParser,
+    this._pageItemFilter,
+  ) {
     if (_pageKey != null && _pageContainerParser == null) {
       throw ArgumentError.notNull('pageContainerParser');
     } else if (_pageKey == null && _pageContainerParser != null) {
@@ -162,23 +203,22 @@ abstract class _Pages {
 
 /// Base class that handles retrieval of pages with one type
 /// (e.g. [Artist], [Playlist] etc.)
-abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
-    implements NextStrategy<V> {
+abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements NextStrategy<V> {
   bool _cancelled = false;
   final ParserFunction<T> _pageParser;
   final List<V> _bufferedPages = [];
 
-  SinglePages(SpotifyApiBase api, String path, this._pageParser,
-      [String? pageKey,
-      ParserFunction<Object>? pageContainerMapper,
-      FilterFunction? pageItemFilter])
-      : super(api, path, pageKey, pageContainerMapper, pageItemFilter);
+  SinglePages(
+    SpotifyApiBase api,
+    String path,
+    this._pageParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerMapper,
+    FilterFunction? pageItemFilter,
+  ]) : super(api, path, pageKey, pageContainerMapper, pageItemFilter);
 
   Future<Iterable<T>> all([int limit = defaultLimit]) {
-    return stream(limit)
-        .map((page) => page.items)
-        .toList()
-        .then((pages) => pages.expand((page) => page!));
+    return stream(limit).map((page) => page.items).toList().then((pages) => pages.expand((page) => page!));
   }
 
   Stream<V> stream([int limit = defaultLimit]) {
@@ -208,96 +248,126 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages
       _getPage(limit, page._next).then(handlePageAndGetNext);
     }
 
-    stream = StreamController<V>(onListen: () {
-      Future<V> firstPage;
-      if (_bufferedPages.length == 1) {
-        firstPage = Future.value(_bufferedPages.removeAt(0));
-      } else {
-        firstPage = first(limit);
-      }
-      firstPage.then(handlePageAndGetNext);
-    }, onCancel: () {
-      _cancelled = true;
-      return;
-    }, onResume: () {
-      _bufferedPages.forEach(stream.add);
-      if (_bufferedPages.last.isLast) {
-        stream.close();
-      }
-      _bufferedPages.clear();
-    });
+    stream = StreamController<V>(
+      onListen: () {
+        Future<V> firstPage;
+        if (_bufferedPages.length == 1) {
+          firstPage = Future.value(_bufferedPages.removeAt(0));
+        } else {
+          firstPage = first(limit);
+        }
+        firstPage.then(handlePageAndGetNext);
+      },
+      onCancel: () {
+        _cancelled = true;
+        return;
+      },
+      onResume: () {
+        _bufferedPages.forEach(stream.add);
+        if (_bufferedPages.last.isLast) {
+          stream.close();
+        }
+        _bufferedPages.clear();
+      },
+    );
     return stream.stream;
   }
 }
 
 /// Handles retrieval of a page through an offset
 class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
-  Pages(super.api, super.path, super.pageParser,
-      [super.pageKey, super.pageContainerMapper, super.pageItemFilter]);
+  Pages(
+    super.api,
+    super.path,
+    super.pageParser, [
+    super.pageKey,
+    super.pageContainerMapper,
+    super.pageItemFilter,
+  ]);
 
   Pages.fromPaging(
-      SpotifyApiBase api, Paging<T> paging, ParserFunction<T> pageParser,
-      [String? pageKey,
-      ParserFunction<Object>? pageContainerMapper,
-      FilterFunction? pageItemFilter])
-      : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
-            pageKey, pageContainerMapper, pageItemFilter) {
+    SpotifyApiBase api,
+    Paging<T> paging,
+    ParserFunction<T> pageParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerMapper,
+    FilterFunction? pageItemFilter,
+  ]) : super(
+          api,
+          Uri.parse(paging.href!).path.substring(1),
+          pageParser,
+          pageKey,
+          pageContainerMapper,
+          pageItemFilter,
+        ) {
     _bufferedPages.add(Page<T>(paging, _pageParser, null, _pageItemFilter));
   }
 
   @override
   Future<Page<T>> getPage(int limit, [int offset = 0]) async {
-    var pathDelimiter = _path.contains('?') ? '&' : '?';
-    var newPath = '$_path${pathDelimiter}limit=$limit&offset=$offset';
+    final pathDelimiter = _path.contains('?') ? '&' : '?';
+    final newPath = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
-    var jsonString = await _api._get(newPath);
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get(newPath);
+    final map = json.decode(jsonString);
 
     if (_pageContainerParser == null) {
-      var paging = Paging<T>.fromJson(map);
+      final paging = Paging<T>.fromJson(map);
       return Page<T>(paging, _pageParser, null, _pageItemFilter);
     } else {
-      var paging = Paging<T>.fromJson(map[_pageKey]);
-      var container = _pageContainerParser!(map);
+      final paging = Paging<T>.fromJson(map[_pageKey]);
+      final container = _pageContainerParser!(map);
       return Page<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
 }
 
 /// Handles retrieval of a page through a cursor
-class CursorPages<T> extends SinglePages<T, CursorPage<T>>
-    with CursorStrategy<CursorPage<T>> {
-  CursorPages(super.api, super.path, super.pageParser,
-      [super.pageKey, super.pageContainerMapper, super.pageItemFilter]);
+class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<CursorPage<T>> {
+  CursorPages(
+    super.api,
+    super.path,
+    super.pageParser, [
+    super.pageKey,
+    super.pageContainerMapper,
+    super.pageItemFilter,
+  ]);
 
   CursorPages.fromCursorPaging(
-      SpotifyApiBase api, CursorPaging<T> paging, ParserFunction<T> pageParser,
-      [String? pageKey,
-      ParserFunction<Object>? pageContainerMapper,
-      FilterFunction? pageItemFilter])
-      : super(api, Uri.parse(paging.href!).path.substring(1), pageParser,
-            pageKey, pageContainerMapper, pageItemFilter) {
-    _bufferedPages
-        .add(CursorPage<T>(paging, _pageParser, null, _pageItemFilter));
+    SpotifyApiBase api,
+    CursorPaging<T> paging,
+    ParserFunction<T> pageParser, [
+    String? pageKey,
+    ParserFunction<Object>? pageContainerMapper,
+    FilterFunction? pageItemFilter,
+  ]) : super(
+          api,
+          Uri.parse(paging.href!).path.substring(1),
+          pageParser,
+          pageKey,
+          pageContainerMapper,
+          pageItemFilter,
+        ) {
+    _bufferedPages.add(CursorPage<T>(paging, _pageParser, null, _pageItemFilter));
   }
 
   @override
   Future<CursorPage<T>> getPage(int limit, [String after = '']) async {
-    var pathDelimiter = _path.contains('?') ? '&' : '?';
+    final pathDelimiter = _path.contains('?') ? '&' : '?';
     var newPath = '$_path${pathDelimiter}limit=$limit';
     if (after.isNotEmpty) {
       newPath += '&after=$after';
     }
 
-    var jsonString = await _api._get(newPath);
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get(newPath);
+    final map = json.decode(jsonString);
 
     if (_pageContainerParser == null) {
-      var paging = CursorPaging<T>.fromJson(map);
+      final paging = CursorPaging<T>.fromJson(map);
       return CursorPage<T>(paging, _pageParser, null, _pageItemFilter);
     } else {
-      var paging = CursorPaging<T>.fromJson(map[_pageKey]);
-      var container = _pageContainerParser!(map);
+      final paging = CursorPaging<T>.fromJson(map[_pageKey]);
+      final container = _pageContainerParser!(map);
       return CursorPage<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
@@ -307,31 +377,34 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>>
 class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
   final Map<String, ParserFunction<dynamic>> _pageMappers;
 
-  BundledPages(SpotifyApiBase api, String path, this._pageMappers,
-      [String? pageKey,
-      ParserFunction<dynamic>? pageContainerParser,
-      FilterFunction? pageItemFilter])
-      : super(api, path, pageKey, pageContainerParser, pageItemFilter);
+  BundledPages(
+    SpotifyApiBase api,
+    String path,
+    this._pageMappers, [
+    String? pageKey,
+    ParserFunction<dynamic>? pageContainerParser,
+    FilterFunction? pageItemFilter,
+  ]) : super(api, path, pageKey, pageContainerParser, pageItemFilter);
 
   @override
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
-    var pathDelimiter = _path.contains('?') ? '&' : '?';
-    var path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
+    final pathDelimiter = _path.contains('?') ? '&' : '?';
+    final path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
     return _api._get(path).then(_parseBundledPage);
   }
 
   List<Page<dynamic>> _parseBundledPage(String jsonString) {
-    var map = json.decode(jsonString);
-    var pages = <Page<dynamic>>[];
+    final map = json.decode(jsonString);
+    final pages = <Page<dynamic>>[];
     _pageMappers.forEach((key, value) {
       if (map[key] != null) {
-        var paging = Paging.fromJson(map[key]);
+        final paging = Paging.fromJson(map[key]);
         Page page;
         if (_pageContainerParser == null) {
           page = Page(paging, value, null, _pageItemFilter);
         } else {
-          var container = _pageContainerParser!(map[key]);
+          final container = _pageContainerParser!(map[key]);
           page = Page(paging, value, container, _pageItemFilter);
         }
         pages.add(page);

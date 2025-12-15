@@ -8,8 +8,7 @@ part of '_models.dart';
 class PlaybackState extends Object {
   PlaybackState();
 
-  factory PlaybackState.fromJson(Map<String, dynamic> json) =>
-      _$PlaybackStateFromJson(json);
+  factory PlaybackState.fromJson(Map<String, dynamic> json) => _$PlaybackStateFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaybackStateToJson(this);
 
@@ -27,8 +26,9 @@ class PlaybackState extends Object {
   /// The currently playing track. Can be `null`.
   Track? item;
 
-  /// The object type of the currently playing item. Can be one of [CurrentlyPlayingType.track],
-  /// [CurrentlyPlayingType.episode], [CurrentlyPlayingType.ad] or [CurrentlyPlayingType.unknown].
+  /// The object type of the currently playing item. Can be one of
+  /// [CurrentlyPlayingType.track], [CurrentlyPlayingType.episode],
+  /// [CurrentlyPlayingType.ad] or [CurrentlyPlayingType.unknown].
   @JsonKey(name: 'currently_playing_type')
   CurrentlyPlayingType? currentlyPlayingType;
 
@@ -40,7 +40,8 @@ class PlaybackState extends Object {
   @JsonKey(name: 'is_playing', defaultValue: false)
   bool? isPlaying;
 
-  /// The shuffle state. `true` if shuffle is turned on, `false` if its turned off
+  /// The shuffle state. `true` if shuffle is turned on, `false` if its turned
+  /// off.
   @JsonKey(name: 'shuffle_state', defaultValue: false)
   bool? isShuffling;
 
@@ -55,8 +56,7 @@ class PlaybackState extends Object {
 class PlayerContext extends Object {
   PlayerContext();
 
-  factory PlayerContext.fromJson(Map<String, dynamic> json) =>
-      _$PlayerContextFromJson(json);
+  factory PlayerContext.fromJson(Map<String, dynamic> json) => _$PlayerContextFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlayerContextToJson(this);
 
@@ -67,7 +67,8 @@ class PlayerContext extends Object {
   /// The href of the context, or `null` if not available.
   String? href;
 
-  /// The object type of the item’s context. Can be one of album, artist or playlist.
+  /// The object type of the item’s context. Can be one of album, artist or
+  /// playlist.
   String? type;
 
   /// The uri of the context.
@@ -78,8 +79,7 @@ class PlayerContext extends Object {
 class Actions extends Object {
   Actions();
 
-  factory Actions.fromJson(Map<String, dynamic> json) =>
-      _$ActionsFromJson(json);
+  factory Actions.fromJson(Map<String, dynamic> json) => _$ActionsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ActionsToJson(this);
 
@@ -139,15 +139,15 @@ class StartWithContextOptions extends StartOrResumeOptions {
   String? contextUri;
 
   /// Optional. Indicates from where in the context playback should start.
-  /// Only available when [contextUri] corresponds to an album or playlist object
+  /// Only available when [contextUri] corresponds to an album or playlist
+  /// object
   @JsonKey(toJson: _offsetToJson)
   Offset? offset;
 
   @override
   Map<String, dynamic> toJson() => _$StartWithContextOptionsToJson(this);
 
-  static Map<String, dynamic>? _offsetToJson(Offset? offset) =>
-      offset?.toJson();
+  static Map<String, dynamic>? _offsetToJson(Offset? offset) => offset?.toJson();
 }
 
 @JsonSerializable(createFactory: false)

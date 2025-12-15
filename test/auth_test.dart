@@ -4,7 +4,7 @@ import 'spotify_mock.dart';
 import 'package:test/test.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -12,7 +12,7 @@ Future main() async {
 
   group('Auth', () {
     test('getCredentials', () async {
-      var result = await spotify.getCredentials();
+      final result = await spotify.getCredentials();
 
       expect(result.clientId, 'clientId');
       expect(result.clientSecret, 'clientSecret');

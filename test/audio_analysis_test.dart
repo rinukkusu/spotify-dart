@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 // ignore_for_file: deprecated_member_use_from_same_package
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -14,7 +14,7 @@ Future main() async {
 
   group('Audio Analysis', () {
     test('get', () async {
-      var result = await spotify.audioAnalysis.get('xyz123');
+      final result = await spotify.audioAnalysis.get('xyz123');
 
       expect(result.track, isNotNull);
       expect(result.bars?.isEmpty, isFalse);
@@ -23,7 +23,7 @@ Future main() async {
       expect(result.segments?.isEmpty, isFalse);
       expect(result.tatums?.isEmpty, isFalse);
 
-      var firstSection = result.sections?.first;
+      final firstSection = result.sections?.first;
       expect(firstSection?.start, 0);
       expect(firstSection?.duration, 6.97092);
       expect(firstSection?.confidence, 1);
@@ -37,7 +37,7 @@ Future main() async {
       expect(firstSection?.timeSignature, 4);
       expect(firstSection?.timeSignatureConfidence, 1);
 
-      var firstSegment = result.segments?.first;
+      final firstSegment = result.segments?.first;
       expect(firstSegment?.start, 0);
       expect(firstSegment?.duration, 0.24317);
       expect(firstSegment?.confidence, 1);
@@ -48,7 +48,7 @@ Future main() async {
       expect(firstSegment?.pitches?.isEmpty, isFalse);
       expect(firstSegment?.timbre?.isEmpty, isFalse);
 
-      var track = result.track;
+      final track = result.track;
       expect(track?.numSamples, 4585515);
       expect(track?.duration, 207.95985);
       expect(track?.analysisSampleRate, 22050);

@@ -51,8 +51,8 @@ class Artist extends Object implements ArtistSimple {
   /// Images of the artist in various sizes, widest first.
   List<Image>? images;
 
-  /// The popularity of the artist. The value will be between 0 and 100, with 100
-  /// being the most popular. The artist's popularity is calculated from the
+  /// The popularity of the artist. The value will be between 0 and 100, with
+  /// 100 being the most popular. The artist's popularity is calculated from the
   /// popularity of all the artist's tracks.
   @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? popularity;
@@ -63,8 +63,7 @@ class Artist extends Object implements ArtistSimple {
 class ArtistSimple extends Object {
   ArtistSimple();
 
-  factory ArtistSimple.fromJson(Map<String, dynamic> json) =>
-      _$ArtistSimpleFromJson(json);
+  factory ArtistSimple.fromJson(Map<String, dynamic> json) => _$ArtistSimpleFromJson(json);
 
   Map<String, dynamic> toJson() => _$ArtistSimpleToJson(this);
 

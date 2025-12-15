@@ -14,8 +14,7 @@ class Browse extends EndpointPaging {
   /// relevant to a particular country. If omitted, the returned items will be
   /// globally relevant.
   @Deprecated('Use [newReleases] instead')
-  Pages<AlbumSimple> getNewReleases({String? country}) =>
-      newReleases(country: Market.values.asNameMap()[country]);
+  Pages<AlbumSimple> getNewReleases({String? country}) => newReleases(country: Market.values.asNameMap()[country]);
 
   /// Returns the new releases.
   ///
@@ -24,12 +23,13 @@ class Browse extends EndpointPaging {
   /// relevant to a particular country. If omitted, the returned items will be
   /// globally relevant.
   Pages<AlbumSimple> newReleases({Market? country}) {
-    var params = _buildQuery({'country': country?.name});
+    final params = _buildQuery({'country': country?.name});
 
     return _getPages(
-        '$_path/new-releases?$params',
-        (json) => AlbumSimple.fromJson(json),
-        'albums',
-        (json) => AlbumSimple.fromJson(json));
+      '$_path/new-releases?$params',
+      (json) => AlbumSimple.fromJson(json),
+      'albums',
+      (json) => AlbumSimple.fromJson(json),
+    );
   }
 }

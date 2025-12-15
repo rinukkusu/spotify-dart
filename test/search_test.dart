@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -13,13 +13,12 @@ Future main() async {
 
   group('Search', () {
     test('get', () async {
-      var searchResult = await spotify.search.get('metallica').first();
+      final searchResult = await spotify.search.get('metallica').first();
       expect(searchResult.length, 2);
     });
 
     test('getError', () async {
-      spotify.mockHttpErrors =
-          [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
+      spotify.mockHttpErrors = [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
       late SpotifyException ex;
       try {
         await spotify.search.get('metallica').first();

@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -13,7 +13,7 @@ Future main() async {
 
   group('Shows', () {
     test('get', () async {
-      var show = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
+      final show = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
 
       expect(show.type, 'show');
       expect(show.id, '4AlxqGkkrqe0mfIx3Mi7Xt');
@@ -24,8 +24,7 @@ Future main() async {
     });
 
     test('list', () async {
-      var shows = await spotify.shows
-          .list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
+      final shows = await spotify.shows.list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
 
       expect(shows.length, 2);
     });
@@ -33,8 +32,8 @@ Future main() async {
 
   group('Show episodes', () {
     test('list', () async {
-      var episodes = spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
-      var firstEpisode = (await episodes.first()).items!.first;
+      final episodes = spotify.shows.episodes('4AlxqGkkrqe0mfIx3Mi7Xt');
+      final firstEpisode = (await episodes.first()).items!.first;
 
       expect(firstEpisode.type, 'episode');
       expect(firstEpisode.explicit, false);

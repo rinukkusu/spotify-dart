@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -13,7 +13,7 @@ Future main() async {
 
   group('Player', () {
     test('player', () async {
-      var result = await spotify.player.playbackState();
+      final result = await spotify.player.playbackState();
       expect(result.isShuffling, true);
       expect(result.isPlaying, true);
       expect(result.currentlyPlayingType, CurrentlyPlayingType.track);
@@ -29,12 +29,13 @@ Future main() async {
         if (method == 'PUT') {
           expect(method, 'PUT');
           expect(body, isNotNull);
-          expect(body,
-              '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}');
+          expect(
+            body,
+            '{"context_uri":"contextUri","offset":{"uri":"urioffset"}}',
+          );
         }
       };
-      await spotify.player
-          .startWithContext('contextUri', offset: UriOffset('urioffset'));
+      await spotify.player.startWithContext('contextUri', offset: UriOffset('urioffset'));
     });
 
     test('startWithUris', () async {

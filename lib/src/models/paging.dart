@@ -10,8 +10,7 @@ Iterable<dynamic> itemsNativeFromJson(List<dynamic> json) {
   return json;
 }
 
-List<Map> itemsNativeToJson(Iterable<dynamic>? items) =>
-    (items == null) ? [] : List.from(items);
+List<Map> itemsNativeToJson(Iterable<dynamic>? items) => (items == null) ? [] : List.from(items);
 
 /// A generic representation of a JSON page
 class BasePaging<T> extends Object {
@@ -66,8 +65,7 @@ class Paging<T> extends BasePaging<T> {
 class CursorPaging<T> extends BasePaging<T> {
   CursorPaging();
 
-  factory CursorPaging.fromJson(Map<String, dynamic> json) =>
-      _$CursorPagingFromJson(json);
+  factory CursorPaging.fromJson(Map<String, dynamic> json) => _$CursorPagingFromJson(json);
 
   Map<String, dynamic> toJson() => _$CursorPagingToJson(this);
 

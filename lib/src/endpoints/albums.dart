@@ -12,15 +12,19 @@ class Albums extends EndpointPaging {
 
   /// Retrieves an album with its [albumId]
   Future<Album> get(String albumId) async {
-    var jsonString = await _get('$_path/$albumId');
-    var map = json.decode(jsonString);
+    final jsonString = await _get('$_path/$albumId');
+    final map = json.decode(jsonString);
 
     return Album.fromJson(map);
   }
 
   /// Returns album informations about a list of [albumIds]
   Future<Iterable<Album>> list(List<String> albumIds) async => _listWithIds(
-      path: _path, ids: albumIds, jsonKey: 'albums', fromJson: Album.fromJson);
+        path: _path,
+        ids: albumIds,
+        jsonKey: 'albums',
+        fromJson: Album.fromJson,
+      );
 
   /// Returns the tracks of a given [albumId]
   @Deprecated('Use [tracks] instead')

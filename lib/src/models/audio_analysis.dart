@@ -8,8 +8,7 @@ part of '_models.dart';
 class AudioAnalysis extends Object {
   AudioAnalysis();
 
-  factory AudioAnalysis.fromJson(Map<String, dynamic> json) =>
-      _$AudioAnalysisFromJson(json);
+  factory AudioAnalysis.fromJson(Map<String, dynamic> json) => _$AudioAnalysisFromJson(json);
 
   Map<String, dynamic> toJson() => _$AudioAnalysisToJson(this);
 
@@ -30,27 +29,32 @@ abstract class _Section {
   /// The duration (in seconds) of the section.
   double? duration;
 
-  /// The confidence, from 0.0 to 1.0, of the reliability of the section’s “designation”.
+  /// The confidence, from 0.0 to 1.0, of the reliability of the section’s
+  /// “designation”.
   double? confidence;
 
   /// The overall loudness of the section in decibels (dB).
-  /// Loudness values are useful for comparing relative loudness of sections within tracks.
+  /// Loudness values are useful for comparing relative loudness of sections
+  /// within tracks.
   double? loudness;
 
   /// The overall estimated tempo of the section in beats per minute (BPM).
-  /// In musical terminology, tempo is the speed or pace of a given piece and derives
+  /// In musical terminology, tempo is the speed or pace of a given piece and
+  /// derives directly from the average beat duration.
   /// directly from the average beat duration.
   double? tempo;
 
   /// The confidence, from 0.0 to 1.0, of the reliability of the tempo.
-  /// Some tracks contain tempo changes or sounds which don’t contain tempo (like pure speech)
+  /// Some tracks contain tempo changes or sounds which don’t contain tempo
+  /// (like pure speech) which would correspond to a low value in this field.
   /// which would correspond to a low value in this field.
   @JsonKey(name: 'tempo_confidence')
   double? tempoConfidence;
 
   /// The estimated overall key of the section. The values in this field
-  /// ranging from `0 to `11` mapping to pitches using standard Pitch Class notation
-  /// (E.g. `0 = C`, `1 = C♯/D♭`, `2 = D`, and so on). If no key was detected, the value is `-1`.
+  /// ranging from `0 to `11` mapping to pitches using standard Pitch Class
+  /// notation (E.g. `0 = C`, `1 = C♯/D♭`, `2 = D`, and so on). If no key was
+  /// detected, the value is `-1`.
   @JsonKey(fromJson: convertToIntIfDoubleValue)
   int? key;
 
@@ -92,8 +96,7 @@ abstract class _Section {
 class TrackAudioAnalysis extends _Section {
   TrackAudioAnalysis();
 
-  factory TrackAudioAnalysis.fromJson(Map<String, dynamic> json) =>
-      _$TrackAudioAnalysisFromJson(json);
+  factory TrackAudioAnalysis.fromJson(Map<String, dynamic> json) => _$TrackAudioAnalysisFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackAudioAnalysisToJson(this);
 
@@ -151,8 +154,7 @@ class TrackAudioAnalysis extends _Section {
 class Section extends _Section {
   Section();
 
-  factory Section.fromJson(Map<String, dynamic> json) =>
-      _$SectionFromJson(json);
+  factory Section.fromJson(Map<String, dynamic> json) => _$SectionFromJson(json);
   Map<String, dynamic> toJson() => _$SectionToJson(this);
 
   /// The starting point (in seconds) of the section.
@@ -164,8 +166,7 @@ class Section extends _Section {
 class Segment extends Object {
   Segment();
 
-  factory Segment.fromJson(Map<String, dynamic> json) =>
-      _$SegmentFromJson(json);
+  factory Segment.fromJson(Map<String, dynamic> json) => _$SegmentFromJson(json);
   Map<String, dynamic> toJson() => _$SegmentToJson(this);
 
   /// The starting point (in seconds) of the segment.
@@ -174,7 +175,8 @@ class Segment extends Object {
   /// The duration (in seconds) of the segment.
   double? duration;
 
-  /// The confidence, from `0.0` to `1.0`, of the reliability of the segmentation.
+  /// The confidence, from `0.0` to `1.0`, of the reliability of the
+  /// segmentation.
   /// Segments of the song which are difficult to logically
   /// segment (e.g: noise) may correspond to low values in this field.
   double? confidence;
@@ -225,8 +227,7 @@ class Segment extends Object {
 class TimeInterval extends Object {
   TimeInterval();
 
-  factory TimeInterval.fromJson(Map<String, dynamic> json) =>
-      _$TimeIntervalFromJson(json);
+  factory TimeInterval.fromJson(Map<String, dynamic> json) => _$TimeIntervalFromJson(json);
   Map<String, dynamic> toJson() => _$TimeIntervalToJson(this);
 
   /// The confidence, from `0.0` to `1.0`, of the reliability of the interval.

@@ -45,12 +45,15 @@ class Categories extends Browse {
   /// (American English).
   ///
   /// [categoryId] - the Spotify category ID for the category.
-  Future<Category> get(String categoryId,
-      {Market? country, String? locale}) async {
+  Future<Category> get(
+    String categoryId, {
+    Market? country,
+    String? locale,
+  }) async {
     final query = _buildQuery({'country': country?.name, 'locale': locale});
 
-    var jsonString = await _api._get('$_path/$categoryId?$query');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$categoryId?$query');
+    final map = json.decode(jsonString);
 
     return Category.fromJson(map);
   }

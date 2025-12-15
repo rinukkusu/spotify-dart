@@ -8,8 +8,7 @@ part of '_models.dart';
 class Playlist extends Object implements PlaylistSimple {
   Playlist();
 
-  factory Playlist.fromJson(Map<String, dynamic> json) =>
-      _$PlaylistFromJson(json);
+  factory Playlist.fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$PlaylistToJson(this);
@@ -90,8 +89,7 @@ class Playlist extends Object implements PlaylistSimple {
 class PlaylistSimple extends Object {
   PlaylistSimple();
 
-  factory PlaylistSimple.fromJson(Map<String, dynamic> json) =>
-      _$PlaylistSimpleFromJson(json);
+  factory PlaylistSimple.fromJson(Map<String, dynamic> json) => _$PlaylistSimpleFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaylistSimpleToJson(this);
 
@@ -154,8 +152,7 @@ class PlaylistSimple extends Object {
 class PlaylistsFeatured extends Object {
   PlaylistsFeatured();
 
-  factory PlaylistsFeatured.fromJson(Map<String, dynamic> json) =>
-      _$PlaylistsFeaturedFromJson(json);
+  factory PlaylistsFeatured.fromJson(Map<String, dynamic> json) => _$PlaylistsFeaturedFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaylistsFeaturedToJson(this);
 
@@ -168,8 +165,7 @@ class PlaylistsFeatured extends Object {
 class PlaylistTrack extends Object {
   PlaylistTrack();
 
-  factory PlaylistTrack.fromJson(Map<String, dynamic> json) =>
-      _$PlaylistTrackFromJson(json);
+  factory PlaylistTrack.fromJson(Map<String, dynamic> json) => _$PlaylistTrackFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaylistTrackToJson(this);
 

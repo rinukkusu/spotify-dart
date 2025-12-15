@@ -1,7 +1,8 @@
 part of '../../spotify.dart';
 
 @Deprecated(
-  'The Spotify Recommendations endpoint has been officially deprecated by Spotify. '
+  'The Spotify Recommendations endpoint has been officially deprecated '
+  'by Spotify. '
   'This functionality may be removed in a future version of this library.',
 )
 class RecommendationsEndpoint extends EndpointBase {
@@ -15,46 +16,45 @@ class RecommendationsEndpoint extends EndpointBase {
   /// [min] [max] and [target] sets Tunable Track attributes limitations
   /// (see https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/)
   @Deprecated(
-    'The Spotify Recommendations endpoint has been officially deprecated by Spotify. '
+    'The Spotify Recommendations endpoint has been officially deprecated '
+    'by Spotify. '
     'This functionality may be removed in a future version of this library.',
   )
-  Future<Recommendations> get(
-      {Iterable<String>? seedArtists,
-      Iterable<String>? seedGenres,
-      Iterable<String>? seedTracks,
-      int limit = 20,
-      Market? market,
-      Map<String, num>? max,
-      Map<String, num>? min,
-      Map<String, num>? target}) async {
+  Future<Recommendations> get({
+    Iterable<String>? seedArtists,
+    Iterable<String>? seedGenres,
+    Iterable<String>? seedTracks,
+    int limit = 20,
+    Market? market,
+    Map<String, num>? max,
+    Map<String, num>? min,
+    Map<String, num>? target,
+  }) async {
     if (limit < 1 || limit > 100) {
       throw RangeError.range(limit, 1, 100, 'limit');
     }
-    final seedsNum = (seedArtists?.length ?? 0) +
-        (seedGenres?.length ?? 0) +
-        (seedTracks?.length ?? 0);
+    final seedsNum = (seedArtists?.length ?? 0) + (seedGenres?.length ?? 0) + (seedTracks?.length ?? 0);
     if (seedsNum < 1 || seedsNum > 5) {
       throw RangeError.range(
-          seedsNum,
-          1,
-          5,
-          'Total seed values',
-          'Up to 5 seed values may be provided in any combination of seed_artists,'
-              ' seed_tracks and seed_genres.');
+        seedsNum,
+        1,
+        5,
+        'Total seed values',
+        'Up to 5 seed values may be provided in any combination of '
+            'seed_artists, seed_tracks and seed_genres.',
+      );
     }
     final parameters = <String, String>{'limit': limit.toString()};
     final _ = {
       'seed_artists': seedArtists,
       'seed_genres': seedGenres,
-      'seed_tracks': seedTracks
+      'seed_tracks': seedTracks,
     }.forEach((key, list) => _addList(parameters, key, list!));
     if (market != null) parameters['market'] = market.name;
-    for (var map in [min, max, target]) {
+    for (final map in [min, max, target]) {
       _addTunableTrackMap(parameters, map);
     }
-    final pathQuery = Uri(path: _path, queryParameters: parameters)
-        .toString()
-        .replaceAll(RegExp(r'%2C'), ',');
+    final pathQuery = Uri(path: _path, queryParameters: parameters).toString().replaceAll(RegExp(r'%2C'), ',');
     final result = jsonDecode(await _api._get(pathQuery));
     return Recommendations.fromJson(result);
   }
@@ -63,17 +63,25 @@ class RecommendationsEndpoint extends EndpointBase {
   /// and [tunableTrackMap] a map of tunable Track Attributes.
   /// adds the attributes to [parameters]
   void _addTunableTrackMap(
-      Map<String, String> parameters, Map<String, num>? tunableTrackMap) {
+    Map<String, String> parameters,
+    Map<String, num>? tunableTrackMap,
+  ) {
     if (tunableTrackMap != null) {
-      parameters.addAll(tunableTrackMap.map<String, String>((k, v) =>
-          MapEntry(k, v is int ? v.toString() : v.toStringAsFixed(2))));
+      parameters.addAll(
+        tunableTrackMap.map<String, String>(
+          (k, v) => MapEntry(k, v is int ? v.toString() : v.toStringAsFixed(2)),
+        ),
+      );
     }
   }
 
   /// gets [parameters], a map of the request's uri parameters and
   /// adds an entry with [key] and value of [paramList] as comma separated list
   void _addList(
-      Map<String, String> parameters, String key, Iterable<String> paramList) {
+    Map<String, String> parameters,
+    String key,
+    Iterable<String> paramList,
+  ) {
     if (paramList.isNotEmpty) {
       parameters[key] = paramList.join(',');
     }

@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:spotify/spotify.dart';
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -13,7 +13,7 @@ Future main() async {
 
   group('markets', () {
     test('getAvailableMarkets', () async {
-      var result = await spotify.markets.availableMarkets;
+      final result = await spotify.markets.availableMarkets;
       expect(result.isEmpty, false);
       expect(result.first, Market.AD);
       expect(result.elementAt(1), Market.AE);

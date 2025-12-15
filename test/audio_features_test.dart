@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 // ignore_for_file: deprecated_member_use_from_same_package
 
 Future main() async {
-  var spotify = SpotifyApiMock.create();
+  final spotify = SpotifyApiMock.create();
 
   tearDown(() {
     spotify.interceptor = null;
@@ -14,15 +14,13 @@ Future main() async {
 
   group('Audio Features', () {
     test('get', () async {
-      var audioFeatures =
-          await spotify.audioFeatures.get('11dFghVXANMlKmJXsNCbNl');
+      final audioFeatures = await spotify.audioFeatures.get('11dFghVXANMlKmJXsNCbNl');
 
       expect(audioFeatures.id, '11dFghVXANMlKmJXsNCbNl');
     });
 
     test('list', () async {
-      var audioFeatures = await spotify.audioFeatures
-          .list(['11dFghVXANMlKmJXsNCbNl', '2cs7JxrZ9DxvsfoVI07ayX']);
+      final audioFeatures = await spotify.audioFeatures.list(['11dFghVXANMlKmJXsNCbNl', '2cs7JxrZ9DxvsfoVI07ayX']);
 
       expect(audioFeatures.length, 1);
     });

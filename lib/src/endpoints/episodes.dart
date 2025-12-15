@@ -14,17 +14,19 @@ class Episodes extends EndpointBase {
     if (id.isEmpty) {
       throw ArgumentError('No episode id was provided');
     }
-    var jsonString =
-        await _api._get('$_path/$id?${_buildQuery({'market': market?.name})}');
+    final jsonString = await _api._get('$_path/$id?${_buildQuery({'market': market?.name})}');
     return EpisodeFull.fromJson(jsonDecode(jsonString));
   }
 
-  Future<Iterable<EpisodeFull>> list(List<String> ids,
-          [Market? market]) async =>
+  Future<Iterable<EpisodeFull>> list(
+    List<String> ids, [
+    Market? market,
+  ]) async =>
       _listWithIds(
-          path: _path,
-          ids: ids,
-          jsonKey: 'episodes',
-          fromJson: EpisodeFull.fromJson,
-          optionalParams: {'market': market?.name});
+        path: _path,
+        ids: ids,
+        jsonKey: 'episodes',
+        fromJson: EpisodeFull.fromJson,
+        optionalParams: {'market': market?.name},
+      );
 }

@@ -18,46 +18,45 @@ abstract class EndpointBase {
   Future<String> _post(String path, String body) => _api._post(path, body);
 
   String _buildQuery(Map<String, dynamic> query) {
-    final filteredQuery = Map.fromIterable(
-      query.keys.where((key) => query[key] != null),
-      value: (key) => query[key],
-    );
+    final filteredQuery = {
+      for (final MapEntry(:key, :value) in query.entries)
+        if (value != null) key: value.toString(),
+    };
 
-    return List.generate(
-      filteredQuery.keys.length,
-      (i) =>
-          '${filteredQuery.keys.toList()[i]}=${filteredQuery.values.toList()[i]}',
-    ).join('&');
+    return Uri(queryParameters: filteredQuery).query;
   }
 
   /// Generic method that requests a set of [T]'s with their given [ids].
-  Future<Iterable<T>> _listWithIds<T>(
-      {required String path,
-      required List<String> ids,
-      required String jsonKey,
-      required T Function(Map<String, dynamic>) fromJson,
-      Map<String, dynamic>? optionalParams}) async {
+  Future<Iterable<T>> _listWithIds<T>({
+    required String path,
+    required List<String> ids,
+    required String jsonKey,
+    required T Function(Map<String, dynamic>) fromJson,
+    Map<String, dynamic>? optionalParams,
+  }) async {
     if (ids.isEmpty) {
       throw ArgumentError('No id\'s were provided');
     }
 
     // filling the params
-    var params = <String, dynamic>{'ids': ids.join(',')};
+    final params = <String, dynamic>{'ids': ids.join(',')};
     params.addAll(optionalParams ?? {});
 
     return _list(
-        path: '$path?${_buildQuery(params)}',
-        jsonKey: jsonKey,
-        fromJson: fromJson);
+      path: '$path?${_buildQuery(params)}',
+      jsonKey: jsonKey,
+      fromJson: fromJson,
+    );
   }
 
   /// Generic method that converts requested json arrays into
   /// [T] iterables with the given [toJson] function
-  Future<Iterable<T>> _list<T>(
-      {required String path,
-      required String jsonKey,
-      required T Function(Map<String, dynamic>) fromJson}) async {
-    var jsonString = await _api._get(path);
+  Future<Iterable<T>> _list<T>({
+    required String path,
+    required String jsonKey,
+    required T Function(Map<String, dynamic>) fromJson,
+  }) async {
+    final jsonString = await _api._get(path);
     final tJson = jsonDecode(jsonString)[jsonKey] as Iterable<dynamic>;
     return tJson.where((e) => e != null).map((json) => fromJson(json));
   }

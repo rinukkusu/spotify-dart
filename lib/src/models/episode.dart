@@ -48,10 +48,12 @@ class Episode extends Object {
   bool? isPlayable;
 
   /// Note: This field is deprecated and might be removed in the future.
-  /// Please use the languages field instead. The language used in the episode, identified by a ISO 639 code.
+  /// Please use the languages field instead. The language used in the episode,
+  /// identified by a ISO 639 code.
   String? language;
 
-  /// A list of the languages used in the episode, identified by their ISO 639 code.
+  /// A list of the languages used in the episode, identified by their ISO 639
+  /// code.
   List<String>? languages;
 
   /// The name of the episode.
@@ -73,8 +75,7 @@ class Episode extends Object {
   /// The Spotify ID for the episode.
   String? uri;
 
-  factory Episode.fromJson(Map<String, dynamic> json) =>
-      _$EpisodeFromJson(json);
+  factory Episode.fromJson(Map<String, dynamic> json) => _$EpisodeFromJson(json);
 
   Map<String, dynamic> toJson() => _$EpisodeToJson(this);
 }
@@ -86,8 +87,7 @@ class EpisodeFull extends Episode {
 
   Show? show;
 
-  factory EpisodeFull.fromJson(Map<String, dynamic> json) =>
-      _$EpisodeFullFromJson(json);
+  factory EpisodeFull.fromJson(Map<String, dynamic> json) => _$EpisodeFullFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$EpisodeFullToJson(this);

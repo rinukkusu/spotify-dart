@@ -27,7 +27,8 @@ class Device extends Object {
   bool? isPrivateSession;
 
   /// Whether controlling this device is restricted.
-  /// At present if this is `true` then no Web API commands will be accepted by this device.
+  /// At present if this is `true` then no Web API commands will be accepted by
+  /// this device.
   @JsonKey(name: 'is_restricted', defaultValue: false)
   bool? isRestricted;
 

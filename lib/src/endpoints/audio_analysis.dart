@@ -5,7 +5,8 @@ part of '../../spotify.dart';
 
 /// Endpoint of a tracks audio analysis
 @Deprecated(
-  'The Spotify Audio Analysis endpoint has been officially deprecated by Spotify. '
+  'The Spotify Audio Analysis endpoint has been officially deprecated '
+  'by Spotify. '
   'This functionality may be removed in a future version of this library.',
 )
 class AudioAnalysisEndpoint extends EndpointBase {
@@ -15,12 +16,13 @@ class AudioAnalysisEndpoint extends EndpointBase {
   AudioAnalysisEndpoint(super.api);
 
   @Deprecated(
-    'The Spotify Audio Analysis endpoint has been officially deprecated by Spotify. '
+    'The Spotify Audio Analysis endpoint has been officially deprecated '
+    'by Spotify. '
     'This functionality may be removed in a future version of this library.',
   )
   Future<AudioAnalysis> get(String trackId) async {
-    var jsonString = await _api._get('$_path/$trackId');
-    var map = json.decode(jsonString);
+    final jsonString = await _api._get('$_path/$trackId');
+    final map = json.decode(jsonString);
 
     return AudioAnalysis.fromJson(map);
   }

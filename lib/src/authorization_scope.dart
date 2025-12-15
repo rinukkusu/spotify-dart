@@ -14,23 +14,22 @@ class AuthorizationScope {
   static const UserAuthorizationScope user = UserAuthorizationScope();
 
   /// Scope regarding playback
-  static PlaylistAuthorizationScope playlist = PlaylistAuthorizationScope();
+  static PlaylistAuthorizationScope playlist = const PlaylistAuthorizationScope();
 
   /// Scope regarding images (e.g. playlist images)
-  static ImagesAuthorizationScope images = ImagesAuthorizationScope();
+  static ImagesAuthorizationScope images = const ImagesAuthorizationScope();
 
   /// Scope regarding Spotify Connect
-  static ConnectAuthorizationScope connect = ConnectAuthorizationScope();
+  static ConnectAuthorizationScope connect = const ConnectAuthorizationScope();
 
   /// Scope regarding the user's library
   static LibraryAuthorizationScope library = LibraryAuthorizationScope();
 
   /// Scope regarding the user's listening history
-  static ListeningHistoryAuthorizationScope listen =
-      ListeningHistoryAuthorizationScope();
+  static ListeningHistoryAuthorizationScope listen = const ListeningHistoryAuthorizationScope();
 
   /// Scope regarding following artists or users
-  static FollowAuthorizationScope follow = FollowAuthorizationScope();
+  static FollowAuthorizationScope follow = const FollowAuthorizationScope();
 
   static final all = List.unmodifiable([
     ...user.all,
@@ -39,7 +38,7 @@ class AuthorizationScope {
     ...connect.all,
     ...library.all,
     ...listen.all,
-    ...follow.all
+    ...follow.all,
   ]);
 }
 
@@ -98,8 +97,7 @@ class ListeningHistoryAuthorizationScope extends _Scope {
   String get readRecentlyPlayed => 'user-read-recently-played';
 
   @override
-  List<String> get all =>
-      List.unmodifiable([readPlaybackPosition, readTop, readRecentlyPlayed]);
+  List<String> get all => List.unmodifiable([readPlaybackPosition, readTop, readRecentlyPlayed]);
 }
 
 class ConnectAuthorizationScope extends _Scope {
@@ -136,7 +134,8 @@ class ConnectAuthorizationScope extends _Scope {
 
   @override
   List<String> get all => List.unmodifiable(
-      [readCurrentlyPlaying, readPlaybackState, modifyPlaybackState]);
+        [readCurrentlyPlaying, readPlaybackState, modifyPlaybackState],
+      );
 }
 
 class LibraryAuthorizationScope extends _Scope {
@@ -247,7 +246,8 @@ class PlaylistAuthorizationScope extends _Scope {
   /// Contains all properties of [AuthorizationScope.playlist]
   @override
   List<String> get all => List.unmodifiable(
-      [readPrivate, readCollaborative, modifyPrivate, modifyPublic]);
+        [readPrivate, readCollaborative, modifyPrivate, modifyPublic],
+      );
 }
 
 class ImagesAuthorizationScope extends _Scope {

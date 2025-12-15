@@ -1,5 +1,6 @@
-// Copyright (c) 2020, deandreamatias, rinukkusu. All rights reserved. Use of this source code
-// is governed by a BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2020, deandreamatias, rinukkusu. All rights reserved. Use of
+// this source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 part of '../../spotify.dart';
 
@@ -18,21 +19,25 @@ class Shows extends EndpointPaging {
   Future<Show> get(String showId, {Market? market}) async {
     String jsonString;
     if (market != null) {
-      var queryMap = {'market': market.name};
-      var query = _buildQuery(queryMap);
+      final queryMap = {'market': market.name};
+      final query = _buildQuery(queryMap);
       jsonString = await _get('$_path/$showId?$query');
     } else {
       jsonString = await _get('$_path/$showId');
     }
 
-    var map = json.decode(jsonString);
+    final map = json.decode(jsonString);
 
     return Show.fromJson(map);
   }
 
   /// Get one or several shows
   Future<Iterable<Show>> list(List<String> showsId) async => _listWithIds(
-      path: _path, ids: showsId, jsonKey: 'shows', fromJson: Show.fromJson);
+        path: _path,
+        ids: showsId,
+        jsonKey: 'shows',
+        fromJson: Show.fromJson,
+      );
 
   /// Get a Show's Episodes
   ///
@@ -40,12 +45,14 @@ class Shows extends EndpointPaging {
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
   Pages<Episode> episodes(String showId, [Market? market]) {
-    var query = _buildQuery({
+    final query = _buildQuery({
       'market': market?.name,
     });
-    var queryString = query.isNotEmpty ? '?$query' : '';
+    final queryString = query.isNotEmpty ? '?$query' : '';
 
-    return _getPages('$_path/$showId/episodes$queryString',
-        (json) => Episode.fromJson(json));
+    return _getPages(
+      '$_path/$showId/episodes$queryString',
+      (json) => Episode.fromJson(json),
+    );
   }
 }
