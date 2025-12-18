@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+- add full PKCE (Proof Key for Code Exchange) support for public clients (#81)
+  - add `codeVerifier` field to `SpotifyApiCredentials`
+  - add `SpotifyApiCredentials.pkce()` constructor for public client flows
+  - add `SpotifyApi.generateCodeVerifier()` helper method
+  - add `isPkce` getter to identify PKCE credentials
+  - update `fullyQualified` to support PKCE credentials (with verifier but no secret)
+  - code verifier is now preserved during credential refresh
+  - add comprehensive PKCE example (`example/example_pkce.dart`)
+  - add PKCE test suite (`test/pkce_test.dart`)
+  - update README with PKCE documentation
+- `SpotifyApiCredentials` constructor now accepts optional `codeVerifier` parameter (backward compatible)
+
 ## 0.15.0
 
 - use Track instead of TrackSimple in PlayHistory and Recommendations for more complete track information

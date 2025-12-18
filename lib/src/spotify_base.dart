@@ -131,12 +131,15 @@ abstract class SpotifyApiBase {
     String? codeVerifier,
     Function(SpotifyApiCredentials)? onCredentialsRefreshed,
   }) {
+    // Use codeVerifier from parameter, or fall back to credentials
+    final verifier = codeVerifier ?? credentials.codeVerifier;
+
     return oauth2.AuthorizationCodeGrant(
       credentials.clientId!,
       Uri.parse(SpotifyApiBase._authorizationUrl),
       Uri.parse(SpotifyApiBase._tokenUrl),
       secret: credentials.clientSecret,
-      codeVerifier: codeVerifier,
+      codeVerifier: verifier,
       httpClient: httpClient,
       onCredentialsRefreshed: onCredentialsRefreshed != null
           ? (oauth2.Credentials cred) {
@@ -147,6 +150,7 @@ abstract class SpotifyApiBase {
                 expiration: cred.expiration,
                 refreshToken: cred.refreshToken,
                 scopes: cred.scopes,
+                codeVerifier: verifier,
               );
               onCredentialsRefreshed(newCredentials);
             }
@@ -171,6 +175,7 @@ abstract class SpotifyApiBase {
             expiration: cred.expiration,
             refreshToken: cred.refreshToken,
             scopes: cred.scopes,
+            codeVerifier: credentials.codeVerifier,
           ),
         );
       }

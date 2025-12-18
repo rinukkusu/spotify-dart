@@ -66,6 +66,15 @@ Future<SpotifyApi?> _getUserAuthenticatedSpotifyApi(
   );
   final redirect = stdin.readLineSync();
 
+  // Note: For public clients (mobile/web apps), use PKCE instead:
+  // final verifier = SpotifyApi.generateCodeVerifier();
+  // final pkceCredentials = SpotifyApiCredentials.pkce(
+  //   clientId,
+  //   codeVerifier: verifier,
+  // );
+  // final grant = SpotifyApi.authorizationCodeGrant(pkceCredentials);
+  // See example/example_pkce.dart for a complete PKCE example.
+
   final grant = SpotifyApi.authorizationCodeGrant(credentials);
   final authUri = grant.getAuthorizationUrl(Uri.parse(redirect!), scopes: _scopes);
 
