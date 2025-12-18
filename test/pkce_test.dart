@@ -61,7 +61,7 @@ void main() {
           accessToken: 'access-token',
           refreshToken: 'refresh-token',
           scopes: ['scope1', 'scope2'],
-          expiration: DateTime.now().add(Duration(hours: 1)),
+          expiration: DateTime.now().add(const Duration(hours: 1)),
         );
 
         expect(credentials.fullyQualified, isTrue);
@@ -102,7 +102,7 @@ void main() {
           accessToken: 'access-token',
           refreshToken: 'refresh-token',
           scopes: ['scope1'],
-          expiration: DateTime.now().add(Duration(hours: 1)),
+          expiration: DateTime.now().add(const Duration(hours: 1)),
         );
 
         expect(credentials.fullyQualified, isTrue);
@@ -117,7 +117,7 @@ void main() {
           accessToken: 'access-token',
           refreshToken: 'refresh-token',
           scopes: ['scope1'],
-          expiration: DateTime.now().add(Duration(hours: 1)),
+          expiration: DateTime.now().add(const Duration(hours: 1)),
         );
 
         expect(credentials.fullyQualified, isTrue);
@@ -130,7 +130,7 @@ void main() {
           accessToken: 'access-token',
           refreshToken: 'refresh-token',
           scopes: ['scope1'],
-          expiration: DateTime.now().add(Duration(hours: 1)),
+          expiration: DateTime.now().add(const Duration(hours: 1)),
         );
 
         expect(credentials.fullyQualified, isFalse);
@@ -212,7 +212,7 @@ void main() {
           accessToken: 'access-token',
           refreshToken: 'refresh-token',
           scopes: ['scope1', 'scope2'],
-          expiration: DateTime.now().add(Duration(hours: 1)),
+          expiration: DateTime.now().add(const Duration(hours: 1)),
         );
 
         expect(credentials.fullyQualified, isTrue);
@@ -257,7 +257,7 @@ void main() {
         final credentials = SpotifyApiCredentials.pkce(
           'client-id',
           codeVerifier: SpotifyApi.generateCodeVerifier(),
-          expiration: DateTime.now().subtract(Duration(hours: 1)),
+          expiration: DateTime.now().subtract(const Duration(hours: 1)),
         );
 
         expect(credentials.isExpired, isTrue);
@@ -267,7 +267,7 @@ void main() {
         final credentials = SpotifyApiCredentials.pkce(
           'client-id',
           codeVerifier: SpotifyApi.generateCodeVerifier(),
-          expiration: DateTime.now().add(Duration(hours: 1)),
+          expiration: DateTime.now().add(const Duration(hours: 1)),
         );
 
         expect(credentials.isExpired, isFalse);
