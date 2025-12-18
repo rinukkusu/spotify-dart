@@ -31,7 +31,54 @@
           "preview_url": "https://p.scdn.co/mp3-preview/6023e5aac2123d098ce490488966b28838b14fa2",
           "track_number": 9,
           "type": "track",
-          "uri": "spotify:track:2gNfxysfBRfl9Lvi9T3v6R"
+          "uri": "spotify:track:2gNfxysfBRfl9Lvi9T3v6R",
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/5INjqkS1o8h1imAzPqGZBb"
+                },
+                "href": "https://api.spotify.com/v1/artists/5INjqkS1o8h1imAzPqGZBb",
+                "id": "5INjqkS1o8h1imAzPqGZBb",
+                "name": "Tame Impala",
+                "type": "artist",
+                "uri": "spotify:artist:5INjqkS1o8h1imAzPqGZBb"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/79dL7FLiJFOO0EoehUHQBv"
+            },
+            "href": "https://api.spotify.com/v1/albums/79dL7FLiJFOO0EoehUHQBv",
+            "id": "79dL7FLiJFOO0EoehUHQBv",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739e1cfc756886ac782e363d79",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029e1cfc756886ac782e363d79",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519e1cfc756886ac782e363d79",
+                "width": 64
+              }
+            ],
+            "name": "Currents",
+            "release_date": "2015-07-17",
+            "release_date_precision": "day",
+            "total_tracks": 13,
+            "type": "album",
+            "uri": "spotify:album:79dL7FLiJFOO0EoehUHQBv"
+          },
+          "popularity": 75,
+          "external_ids": {
+            "isrc": "GBAHT1500338"
+          }
         },
         "played_at": "2016-12-13T20:44:04.589Z",
         "context": {
@@ -74,7 +121,54 @@
           "preview_url": "https://p.scdn.co/mp3-preview/05dee1ad0d2a6fa4ad07fbd24ae49d58468e8194",
           "track_number": 1,
           "type": "track",
-          "uri": "spotify:track:2X485T9Z5Ly0xyaghN73ed"
+          "uri": "spotify:track:2X485T9Z5Ly0xyaghN73ed",
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/5INjqkS1o8h1imAzPqGZBb"
+                },
+                "href": "https://api.spotify.com/v1/artists/5INjqkS1o8h1imAzPqGZBb",
+                "id": "5INjqkS1o8h1imAzPqGZBb",
+                "name": "Tame Impala",
+                "type": "artist",
+                "uri": "spotify:artist:5INjqkS1o8h1imAzPqGZBb"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/79dL7FLiJFOO0EoehUHQBv"
+            },
+            "href": "https://api.spotify.com/v1/albums/79dL7FLiJFOO0EoehUHQBv",
+            "id": "79dL7FLiJFOO0EoehUHQBv",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739e1cfc756886ac782e363d79",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029e1cfc756886ac782e363d79",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519e1cfc756886ac782e363d79",
+                "width": 64
+              }
+            ],
+            "name": "Currents",
+            "release_date": "2015-07-17",
+            "release_date_precision": "day",
+            "total_tracks": 13,
+            "type": "album",
+            "uri": "spotify:album:79dL7FLiJFOO0EoehUHQBv"
+          },
+          "popularity": 82,
+          "external_ids": {
+            "isrc": "GBAHT1500325"
+          }
         },
         "played_at": "2016-12-13T20:42:17.016Z",
         "context": {

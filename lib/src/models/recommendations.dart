@@ -13,9 +13,9 @@ class Recommendations extends Object {
   /// A List of [RecommendationsSeed] objects.
   List<RecommendationsSeed>? seeds;
 
-  /// A List of [TrackSimple] objects ordered according to the parameters
+  /// A List of [Track] objects ordered according to the parameters
   /// supplied.
-  List<TrackSimple>? tracks;
+  List<Track>? tracks;
 }
 
 /// Json representation of the recommendation seed

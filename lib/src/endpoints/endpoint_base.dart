@@ -37,7 +37,9 @@ abstract class EndpointBase {
       required String jsonKey,
       required T Function(Map<String, dynamic>) fromJson,
       Map<String, dynamic>? optionalParams}) async {
-    assert(ids.isNotEmpty, 'No id\'s were provided');
+    if (ids.isEmpty) {
+      throw ArgumentError('No id\'s were provided');
+    }
 
     // filling the params
     var params = <String, dynamic>{'ids': ids.join(',')};

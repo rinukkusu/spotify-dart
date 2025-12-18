@@ -196,7 +196,9 @@ class PositionOffset extends Offset {
   final int position;
 
   PositionOffset(this.position) {
-    assert(position >= 0, 'Position must be greater than or equal to 0');
+    if (position < 0) {
+      throw RangeError.range(position, 0, null, 'position');
+    }
   }
 
   @override
