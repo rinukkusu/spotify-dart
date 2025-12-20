@@ -5,6 +5,7 @@ part '_models.g.dart';
 
 part 'external_objects.dart';
 
+part '_base.dart';
 part 'album.dart';
 part 'artist.dart';
 part 'audio_analysis.dart';
