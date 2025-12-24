@@ -27,27 +27,3 @@ int? convertToIntIfDoubleValue(dynamic jsonValue) {
 int convertToIntIfDoubleValueWithoutNull(dynamic jsonValue) {
   return convertToIntIfDoubleValue(jsonValue) ?? 0;
 }
-
-/// Generates a cryptographically secure random code verifier for PKCE.
-///
-/// The code verifier is a high-entropy cryptographic random string using the
-/// characters [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~", with a minimum
-/// length of 43 characters and a maximum length of 128 characters.
-///
-/// This implementation generates a 128-character verifier for maximum security.
-///
-/// Returns a random code verifier string suitable for PKCE flows.
-///
-/// Example:
-/// ```dart
-/// final verifier = generateCodeVerifier();
-/// print(verifier); // e.g., "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk..."
-/// ```
-String generateCodeVerifier() {
-  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-  final random = math.Random.secure();
-  return List.generate(
-    128,
-    (_) => charset[random.nextInt(charset.length)],
-  ).join();
-}
