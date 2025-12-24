@@ -31,7 +31,6 @@ final _scopes = [
 void main() async {
   print('=== Spotify PKCE Authentication Example ===\n');
 
-  // Step 1: Get client ID (no secret needed for PKCE!)
   print('Enter your Spotify Client ID:');
   final clientId = stdin.readLineSync();
   if (clientId == null || clientId.isEmpty) {
@@ -39,18 +38,15 @@ void main() async {
     exit(1);
   }
 
-  // Step 2: Generate code verifier for PKCE
   print('\nGenerating secure code verifier...');
   final codeVerifier = SpotifyApi.generateCodeVerifier();
   print('Code verifier generated (length: ${codeVerifier.length})');
 
-  // Step 3: Create PKCE credentials (no client secret!)
   final credentials = SpotifyApiCredentials.pkce(
     clientId,
     codeVerifier: codeVerifier,
   );
 
-  // Step 4: Get redirect URI
   print('\nEnter your redirect URI (from Spotify app settings):');
   final redirectInput = stdin.readLineSync();
   if (redirectInput == null || redirectInput.isEmpty) {
@@ -59,7 +55,6 @@ void main() async {
   }
   final redirectUri = Uri.parse(redirectInput);
 
-  // Step 5: Create authorization grant
   print('\nInitializing OAuth authorization grant...');
   final grant = SpotifyApi.authorizationCodeGrant(
     credentials,
@@ -69,7 +64,6 @@ void main() async {
     },
   );
 
-  // Step 6: Get authorization URL
   final authUri = grant.getAuthorizationUrl(redirectUri, scopes: _scopes);
 
   print('\n=== Authorization Required ===');
@@ -78,7 +72,6 @@ void main() async {
   print('\nAfter authorizing, you will be redirected.');
   print('Copy the COMPLETE redirect URL and paste it here:');
 
-  // Step 7: Handle redirect
   final responseInput = stdin.readLineSync();
   if (responseInput == null || responseInput.isEmpty) {
     print('Redirect URL is required');
@@ -92,17 +85,14 @@ void main() async {
     responseUri.queryParameters,
   );
 
-  // Step 8: Create Spotify API client
   final spotify = SpotifyApi.fromClient(client);
 
   print('✅ Authentication successful!\n');
 
-  // Step 9: Save credentials for later use
   final savedCredentials = await spotify.getCredentials();
   _saveCredentials(savedCredentials);
   print('💾 Credentials saved to .credentials_pkce\n');
 
-  // Step 10: Test the API
   print('=== Testing API Access ===\n');
   await _testApi(spotify);
 
@@ -159,7 +149,7 @@ void _saveCredentials(SpotifyApiCredentials credentials) {
     'tokenEndpoint': credentials.tokenEndpoint?.toString(),
     'scopes': credentials.scopes,
     'expiration': credentials.expiration?.toIso8601String(),
-    'codeVerifier': credentials.codeVerifier, // Critical for PKCE!
+    'codeVerifier': credentials.codeVerifier,
   };
 
   File('.credentials_pkce').writeAsStringSync(
@@ -173,12 +163,9 @@ SpotifyApiCredentials? _loadCredentials() {
     if (!file.existsSync()) return null;
 
     final credentialsJson = json.decode(file.readAsStringSync());
-
-    // Check if this is a PKCE credential set
     final codeVerifier = credentialsJson['codeVerifier'] as String?;
 
     if (codeVerifier != null) {
-      // Restore PKCE credentials
       return SpotifyApiCredentials.pkce(
         credentialsJson['clientId'],
         codeVerifier: codeVerifier,
@@ -188,7 +175,6 @@ SpotifyApiCredentials? _loadCredentials() {
         expiration: credentialsJson['expiration'] != null ? DateTime.parse(credentialsJson['expiration']) : null,
       );
     } else {
-      // Restore traditional credentials
       return SpotifyApiCredentials(
         credentialsJson['clientId'],
         credentialsJson['clientSecret'],
