@@ -288,6 +288,103 @@ class Me extends _MeEndpointBase {
   }
 }
 
+/// Endpoint for authenticated user's audiobooks `v1/me/audiobooks`
+class AudiobooksMe extends _MeEndpointBase {
+  @override
+  String get _path => 'v1/me/audiobooks';
+
+  AudiobooksMe(super.api);
+
+  /// Get a list of the audiobooks saved in the current Spotify user's 'Your
+  /// Music' library.
+  ///
+  /// Requires the `user-library-read` scope.
+  Pages<AudiobookSaved> get saved {
+    return _getPages(_path, (json) => AudiobookSaved.fromJson(json));
+  }
+
+  /// Check if one or more audiobooks are already saved in the current Spotify
+  /// user's 'Your Music' library.
+  ///
+  /// Requires the `user-library-read` scope.
+  ///
+  /// [ids] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
+  /// Returns a Map of audiobook ID to boolean indicating if the audiobook is saved
+  Future<Map<String, bool>> contains(List<String> ids) async {
+    if (ids.isEmpty) {
+      throw ArgumentError('No audiobook ids were provided');
+    }
+    if (ids.length > 50) {
+      throw RangeError.range(ids.length, 0, 50, 'ids',
+          'Maximum of 50 audiobook IDs allowed per request');
+    }
+    final idsParam = ids.join(',');
+    final jsonString = await _api._get('$_path/contains?ids=$idsParam');
+    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
+    return Map.fromIterables(ids, list);
+  }
+
+  /// Check if a single audiobook is already saved in the current Spotify user's
+  /// 'Your Music' library.
+  ///
+  /// Requires the `user-library-read` scope.
+  ///
+  /// [id] : The Spotify ID for the audiobook
+  /// Returns true if the audiobook is saved, false otherwise
+  Future<bool> containsOne(String id) async {
+    final list = await contains([id]);
+    return list[id] ?? false;
+  }
+
+  /// Save one or more audiobooks to the current user's 'Your Music' library.
+  ///
+  /// Requires the `user-library-modify` scope.
+  ///
+  /// [ids] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
+  Future<void> save(List<String> ids) async {
+    if (ids.isEmpty) {
+      throw ArgumentError('No audiobook ids were provided');
+    }
+    if (ids.length > 50) {
+      throw RangeError.range(ids.length, 0, 50, 'ids',
+          'Maximum of 50 audiobook IDs allowed per request');
+    }
+    final idsParam = ids.join(',');
+    await _api._put('$_path?ids=$idsParam', '');
+  }
+
+  /// Save a single audiobook to the current user's 'Your Music' library.
+  ///
+  /// Requires the `user-library-modify` scope.
+  ///
+  /// [id] : The Spotify ID for the audiobook
+  Future<void> saveOne(String id) => save([id]);
+
+  /// Remove one or more audiobooks from the current user's 'Your Music' library.
+  ///
+  /// Requires the `user-library-modify` scope.
+  ///
+  /// [ids] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
+  Future<void> remove(List<String> ids) async {
+    if (ids.isEmpty) {
+      throw ArgumentError('No audiobook ids were provided');
+    }
+    if (ids.length > 50) {
+      throw RangeError.range(ids.length, 0, 50, 'ids',
+          'Maximum of 50 audiobook IDs allowed per request');
+    }
+    final idsParam = ids.join(',');
+    await _api._delete('$_path?ids=$idsParam');
+  }
+
+  /// Remove a single audiobook from the current user's 'Your Music' library.
+  ///
+  /// Requires the `user-library-modify` scope.
+  ///
+  /// [id] : The Spotify ID for the audiobook
+  Future<void> removeOne(String id) => remove([id]);
+}
+
 enum FollowingType {
   artist(key: 'artist'),
   user(key: 'user');
