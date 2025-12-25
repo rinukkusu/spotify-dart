@@ -90,6 +90,37 @@ This library supports multiple authorization flows:
 
 For detailed information on authorization flows, OAuth scopes, and advanced usage, see the [wiki](https://github.com/rinukkusu/spotify-dart/wiki).
 
+### PKCE (Public Client) Authentication
+
+For mobile apps and single-page applications that cannot securely store client secrets, use PKCE:
+
+```dart
+// Generate a secure code verifier
+final verifier = SpotifyApi.generateCodeVerifier();
+
+// Create PKCE credentials (no client secret needed!)
+final credentials = SpotifyApiCredentials.pkce(
+  'your-client-id',
+  codeVerifier: verifier,
+);
+
+// Complete OAuth flow
+final grant = SpotifyApi.authorizationCodeGrant(credentials);
+final authUri = grant.getAuthorizationUrl(redirectUri, scopes: scopes);
+// ... redirect user, get authorization code
+final client = await grant.handleAuthorizationResponse(params);
+final spotify = SpotifyApi.fromClient(client);
+
+// Save credentials for later (including codeVerifier!)
+final creds = await spotify.getCredentials();
+// Store creds.codeVerifier along with other credential fields
+
+// Restore later
+final spotify = await SpotifyApi.asyncFromCredentials(restoredCreds);
+```
+
+See `example/example_pkce.dart` for a complete working example.
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].

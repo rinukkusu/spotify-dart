@@ -44,6 +44,13 @@ class SpotifyApiCredentials {
   /// expiration date.
   DateTime? expiration;
 
+  /// The PKCE code verifier for public client flows.
+  ///
+  /// This is required for PKCE (Proof Key for Code Exchange) flows, typically
+  /// used by public clients (mobile/web apps) that cannot securely store secrets.
+  /// See https://oauth.net/2/pkce/
+  String? codeVerifier;
+
   SpotifyApiCredentials(
     this.clientId,
     this.clientSecret, {
@@ -51,9 +58,34 @@ class SpotifyApiCredentials {
     this.refreshToken,
     this.scopes,
     this.expiration,
+    this.codeVerifier,
   }) : tokenEndpoint = Uri.parse(SpotifyApiBase._tokenUrl);
 
   SpotifyApiCredentials.withAccessToken(this.accessToken);
+
+  /// Creates credentials for a public client using PKCE.
+  ///
+  /// This constructor is designed for OAuth flows that use PKCE instead of
+  /// client secrets. The [clientSecret] is set to null, and the [codeVerifier]
+  /// must be provided for token exchanges.
+  ///
+  /// Example:
+  /// ```dart
+  /// final verifier = SpotifyApi.generateCodeVerifier();
+  /// final credentials = SpotifyApiCredentials.pkce(
+  ///   'my-client-id',
+  ///   codeVerifier: verifier,
+  /// );
+  /// ```
+  SpotifyApiCredentials.pkce(
+    this.clientId, {
+    required this.codeVerifier,
+    this.accessToken,
+    this.refreshToken,
+    this.scopes,
+    this.expiration,
+  })  : clientSecret = null,
+        tokenEndpoint = Uri.parse(SpotifyApiBase._tokenUrl);
 
   SpotifyApiCredentials._fromClient(oauth2.Client client) {
     clientId = client.identifier;
@@ -76,13 +108,25 @@ class SpotifyApiCredentials {
   /// Whether it's possible to refresh these credentials.
   bool get canRefresh => refreshToken != null && tokenEndpoint != null;
 
+  /// Whether these credentials use PKCE (Proof Key for Code Exchange).
+  ///
+  /// Returns true if using PKCE flow (has code verifier but no client secret).
+  bool get isPkce => codeVerifier != null && clientSecret == null;
+
   String get basicAuth => base64.encode('$clientId:$clientSecret'.codeUnits);
 
   /// Whether or not these credentials contain all of the required information
   /// to create a client with access to a user's private data.
+  ///
+  /// Returns true if credentials have either:
+  /// - A client secret (confidential client flow), OR
+  /// - A code verifier (PKCE public client flow)
+  ///
+  /// Both flows require client ID, access token, refresh token, token endpoint,
+  /// scopes, and expiration.
   bool get fullyQualified =>
       clientId != null &&
-      clientSecret != null &&
+      (clientSecret != null || codeVerifier != null) &&
       accessToken != null &&
       refreshToken != null &&
       tokenEndpoint != null &&
