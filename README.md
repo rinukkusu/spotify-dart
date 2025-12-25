@@ -118,7 +118,7 @@ Contributions are welcome! Here's how to work on this project:
 
 ### Generating JSON Serializers
 
-This project uses [json_serializable](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api) for model serialization:
+This project uses [json_serializable](https://pub.dev/packages/json_serializable) for model serialization:
 
 - Run `dart run build_runner build` to generate serializers
 - Run `dart run build_runner watch` to continuously rebuild when files change
