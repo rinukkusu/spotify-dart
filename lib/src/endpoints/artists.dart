@@ -45,11 +45,9 @@ class Artists extends EndpointPaging {
   }
 
   /// Returns related artists based on the artist with its [artistId]
-  @Deprecated(
-    'The Spotify related artists endpoint has been officially deprecated '
-    'by Spotify. '
-    'This functionality may be removed in a future version of this library.'
-  )
+  @Deprecated('The Spotify related artists endpoint has been officially deprecated '
+      'by Spotify. '
+      'This functionality may be removed in a future version of this library.')
   Future<Iterable<Artist>> getRelatedArtists(String artistId) async => relatedArtists(artistId);
 
   /// Retrieves multiple artists with [artistIds]
