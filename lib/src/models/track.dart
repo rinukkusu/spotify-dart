@@ -105,6 +105,10 @@ class Track extends Object implements TrackSimple {
   /// available.
   @JsonKey(name: 'preview_url')
   @override
+  @Deprecated(
+    'This property has been officially deprecated by Spotify'
+    'and may be removed in a future version of this library.',
+  )
   String? previewUrl;
 
   /// The number of the track. If an album has several discs, the track number

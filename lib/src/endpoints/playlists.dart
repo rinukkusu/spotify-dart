@@ -17,6 +17,11 @@ class Playlists extends EndpointPaging {
   }
 
   /// Returns the featuerd playlists
+  @Deprecated(
+    'The Spotify featured playlist endpoint has been officially deprecated '
+    'by Spotify. '
+    'This functionality may be removed in a future version of this library.',
+  )
   Pages<PlaylistSimple> get featured => _getPages(
         '$_path/featured-playlists',
         (json) => PlaylistSimple.fromJson(json),
@@ -320,6 +325,11 @@ class Playlists extends EndpointPaging {
   /// (American English).
   ///
   /// [categoryId] - the Spotify category ID for the category.
+  @Deprecated(
+    'The Spotify category\'s playlist endpoint has been officially deprecated '
+    'by Spotify. '
+    'This functionality may be removed in a future version of this library.',
+  )
   Pages<PlaylistSimple> getByCategoryId(
     String categoryId, {
     Market? country,
