@@ -1,3 +1,6 @@
+[Installation](#installation) | [Features](#features) | [Quick Start](#quick-start) | [Authorization](#authorization) | [Features & Bugs](#features-and-bugs) | [Contributing](#contributing)
+
+
 # spotify-dart [![Pub](https://img.shields.io/pub/v/spotify.svg)](https://pub.dartlang.org/packages/spotify) ![Dart CI](https://github.com/rinukkusu/spotify-dart/workflows/Dart%20CI/badge.svg)
 
 A Dart library for interfacing with the Spotify API.
@@ -8,16 +11,24 @@ Add `spotify` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  spotify: ^0.14.0
+  spotify: ^0.15.0
 ```
 
-Then run `dart pub get` to install the package.
+Alternatively, run
+
+```bash
+dart pub add spotify
+```
+and the latest version will be added automatically.
+
+Finally, run `dart pub get` to install the package.
 
 ## Features
 
 This library provides comprehensive access to Spotify's Web API:
 
 ### Core Content
+
 - **Artists** - Get artist info, top tracks, related artists, and albums
 - **Tracks** - Retrieve track details and metadata
 - **Albums** - Access album information and track listings
@@ -27,7 +38,8 @@ This library provides comprehensive access to Spotify's Web API:
 - **Browse** - Discover new releases, featured playlists, and categories
 - **Categories** - Browse categories with market and locale support
 
-### User Features (require authentication)
+### User Features (requires authentication)
+
 - **User Profile** - Access current user information via `me` endpoint
 - **Playback Control** - Control playback, manage queue, get available devices
 - **Library Management** - Manage saved tracks, albums, shows, and episodes
@@ -35,12 +47,13 @@ This library provides comprehensive access to Spotify's Web API:
 - **Following** - Follow/unfollow artists and users
 
 ### Additional Capabilities
+
 - **Pagination** - Efficient handling of large result sets with `Pages<T>` and `CursorPages<T>`
 - **Market Support** - Country-specific content filtering
 - **Multiple Auth Flows** - Client credentials and authorization code grant (with PKCE support)
 - **OAuth Scopes** - Comprehensive authorization scope management
 
-**Note:** Audio Features, Audio Analysis, and Recommendations endpoints are deprecated by Spotify but still available in this library.
+**Note:** Related Artists, Audio Features, Audio Analysis, Featured Playlists, Category Playlists and Recommendation endpoints are [deprecated by Spotify](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api) but still available in this library.
 
 ## Quick Start
 
@@ -136,7 +149,7 @@ Contributions are welcome! Here's how to work on this project:
 
 ### Generating JSON Serializers
 
-This project uses [json_serializable][] for model serialization:
+This project uses [json_serializable](https://pub.dev/packages/json_serializable) for model serialization:
 
 - Run `dart run build_runner build` to generate serializers
 - Run `dart run build_runner watch` to continuously rebuild when files change
@@ -164,7 +177,7 @@ dart run example/example.dart
 
 You'll need to modify the file to include your Spotify client ID and secret.
 
-For the authenticated example (accessing user data, playback control):
+For the authenticated example (accessing user data, playback control) run:
 ```bash
 dart run example/example_auth.dart
 ```
