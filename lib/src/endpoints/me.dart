@@ -195,7 +195,7 @@ class Me extends _MeEndpointBase {
   Future<Iterable<Device>> devices() async => _player.devices();
 
   /// Get a list of shows saved in the current Spotify user’s library.
-  @Deprecated('Use [spotify.me.shows.getSaved()] instead')
+  @Deprecated('Use [spotify.me.shows.saved()] instead')
   Pages<Show> savedShows() => _showsMe.saved();
 
   /// Save shows for the current user. It requires the `user-library-modify`
@@ -219,7 +219,7 @@ class Me extends _MeEndpointBase {
   Future<Map<String, bool>> containsSavedShows(List<String> ids) async => _showsMe.contains(ids);
 
   /// gets current user's saved albums in pages
-  @Deprecated('Use [spotify.me.albums.getSaved()] instead]')
+  @Deprecated('Use [spotify.me.albums.saved()] instead]')
   Pages<AlbumSimple> savedAlbums() => _albumsMe.saved();
 
   /// Save albums for the current-user. It requires the
@@ -250,7 +250,7 @@ class Me extends _MeEndpointBase {
 
   /// Returns the current user's saved episodes. Requires the
   /// `user-library-read` scope.
-  @Deprecated('Use [spotify.me.getSaved()] instead')
+  @Deprecated('Use [spotify.me.saved()] instead')
   Pages<EpisodeFull> savedEpisodes() => _episodesMe.saved();
 
   /// Saves episodes for the current user. Requires the `user-library-modify`
