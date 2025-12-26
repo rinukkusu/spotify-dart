@@ -1,9 +1,8 @@
-[Installation](#installation) | [Features](#features) | [Quick Start](#quick-start) | [Authorization](#authorization) | [Features & Bugs](#features-and-bugs) | [Contributing](#contributing)
-
-
 # spotify-dart [![Pub](https://img.shields.io/pub/v/spotify.svg)](https://pub.dartlang.org/packages/spotify) ![Dart CI](https://github.com/rinukkusu/spotify-dart/workflows/Dart%20CI/badge.svg)
 
 A Dart library for interfacing with the Spotify API.
+
+[Installation](#installation) | [Features](#features) | [Quick Start](#quick-start) | [Authorization](#authorization) | [Features & Bugs](#features-and-bugs) | [Contributing](#contributing)
 
 ## Installation
 
@@ -19,6 +18,7 @@ Alternatively, run
 ```bash
 dart pub add spotify
 ```
+
 and the latest version will be added automatically.
 
 Finally, run `dart pub get` to install the package.
@@ -149,7 +149,7 @@ Contributions are welcome! Here's how to work on this project:
 
 ### Generating JSON Serializers
 
-This project uses [json_serializable](https://pub.dev/packages/json_serializable) for model serialization:
+This project uses [json_serializable][json_serializable] for model serialization:
 
 - Run `dart run build_runner build` to generate serializers
 - Run `dart run build_runner watch` to continuously rebuild when files change
@@ -164,6 +164,7 @@ Before committing, ensure your code passes:
 ### Running Tests
 
 Run the test suite:
+
 ```bash
 dart test
 ```
@@ -171,6 +172,7 @@ dart test
 ### Running Examples
 
 To run the basic example:
+
 ```bash
 dart run example/example.dart
 ```
@@ -178,6 +180,7 @@ dart run example/example.dart
 You'll need to modify the file to include your Spotify client ID and secret.
 
 For the authenticated example (accessing user data, playback control) run:
+
 ```bash
 dart run example/example_auth.dart
 ```
@@ -185,8 +188,4 @@ dart run example/example_auth.dart
 This example will prompt you for a redirect URL and guide you through the OAuth flow to access features like currently playing tracks and available devices.
 
 [json_serializable]: https://pub.dartlang.org/packages/json_serializable
-[spotify_auth]: https://developer.spotify.com/documentation/general/guides/authorization-guide/
 [tracker]: https://github.com/rinukkusu/spotify-dart/issues
-[uni_links]: https://pub.dev/packages/uni_links
-[url_launcher]: https://pub.dev/packages/url_launcher
-[webview_flutter]: https://pub.dev/packages/webview_flutter
