@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of a show
 @JsonSerializable()
-class Show {
+class Show extends SpotifyContent {
   Show();
 
   /// The markets in which the show is available: ISO 3166-1 alpha-2 country
@@ -28,12 +28,6 @@ class Show {
   @JsonKey(name: 'external_urls')
   ExternalUrls? externalUrls;
 
-  /// A link to the Web API endpoint providing full details of the show.
-  String? href;
-
-  /// The Spotify ID for the show.
-  String? id;
-
   /// The cover art for the show in various sizes, widest first.
   List<Image>? images;
 
@@ -54,12 +48,6 @@ class Show {
 
   /// The publisher of the show.
   String? publisher;
-
-  /// The object type: "show"
-  String? type;
-
-  /// The Spotify URI for the show.
-  String? uri;
 
   /// The number of total episodes in this show
   @JsonKey(

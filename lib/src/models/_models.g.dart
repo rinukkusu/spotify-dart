@@ -1077,76 +1077,88 @@ Map<String, dynamic> _$PositionOffsetToJson(PositionOffset instance) => <String,
       'position': instance.position,
     };
 
-Playlist _$PlaylistFromJson(Map<String, dynamic> json) => Playlist()
+PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) => PlaylistSimple()
+  ..href = json['href'] as String?
+  ..id = json['id'] as String?
+  ..uri = json['uri'] as String?
+  ..type = $enumDecodeNullable(_$SpotifyContentTypeEnumMap, json['type'])
   ..collaborative = json['collaborative'] as bool?
   ..description = json['description'] as String?
   ..externalUrls =
       json['external_urls'] == null ? null : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
   ..followers = json['followers'] == null ? null : Followers.fromJson(json['followers'] as Map<String, dynamic>)
-  ..href = json['href'] as String?
-  ..id = json['id'] as String?
   ..images = (json['images'] as List<dynamic>?)?.map((e) => Image.fromJson(e as Map<String, dynamic>)).toList()
   ..name = json['name'] as String?
   ..owner = json['owner'] == null ? null : User.fromJson(json['owner'] as Map<String, dynamic>)
   ..public = json['public'] as bool?
   ..snapshotId = json['snapshot_id'] as String?
-  ..tracks = json['tracks'] == null ? null : Paging<Track>.fromJson(json['tracks'] as Map<String, dynamic>)
-  ..type = json['type'] as String?
-  ..uri = json['uri'] as String?;
+  ..tracks = json['tracks'] == null ? null : TracksLink.fromJson(json['tracks'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
+Map<String, dynamic> _$PlaylistSimpleToJson(PlaylistSimple instance) => <String, dynamic>{
+      'href': instance.href,
+      'id': instance.id,
+      'uri': instance.uri,
+      'type': _$SpotifyContentTypeEnumMap[instance.type],
       'collaborative': instance.collaborative,
       'description': instance.description,
       'external_urls': instance.externalUrls?.toJson(),
       'followers': instance.followers?.toJson(),
-      'href': instance.href,
-      'id': instance.id,
       'images': instance.images?.map((e) => e.toJson()).toList(),
       'name': instance.name,
       'owner': instance.owner?.toJson(),
       'public': instance.public,
       'snapshot_id': instance.snapshotId,
       'tracks': instance.tracks?.toJson(),
-      'type': instance.type,
-      'uri': instance.uri,
     };
 
-PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) => PlaylistSimple()
+const _$SpotifyContentTypeEnumMap = {
+  SpotifyContentType.album: 'album',
+  SpotifyContentType.track: 'track',
+  SpotifyContentType.playlist: 'playlist',
+  SpotifyContentType.episode: 'episode',
+  SpotifyContentType.show: 'show',
+};
+
+Playlist _$PlaylistFromJson(Map<String, dynamic> json) => Playlist()
+  ..href = json['href'] as String?
+  ..id = json['id'] as String?
+  ..uri = json['uri'] as String?
+  ..type = $enumDecodeNullable(_$SpotifyContentTypeEnumMap, json['type'])
   ..collaborative = json['collaborative'] as bool?
   ..description = json['description'] as String?
   ..externalUrls =
       json['external_urls'] == null ? null : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
-  ..href = json['href'] as String?
-  ..id = json['id'] as String?
+  ..followers = json['followers'] == null ? null : Followers.fromJson(json['followers'] as Map<String, dynamic>)
   ..images = (json['images'] as List<dynamic>?)?.map((e) => Image.fromJson(e as Map<String, dynamic>)).toList()
   ..name = json['name'] as String?
   ..owner = json['owner'] == null ? null : User.fromJson(json['owner'] as Map<String, dynamic>)
   ..public = json['public'] as bool?
   ..snapshotId = json['snapshot_id'] as String?
-  ..tracksLink = json['tracks'] == null ? null : TracksLink.fromJson(json['tracks'] as Map<String, dynamic>)
-  ..type = json['type'] as String?
-  ..uri = json['uri'] as String?;
+  ..tracks = json['tracks'] == null ? null : Paging<Track>.fromJson(json['tracks'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$PlaylistSimpleToJson(PlaylistSimple instance) => <String, dynamic>{
+Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
+      'href': instance.href,
+      'id': instance.id,
+      'uri': instance.uri,
+      'type': _$SpotifyContentTypeEnumMap[instance.type],
       'collaborative': instance.collaborative,
       'description': instance.description,
       'external_urls': instance.externalUrls?.toJson(),
-      'href': instance.href,
-      'id': instance.id,
+      'followers': instance.followers?.toJson(),
       'images': instance.images?.map((e) => e.toJson()).toList(),
       'name': instance.name,
       'owner': instance.owner?.toJson(),
       'public': instance.public,
       'snapshot_id': instance.snapshotId,
-      'tracks': instance.tracksLink?.toJson(),
-      'type': instance.type,
-      'uri': instance.uri,
+      'tracks': instance.tracks?.toJson(),
     };
 
-PlaylistsFeatured _$PlaylistsFeaturedFromJson(Map<String, dynamic> json) =>
-    PlaylistsFeatured()..message = json['message'] as String?;
+PlaylistsFeatured _$PlaylistsFeaturedFromJson(Map<String, dynamic> json) => PlaylistsFeatured()
+  ..content = json['content'] == null ? null : Playlist.fromJson(json['content'] as Map<String, dynamic>)
+  ..message = json['message'] as String?;
 
 Map<String, dynamic> _$PlaylistsFeaturedToJson(PlaylistsFeatured instance) => <String, dynamic>{
+      'content': instance.content?.toJson(),
       'message': instance.message,
     };
 
@@ -1209,6 +1221,10 @@ Map<String, dynamic> _$ResumePointToJson(ResumePoint instance) =>
     };
 
 Show _$ShowFromJson(Map<String, dynamic> json) => Show()
+  ..href = json['href'] as String?
+  ..id = json['id'] as String?
+  ..uri = json['uri'] as String?
+  ..type = $enumDecodeNullable(_$SpotifyContentTypeEnumMap, json['type'])
   ..availableMarkets =
       (json['available_markets'] as List<dynamic>?)?.map((e) => $enumDecode(_$MarketEnumMap, e)).toList()
   ..copyrights =
@@ -1217,34 +1233,30 @@ Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..explicit = json['explicit'] as bool?
   ..externalUrls =
       json['external_urls'] == null ? null : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
-  ..href = json['href'] as String?
-  ..id = json['id'] as String?
   ..images = (json['images'] as List<dynamic>?)?.map((e) => Image.fromJson(e as Map<String, dynamic>)).toList()
   ..isExternallyHosted = json['is_externally_hosted'] as bool?
   ..languages = (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList()
   ..mediaType = json['media_type'] as String?
   ..name = json['name'] as String?
   ..publisher = json['publisher'] as String?
-  ..type = json['type'] as String?
-  ..uri = json['uri'] as String?
   ..totalEpisodes = json['total_episodes'] == null ? 0 : convertToIntIfDoubleValue(json['total_episodes']);
 
 Map<String, dynamic> _$ShowToJson(Show instance) => <String, dynamic>{
+      'href': instance.href,
+      'id': instance.id,
+      'uri': instance.uri,
+      'type': _$SpotifyContentTypeEnumMap[instance.type],
       'available_markets': instance.availableMarkets?.map((e) => _$MarketEnumMap[e]!).toList(),
       'copyrights': instance.copyrights?.map((e) => e.toJson()).toList(),
       'description': instance.description,
       'explicit': instance.explicit,
       'external_urls': instance.externalUrls?.toJson(),
-      'href': instance.href,
-      'id': instance.id,
       'images': instance.images?.map((e) => e.toJson()).toList(),
       'is_externally_hosted': instance.isExternallyHosted,
       'languages': instance.languages,
       'media_type': instance.mediaType,
       'name': instance.name,
       'publisher': instance.publisher,
-      'type': instance.type,
-      'uri': instance.uri,
       'total_episodes': instance.totalEpisodes,
     };
 

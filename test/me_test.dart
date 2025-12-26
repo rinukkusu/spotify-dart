@@ -131,7 +131,7 @@ Future main() async {
         expect(result.items!.length, 2);
 
         final firstShow = result.items!.first;
-        expect(firstShow.type, 'show');
+        expect(firstShow.type, SpotifyContentType.show);
         expect(firstShow.name != null, true);
         expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
       });

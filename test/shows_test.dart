@@ -15,7 +15,7 @@ Future main() async {
     test('get', () async {
       final show = await spotify.shows.get('4AlxqGkkrqe0mfIx3Mi7Xt');
 
-      expect(show.type, 'show');
+      expect(show.type, SpotifyContentType.show);
       expect(show.id, '4AlxqGkkrqe0mfIx3Mi7Xt');
       expect(show.name, 'Universo Flutter');
       expect(show.totalEpisodes, 26);
