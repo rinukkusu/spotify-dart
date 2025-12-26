@@ -80,7 +80,7 @@ abstract class SpotifyApiBase {
     _spotifyClient = SpotifyClient(client);
     _player = PlayerEndpoint(this);
     _me = Me(this, _player);
-    
+
     _artists = Artists(this);
     _albums = Albums(this);
     _audiobooks = Audiobooks(this);

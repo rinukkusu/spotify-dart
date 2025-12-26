@@ -150,7 +150,7 @@ Future<void> _shuffle(bool state, SpotifyApi spotify) async {
 }
 
 Future<void> _playlists(SpotifyApi spotify) async {
-  await spotify.playlists.me.all(1).then((playlists) {
+  await spotify.me.playlists.saved().all(1).then((playlists) {
     final lists = playlists.map((playlist) => playlist.name).join(', ');
     print('Playlists: $lists');
   }).catchError(_prettyPrintError);
@@ -189,7 +189,7 @@ Future<void> _listShows(SpotifyApi spotify) async {
 
 Future<void> _savedShows(SpotifyApi spotify) async {
   print('Users saved shows');
-  final response = spotify.me.savedShows().stream();
+  final response = spotify.me.shows.saved().stream();
   await for (final page in response) {
     final names = page.items?.map((e) => e.name).join(', ');
     print(names);
@@ -200,14 +200,14 @@ Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
   const showId = '4XPl3uEEL9hvqMkoZrzbx5';
 
   print('Saving show with id $showId');
-  await spotify.me.saveShows([showId]);
-  var saved = await spotify.me.containsSavedShows([showId]);
+  await spotify.me.shows.save([showId]);
+  var saved = await spotify.me.shows.containsOne(showId);
   print('Checking is $showId is in saved shows...');
   print(saved);
   print('Removing show wish id $showId');
-  await spotify.me.removeShows([showId]);
+  await spotify.me.shows.removeOne(showId);
   print('Checking is $showId is in saved shows...');
-  saved = await spotify.me.containsSavedShows([showId]);
+  saved = await spotify.me.shows.containsOne(showId);
   print(saved);
 }
 
@@ -232,7 +232,7 @@ Future<void> _listEpisodes(SpotifyApi spotify) async {
 Future<void> _savedEpisodes(SpotifyApi spotify) async {
   print('Users saved episodes:');
 
-  final episodes = spotify.me.savedEpisodes().stream();
+  final episodes = spotify.me.episodes.saved().stream();
   await for (final page in episodes) {
     final names = page.items?.map((e) => e.name).join(', ');
     print(names);
@@ -243,14 +243,14 @@ Future<void> _saveAndRemoveEpisode(SpotifyApi spotify) async {
   const episodeId = '4Bje2xtE4VxqO2HO1PQdsG';
 
   print('Saving episode with id $episodeId');
-  await spotify.me.saveShows([episodeId]);
-  var saved = await spotify.me.containsSavedShows([episodeId]);
+  await spotify.me.shows.save([episodeId]);
+  var saved = await spotify.me.shows.containsOne(episodeId);
   print('Checking is $episodeId is in saved shows...');
   print(saved);
   print('Removing show wish id $episodeId');
-  await spotify.me.removeShows([episodeId]);
+  await spotify.me.shows.removeOne(episodeId);
   print('Checking is $episodeId is in saved shows...');
-  saved = await spotify.me.containsSavedShows([episodeId]);
+  saved = await spotify.me.shows.containsOne(episodeId);
   print(saved);
 }
 
@@ -337,21 +337,26 @@ Future<Iterable<PlaylistTrack>> _getPlaylistTracks(
 }
 
 Future<PlaybackState?> _play(SpotifyApi spotify) async {
-  const trackIds = ['6zW80jVqLtgSF1yCtGHiiD', '4VnDmjYCZkyeqeb0NIKqdA'];
-  const albumId = '0rwbMKjNkp4ehQTwf9V2Jk';
+  const trackIds = ['55mJleti2WfWEFNFcBduhc'];
+  const albumId = '5l5m1hnH4punS1GQXgEi3T';
 
   var track = await spotify.tracks.get(trackIds.first);
   print(
     'Playing "${track.name} - ${track.artists?.first.name}" '
     'with track context for 10 s',
   );
+  final devices = await spotify.player.devices();
+  if (devices.isEmpty) {
+    return null;
+  }
   var result = await spotify.player.startWithTracks(
-    ['spotify:track:${trackIds.first}?si=99fd66ccb2464bad'],
+    ['spotify:track:${trackIds.first}?si=0b5aefa2bc764646'],
     positionMs: 10000,
+    deviceId: devices.first.id,
   );
   sleep(const Duration(seconds: 10));
   print('Pausing...');
-  spotify.player.pause();
+  spotify.player.pause(deviceId: devices.first.id);
   final album = await spotify.albums.get(albumId);
   track = await spotify.tracks.get(trackIds.last);
   print(
@@ -360,9 +365,9 @@ Future<PlaybackState?> _play(SpotifyApi spotify) async {
   );
   print(
     'and offset to "${track.name} - ${track.artists?.first.name}" for 10 s',
-  );
+  ); // https://open.spotify.com/intl-de/album/5l5m1hnH4punS1GQXgEi3T?si=Z_7SbJR6Q_uI4-AgLh7ZRw
   result = await spotify.player.startWithContext(
-    'spotify:album:$albumId?si=HA-mX2mPQ1CUp7ExfdDt2g',
+    'spotify:album:$albumId?si=Z_7SbJR6Q_uI4-AgLh7ZRw',
     offset: UriOffset('spotify:track:${trackIds.last}'),
   );
   sleep(const Duration(seconds: 10));
