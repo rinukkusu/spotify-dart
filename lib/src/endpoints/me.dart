@@ -15,11 +15,14 @@ abstract class _MeEndpointBase extends EndpointPaging {
 class Me extends _MeEndpointBase {
   late PlayerEndpoint _player;
   late final AlbumsMe _albumsMe = AlbumsMe._(super._api);
-// late final AudioBooksMe _audiobooksMe = AudioBooksMe._(super.api);
+  late final AudiobooksMe _audiobooksMe = AudiobooksMe._(super._api);
   late final EpisodesMe _episodesMe = EpisodesMe._(super._api);
   late final ShowsMe _showsMe = ShowsMe._(super._api);
   late final TracksMe _tracksMe = TracksMe._(super._api);
   // late final PlaylistsMe _playlistsMe = PlaylistsMe._(super._api);
+
+  /// Accesses the user's audiobooks
+  AudiobooksMe get audiobooks => _audiobooksMe;
 
   /// Accesses the user's shows
   ShowsMe get shows => _showsMe;
@@ -272,6 +275,13 @@ abstract class MeOperations<T> extends _MeEndpointBase {
 
   Pages<T> saved();
 
+  Pages<T> _savedImpl(ParserFunction<T> pageItemParser) => _getPages(
+        _path,
+        pageItemParser,
+      );
+
+  /// Save this content for the current user. It requires the  [LibraryAuthorizationScope.modify] scope.
+  /// [ids] - the ids to save
   Future<void> save(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError(_errorMessage);
@@ -279,48 +289,12 @@ abstract class MeOperations<T> extends _MeEndpointBase {
     await _api._put('$_path?${_buildQuery({'ids': ids.join(',')})}');
   }
 
-  Future<void> removeOne(String id) async => remove([id]);
-
-  Future<void> remove(List<String> ids);
-
+  /// Check if the passed [id] are saved by current user.
+  /// [id] - the id to check
+  /// Returns [true] or [false] whether it has been saved
   Future<bool> containsOne(String id) async => (await contains([id]))[id] ?? false;
 
-  Future<Map<String, bool>> contains(List<String> ids);
-
-  Future<void> saveImpl(List<String> ids, String type) async {}
-}
-
-class ShowsMe extends MeOperations<Show> {
-  @override
-  String get _path => '${super._path}/shows';
-
-  @override
-  String get _errorMessage => 'No show id\'s were provided';
-
-  ShowsMe._(super.api);
-
-  /// Save shows for the current user. It requires the  [LibraryAuthorizationScope.modify] scope.
-  /// [ids] - the ids of the shows to save
-  @override
-  Future<void> save(List<String> ids) async => super.save(ids);
-
-  /// Removes shows for the current user. It requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the shows to remove
-  /// [market] - An ISO 3166-1 alpha-2 country code. If a country code is
-  /// specified, only content that is available in that market will be returned.
-  Future<void> remove(List<String> ids, [Market? market]) async {
-    if (ids.isEmpty) {
-      throw ArgumentError(_errorMessage);
-    }
-    final queryMap = {
-      'ids': ids.join(','),
-      'market': market?.name,
-    };
-    await _api._delete('$_path?${_buildQuery(queryMap)}');
-  }
-
-  /// Check if passed albums (ids) are saved by current user.
+  /// Check if passed [ids] are saved by current user.
   /// [ids] - list of IDs to check
   /// Returns the list of IDs mapped with the response whether it has been saved
   Future<Map<String, bool>> contains(List<String> ids) async {
@@ -334,12 +308,57 @@ class ShowsMe extends MeOperations<Show> {
     return Map.fromIterables(ids, response);
   }
 
-  /// Get a list of shows saved in the current Spotify user’s library.
-  @override
-  Pages<Show> saved() => _getPages(_path, (json) => Show.fromJson(json['show']));
+  Future<void> _removeImpl(List<String> ids, [Market? market]) async {
+    if (ids.isEmpty) {
+      throw ArgumentError(_errorMessage);
+    }
+    final queryMap = {
+      'ids': ids.join(','),
+      'market': market?.name,
+    };
+    await _api._delete('$_path?${_buildQuery(queryMap)}');
+  }
 }
 
-class EpisodesMe extends MeOperations<EpisodeFull> {
+mixin ContentMeSavable {
+  
+}
+
+mixin ContentMeRemovable {
+  Future<void> removeOne(String id) async => remove([id]);
+
+  Future<void> remove(List<String> ids);
+}
+
+mixin MarketRemovable {
+  Future<void> removeOne(String id, [Market? market]) async => remove([id], market);
+
+  Future<void> remove(List<String> ids, [Market? market]);
+}
+
+class ShowsMe extends MeOperations<Show> with MarketRemovable {
+  @override
+  String get _path => '${super._path}/shows';
+
+  @override
+  String get _errorMessage => 'No show id\'s were provided';
+
+  ShowsMe._(super.api);
+
+  /// Get a list of shows saved in the current Spotify user’s library.
+  @override
+  Pages<Show> saved() => _savedImpl((json) => Show.fromJson(json['show']));
+
+  /// Removes shows for the current user. It requires the `user-library-modify`
+  /// scope.
+  /// [ids] - the ids of the shows to remove
+  /// [market] - An ISO 3166-1 alpha-2 country code. If a country code is
+  /// specified, only content that is available in that market will be returned.
+  @override
+  Future<void> remove(List<String> ids, [Market? market]) async => _removeImpl(ids, market);
+}
+
+class EpisodesMe extends MeOperations<EpisodeFull> with ContentMeRemovable {
   @override
   String get _path => '${super._path}/episodes';
 
@@ -349,7 +368,7 @@ class EpisodesMe extends MeOperations<EpisodeFull> {
   EpisodesMe._(super.api);
 
   /// Returns the current user's saved episodes. Requires the
-  /// `user-library-read` scope.
+  /// [LibraryAuthorizationScope.read] scope.
   @override
   Pages<EpisodeFull> saved() => _getPages(
         _path,
@@ -371,12 +390,7 @@ class EpisodesMe extends MeOperations<EpisodeFull> {
   /// scope.
   /// [ids] - the ids of the episodes
   @override
-  Future<void> remove(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No episode ids were provided for removing');
-    }
-    await _api._delete('$_path?${_buildQuery({'ids': ids.join(',')})}');
-  }
+  Future<void> remove(List<String> ids) async => _removeImpl(ids);
 
   /// Check if passed episode [ids] are saved by current user.
   /// Returns the list of IDs mapped with the response whether it has been
@@ -395,7 +409,7 @@ class EpisodesMe extends MeOperations<EpisodeFull> {
   }
 }
 
-class AlbumsMe extends MeOperations<AlbumSimple> {
+class AlbumsMe extends MeOperations<AlbumSimple> with ContentMeRemovable {
   @override
   String get _path => '${super._path}/albums';
 
@@ -405,6 +419,7 @@ class AlbumsMe extends MeOperations<AlbumSimple> {
   AlbumsMe._(super.api);
 
   /// gets current user's saved albums in pages
+  @override
   Pages<AlbumSimple> saved() {
     return _getPages(_path, (json) => Album.fromJson(json['album']));
   }
@@ -412,6 +427,7 @@ class AlbumsMe extends MeOperations<AlbumSimple> {
   /// Save albums for the current-user. It requires the
   /// `user-library-modify` scope of Spotify WebSDK\
   /// [ids] - the ids of the albums
+  @override
   Future<void> save(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No album ids were provided for saving');
@@ -420,18 +436,15 @@ class AlbumsMe extends MeOperations<AlbumSimple> {
   }
 
   /// Remove albums for the current-user. It requires the
-  /// `user-library-modify` scope of Spotify WebSDK\
+  /// [LibraryAuthorizationScope.modify] scope of Spotify WebSDK.
   /// [ids] - the ids of the albums
-  Future<void> remove(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No album ids were provided for removing');
-    }
-    await _api._delete('$_path?ids=${ids.join(",")}');
-  }
+  @override
+  Future<void> remove(List<String> ids) async => _removeImpl(ids);
 
-  /// Check if passed albums (ids) are saved by current user.
+  /// Check if passed albums [ids] are saved by current user.
   /// Returns the list of IDs mapped with the response whether it has been
   /// saved.
+  @override
   Future<Map<String, bool>> contains(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No album ids were provided for checking');
@@ -443,7 +456,7 @@ class AlbumsMe extends MeOperations<AlbumSimple> {
   }
 }
 
-class TracksMe extends MeOperations<TrackSaved> {
+class TracksMe extends MeOperations<TrackSaved> with ContentMeRemovable {
   @override
   String get _path => '${super._path}/tracks';
 
@@ -463,6 +476,7 @@ class TracksMe extends MeOperations<TrackSaved> {
     return list[id] ?? false;
   }
 
+  @override
   Future<Map<String, bool>> contains(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No track ids were provided');
@@ -474,8 +488,7 @@ class TracksMe extends MeOperations<TrackSaved> {
     return Map.fromIterables(ids, list);
   }
 
-  Future<void> saveOne(String id) => save([id]);
-
+  @override
   Future<void> save(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No track ids were provided');
@@ -485,10 +498,7 @@ class TracksMe extends MeOperations<TrackSaved> {
     await _api._put('$_path?ids=$idsParam', '');
   }
 
-  Future<void> removeOne(String id) {
-    return remove([id]);
-  }
-
+  @override
   Future<void> remove(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No track ids were provided');
@@ -500,19 +510,21 @@ class TracksMe extends MeOperations<TrackSaved> {
 }
 
 /// Endpoint for authenticated user's audiobooks `v1/me/audiobooks`
-class AudiobooksMe extends _MeEndpointBase {
+class AudiobooksMe extends MeOperations<AudiobookSaved> with ContentMeRemovable {
   @override
-  String get _path => 'v1/me/audiobooks';
+  String get _path => '${super._path}/audiobooks';
 
-  AudiobooksMe(super.api);
+  @override
+  String get _errorMessage => 'No audiobook id\'s were provided';
+
+  AudiobooksMe._(super.api);
 
   /// Get a list of the audiobooks saved in the current Spotify user's 'Your
   /// Music' library.
   ///
   /// Requires the `user-library-read` scope.
-  Pages<AudiobookSaved> get saved {
-    return _getPages(_path, (json) => AudiobookSaved.fromJson(json));
-  }
+  @override
+  Pages<AudiobookSaved> saved() => _savedImpl((json) => AudiobookSaved.fromJson(json));
 
   /// Check if one or more audiobooks are already saved in the current Spotify
   /// user's 'Your Music' library.
@@ -521,6 +533,7 @@ class AudiobooksMe extends _MeEndpointBase {
   ///
   /// [ids] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
   /// Returns a Map of audiobook ID to boolean indicating if the audiobook is saved
+  @override
   Future<Map<String, bool>> contains(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No audiobook ids were provided');
@@ -551,6 +564,7 @@ class AudiobooksMe extends _MeEndpointBase {
   /// Requires the `user-library-modify` scope.
   ///
   /// [ids] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
+  @override
   Future<void> save(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No audiobook ids were provided');
@@ -567,6 +581,7 @@ class AudiobooksMe extends _MeEndpointBase {
   /// Requires the `user-library-modify` scope.
   ///
   /// [id] : The Spotify ID for the audiobook
+
   Future<void> saveOne(String id) => save([id]);
 
   /// Remove one or more audiobooks from the current user's 'Your Music' library.
@@ -574,6 +589,7 @@ class AudiobooksMe extends _MeEndpointBase {
   /// Requires the `user-library-modify` scope.
   ///
   /// [ids] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
+  @override
   Future<void> remove(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError('No audiobook ids were provided');
@@ -591,6 +607,10 @@ class AudiobooksMe extends _MeEndpointBase {
   ///
   /// [id] : The Spotify ID for the audiobook
   Future<void> removeOne(String id) => remove([id]);
+}
+
+class PlaylistMe {
+
 }
 
 enum FollowingType {

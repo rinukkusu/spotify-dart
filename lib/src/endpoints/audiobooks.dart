@@ -5,16 +5,10 @@ part of '../../spotify.dart';
 
 /// Endpoint for audiobooks `v1/audiobooks`
 class Audiobooks extends EndpointPaging {
-  late AudiobooksMe _me;
-
   @override
   String get _path => 'v1/audiobooks';
 
-  Audiobooks(SpotifyApiBase api) : super(api) {
-    _me = AudiobooksMe(api);
-  }
-
-  AudiobooksMe get me => _me;
+  Audiobooks(super.api);
 
   /// Get Spotify catalog information for a single audiobook identified by its
   /// unique Spotify ID.
