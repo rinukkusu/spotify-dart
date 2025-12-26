@@ -124,6 +124,12 @@ Future main() async {
       });
     });
 
+    group('me/albums', () {
+      test('albums.contains throws on >20 ids', () async {
+        final tooMany = List.generate(21, (i) => 'id$i');
+        expect(() => spotify.me.albums.contains(tooMany), throwsA(isA<RangeError>()));
+      });
+    });
     group('me/shows', () {
       test('savedShows', () async {
         final pages = spotify.me.shows.saved();
@@ -142,6 +148,15 @@ Future main() async {
         expect(response['one'], true);
         expect(response['two'], false);
       });
+
+      test('shows.remove includes market query param', () async {
+        spotify.interceptor = (method, url, headers, [body]) {
+          expect(url, contains('market=US'));
+          return null;
+        };
+        await spotify.me.shows.remove(['s1'], Market.US);
+      });
+      
     });
 
     group('me/albums', () {

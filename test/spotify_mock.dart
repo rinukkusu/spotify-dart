@@ -63,9 +63,8 @@ class MockClient implements oauth2.Client {
   MockHttpError? _getMockError() {
     if (_mockHttpErrors != null && _mockHttpErrors!.moveNext()) {
       return _mockHttpErrors!.current;
-    } else {
-      return null;
     }
+    return null;
   }
 
   String _readPath(Uri url) {
@@ -90,8 +89,13 @@ class MockClient implements oauth2.Client {
     Object? body,
     Encoding? encoding,
     Map<String, String>? headers,
-  }) {
-    throw 'Not implemented';
+  }) async {
+    _intercept('DELETE', url.toString(), headers);
+    final err = _getMockError();
+    if (err != null) {
+      return createErrorResponse(err);
+    }
+    return createSuccessResponse(_readPath(url));
   }
 
   @override
@@ -157,8 +161,16 @@ class MockClient implements oauth2.Client {
   }
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    throw 'Not implemented';
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    _intercept(request.method, request.url.toString(), request.headers);
+    final err = _getMockError();
+    if (err != null) {
+      return http.StreamedResponse(
+        Stream.error(err),
+        err.statusCode!,
+      );
+    }
+    return http.StreamedResponse(const Stream.empty(), HttpStatus.ok);
   }
 
   @override
