@@ -126,7 +126,7 @@ Future main() async {
 
     group('me/shows', () {
       test('savedShows', () async {
-        final pages = spotify.me.savedShows();
+        final pages = spotify.me.shows.getSaved();
         final result = await pages.first(2);
         expect(result.items!.length, 2);
 
@@ -137,7 +137,7 @@ Future main() async {
       });
 
       test('containsShows', () async {
-        final response = await spotify.me.containsSavedShows(['one', 'two']);
+        final response = await spotify.me.shows.contains(['one', 'two']);
         expect(response.isNotEmpty, true);
         expect(response['one'], true);
         expect(response['two'], false);
@@ -146,7 +146,7 @@ Future main() async {
 
     group('me/albums', () {
       test('savedAlbums', () async {
-        final albums = await spotify.me.savedAlbums().getPage(10, 0);
+        final albums = await spotify.me.albums.getSaved().getPage(10, 0);
         expect(albums.items?.length, 2);
         expect(albums.isLast, true);
         expect(albums.items?.every((item) => item is Album), isTrue);
@@ -159,7 +159,7 @@ Future main() async {
           '2noRn2Aes5aoNVsU6iWThc',
         ];
 
-        final list = await spotify.me.containsSavedAlbums(albumIds);
+        final list = await spotify.me.albums.contains(albumIds);
 
         expect(list.length, 3);
         expect(list[albumIds[0]], isTrue);
@@ -170,7 +170,7 @@ Future main() async {
 
     group('me/episodes', () {
       test('savedEpisodes', () async {
-        final pages = spotify.me.savedEpisodes();
+        final pages = spotify.me.episodes.saved();
         final result = await pages.first(2);
         expect(result.items!.length, 1);
 
@@ -188,7 +188,7 @@ Future main() async {
           '2noRn2Aes5aoNVsU6iWThc',
         ];
 
-        final list = await spotify.me.containsSavedEpisodes(episodeIds);
+        final list = await spotify.me.episodes.contains(episodeIds);
 
         expect(list.length, 3);
         expect(list[episodeIds[0]], isTrue);
@@ -267,6 +267,17 @@ Future main() async {
           throwsA(isA<RangeError>()),
         );
       });
+    });
+  });
+
+  group('me/tracks', () {
+    test('containsTracks', () async {
+      final result = await spotify.me.tracks.contains(['1', '2', '3']);
+
+      expect(result.length, 3);
+      expect(result['1'], isTrue);
+      expect(result['2'], isFalse);
+      expect(result['3'], isTrue);
     });
   });
 }

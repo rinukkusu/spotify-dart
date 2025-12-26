@@ -154,14 +154,18 @@ class LibraryAuthorizationScope extends _Scope {
   /// Write/delete access to a user's "Your Music" library.
   ///
   /// Endpoints that require the `user-library-modify` scope:
-  /// * [Me.removeAlbums]
-  /// * [Me.removeEpisodes]
-  /// * [Me.saveEpisodes]
-  /// * [Me.saveAlbums]
   /// * [TracksMe.saveOne]
   /// * [TracksMe.save]
   /// * [TracksMe.remove]
   /// * [TracksMe.removeOne]
+  /// * [PlaylistsMe.save]
+  /// * [PlaylistsMe.remove]
+  /// * [ShowsMe.save]
+  /// * [ShowsMe.remove]
+  /// * [EpisodesMe.save]
+  /// * [EpisodesMe.remove]
+  /// * [AlbumsMe.save]
+  /// * [AlbumsMe.remove]
   String get modify => 'user-library-modify';
 
   @override

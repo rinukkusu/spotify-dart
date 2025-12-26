@@ -78,20 +78,21 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
     _spotifyClient = SpotifyClient(client);
-
+    _player = PlayerEndpoint(this);
+    _me = Me(this, _player);
+    
     _artists = Artists(this);
     _albums = Albums(this);
     _audiobooks = Audiobooks(this);
     _browse = Browse(this);
     _chapters = Chapters(this);
-    _tracks = Tracks(this);
+    _tracks = Tracks(this, _me);
     _episodes = Episodes(this);
     _playlists = Playlists(this);
     // ignore: deprecated_member_use_from_same_package
     _recommendations = RecommendationsEndpoint(this);
     _markets = Markets(this);
-    _player = PlayerEndpoint(this);
-    _me = Me(this, _player);
+
     _users = Users(this);
     _search = Search(this);
     // ignore: deprecated_member_use_from_same_package
