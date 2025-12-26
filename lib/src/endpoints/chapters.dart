@@ -37,9 +37,10 @@ class Chapters extends EndpointBase {
   /// [market] : An ISO 3166-1 alpha-2 country code. If a country code is
   /// specified, only content that is available in that market will be returned
   Future<Iterable<Chapter>> list(List<String> chapterIds, {Market? market}) async => _listWithIds(
-      path: _path,
-      ids: chapterIds,
-      jsonKey: 'chapters',
-      fromJson: Chapter.fromJson,
-      optionalParams: {'market': market?.name},);
+        path: _path,
+        ids: chapterIds,
+        jsonKey: 'chapters',
+        fromJson: Chapter.fromJson,
+        optionalParams: {'market': market?.name},
+      );
 }
