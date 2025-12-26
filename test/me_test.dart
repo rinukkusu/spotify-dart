@@ -156,7 +156,6 @@ Future main() async {
         };
         await spotify.me.shows.remove(['s1'], Market.US);
       });
-      
     });
 
     group('me/albums', () {
