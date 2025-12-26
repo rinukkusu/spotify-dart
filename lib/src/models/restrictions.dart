@@ -8,8 +8,7 @@ part of '_models.dart';
 class Restrictions extends Object {
   Restrictions();
 
-  factory Restrictions.fromJson(Map<String, dynamic> json) =>
-      _$RestrictionsFromJson(json);
+  factory Restrictions.fromJson(Map<String, dynamic> json) => _$RestrictionsFromJson(json);
 
   Map<String, dynamic> toJson() => _$RestrictionsToJson(this);
 

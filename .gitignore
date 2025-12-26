@@ -20,3 +20,6 @@ doc/api/
 # MacOS
 .DS_Store
 Thumbs.db
+
+# Claude Code
+.claude/

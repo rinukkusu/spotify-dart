@@ -8,8 +8,7 @@ part of '_models.dart';
 class Audiobook extends AudiobookSimple {
   Audiobook();
 
-  factory Audiobook.fromJson(Map<String, dynamic> json) =>
-      _$AudiobookFromJson(json);
+  factory Audiobook.fromJson(Map<String, dynamic> json) => _$AudiobookFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$AudiobookToJson(this);
@@ -24,8 +23,7 @@ class Audiobook extends AudiobookSimple {
 class AudiobookSimple extends Object {
   AudiobookSimple();
 
-  factory AudiobookSimple.fromJson(Map<String, dynamic> json) =>
-      _$AudiobookSimpleFromJson(json);
+  factory AudiobookSimple.fromJson(Map<String, dynamic> json) => _$AudiobookSimpleFromJson(json);
 
   Map<String, dynamic> toJson() => _$AudiobookSimpleToJson(this);
 
@@ -39,10 +37,8 @@ class AudiobookSimple extends Object {
       return json.map((chapterJson) => ChapterSimple.fromJson(chapterJson));
     }
 
-    var items = Paging.fromJson(json).itemsNative;
-    return json.isEmpty || (items == null)
-        ? []
-        : items.map((chapterJson) => ChapterSimple.fromJson(chapterJson));
+    final items = Paging.fromJson(json).itemsNative;
+    return json.isEmpty || (items == null) ? [] : items.map((chapterJson) => ChapterSimple.fromJson(chapterJson));
   }
 
   /// The author(s) for the audiobook
@@ -114,8 +110,7 @@ class AudiobookSimple extends Object {
 class AudiobookSaved extends Object {
   AudiobookSaved();
 
-  factory AudiobookSaved.fromJson(Map<String, dynamic> json) =>
-      _$AudiobookSavedFromJson(json);
+  factory AudiobookSaved.fromJson(Map<String, dynamic> json) => _$AudiobookSavedFromJson(json);
 
   Map<String, dynamic> toJson() => _$AudiobookSavedToJson(this);
 

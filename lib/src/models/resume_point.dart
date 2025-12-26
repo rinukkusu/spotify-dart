@@ -8,8 +8,7 @@ part of '_models.dart';
 class ResumePoint extends Object {
   ResumePoint();
 
-  factory ResumePoint.fromJson(Map<String, dynamic> json) =>
-      _$ResumePointFromJson(json);
+  factory ResumePoint.fromJson(Map<String, dynamic> json) => _$ResumePointFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResumePointToJson(this);
 

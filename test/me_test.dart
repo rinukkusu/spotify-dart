@@ -199,13 +199,13 @@ Future main() async {
 
     group('me/audiobooks', () {
       test('saved audiobooks', () async {
-        var pages = spotify.audiobooks.me.saved;
-        var result = await pages.first();
+        final pages = spotify.audiobooks.me.saved;
+        final result = await pages.first();
 
         expect(result.items, isNotNull);
         expect(result.items!.length, 1);
 
-        var saved = result.items!.first;
+        final saved = result.items!.first;
         expect(saved.addedAt, isNotNull);
         expect(saved.audiobook, isNotNull);
         expect(saved.audiobook!.id, 'savedbook');
@@ -214,8 +214,7 @@ Future main() async {
       });
 
       test('contains audiobooks', () async {
-        var result = await spotify.audiobooks.me
-            .contains(['audiobook1', 'audiobook2', 'audiobook3']);
+        final result = await spotify.audiobooks.me.contains(['audiobook1', 'audiobook2', 'audiobook3']);
 
         expect(result.isNotEmpty, true);
         expect(result.length, 3);
@@ -232,7 +231,7 @@ Future main() async {
       });
 
       test('contains throws on >50 ids', () async {
-        var tooManyIds = List.generate(51, (i) => 'id$i');
+        final tooManyIds = List.generate(51, (i) => 'id$i');
         expect(
           () => spotify.audiobooks.me.contains(tooManyIds),
           throwsA(isA<RangeError>()),
@@ -247,7 +246,7 @@ Future main() async {
       });
 
       test('save throws on >50 ids', () async {
-        var tooManyIds = List.generate(51, (i) => 'id$i');
+        final tooManyIds = List.generate(51, (i) => 'id$i');
         expect(
           () => spotify.audiobooks.me.save(tooManyIds),
           throwsA(isA<RangeError>()),
@@ -262,7 +261,7 @@ Future main() async {
       });
 
       test('remove throws on >50 ids', () async {
-        var tooManyIds = List.generate(51, (i) => 'id$i');
+        final tooManyIds = List.generate(51, (i) => 'id$i');
         expect(
           () => spotify.audiobooks.me.remove(tooManyIds),
           throwsA(isA<RangeError>()),

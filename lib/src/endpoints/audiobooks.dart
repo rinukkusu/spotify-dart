@@ -48,14 +48,12 @@ class Audiobooks extends EndpointPaging {
   /// [audiobookIds] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
   /// [market] : An ISO 3166-1 alpha-2 country code. If a country code is
   /// specified, only content that is available in that market will be returned
-  Future<Iterable<Audiobook>> list(List<String> audiobookIds,
-          {Market? market}) async =>
-      _listWithIds(
-          path: _path,
-          ids: audiobookIds,
-          jsonKey: 'audiobooks',
-          fromJson: Audiobook.fromJson,
-          optionalParams: {'market': market?.name});
+  Future<Iterable<Audiobook>> list(List<String> audiobookIds, {Market? market}) async => _listWithIds(
+      path: _path,
+      ids: audiobookIds,
+      jsonKey: 'audiobooks',
+      fromJson: Audiobook.fromJson,
+      optionalParams: {'market': market?.name},);
 
   /// Get Spotify catalog information about an audiobook's chapters.
   ///
@@ -69,7 +67,6 @@ class Audiobooks extends EndpointPaging {
     final query = _buildQuery({'market': market?.name});
     final queryString = query.isNotEmpty ? '?$query' : '';
 
-    return _getPages('$_path/$audiobookId/chapters$queryString',
-        (json) => ChapterSimple.fromJson(json));
+    return _getPages('$_path/$audiobookId/chapters$queryString', (json) => ChapterSimple.fromJson(json));
   }
 }

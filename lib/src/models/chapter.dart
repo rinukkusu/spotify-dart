@@ -8,8 +8,7 @@ part of '_models.dart';
 class Chapter extends Object implements ChapterSimple {
   Chapter();
 
-  factory Chapter.fromJson(Map<String, dynamic> json) =>
-      _$ChapterFromJson(json);
+  factory Chapter.fromJson(Map<String, dynamic> json) => _$ChapterFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$ChapterToJson(this);
@@ -121,8 +120,7 @@ class Chapter extends Object implements ChapterSimple {
 class ChapterSimple extends Object {
   ChapterSimple();
 
-  factory ChapterSimple.fromJson(Map<String, dynamic> json) =>
-      _$ChapterSimpleFromJson(json);
+  factory ChapterSimple.fromJson(Map<String, dynamic> json) => _$ChapterSimpleFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChapterSimpleToJson(this);
 

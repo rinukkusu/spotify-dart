@@ -13,7 +13,7 @@ Future main() async {
 
   group('Audiobooks', () {
     test('get', () async {
-      var audiobook = await spotify.audiobooks.get('7iHfbu1YPACw6oZPAFJtqe');
+      final audiobook = await spotify.audiobooks.get('7iHfbu1YPACw6oZPAFJtqe');
 
       expect(audiobook.id, '7iHfbu1YPACw6oZPAFJtqe');
       expect(audiobook.name, 'Sample Audiobook');
@@ -32,8 +32,7 @@ Future main() async {
     });
 
     test('list', () async {
-      var audiobooks =
-          await spotify.audiobooks.list(['audiobook1', 'audiobook2']);
+      final audiobooks = await spotify.audiobooks.list(['audiobook1', 'audiobook2']);
 
       expect(audiobooks.length, 2);
       expect(audiobooks.first.id, 'audiobook1');
@@ -43,13 +42,13 @@ Future main() async {
     });
 
     test('chapters', () async {
-      var chaptersPage = spotify.audiobooks.chapters('7iHfbu1YPACw6oZPAFJtqe');
-      var firstPage = await chaptersPage.first();
+      final chaptersPage = spotify.audiobooks.chapters('7iHfbu1YPACw6oZPAFJtqe');
+      final firstPage = await chaptersPage.first();
 
       expect(firstPage.items, isNotNull);
       expect(firstPage.items!.length, 2);
 
-      var chapter = firstPage.items!.first;
+      final chapter = firstPage.items!.first;
       expect(chapter.id, 'chapter1');
       expect(chapter.name, 'Chapter 1: The Beginning');
       expect(chapter.chapterNumber, 1);
@@ -70,7 +69,7 @@ Future main() async {
 
   group('Chapters', () {
     test('get', () async {
-      var chapter = await spotify.chapters.get('0IsXVP0JmcB2adSE338GkK');
+      final chapter = await spotify.chapters.get('0IsXVP0JmcB2adSE338GkK');
 
       expect(chapter.id, '0IsXVP0JmcB2adSE338GkK');
       expect(chapter.name, 'Chapter 5: The Climax');
@@ -88,7 +87,7 @@ Future main() async {
     });
 
     test('list', () async {
-      var chapters = await spotify.chapters.list(['chap1', 'chap2']);
+      final chapters = await spotify.chapters.list(['chap1', 'chap2']);
 
       expect(chapters.length, 2);
       expect(chapters.first.id, 'chap1');

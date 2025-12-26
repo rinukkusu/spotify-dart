@@ -331,8 +331,7 @@ class AudiobooksMe extends _MeEndpointBase {
       throw ArgumentError('No audiobook ids were provided');
     }
     if (ids.length > 50) {
-      throw RangeError.range(ids.length, 0, 50, 'ids',
-          'Maximum of 50 audiobook IDs allowed per request');
+      throw RangeError.range(ids.length, 0, 50, 'ids', 'Maximum of 50 audiobook IDs allowed per request');
     }
     final idsParam = ids.join(',');
     final jsonString = await _api._get('$_path/contains?ids=$idsParam');
@@ -362,8 +361,7 @@ class AudiobooksMe extends _MeEndpointBase {
       throw ArgumentError('No audiobook ids were provided');
     }
     if (ids.length > 50) {
-      throw RangeError.range(ids.length, 0, 50, 'ids',
-          'Maximum of 50 audiobook IDs allowed per request');
+      throw RangeError.range(ids.length, 0, 50, 'ids', 'Maximum of 50 audiobook IDs allowed per request');
     }
     final idsParam = ids.join(',');
     await _api._put('$_path?ids=$idsParam', '');
@@ -386,8 +384,7 @@ class AudiobooksMe extends _MeEndpointBase {
       throw ArgumentError('No audiobook ids were provided');
     }
     if (ids.length > 50) {
-      throw RangeError.range(ids.length, 0, 50, 'ids',
-          'Maximum of 50 audiobook IDs allowed per request');
+      throw RangeError.range(ids.length, 0, 50, 'ids', 'Maximum of 50 audiobook IDs allowed per request');
     }
     final idsParam = ids.join(',');
     await _api._delete('$_path?ids=$idsParam');
