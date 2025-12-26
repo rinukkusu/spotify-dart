@@ -196,5 +196,78 @@ Future main() async {
         expect(list[episodeIds[2]], isFalse);
       });
     });
+
+    group('me/audiobooks', () {
+      test('saved audiobooks', () async {
+        var pages = spotify.audiobooks.me.saved;
+        var result = await pages.first();
+
+        expect(result.items, isNotNull);
+        expect(result.items!.length, 1);
+
+        var saved = result.items!.first;
+        expect(saved.addedAt, isNotNull);
+        expect(saved.audiobook, isNotNull);
+        expect(saved.audiobook!.id, 'savedbook');
+        expect(saved.audiobook!.name, 'Saved Audiobook');
+        expect(saved.audiobook!.type, 'audiobook');
+      });
+
+      test('contains audiobooks', () async {
+        var result = await spotify.audiobooks.me
+            .contains(['audiobook1', 'audiobook2', 'audiobook3']);
+
+        expect(result.isNotEmpty, true);
+        expect(result.length, 3);
+        expect(result['audiobook1'], true);
+        expect(result['audiobook2'], false);
+        expect(result['audiobook3'], true);
+      });
+
+      test('contains throws on empty list', () async {
+        expect(
+          () => spotify.audiobooks.me.contains([]),
+          throwsA(isA<ArgumentError>()),
+        );
+      });
+
+      test('contains throws on >50 ids', () async {
+        var tooManyIds = List.generate(51, (i) => 'id$i');
+        expect(
+          () => spotify.audiobooks.me.contains(tooManyIds),
+          throwsA(isA<RangeError>()),
+        );
+      });
+
+      test('save throws on empty list', () async {
+        expect(
+          () => spotify.audiobooks.me.save([]),
+          throwsA(isA<ArgumentError>()),
+        );
+      });
+
+      test('save throws on >50 ids', () async {
+        var tooManyIds = List.generate(51, (i) => 'id$i');
+        expect(
+          () => spotify.audiobooks.me.save(tooManyIds),
+          throwsA(isA<RangeError>()),
+        );
+      });
+
+      test('remove throws on empty list', () async {
+        expect(
+          () => spotify.audiobooks.me.remove([]),
+          throwsA(isA<ArgumentError>()),
+        );
+      });
+
+      test('remove throws on >50 ids', () async {
+        var tooManyIds = List.generate(51, (i) => 'id$i');
+        expect(
+          () => spotify.audiobooks.me.remove(tooManyIds),
+          throwsA(isA<RangeError>()),
+        );
+      });
+    });
   });
 }
