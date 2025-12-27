@@ -305,7 +305,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
     if (ids.isEmpty) {
       throw ArgumentError(_errorMessage);
     }
-    if (ids.length > 50) {
+    if (ids.length > _idSizeConstraint) {
       throw RangeError.range(
         ids.length,
         0,
