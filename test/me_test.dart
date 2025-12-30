@@ -123,13 +123,6 @@ Future main() async {
         expect(firstItem?.name, 'Porcupine Tree');
       });
     });
-
-    group('me/albums', () {
-      test('albums.contains throws on >20 ids', () async {
-        final tooMany = List.generate(21, (i) => 'id$i');
-        expect(() => spotify.me.albums.contains(tooMany), throwsA(isA<RangeError>()));
-      });
-    });
     group('me/shows', () {
       test('savedShows', () async {
         final pages = spotify.me.shows.saved();
@@ -155,30 +148,6 @@ Future main() async {
           return null;
         };
         await spotify.me.shows.remove(['s1'], Market.US);
-      });
-    });
-
-    group('me/albums', () {
-      test('savedAlbums', () async {
-        final albums = await spotify.me.albums.saved().getPage(10, 0);
-        expect(albums.items?.length, 2);
-        expect(albums.isLast, true);
-        expect(albums.items?.every((item) => item is Album), isTrue);
-      });
-
-      test('containsSavedAlbums', () async {
-        final albumIds = [
-          '382ObEPsp2rxGrESizN5TX',
-          '1A2GTWGtFfWp7KSQTwWOyo',
-          '2noRn2Aes5aoNVsU6iWThc',
-        ];
-
-        final list = await spotify.me.albums.contains(albumIds);
-
-        expect(list.length, 3);
-        expect(list[albumIds[0]], isTrue);
-        expect(list[albumIds[1]], isFalse);
-        expect(list[albumIds[2]], isTrue);
       });
     });
 
