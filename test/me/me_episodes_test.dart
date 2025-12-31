@@ -19,7 +19,10 @@ Future main() async {
       final firstItem = firstPage.items?.first;
       expect(firstItem, isNotNull);
       expect(firstItem!.name, 'Starting Your Own Podcast: Tips, Tricks, and Advice From Anchor Creators');
-      expect(firstItem.description, 'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.\n');
+      expect(
+        firstItem.description,
+        'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.\n',
+      );
       expect(firstItem.explicit, true);
       expect(firstItem.isPlayable, true);
       expect(firstItem.durationMs, 1686230);

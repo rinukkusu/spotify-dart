@@ -356,7 +356,9 @@ mixin LibraryModifiable<T> on MeOperations<T> {
   /// Removes content with given list of [ids] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
-  Future<void> remove(List<String> ids) async {
+  Future<void> remove(List<String> ids) async => _removeImpl(ids);
+
+  Future<void> _removeImpl(List<String> ids, [Market? market]) async {
     if (ids.isEmpty) {
       throw ArgumentError(_errorMessage);
     }
@@ -369,7 +371,10 @@ mixin LibraryModifiable<T> on MeOperations<T> {
         'Maximum of $_idSizeConstraint IDs allowed per request',
       );
     }
-    await _api._delete('$_path?${_buildQuery({'ids': ids.join(',')})}');
+    await _api._delete('$_path?${_buildQuery({
+          'ids': ids.join(','),
+          'market': market?.name,
+        })}');
   }
 }
 
@@ -382,16 +387,7 @@ mixin MarketRemovable<T> on MeOperations<T>, LibraryModifiable<T> {
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
   @override
-  Future<void> remove(List<String> ids, [Market? market]) async {
-    if (ids.isEmpty) {
-      throw ArgumentError(_errorMessage);
-    }
-    final queryMap = {
-      'ids': ids.join(','),
-      'market': market?.name,
-    };
-    await _api._delete('$_path?${_buildQuery(queryMap)}');
-  }
+  Future<void> remove(List<String> ids, [Market? market]) async => _removeImpl(ids, market);
 }
 
 /// Endpoint for authenticated user's shows `v1/me/shows`
