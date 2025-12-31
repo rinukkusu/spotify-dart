@@ -3,6 +3,8 @@ import 'dart:async';
 import '../spotify_mock.dart';
 import 'package:test/test.dart';
 
+import 'me_core_test.dart';
+
 Future main() async {
   final spotify = SpotifyApiMock.create();
 
@@ -25,7 +27,7 @@ Future main() async {
     });
 
     test('save throws on empty ids', () async {
-      expect(() => spotify.me.albums.save(List.empty()), throwsA(isA<ArgumentError>()));
+      testSaveThrowsOnEmptyIds(spotify.me.albums);
     });
 
     test('saveOne', () async {
@@ -38,8 +40,7 @@ Future main() async {
     });
 
     test('save throws on >20 ids', () async {
-      final tooMany = List.generate(21, (i) => 'id$i');
-      expect(() => spotify.me.albums.save(tooMany), throwsA(isA<RangeError>()));
+      testSaveThrowsOnGreaterThanN(spotify.me.albums, 20);
     });
 
     test('save', () async {
@@ -52,12 +53,11 @@ Future main() async {
     });
 
     test('contains throws on empty ids', () async {
-      expect(() => spotify.me.albums.contains(List.empty()), throwsA(isA<ArgumentError>()));
+      testContainsThrowsOnEmptyIds(spotify.me.albums);
     });
 
     test('contains throws on >20 ids', () async {
-      final tooMany = List.generate(21, (i) => 'id$i');
-      expect(() => spotify.me.albums.contains(tooMany), throwsA(isA<RangeError>()));
+      testContainsThrowsOnGreaterThanN(spotify.me.albums, 20);
     });
 
     test('contains', () async {
@@ -76,12 +76,11 @@ Future main() async {
     });
 
     test('remove throws on empty ids', () async {
-      expect(() => spotify.me.albums.remove(List.empty()), throwsA(isA<ArgumentError>()));
+      testRemoveThrowsOnEmptyIds(spotify.me.albums);
     });
 
     test('remove throws on > 20 ids', () async {
-      final tooMany = List.generate(21, (i) => 'id$i');
-      expect(() => spotify.me.albums.remove(tooMany), throwsA(isA<RangeError>()));
+      testRemoveThrowsOnGreaterThanN(spotify.me.albums, 20);
     });
 
     test('remove', () async {
