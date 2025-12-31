@@ -12,57 +12,52 @@ Future main() async {
     spotify.interceptor = null;
   });
 
-  group('me/audiobooks', () {
+  group('me/episodes', () {
     test('saved', () async {
-      final albumsPage = spotify.me.audiobooks.saved();
-      final firstPage = await (albumsPage.first());
+      final episodesPage = spotify.me.episodes.saved();
+      final firstPage = await (episodesPage.first());
       final firstItem = firstPage.items?.first;
       expect(firstItem, isNotNull);
-      expect(firstItem!.audiobook, isNotNull);
-      expect(firstItem.audiobook!.id, 'savedbook');
-      expect(firstItem.audiobook!.authors, hasLength(1));
-      expect(firstItem.audiobook!.description, 'A saved audiobook');
-
-      expect(firstItem.audiobook!.totalChapters, 12);
-      expect(firstItem.audiobook!.name, 'Saved Audiobook');
-      expect(firstItem.audiobook!.publisher, 'Saved Publisher');
-      expect(firstItem.audiobook!.explicit, false);
-      expect(firstItem.audiobook!.edition, 'Unabridged');
-      expect(firstItem.audiobook!.uri, 'spotify:show:savedbook');
+      expect(firstItem!.name, 'Starting Your Own Podcast: Tips, Tricks, and Advice From Anchor Creators');
+      expect(firstItem.description, 'A Spotify podcast sharing fresh insights on important topics of the moment—in a way only Spotify can. You’ll hear from experts in the music, podcast and tech industries as we discover and uncover stories about our work and the world around us.\n');
+      expect(firstItem.explicit, true);
+      expect(firstItem.isPlayable, true);
+      expect(firstItem.durationMs, 1686230);
+      expect(firstItem.language, 'en');
     });
 
     test('save throws on empty ids', () async {
-      testSaveThrowsOnEmptyIds(spotify.me.audiobooks);
+      testSaveThrowsOnEmptyIds(spotify.me.episodes);
     });
 
     test('saveOne', () async {
       spotify.interceptor = (method, url, headers, [body]) {
         if (method == 'PUT') {
-          expect(url, contains('me/audiobooks?ids=1'));
+          expect(url, contains('me/episodes?ids=1'));
         }
       };
-      spotify.me.audiobooks.saveOne('1');
+      spotify.me.episodes.saveOne('1');
     });
 
     test('save throws on >50 ids', () async {
-      testSaveThrowsOnGreaterThanN(spotify.me.audiobooks, 50);
+      testSaveThrowsOnGreaterThanN(spotify.me.episodes, 50);
     });
 
     test('save', () async {
       spotify.interceptor = (method, url, headers, [body]) {
         if (method == 'PUT') {
-          expect(url, contains('me/audiobooks?ids=${Uri.encodeComponent('1,2,3')}'));
+          expect(url, contains('me/episodes?ids=${Uri.encodeComponent('1,2,3')}'));
         }
       };
-      spotify.me.audiobooks.save(['1', '2', '3']);
+      spotify.me.episodes.save(['1', '2', '3']);
     });
 
     test('contains throws on empty ids', () async {
-      testContainsThrowsOnEmptyIds(spotify.me.audiobooks);
+      testContainsThrowsOnEmptyIds(spotify.me.episodes);
     });
 
     test('contains throws on >50 ids', () async {
-      testContainsThrowsOnGreaterThanN(spotify.me.audiobooks, 50);
+      testContainsThrowsOnGreaterThanN(spotify.me.episodes, 50);
     });
 
     test('contains', () async {
@@ -72,16 +67,16 @@ Future main() async {
         '2noRn2Aes5aoNVsU6iWThc',
       ];
 
-      final list = await spotify.me.audiobooks.contains(albumIds);
+      final list = await spotify.me.episodes.contains(albumIds);
 
       expect(list.length, 3);
       expect(list[albumIds[0]], isTrue);
       expect(list[albumIds[1]], isFalse);
-      expect(list[albumIds[2]], isTrue);
+      expect(list[albumIds[2]], isFalse);
     });
 
     test('remove throws on empty ids', () async {
-      testRemoveThrowsOnEmptyIds(spotify.me.audiobooks);
+      testRemoveThrowsOnEmptyIds(spotify.me.episodes);
     });
 
     test('remove throws on > 50 ids', () async {
