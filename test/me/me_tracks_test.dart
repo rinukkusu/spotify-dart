@@ -22,7 +22,7 @@ Future main() async {
       expect(firstItem.track!.id, '4DMKwE2E2iYDKY01C335Uw');
       expect(firstItem.track!.artists, hasLength(1));
       expect(firstItem.track!.artists!.first.id, '2hl0xAkS2AIRAu23TVMBG1');
-      
+
       expect(firstItem.track!.duration, const Duration(milliseconds: 323000));
       expect(firstItem.track!.popularity, 76);
       expect(firstItem.track!.trackNumber, 1);
