@@ -21,6 +21,10 @@ class Episode extends Object {
   @JsonKey(name: 'duration_ms', fromJson: convertToIntIfDoubleValue)
   int? durationMs;
 
+    /// The track length
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  Duration? get duration => Duration(milliseconds: durationMs ?? 0);
+
   /// Whether or not the episode has explicit content
   /// (`true` = yes it does; `false` = no it does not OR unknown).
   bool? explicit;
