@@ -21,7 +21,7 @@ class Episode extends Object {
   @JsonKey(name: 'duration_ms', fromJson: convertToIntIfDoubleValue)
   int? durationMs;
 
-    /// The track length
+  /// The track length
   @JsonKey(includeFromJson: false, includeToJson: false)
   Duration? get duration => Duration(milliseconds: durationMs ?? 0);
 
