@@ -1,0 +1,46 @@
+{
+  "href": "https://api.spotify.com/v1/users/asdf/playlists",
+  "limit": 2,
+  "next": "https://api.spotify.com/v1/users/asdf/playlists",
+  "offset": 0,
+  "previous": null,
+  "total": 15,
+  "items": [
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/a123"
+      },
+      "href": "https://api.spotify.com/v1/playlists/a123",
+      "id": "a123",
+      "images": [
+        {
+          "height": null,
+          "url": "https://i.scdn.co/image/ab67616d00001e02da4c8e68e8afb5f8f6fbbd54",
+          "width": null
+        }
+      ],
+      "name": "Playlist#1",
+      "owner": {
+        "display_name": "asdf",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/asdf"
+        },
+        "href": "https://api.spotify.com/v1/users/asdf",
+        "id": "asdf",
+        "type": "user",
+        "uri": "spotify:user:asdf"
+      },
+      "primary_color": null,
+      "public": false,
+      "snapshot_id": "AAAAAueFIcA3xKucOxnKURVRufxfuqb0",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/a123/tracks",
+        "total": 1
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:a123"
+    }
+  ]
+}

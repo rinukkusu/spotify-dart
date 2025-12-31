@@ -123,10 +123,9 @@ Future main() async {
         expect(firstItem?.name, 'Porcupine Tree');
       });
     });
-
     group('me/shows', () {
       test('savedShows', () async {
-        final pages = spotify.me.savedShows();
+        final pages = spotify.me.shows.saved();
         final result = await pages.first(2);
         expect(result.items!.length, 2);
 
@@ -137,40 +136,24 @@ Future main() async {
       });
 
       test('containsShows', () async {
-        final response = await spotify.me.containsSavedShows(['one', 'two']);
+        final response = await spotify.me.shows.contains(['one', 'two']);
         expect(response.isNotEmpty, true);
         expect(response['one'], true);
         expect(response['two'], false);
       });
-    });
 
-    group('me/albums', () {
-      test('savedAlbums', () async {
-        final albums = await spotify.me.savedAlbums().getPage(10, 0);
-        expect(albums.items?.length, 2);
-        expect(albums.isLast, true);
-        expect(albums.items?.every((item) => item is Album), isTrue);
-      });
-
-      test('containsSavedAlbums', () async {
-        final albumIds = [
-          '382ObEPsp2rxGrESizN5TX',
-          '1A2GTWGtFfWp7KSQTwWOyo',
-          '2noRn2Aes5aoNVsU6iWThc',
-        ];
-
-        final list = await spotify.me.containsSavedAlbums(albumIds);
-
-        expect(list.length, 3);
-        expect(list[albumIds[0]], isTrue);
-        expect(list[albumIds[1]], isFalse);
-        expect(list[albumIds[2]], isTrue);
+      test('shows.remove includes market query param', () async {
+        spotify.interceptor = (method, url, headers, [body]) {
+          expect(url, contains('market=US'));
+          return null;
+        };
+        await spotify.me.shows.remove(['s1'], Market.US);
       });
     });
 
     group('me/episodes', () {
       test('savedEpisodes', () async {
-        final pages = spotify.me.savedEpisodes();
+        final pages = spotify.me.episodes.saved();
         final result = await pages.first(2);
         expect(result.items!.length, 1);
 
@@ -188,7 +171,7 @@ Future main() async {
           '2noRn2Aes5aoNVsU6iWThc',
         ];
 
-        final list = await spotify.me.containsSavedEpisodes(episodeIds);
+        final list = await spotify.me.episodes.contains(episodeIds);
 
         expect(list.length, 3);
         expect(list[episodeIds[0]], isTrue);
@@ -199,7 +182,7 @@ Future main() async {
 
     group('me/audiobooks', () {
       test('saved audiobooks', () async {
-        final pages = spotify.audiobooks.me.saved;
+        final pages = spotify.me.audiobooks.saved();
         final result = await pages.first();
 
         expect(result.items, isNotNull);
@@ -214,7 +197,7 @@ Future main() async {
       });
 
       test('contains audiobooks', () async {
-        final result = await spotify.audiobooks.me.contains(['audiobook1', 'audiobook2', 'audiobook3']);
+        final result = await spotify.me.audiobooks.contains(['audiobook1', 'audiobook2', 'audiobook3']);
 
         expect(result.isNotEmpty, true);
         expect(result.length, 3);
@@ -225,7 +208,7 @@ Future main() async {
 
       test('contains throws on empty list', () async {
         expect(
-          () => spotify.audiobooks.me.contains([]),
+          () => spotify.me.audiobooks.contains([]),
           throwsA(isA<ArgumentError>()),
         );
       });
@@ -233,14 +216,14 @@ Future main() async {
       test('contains throws on >50 ids', () async {
         final tooManyIds = List.generate(51, (i) => 'id$i');
         expect(
-          () => spotify.audiobooks.me.contains(tooManyIds),
+          () => spotify.me.audiobooks.contains(tooManyIds),
           throwsA(isA<RangeError>()),
         );
       });
 
       test('save throws on empty list', () async {
         expect(
-          () => spotify.audiobooks.me.save([]),
+          () => spotify.me.audiobooks.save([]),
           throwsA(isA<ArgumentError>()),
         );
       });
@@ -248,14 +231,14 @@ Future main() async {
       test('save throws on >50 ids', () async {
         final tooManyIds = List.generate(51, (i) => 'id$i');
         expect(
-          () => spotify.audiobooks.me.save(tooManyIds),
+          () => spotify.me.audiobooks.save(tooManyIds),
           throwsA(isA<RangeError>()),
         );
       });
 
       test('remove throws on empty list', () async {
         expect(
-          () => spotify.audiobooks.me.remove([]),
+          () => spotify.me.audiobooks.remove([]),
           throwsA(isA<ArgumentError>()),
         );
       });
@@ -263,10 +246,21 @@ Future main() async {
       test('remove throws on >50 ids', () async {
         final tooManyIds = List.generate(51, (i) => 'id$i');
         expect(
-          () => spotify.audiobooks.me.remove(tooManyIds),
+          () => spotify.me.audiobooks.remove(tooManyIds),
           throwsA(isA<RangeError>()),
         );
       });
+    });
+  });
+
+  group('me/tracks', () {
+    test('containsTracks', () async {
+      final result = await spotify.me.tracks.contains(['1', '2', '3']);
+
+      expect(result.length, 3);
+      expect(result['1'], isTrue);
+      expect(result['2'], isFalse);
+      expect(result['3'], isTrue);
     });
   });
 }

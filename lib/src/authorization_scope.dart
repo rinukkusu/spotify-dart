@@ -142,26 +142,38 @@ class LibraryAuthorizationScope extends _Scope {
   /// Read access to a user's library.
   ///
   /// Endpoints that require the `user-library-read` scope:
-  /// * [Me.savedEpisodes]
-  /// * [Me.containsSavedEpisodes]
-  /// * [Me.savedAlbums]
-  /// * [Me.containsSavedAlbums]
-  /// * [TracksMe.containsTracks]
+  /// * [AlbumsMe.containsOne]
+  /// * [AlbumsMe.contains]
+  /// * [AlbumsMe.saved]
   /// * [TracksMe.containsOne]
+  /// * [TracksMe.contains]
   /// * [TracksMe.saved]
+  /// * [EpisodesMe.containsOne]
+  /// * [EpisodesMe.contains]
+  /// * [EpisodesMe.saved]
+  /// * [AudiobooksMe.containsOne]
+  /// * [AudiobooksMe.contains]
+  /// * [AudiobooksMe.saved]
+  /// * [ShowsMe.containsOne]
+  /// * [ShowsMe.contains]
+  /// * [ShowsMe.saved]
   String get read => 'user-library-read';
 
   /// Write/delete access to a user's "Your Music" library.
   ///
   /// Endpoints that require the `user-library-modify` scope:
-  /// * [Me.removeAlbums]
-  /// * [Me.removeEpisodes]
-  /// * [Me.saveEpisodes]
-  /// * [Me.saveAlbums]
   /// * [TracksMe.saveOne]
   /// * [TracksMe.save]
   /// * [TracksMe.remove]
   /// * [TracksMe.removeOne]
+  /// * [PlaylistsMe.save]
+  /// * [PlaylistsMe.remove]
+  /// * [ShowsMe.save]
+  /// * [ShowsMe.remove]
+  /// * [EpisodesMe.save]
+  /// * [EpisodesMe.remove]
+  /// * [AlbumsMe.save]
+  /// * [AlbumsMe.remove]
   String get modify => 'user-library-modify';
 
   @override
@@ -196,7 +208,7 @@ class PlaylistAuthorizationScope extends _Scope {
   ///
   /// Endpoints that require the `playlist-read-private` scope:
   /// * [Playlists.followedByUsers]
-  /// * [Playlists.me]
+  /// * [PlaylistsMe.saved]
   /// * [Users.playlist]
   String get readPrivate => 'playlist-read-private';
 
@@ -221,7 +233,6 @@ class PlaylistAuthorizationScope extends _Scope {
   /// Include collaborative playlists when requesting a user's playlists.
   ///
   /// Endpoints that require the `playlist-read-collaborative` scope:
-  /// * [Playlists.me]
   /// * [Users.playlist]
   String get readCollaborative => 'playlist-read-collaborative';
 

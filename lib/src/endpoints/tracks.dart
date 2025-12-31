@@ -10,10 +10,11 @@ class Tracks extends EndpointBase {
   @override
   String get _path => 'v1/tracks';
 
-  Tracks(SpotifyApiBase api) : super(api) {
-    _me = TracksMe(api);
+  Tracks(super.api, Me me) {
+    _me = me.tracks;
   }
 
+  @Deprecated('Use [spotify.me.tracks] instead')
   TracksMe get me => _me;
 
   Future<Track> get(String trackId) async {
@@ -50,61 +51,5 @@ class Tracks extends EndpointBase {
     await for (final batch in listInBatches(trackIds)) {
       yield* Stream.fromIterable(batch);
     }
-  }
-}
-
-class TracksMe extends EndpointPaging {
-  @override
-  String get _path => 'v1/me/tracks';
-
-  TracksMe(super.api);
-
-  Pages<TrackSaved> get saved {
-    return _getPages(_path, (json) => TrackSaved.fromJson(json));
-  }
-
-  Future<bool> containsOne(String id) async {
-    final list = await containsTracks([id]);
-    return list[id] ?? false;
-  }
-
-  @Deprecated('Use [containsTracks(ids)] instead')
-  Future<List<bool>> contains(List<String> ids) async {
-    return (await containsTracks(ids)).values.toList();
-  }
-
-  Future<Map<String, bool>> containsTracks(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No track ids were provided');
-    }
-    final limit = ids.length < 50 ? ids.length : 50;
-    final idsParam = ids.sublist(0, limit).join(',');
-    final jsonString = await _api._get('$_path/contains?ids=$idsParam');
-    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return Map.fromIterables(ids, list);
-  }
-
-  Future<void> saveOne(String id) => save([id]);
-
-  Future<void> save(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No track ids were provided');
-    }
-    final limit = ids.length < 50 ? ids.length : 50;
-    final idsParam = ids.sublist(0, limit).join(',');
-    await _api._put('$_path?ids=$idsParam', '');
-  }
-
-  Future<void> removeOne(String id) {
-    return remove([id]);
-  }
-
-  Future<void> remove(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No track ids were provided');
-    }
-    final limit = ids.length < 50 ? ids.length : 50;
-    final idsParam = ids.sublist(0, limit).join(',');
-    await _api._delete('$_path?ids=$idsParam');
   }
 }

@@ -1,0 +1,174 @@
+{
+  "href": "https://api.spotify.com/v1/me/tracks?offset=0&limit=2&locale=de,en-US;q%3D0.7,en;q%3D0.3",
+  "items": [
+    {
+      "added_at": "2025-12-06T20:04:18Z",
+      "track": {
+        "album": {
+          "album_type": "album",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/2hl0xAkS2AIRAu23TVMBG1"
+              },
+              "href": "https://api.spotify.com/v1/artists/2hl0xAkS2AIRAu23TVMBG1",
+              "id": "2hl0xAkS2AIRAu23TVMBG1",
+              "name": "Kansas",
+              "type": "artist",
+              "uri": "spotify:artist:2hl0xAkS2AIRAu23TVMBG1"
+            }
+          ],
+          "available_markets": ["AR"],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/7MejfRSNnrpcLZIxkeZDqR"
+          },
+          "href": "https://api.spotify.com/v1/albums/7MejfRSNnrpcLZIxkeZDqR",
+          "id": "7MejfRSNnrpcLZIxkeZDqR",
+          "images": [
+            {
+              "height": 640,
+              "width": 640,
+              "url": "https://i.scdn.co/image/ab67616d0000b2731be40e44db112e123e5e8b51"
+            },
+            {
+              "height": 300,
+              "width": 300,
+              "url": "https://i.scdn.co/image/ab67616d00001e021be40e44db112e123e5e8b51"
+            },
+            {
+              "height": 64,
+              "width": 64,
+              "url": "https://i.scdn.co/image/ab67616d000048511be40e44db112e123e5e8b51"
+            }
+          ],
+          "is_playable": true,
+          "name": "Leftoverture (Expanded Edition)",
+          "release_date": "1976",
+          "release_date_precision": "year",
+          "total_tracks": 10,
+          "type": "album",
+          "uri": "spotify:album:7MejfRSNnrpcLZIxkeZDqR"
+        },
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/2hl0xAkS2AIRAu23TVMBG1"
+            },
+            "href": "https://api.spotify.com/v1/artists/2hl0xAkS2AIRAu23TVMBG1",
+            "id": "2hl0xAkS2AIRAu23TVMBG1",
+            "name": "Kansas",
+            "type": "artist",
+            "uri": "spotify:artist:2hl0xAkS2AIRAu23TVMBG1"
+          }
+        ],
+        "available_markets": ["AR"],
+        "disc_number": 1,
+        "duration_ms": 323000,
+        "explicit": false,
+        "external_ids": {
+          "isrc": "USSM17600874"
+        },
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/4DMKwE2E2iYDKY01C335Uw"
+        },
+        "href": "https://api.spotify.com/v1/tracks/4DMKwE2E2iYDKY01C335Uw",
+        "id": "4DMKwE2E2iYDKY01C335Uw",
+        "is_local": false,
+        "is_playable": true,
+        "name": "Carry on Wayward Son",
+        "popularity": 76,
+        "preview_url": null,
+        "track_number": 1,
+        "type": "track",
+        "uri": "spotify:track:4DMKwE2E2iYDKY01C335Uw"
+      }
+    },
+    {
+      "added_at": "2025-12-01T06:35:35Z",
+      "track": {
+        "album": {
+          "album_type": "album",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0ybFZ2Ab08V8hueghSXm6E"
+              },
+              "href": "https://api.spotify.com/v1/artists/0ybFZ2Ab08V8hueghSXm6E",
+              "id": "0ybFZ2Ab08V8hueghSXm6E",
+              "name": "Opeth",
+              "type": "artist",
+              "uri": "spotify:artist:0ybFZ2Ab08V8hueghSXm6E"
+            }
+          ],
+          "available_markets": ["AR"],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/1hwMH9WoeNvvsH0KOiB994"
+          },
+          "href": "https://api.spotify.com/v1/albums/1hwMH9WoeNvvsH0KOiB994",
+          "id": "1hwMH9WoeNvvsH0KOiB994",
+          "images": [
+            {
+              "height": 640,
+              "width": 640,
+              "url": "https://i.scdn.co/image/ab67616d0000b27394ce7989fb9d7c35a0c1f77f"
+            },
+            {
+              "height": 300,
+              "width": 300,
+              "url": "https://i.scdn.co/image/ab67616d00001e0294ce7989fb9d7c35a0c1f77f"
+            },
+            {
+              "height": 64,
+              "width": 64,
+              "url": "https://i.scdn.co/image/ab67616d0000485194ce7989fb9d7c35a0c1f77f"
+            }
+          ],
+          "is_playable": true,
+          "name": "Deliverance & Damnation Remixed",
+          "release_date": "2015-10-30",
+          "release_date_precision": "day",
+          "total_tracks": 14,
+          "type": "album",
+          "uri": "spotify:album:1hwMH9WoeNvvsH0KOiB994"
+        },
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0ybFZ2Ab08V8hueghSXm6E"
+            },
+            "href": "https://api.spotify.com/v1/artists/0ybFZ2Ab08V8hueghSXm6E",
+            "id": "0ybFZ2Ab08V8hueghSXm6E",
+            "name": "Opeth",
+            "type": "artist",
+            "uri": "spotify:artist:0ybFZ2Ab08V8hueghSXm6E"
+          }
+        ],
+        "available_markets": ["AR"],
+        "disc_number": 1,
+        "duration_ms": 670973,
+        "explicit": false,
+        "external_ids": {
+          "isrc": "GBCKC1500051"
+        },
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/09HnUFt1rlmoNwPdF8Yw7n"
+        },
+        "href": "https://api.spotify.com/v1/tracks/09HnUFt1rlmoNwPdF8Yw7n",
+        "id": "09HnUFt1rlmoNwPdF8Yw7n",
+        "is_local": false,
+        "is_playable": true,
+        "name": "Wreath - Remixed",
+        "popularity": 22,
+        "preview_url": null,
+        "track_number": 1,
+        "type": "track",
+        "uri": "spotify:track:09HnUFt1rlmoNwPdF8Yw7n"
+      }
+    }
+  ],
+  "limit": 2,
+  "next": "https://api.spotify.com/v1/me/tracks?offset=2&limit=2&locale=de,en-US;q%3D0.7,en;q%3D0.3",
+  "offset": 0,
+  "previous": null,
+  "total": 2337
+}
