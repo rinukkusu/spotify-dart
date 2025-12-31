@@ -16,6 +16,7 @@ Future main() async {
       final result = await spotify.episodes.get('5Xt5DXGzch68nYYamXrNxZ');
 
       expect(result.durationMs, 1686230);
+      expect(result.duration, const Duration(milliseconds: 1686230));
       expect(result.explicit, true);
       expect(
         result.audioPreviewUrl,
