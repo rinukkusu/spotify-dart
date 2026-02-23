@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-- add full PKCE (Proof Key for Code Exchange) support for public clients (#81)
+## 0.16.0
+
+- add full PKCE (Proof Key for Code Exchange) support for public clients (#237)
   - add `codeVerifier` field to `SpotifyApiCredentials`
   - add `SpotifyApiCredentials.pkce()` constructor for public client flows
   - add `SpotifyApi.generateCodeVerifier()` helper method
@@ -12,7 +14,12 @@
   - add comprehensive PKCE example (`example/example_pkce.dart`)
   - add PKCE test suite (`test/pkce_test.dart`)
   - update README with PKCE documentation
-- `SpotifyApiCredentials` constructor now accepts optional `codeVerifier` parameter (backward compatible)
+- add audiobooks and chapters endpoints (#232)
+- add duration field to episodes (#244)
+- refactor me endpoint structure (#243)
+- enhance deprecation messages for Spotify-deprecated endpoints (#240)
+- improve README structure and documentation (#236, #239)
+- enforce trailing commas and linter rules (#235)
 
 ## 0.15.0
 
