@@ -33,8 +33,11 @@ Future main() async {
     test('save', () async {
       spotify.interceptor = (method, url, headers, [body]) {
         if (method == 'PUT') {
-          expect(url,
-              contains('me/library?uris=${Uri.encodeComponent('spotify:track:1,spotify:album:2,spotify:episode:3')}'));
+          expect(
+              url,
+              contains(
+                'me/library?uris=${Uri.encodeComponent('spotify:track:1,spotify:album:2,spotify:episode:3')}',
+              ));
         }
       };
       spotify.me.library.save([TrackUri('1'), AlbumUri('2'), EpisodeUri('3')]);
@@ -74,8 +77,11 @@ Future main() async {
     test('remove', () async {
       spotify.interceptor = (method, url, headers, [body]) {
         if (method == 'DELETE') {
-          expect(url,
-              contains('me/library?uris=${Uri.encodeComponent('spotify:album:1,spotify:track:2,spotify:show:3')}'));
+          expect(
+              url,
+              contains(
+                'me/library?uris=${Uri.encodeComponent('spotify:album:1,spotify:track:2,spotify:show:3')}',
+              ));
         }
       };
       spotify.me.library.remove([
