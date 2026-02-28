@@ -20,6 +20,7 @@ class Me extends _MeEndpointBase {
   late final ShowsMe _showsMe = ShowsMe._(super._api);
   late final TracksMe _tracksMe = TracksMe._(super._api);
   late final PlaylistsMe _playlistsMe = PlaylistsMe._(super._api);
+  late final LibraryMe _libraryMe = LibraryMe(super._api);
 
   /// Accesses the user's audiobooks.
   AudiobooksMe get audiobooks => _audiobooksMe;
@@ -38,6 +39,8 @@ class Me extends _MeEndpointBase {
 
   /// Accesses the user's playlists.
   PlaylistsMe get playlists => _playlistsMe;
+
+  LibraryMe get library => _libraryMe;
 
   Me(super.api, PlayerEndpoint player) {
     _player = player;
@@ -286,6 +289,98 @@ abstract class MeOperations<T> extends _MeEndpointBase {
       );
 }
 
+class LibraryMe extends _MeEndpointBase {
+  @override
+  String get _path => '${super._path}/library';
+
+  String get _errorMessage => 'No uri\'s were provided';
+
+  int get _idSizeConstraint => 50;
+
+  LibraryMe(super.api);
+
+  /// Save this content with given [uri] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  Future<void> saveOne(SpotifyUri uri) async => save([uri]);
+
+  /// Save this content with given [uris] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  ///
+  /// **Note:** Only the 50 [uris] are allowed, otherwise throws [RangeError].
+  Future<void> save(List<SpotifyUri> uris) async {
+    if (uris.isEmpty) {
+      throw ArgumentError(_errorMessage);
+    }
+    if (uris.length > _idSizeConstraint) {
+      throw RangeError.range(
+        uris.length,
+        0,
+        _idSizeConstraint,
+        'uris',
+        'Maximum of $_idSizeConstraint Uri\'s allowed per request',
+      );
+    }
+    await _api._put('$_path?${_buildQuery({'uris': uris.join(',')})}');
+  }
+
+  /// Check if the passed [uri] are saved by current user.
+  /// Returns `true` or `false` whether the content has been saved.
+  ///
+  /// Requires [LibraryAuthorizationScope.read] scope.
+  Future<bool> containsOne(SpotifyUri uri) async => (await contains([uri]))[uri] ?? false;
+
+  /// Check if passed [uris] are saved by current user.
+  /// Returns the same list of [uris] mapped with the response whether it has been saved or not.
+  ///
+  /// Requires [LibraryAuthorizationScope.read] scope.
+  /// **Note:** Only the 50 [uris] are allowed, otherwise throws [RangeError].
+  Future<Map<SpotifyUri, bool>> contains(List<SpotifyUri> uris) async {
+    if (uris.isEmpty) {
+      throw ArgumentError(_errorMessage);
+    }
+    if (uris.length > _idSizeConstraint) {
+      throw RangeError.range(
+        uris.length,
+        0,
+        _idSizeConstraint,
+        'uris',
+        'Maximum of $_idSizeConstraint Uri\'s allowed per request',
+      );
+    }
+    final query = _buildQuery({'uris': uris.join(',')});
+    final jsonString = await _api._get('$_path/contains?$query');
+    final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
+
+    return Map.fromIterables(uris, response);
+  }
+
+  /// Removes content with given [uri] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  Future<void> removeOne(SpotifyUri uri, [Market? market]) async => remove([uri]);
+
+  /// Removes content with given list of [uri] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  Future<void> remove(List<SpotifyUri> uris) async {
+    if (uris.isEmpty) {
+      throw ArgumentError(_errorMessage);
+    }
+    if (uris.length > _idSizeConstraint) {
+      throw RangeError.range(
+        uris.length,
+        0,
+        _idSizeConstraint,
+        'uris',
+        'Maximum of $_idSizeConstraint IDs allowed per request',
+      );
+    }
+    await _api._delete('$_path?${_buildQuery({'uris': uris.join(',')})}');
+  }
+}
+
 mixin LibraryModifiable<T> on MeOperations<T> {
   String get _errorMessage;
 
@@ -294,6 +389,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
   /// Save this content with given [id] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
+  @Deprecated('As from March 2026, this method is depracated. Use [spotify.me.library.saveOne] instead.')
   Future<void> saveOne(String id) async => save([id]);
 
   /// Save this content with given [ids] for the current user.
@@ -301,6 +397,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
   /// Requires the [LibraryAuthorizationScope.modify] scope.
   ///
   /// **Note:** Only the 50 [ids] are allowed, otherwise throws [RangeError].
+  @Deprecated('As from March 2026, this method is depracated. Use [spotify.me.library.save] instead.')
   Future<void> save(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError(_errorMessage);
@@ -321,6 +418,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
   /// Returns `true` or `false` whether the content has been saved.
   ///
   /// Requires [LibraryAuthorizationScope.read] scope.
+  @Deprecated('As from March 2026, this method is depracated. User [spotify.me.library.containsOne] instead.')
   Future<bool> containsOne(String id) async => (await contains([id]))[id] ?? false;
 
   /// Check if passed [ids] are saved by current user.
@@ -328,6 +426,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
   ///
   /// Requires [LibraryAuthorizationScope.read] scope.
   /// **Note:** Only the 50 [ids] are allowed, otherwise throws [RangeError].
+  @Deprecated('As from March 2026, this method is depracated. Use [spotify.me.library.contains] instead.')
   Future<Map<String, bool>> contains(List<String> ids) async {
     if (ids.isEmpty) {
       throw ArgumentError(_errorMessage);
@@ -351,11 +450,13 @@ mixin LibraryModifiable<T> on MeOperations<T> {
   /// Removes content with given [id] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
+  @Deprecated('As from March 2026, this method is depracated. Use [spotify.me.library.removeOne] instead.')
   Future<void> removeOne(String id, [Market? market]) async => remove([id]);
 
   /// Removes content with given list of [ids] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
+  @Deprecated('As from March 2026, this method is depracated. Use [spotify.me.library.remove] instead.')
   Future<void> remove(List<String> ids) async => _removeImpl(ids);
 
   Future<void> _removeImpl(List<String> ids, [Market? market]) async {
@@ -380,6 +481,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
 
 mixin MarketRemovable<T> on MeOperations<T>, LibraryModifiable<T> {
   @override
+  @Deprecated('As from March 2026, this method is depracated. Use [spotify.me.library.removeOne] instead.')
   Future<void> removeOne(String id, [Market? market]) async => remove([id], market);
 
   /// Removes content with given [ids] for the current user and an optional [market] ISO 3166-1 alpha-2 country code.
@@ -387,6 +489,7 @@ mixin MarketRemovable<T> on MeOperations<T>, LibraryModifiable<T> {
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
   @override
+  @Deprecated('As from March 2026, this method is depracated. Use [spotify.me.library.remove] instead.')
   Future<void> remove(List<String> ids, [Market? market]) async => _removeImpl(ids, market);
 }
 

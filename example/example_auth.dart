@@ -200,14 +200,15 @@ Future<void> _saveAndRemoveShow(SpotifyApi spotify) async {
   const showId = '4XPl3uEEL9hvqMkoZrzbx5';
 
   print('Saving show with id $showId');
-  await spotify.me.shows.save([showId]);
-  var saved = await spotify.me.shows.containsOne(showId);
+  final showUri = ShowUri(showId);
+  await spotify.me.library.saveOne(showUri);
+  var saved = await spotify.me.library.containsOne(showUri);
   print('Checking is $showId is in saved shows...');
   print(saved);
   print('Removing show wish id $showId');
-  await spotify.me.shows.removeOne(showId);
+  await spotify.me.library.removeOne(showUri);
   print('Checking is $showId is in saved shows...');
-  saved = await spotify.me.shows.containsOne(showId);
+  saved = await spotify.me.library.containsOne(showUri);
   print(saved);
 }
 
@@ -241,16 +242,16 @@ Future<void> _savedEpisodes(SpotifyApi spotify) async {
 
 Future<void> _saveAndRemoveEpisode(SpotifyApi spotify) async {
   const episodeId = '4Bje2xtE4VxqO2HO1PQdsG';
-
+  final episodeUri = EpisodeUri(episodeId);
   print('Saving episode with id $episodeId');
-  await spotify.me.shows.save([episodeId]);
-  var saved = await spotify.me.shows.containsOne(episodeId);
+  await spotify.me.library.saveOne(episodeUri);
+  var saved = await spotify.me.library.containsOne(episodeUri);
   print('Checking is $episodeId is in saved shows...');
   print(saved);
   print('Removing show wish id $episodeId');
-  await spotify.me.shows.removeOne(episodeId);
+  await spotify.me.library.removeOne(episodeUri);
   print('Checking is $episodeId is in saved shows...');
-  saved = await spotify.me.shows.containsOne(episodeId);
+  saved = await spotify.me.library.containsOne(episodeUri);
   print(saved);
 }
 
