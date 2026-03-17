@@ -5,35 +5,31 @@ part of '../../spotify.dart';
 
 class Users extends EndpointPaging {
   @override
+  // ignore: unused_element
   String get _path => 'v1/users';
 
   Users(super.api);
 
-  Future<UserPublic> get(String userId) async {
-    final jsonString = await _api._get('$_path/$userId');
-    final map = json.decode(jsonString);
+  @Deprecated('This endpoint is now removed by spotify and throws an UnsupportedError.'
+      'Use [spotify.me] for current user instead.')
+  Future<UserPublic> get(String userId) async => throw UnsupportedError(
+        'This endpoint is now removd by spotify. Use [spotify.me] instead.',
+      );
 
-    return UserPublic.fromJson(map);
-  }
+  @Deprecated('This endpoint is now removed by spotify and throws an UnsupportedError.'
+      'Use [spotify.me.playlists.saved] for current user instead.')
+  Pages<PlaylistSimple> playlists(String userId) => throw UnsupportedError(
+        'This endpoint is now removd by spotify. Use [spotify.me.playlists.saved] instead.',
+      );
 
-  Pages<PlaylistSimple> playlists(String userId) {
-    return _getPages(
-      '$_path/$userId/playlists',
-      (json) => PlaylistSimple.fromJson(json),
-    );
-  }
+  @Deprecated('This endpoint is now removed by spotify and throws an UnsupportedError.'
+      'Use [spotify.me.playlists.saved] for current user instead.')
+  Future<Playlist> playlist(String userId, String playlistId) async => throw UnsupportedError(
+        'This endpoint is now removed by spotify. Use [spotify.me.playlists.saved] for current user instead.',
+      );
 
-  Future<Playlist> playlist(String userId, String playlistId) async {
-    final jsonString = await _api._get('$_path/$userId/playlists/$playlistId');
-    final map = json.decode(jsonString);
-
-    return Playlist.fromJson(map);
-  }
-
-  Pages<PlaylistTrack> playlistTracks(String userId, String playlistId) {
-    return _getPages(
-      '$_path/$userId/playlists/$playlistId/tracks',
-      (json) => PlaylistTrack.fromJson(json),
-    );
-  }
+  @Deprecated('This endpoint is now removed by spotify and throws an UnsupportedError.')
+  Pages<PlaylistTrack> playlistTracks(String userId, String playlistId) => throw UnsupportedError(
+        'This endpoint is now removed by spotify',
+      );
 }
