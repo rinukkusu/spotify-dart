@@ -488,6 +488,39 @@ class PlaylistsMe extends MeOperations<PlaylistSimple> {
   /// Requires [PlaylistAuthorizationScope.readPrivate] scope.
   @override
   Pages<PlaylistSimple> saved() => _savedImpl((json) => PlaylistSimple.fromJson(json));
+
+  /// Create a playlist for the current Spotify user.
+  ///
+  /// The playlist will be empty until you add tracks to it.
+  /// Each user is generally limited to a maximum of 11000 playlists.
+  ///
+  /// [name] - The name for the new playlist.
+  ///
+  /// [public] - Defaults to `true`. If `true` the playlist will be public,
+  /// if `false` the playlist will be private.
+  ///
+  /// [collaborative] - Defaults to `false`. If `true` the playlist will be
+  /// collaborative. Note: to create a collaborative playlist you must also
+  /// set [public] to `false`.
+  ///
+  /// [description] - The playlist description as displayed in Spotify Clients.
+  ///
+  /// Requires [PlaylistAuthorizationScope.modifyPublic] and/or
+  /// [PlaylistAuthorizationScope.modifyPrivate] scope.
+  Future<Playlist> create(
+    String name, {
+    bool? public,
+    bool? collaborative,
+    String? description,
+  }) async {
+    final body = <String, dynamic>{'name': name};
+    if (public != null) body['public'] = public;
+    if (collaborative != null) body['collaborative'] = collaborative;
+    if (description != null) body['description'] = description;
+
+    final response = await _api._post(_path, jsonEncode(body));
+    return Playlist.fromJson(jsonDecode(response));
+  }
 }
 
 enum FollowingType {

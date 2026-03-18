@@ -79,7 +79,14 @@ class Playlists extends EndpointPaging {
     );
   }
 
-  /// [userId] - the Spotify user ID
+  /// Create a playlist for the current Spotify user.
+  ///
+  /// **Deprecated**: Use [spotify.me.playlists.create] instead. The
+  /// `POST /users/{user_id}/playlists` endpoint has been deprecated by
+  /// Spotify (February 2026); use `POST /me/playlists` instead.
+  ///
+  /// [userId] - the Spotify user ID (ignored when creating for current user;
+  /// kept for backwards compatibility)
   ///
   /// [playlistName] - the name of the new playlist
   ///
@@ -90,6 +97,10 @@ class Playlists extends EndpointPaging {
   /// be collaborative.
   ///
   /// [description] - the description of the new playlist
+  @Deprecated(
+    'Use spotify.me.playlists.create(playlistName, ...) instead. '
+    'The POST /users/{user_id}/playlists endpoint has been deprecated by Spotify.',
+  )
   Future<Playlist> createPlaylist(
     String userId,
     String playlistName, {
@@ -97,15 +108,13 @@ class Playlists extends EndpointPaging {
     bool? collaborative,
     String? description,
   }) async {
-    final url = 'v1/users/$userId/playlists';
-    final json = <String, dynamic>{'name': playlistName};
-
-    if (public != null) json['public'] = public;
-    if (collaborative != null) json['collaborative'] = collaborative;
-    if (description != null) json['description'] = description;
-
-    final playlistJson = await _api._post(url, jsonEncode(json));
-    return Playlist.fromJson(jsonDecode(playlistJson));
+    // Use new POST /me/playlists endpoint
+    return _api.me.playlists.create(
+      playlistName,
+      public: public,
+      collaborative: collaborative,
+      description: description,
+    );
   }
 
   /// [playlistId] - the ID of the playlist to update
