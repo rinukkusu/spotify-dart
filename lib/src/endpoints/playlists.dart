@@ -58,7 +58,7 @@ class Playlists extends EndpointPaging {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
-      'v1/playlists/$playlistId/tracks?$query',
+      'v1/playlists/$playlistId/items?$query',
       (json) => Track.fromJson(json['track']),
       null,
       null,
@@ -71,7 +71,7 @@ class Playlists extends EndpointPaging {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
-      'v1/playlists/$playlistId/tracks?$query',
+      'v1/playlists/$playlistId/items?$query',
       (json) => PlaylistTrack.fromJson(json),
       null,
       null,
@@ -175,7 +175,7 @@ class Playlists extends EndpointPaging {
     String playlistId, {
     int position = -1,
   }) async {
-    var url = 'v1/playlists/$playlistId/tracks';
+    var url = 'v1/playlists/$playlistId/items';
 
     if (position >= 0) {
       url = '$url?position=$position';
@@ -199,7 +199,7 @@ class Playlists extends EndpointPaging {
     if (uris.isEmpty) {
       throw ArgumentError('No uris provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
+    final url = 'v1/playlists/$playlistId/items';
     await _api._post(url, jsonEncode({'uris': uris}));
   }
 
@@ -218,14 +218,14 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
-    final track = <String, dynamic>{'uri': trackUri};
+    final url = 'v1/playlists/$playlistId/items';
+    final item = <String, dynamic>{'uri': trackUri};
     if (positions != null) {
-      track['positions'] = positions;
+      item['positions'] = positions;
     }
 
     final body = jsonEncode({
-      'tracks': [track],
+      'items': [item],
     });
     await _api._delete(url, body);
   }
@@ -241,11 +241,11 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
-    final tracks = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
+    final url = 'v1/playlists/$playlistId/items';
+    final items = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
 
     final body = jsonEncode({
-      'tracks': tracks,
+      'items': items,
     });
     await _api._delete(url, body);
   }
@@ -320,7 +320,7 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    return await _api._put('v1/playlists/$playlistId/tracks', body);
+    return await _api._put('v1/playlists/$playlistId/items', body);
   }
 
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
