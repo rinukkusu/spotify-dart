@@ -48,6 +48,8 @@ abstract class EndpointPaging extends EndpointBase {
     String? pageKey,
     ParserFunction<Object>? pageContainerParser,
     FilterFunction? pageItemFilter,
+    int defaultLimit = 5,
+    int maxLimit = 10,
   ]) =>
       BundledPages(
         _api,
@@ -56,6 +58,8 @@ abstract class EndpointPaging extends EndpointBase {
         pageKey,
         pageContainerParser,
         pageItemFilter,
+        defaultLimit,
+        maxLimit,
       );
 }
 
