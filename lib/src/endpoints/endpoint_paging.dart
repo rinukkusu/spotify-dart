@@ -63,7 +63,11 @@ abstract class EndpointPaging extends EndpointBase {
       );
 }
 
-const defaultLimit = 20;
+var _defaultLimit = 20;
+
+int get defaultLimit => _defaultLimit;
+
+set defaultLimit(int value) => _defaultLimit = value;
 
 /// Base class that represents a generic response page.
 abstract class BasePage<T> {
@@ -154,7 +158,7 @@ class CursorPage<T> extends BasePage<T> {
 
 /// Generic strategy to first and next
 abstract class NextStrategy<T> {
-  Future<T> first([int limit = defaultLimit]);
+  Future<T> first();
 
   Future<T> _getPage(int limit, dynamic next);
 }
@@ -162,7 +166,7 @@ abstract class NextStrategy<T> {
 /// Strategy to get the next set of elements from an offset
 mixin OffsetStrategy<T> implements NextStrategy<T> {
   @override
-  Future<T> first([int limit = defaultLimit]) => getPage(limit);
+  Future<T> first() => getPage(defaultLimit);
 
   @override
   Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as int);
@@ -174,7 +178,7 @@ mixin OffsetStrategy<T> implements NextStrategy<T> {
 /// Strategy to get the next set of elements from a cursor
 mixin CursorStrategy<T> implements NextStrategy<T> {
   @override
-  Future<T> first([int limit = defaultLimit]) => getPage(limit);
+  Future<T> first() => getPage(defaultLimit);
 
   @override
   Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as String);
@@ -222,11 +226,11 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
     FilterFunction? pageItemFilter,
   ]) : super(api, path, pageKey, pageContainerMapper, pageItemFilter);
 
-  Future<Iterable<T>> all([int limit = defaultLimit]) {
-    return stream(limit).map((page) => page.items).toList().then((pages) => pages.expand((page) => page!));
+  Future<Iterable<T>> all() {
+    return stream().map((page) => page.items).toList().then((pages) => pages.expand((page) => page!));
   }
 
-  Stream<V> stream([int limit = defaultLimit]) {
+  Stream<V> stream() {
     late StreamController<V> stream;
 
     void handlePageAndGetNext(V page) {
@@ -259,7 +263,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
         if (_bufferedPages.length == 1) {
           firstPage = Future.value(_bufferedPages.removeAt(0));
         } else {
-          firstPage = first(limit);
+          firstPage = first();
         }
         firstPage.then(handlePageAndGetNext);
       },

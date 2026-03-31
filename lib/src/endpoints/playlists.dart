@@ -40,7 +40,7 @@ class Playlists extends EndpointPaging {
   /// Returns a playlist of a user with [userId]
   Pages<PlaylistSimple> getUsersPlaylists(
     String userId, [
-    int limit = defaultLimit,
+    // int limit = defaultLimit,
     int offset = 0,
   ]) {
     if (userId.isEmpty) {

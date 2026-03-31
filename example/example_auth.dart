@@ -150,7 +150,8 @@ Future<void> _shuffle(bool state, SpotifyApi spotify) async {
 }
 
 Future<void> _playlists(SpotifyApi spotify) async {
-  await spotify.me.playlists.saved().all(1).then((playlists) {
+  defaultLimit = 1;
+  await spotify.me.playlists.saved().all().then((playlists) {
     final lists = playlists.map((playlist) => playlist.name).join(', ');
     print('Playlists: $lists');
   }).catchError(_prettyPrintError);

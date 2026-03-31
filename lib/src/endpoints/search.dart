@@ -32,7 +32,7 @@ class Search extends EndpointPaging {
       'type': type,
       'market': market?.name,
     });
-
+    defaultLimit = 5;
     return _getBundledPages('$_path?$query', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
       'albums': (json) => AlbumSimple.fromJson(json),
