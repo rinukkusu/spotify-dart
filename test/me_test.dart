@@ -126,7 +126,7 @@ Future main() async {
     group('me/shows', () {
       test('savedShows', () async {
         final pages = spotify.me.shows.saved();
-        final result = await pages.first();
+        final result = await pages.first(2);
         expect(result.items!.length, 2);
 
         final firstShow = result.items!.first;
@@ -154,7 +154,7 @@ Future main() async {
     group('me/episodes', () {
       test('savedEpisodes', () async {
         final pages = spotify.me.episodes.saved();
-        final result = await pages.first();
+        final result = await pages.first(2);
         expect(result.items!.length, 1);
 
         final firstEpisode = result.items!.first;

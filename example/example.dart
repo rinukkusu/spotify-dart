@@ -66,7 +66,7 @@ void main() async {
   }
 
   print("\nSearching for 'Metallica':");
-  final search = await spotify.search.get('metallica').first();
+  final search = await spotify.search.get('metallica').first(2);
 
   for (final pages in search) {
     if (pages.items == null) {
