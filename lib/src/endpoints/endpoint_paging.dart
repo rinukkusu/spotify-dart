@@ -398,7 +398,6 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
 
   @override
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
-
     if (defaultLimit < limit || limit > maxLimit) {
       throw ArgumentError.value(limit, 'limit', 'limit value should be >= $defaultLimit and <= $maxLimit');
     }
