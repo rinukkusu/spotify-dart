@@ -185,6 +185,7 @@ abstract class _Pages {
   final String? _pageKey;
   final ParserFunction<dynamic>? _pageContainerParser;
   final FilterFunction? _pageItemFilter;
+  late final int limit;
 
   _Pages(
     this._api,
@@ -377,6 +378,9 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<C
 class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
   final Map<String, ParserFunction<dynamic>> _pageMappers;
 
+  late final int defaultLimit;
+  late final int maxLimit;
+
   BundledPages(
     SpotifyApiBase api,
     String path,
@@ -384,10 +388,17 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
     String? pageKey,
     ParserFunction<dynamic>? pageContainerParser,
     FilterFunction? pageItemFilter,
+    this.defaultLimit = 5,
+    this.maxLimit = 10,
   ]) : super(api, path, pageKey, pageContainerParser, pageItemFilter);
 
   @override
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
+
+    if (defaultLimit < limit || limit > maxLimit) {
+      throw ArgumentError.value(limit, 'limit', 'limit value should be >= $defaultLimit and <= $maxLimit');
+    }
+
     final pathDelimiter = _path.contains('?') ? '&' : '?';
     final path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 

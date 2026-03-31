@@ -31,4 +31,13 @@ Future main() async {
       expect(ex.message, 'Bad Request');
     });
   });
+
+  test('limit boundaries crossed', () async {
+    try {
+      await spotify.search.get('metallica').getPage(100);
+    } on ArgumentError catch (e) {
+      expect(e.name, 'limit');
+      expect(e, isNotNull);
+    }
+  });
 }

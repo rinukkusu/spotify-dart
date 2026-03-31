@@ -11,6 +11,8 @@ class Search extends EndpointPaging {
 
   Search(super.api);
 
+  
+
   /// Get Spotify Catalog information about albums, artists, playlists,
   /// tracks, shows or episodes that match a keyword string.
   ///
