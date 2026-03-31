@@ -150,6 +150,8 @@ class CursorPage<T> extends BasePage<T> {
 
 /// Generic strategy to first and next
 abstract class NextStrategy<T> {
+  int get defaultLimit;
+
   Future<T> first([int? limit]);
 
   Future<T> _getPage(int limit, dynamic next);
@@ -158,7 +160,7 @@ abstract class NextStrategy<T> {
 /// Strategy to get the next set of elements from an offset
 mixin OffsetStrategy<T> implements NextStrategy<T> {
   @override
-  Future<T> first([int? limit]) => getPage(limit ?? _globalLimit);
+  Future<T> first([int? limit]) => getPage(limit ?? defaultLimit);
 
   @override
   Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as int);
@@ -170,7 +172,7 @@ mixin OffsetStrategy<T> implements NextStrategy<T> {
 /// Strategy to get the next set of elements from a cursor
 mixin CursorStrategy<T> implements NextStrategy<T> {
   @override
-  Future<T> first([int? limit]) => getPage(limit ?? _globalLimit);
+  Future<T> first([int? limit]) => getPage(limit ?? defaultLimit);
 
   @override
   Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as String);
@@ -186,8 +188,8 @@ abstract class _Pages {
   final ParserFunction<dynamic>? _pageContainerParser;
   final FilterFunction? _pageItemFilter;
 
-  int defaultLimit = _globalLimit;
-  int maxLimit = _globalLimit;
+  int _defaultLimit = _globalLimit;
+  int _maxLimit = _globalLimit;
 
   _Pages(
     this._api,
@@ -326,6 +328,9 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
       return Page<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
+  
+  @override
+  int get defaultLimit => _defaultLimit;
 }
 
 /// Handles retrieval of a page through a cursor
@@ -377,6 +382,9 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<C
       return CursorPage<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
+  
+  @override
+  int get defaultLimit => _defaultLimit;
 }
 
 /// Page that allows multiple types (artist, track, episode etc.) together
@@ -392,9 +400,11 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
     FilterFunction? pageItemFilter,
   ]) : super(api, path, pageKey, pageContainerParser, pageItemFilter);
 
+
+
   @override
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
-    if (limit > maxLimit) {
+    if (limit > 10) {
       throw ArgumentError.value(limit, 'limit', 'limit value should be <= $maxLimit');
     }
 
@@ -422,4 +432,7 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
     });
     return pages;
   }
+  
+  @override
+  int get defaultLimit => _defaultLimit;
 }
