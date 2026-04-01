@@ -149,21 +149,46 @@ class CursorPage<T> extends BasePage<T> {
 }
 
 /// Generic strategy to first and next
-abstract class NextStrategy<T> {
-  int get defaultLimit;
+class NextStrategy<T> {
+  int _maxLimit = 50;
+  int _defaultLimit = 20;
+  int get defaultLimit => _defaultLimit;
+  set defaultLimit(int value) {
+    ensureLimitInBoundaries(value);
+    _defaultLimit = value;
+  }
 
-  Future<T> first([int? limit]);
+  set maxLimit(int value) => _maxLimit = value;
 
-  Future<T> _getPage(int limit, dynamic next);
+  Future<T> first([int? limit]) {
+    limit = limit ?? defaultLimit;
+    ensureLimitInBoundaries(limit);
+    return _getPage(limit, null);
+  }
+
+  Future<T> _getPage(int limit, dynamic next) => Future.value(null);
+
+  void ensureLimitInBoundaries(int value) {
+    if (_maxLimit < value) {
+      throw ArgumentError.value(
+        value,
+        'value',
+        'defaultLimit cannot be > maxLimit ($_maxLimit)',
+      );
+    }
+  }
 }
 
 /// Strategy to get the next set of elements from an offset
 mixin OffsetStrategy<T> implements NextStrategy<T> {
-  @override
-  Future<T> first([int? limit]) => getPage(limit ?? defaultLimit);
+  // @override
+  // Future<T> first([int? limit]); => getPage(limit ?? defaultLimit);
 
   @override
-  Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as int);
+  Future<T> _getPage(int limit, dynamic next) {
+    ensureLimitInBoundaries(limit);
+    return getPage(limit, next as int);
+  } 
 
   /// Abstract method that is used to do the api call and json serializing
   Future<T> getPage(int limit, [int offset = 0]);
@@ -171,11 +196,14 @@ mixin OffsetStrategy<T> implements NextStrategy<T> {
 
 /// Strategy to get the next set of elements from a cursor
 mixin CursorStrategy<T> implements NextStrategy<T> {
-  @override
-  Future<T> first([int? limit]) => getPage(limit ?? defaultLimit);
+  // @override
+  // Future<T> first([int? limit]) => getPage(limit ?? defaultLimit);
 
   @override
-  Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as String);
+  Future<T> _getPage(int limit, dynamic next) {
+    ensureLimitInBoundaries(limit);
+    return getPage(limit, next as String);
+  }
 
   /// Abstract method that is used to do the api call and json serializing
   Future<T> getPage(int limit, [String after = '']);
@@ -283,7 +311,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
 }
 
 /// Handles retrieval of a page through an offset
-class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
+class Pages<T> extends SinglePages<T, Page<T>> implements OffsetStrategy<Page<T>> {
   Pages(
     super.api,
     super.path,
@@ -328,7 +356,7 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
       return Page<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
-  
+
   @override
   int get defaultLimit => _defaultLimit;
 }
@@ -382,7 +410,7 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<C
       return CursorPage<T>(paging, _pageParser, container, _pageItemFilter);
     }
   }
-  
+
   @override
   int get defaultLimit => _defaultLimit;
 }
@@ -400,12 +428,10 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
     FilterFunction? pageItemFilter,
   ]) : super(api, path, pageKey, pageContainerParser, pageItemFilter);
 
-
-
   @override
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
     if (limit > 10) {
-      throw ArgumentError.value(limit, 'limit', 'limit value should be <= $maxLimit');
+      throw ArgumentError.value(limit, 'limit', 'limit value should be <= 10');
     }
 
     final pathDelimiter = _path.contains('?') ? '&' : '?';
@@ -432,7 +458,7 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
     });
     return pages;
   }
-  
+
   @override
   int get defaultLimit => _defaultLimit;
 }
