@@ -250,8 +250,9 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
 
     stream = StreamController<V>(
       onListen: () {
+        _cancelled = false;
         Future<V> firstPage;
-        if (_bufferedPages.length == 1) {
+        if (_bufferedPages.isNotEmpty) {
           firstPage = Future.value(_bufferedPages.removeAt(0));
         } else {
           firstPage = first(limit);
@@ -263,11 +264,17 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
         return;
       },
       onResume: () {
+        if (_bufferedPages.isEmpty) {
+          return;
+        }
+
+        final isLastPage = _bufferedPages.last.isLast;
         _bufferedPages.forEach(stream.add);
-        if (_bufferedPages.last.isLast) {
+        _bufferedPages.clear();
+
+        if (isLastPage) {
           stream.close();
         }
-        _bufferedPages.clear();
       },
     );
     return stream.stream;
