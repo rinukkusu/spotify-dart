@@ -79,7 +79,6 @@ Future main() async {
     expect(() => search.defaultLimit = 3, throwsArgumentError);
   });
 
-
   test('limit boundaries exceeded', () async {
     await expectLater(spotify.search.get('metallica').getPage(100), throwsArgumentError);
   });
