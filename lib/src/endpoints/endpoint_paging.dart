@@ -154,24 +154,6 @@ abstract class NextStrategy<T> {
   Future<T> _getPage(int limit, dynamic next);
 }
 
-/// Strategy to get the next set of elements from an offset
-mixin OffsetStrategy<T> implements NextStrategy<T> {
-  @override
-  Future<T> _getPage(int limit, dynamic next) => getPage(limit, next ?? next as int);
-
-  /// Abstract method that is used to do the api call and json serializing
-  Future<T> getPage(int limit, [int offset = 0]);
-}
-
-/// Strategy to get the next set of elements from a cursor
-mixin CursorStrategy<T> implements NextStrategy<T> {
-  @override
-  Future<T> _getPage(int limit, dynamic next) => getPage(limit, next ?? next as String);
-
-  /// Abstract method that is used to do the api call and json serializing
-  Future<T> getPage(int limit, [String after = '']);
-}
-
 abstract class _Pages<T> implements NextStrategy<T> {
   final SpotifyApiBase _api;
   final String _path;
