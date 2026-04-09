@@ -59,8 +59,6 @@ abstract class EndpointPaging extends EndpointBase {
       );
 }
 
-const _globalLimit = 20;
-
 /// Base class that represents a generic response page.
 abstract class BasePage<T> {
   final BasePaging<T> _paging;
