@@ -3,11 +3,19 @@
 
 part of '_models.dart';
 
-final _validUriTypes = ['track', 'audiobook', 'album', 'user', 'show', 
-'playlist', 'episode',];
+final _validUriTypes = [
+  'track',
+  'audiobook',
+  'album',
+  'user',
+  'show',
+  'playlist',
+  'episode',
+];
 
 // ignore: prefer_interpolation_to_compose_strings
-bool isValidUri(String uri) =>  uri.matchAsPrefix(r'spotify:(?:' + _validUriTypes.join('|') + '):*') != null;
+bool isValidUri(SpotifyUri uri) =>
+    uri.toString().matchAsPrefix(r'spotify:(?:' + _validUriTypes.join('|') + '):*') != null;
 
 abstract class SpotifyUri {
   final String id;

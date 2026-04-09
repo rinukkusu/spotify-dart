@@ -310,18 +310,8 @@ class LibraryMe extends _MeEndpointBase {
   ///
   /// **Note:** Only the 50 [uris] are allowed, otherwise throws [RangeError].
   Future<void> save(List<SpotifyUri> uris) async {
-    if (uris.isEmpty) {
-      throw ArgumentError(_errorMessage);
-    }
-    if (uris.length > _idSizeConstraint) {
-      throw RangeError.range(
-        uris.length,
-        0,
-        _idSizeConstraint,
-        'uris',
-        'Maximum of $_idSizeConstraint Uri\'s allowed per request',
-      );
-    }
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
     await _api._put('$_path?${_buildQuery({'uris': uris.join(',')})}');
   }
 
@@ -337,18 +327,8 @@ class LibraryMe extends _MeEndpointBase {
   /// Requires [LibraryAuthorizationScope.read] scope.
   /// **Note:** Only the 50 [uris] are allowed, otherwise throws [RangeError].
   Future<Map<SpotifyUri, bool>> contains(List<SpotifyUri> uris) async {
-    if (uris.isEmpty) {
-      throw ArgumentError(_errorMessage);
-    }
-    if (uris.length > _idSizeConstraint) {
-      throw RangeError.range(
-        uris.length,
-        0,
-        _idSizeConstraint,
-        'uris',
-        'Maximum of $_idSizeConstraint Uri\'s allowed per request',
-      );
-    }
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
     final query = _buildQuery({'uris': uris.join(',')});
     final jsonString = await _api._get('$_path/contains?$query');
     final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
@@ -365,19 +345,35 @@ class LibraryMe extends _MeEndpointBase {
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
   Future<void> remove(List<SpotifyUri> uris) async {
-    if (uris.isEmpty) {
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
+    await _api._delete('$_path?${_buildQuery({'uris': uris.join(',')})}');
+  }
+
+  void _ensureListContainsElements<T>(List<T> elements) {
+    if (elements.isEmpty) {
       throw ArgumentError(_errorMessage);
     }
-    if (uris.length > _idSizeConstraint) {
+  }
+
+  void _ensureListWithinSizeContrants<T>(List<T> elements, String name) {
+    if (elements.length > _idSizeConstraint) {
       throw RangeError.range(
-        uris.length,
+        elements.length,
         0,
         _idSizeConstraint,
-        'uris',
-        'Maximum of $_idSizeConstraint IDs allowed per request',
+        name,
+        'Maximum of $_idSizeConstraint Uri\'s allowed per request',
       );
     }
-    await _api._delete('$_path?${_buildQuery({'uris': uris.join(',')})}');
+  }
+
+  void _ensureValidUris(List<SpotifyUri> uris) {
+    final valid = uris.map((uri) => isValidUri(uri)).reduce((b1, b2) => b1 && b2);
+    if (!valid) {
+      throw ArgumentError('Invalid uris found');
+    }
   }
 }
 
