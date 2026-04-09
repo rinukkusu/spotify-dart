@@ -411,7 +411,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
         'Maximum of $_idSizeConstraint IDs allowed per request',
       );
     }
-    await _api._put('$_path?${_buildQuery({'ids': ids.join(',')})}');
+    await _api._put('$_path?${_buildQuery({'uris': ids.join(',')})}');
   }
 
   /// Check if the passed [id] are saved by current user.
@@ -440,7 +440,7 @@ mixin LibraryModifiable<T> on MeOperations<T> {
         'Maximum of $_idSizeConstraint IDs allowed per request',
       );
     }
-    final query = _buildQuery({'ids': ids.join(',')});
+    final query = _buildQuery({'uris': ids.join(',')});
     final jsonString = await _api._get('$_path/contains?$query');
     final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
 
