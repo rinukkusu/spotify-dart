@@ -58,7 +58,7 @@ class Playlists extends EndpointPaging {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
-      'v1/playlists/$playlistId/tracks?$query',
+      'v1/playlists/$playlistId/items?$query',
       (json) => Track.fromJson(json['track']),
       null,
       null,
@@ -71,7 +71,7 @@ class Playlists extends EndpointPaging {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
-      'v1/playlists/$playlistId/tracks?$query',
+      'v1/playlists/$playlistId/items?$query',
       (json) => PlaylistTrack.fromJson(json),
       null,
       null,
@@ -79,7 +79,14 @@ class Playlists extends EndpointPaging {
     );
   }
 
-  /// [userId] - the Spotify user ID
+  /// Create a playlist for the current Spotify user.
+  ///
+  /// **Deprecated**: Use [spotify.me.playlists.create] instead. The
+  /// `POST /users/{user_id}/playlists` endpoint has been deprecated by
+  /// Spotify (February 2026); use `POST /me/playlists` instead.
+  ///
+  /// [userId] - the Spotify user ID (ignored when creating for current user;
+  /// kept for backwards compatibility)
   ///
   /// [playlistName] - the name of the new playlist
   ///
@@ -90,6 +97,10 @@ class Playlists extends EndpointPaging {
   /// be collaborative.
   ///
   /// [description] - the description of the new playlist
+  @Deprecated(
+    'Use spotify.me.playlists.create(playlistName, ...) instead. '
+    'The POST /users/{user_id}/playlists endpoint has been deprecated by Spotify.',
+  )
   Future<Playlist> createPlaylist(
     String userId,
     String playlistName, {
@@ -97,15 +108,13 @@ class Playlists extends EndpointPaging {
     bool? collaborative,
     String? description,
   }) async {
-    final url = 'v1/users/$userId/playlists';
-    final json = <String, dynamic>{'name': playlistName};
-
-    if (public != null) json['public'] = public;
-    if (collaborative != null) json['collaborative'] = collaborative;
-    if (description != null) json['description'] = description;
-
-    final playlistJson = await _api._post(url, jsonEncode(json));
-    return Playlist.fromJson(jsonDecode(playlistJson));
+    // Use new POST /me/playlists endpoint
+    return _api.me.playlists.create(
+      playlistName,
+      public: public,
+      collaborative: collaborative,
+      description: description,
+    );
   }
 
   /// [playlistId] - the ID of the playlist to update
@@ -166,7 +175,7 @@ class Playlists extends EndpointPaging {
     String playlistId, {
     int position = -1,
   }) async {
-    var url = 'v1/playlists/$playlistId/tracks';
+    var url = 'v1/playlists/$playlistId/items';
 
     if (position >= 0) {
       url = '$url?position=$position';
@@ -190,7 +199,7 @@ class Playlists extends EndpointPaging {
     if (uris.isEmpty) {
       throw ArgumentError('No uris provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
+    final url = 'v1/playlists/$playlistId/items';
     await _api._post(url, jsonEncode({'uris': uris}));
   }
 
@@ -209,14 +218,14 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
-    final track = <String, dynamic>{'uri': trackUri};
+    final url = 'v1/playlists/$playlistId/items';
+    final item = <String, dynamic>{'uri': trackUri};
     if (positions != null) {
-      track['positions'] = positions;
+      item['positions'] = positions;
     }
 
     final body = jsonEncode({
-      'tracks': [track],
+      'items': [item],
     });
     await _api._delete(url, body);
   }
@@ -232,11 +241,11 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
-    final tracks = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
+    final url = 'v1/playlists/$playlistId/items';
+    final items = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
 
     final body = jsonEncode({
-      'tracks': tracks,
+      'items': items,
     });
     await _api._delete(url, body);
   }
@@ -311,7 +320,7 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    return await _api._put('v1/playlists/$playlistId/tracks', body);
+    return await _api._put('v1/playlists/$playlistId/items', body);
   }
 
   /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
