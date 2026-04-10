@@ -33,7 +33,7 @@ class Search extends EndpointPaging {
       'market': market?.name,
     });
 
-    return _getBundledPages('$_path?$query', {
+    final bundle = _getBundledPages('$_path?$query', {
       'playlists': (json) => PlaylistSimple.fromJson(json),
       'albums': (json) => AlbumSimple.fromJson(json),
       'artists': (json) => Artist.fromJson(json),
@@ -41,6 +41,9 @@ class Search extends EndpointPaging {
       'shows': (json) => Show.fromJson(json),
       'episodes': (json) => Episode.fromJson(json),
     });
+    bundle.defaultLimit = 5;
+    bundle.maxLimit = 10;
+    return bundle;
   }
 }
 

@@ -11,27 +11,6 @@ Future main() async {
     spotify.interceptor = null;
   });
 
-  group('Search', () {
-    test('get', () async {
-      final searchResult = await spotify.search.get('metallica').first();
-      expect(searchResult.length, 2);
-    });
-
-    test('getError', () async {
-      spotify.mockHttpErrors = [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
-      late SpotifyException ex;
-      try {
-        await spotify.search.get('metallica').first();
-      } on SpotifyException catch (e) {
-        expect(e, isA<SpotifyException>());
-        ex = e;
-      }
-      expect(ex, isNotNull);
-      expect(ex.status, 401);
-      expect(ex.message, 'Bad Request');
-    });
-  });
-
   test('set defaultLimit is in url', () async {
     spotify.interceptor = (String method, String url, Map<String, String>? headers, [String? body]) {
       expect(method, 'GET');

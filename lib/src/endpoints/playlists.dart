@@ -38,11 +38,7 @@ class Playlists extends EndpointPaging {
   }
 
   /// Returns a playlist of a user with [userId]
-  Pages<PlaylistSimple> getUsersPlaylists(
-    String userId, [
-    int limit = defaultLimit,
-    int offset = 0,
-  ]) {
+  Pages<PlaylistSimple> getUsersPlaylists(String userId) {
     if (userId.isEmpty) {
       throw ArgumentError('UserId cannot be empty');
     }
