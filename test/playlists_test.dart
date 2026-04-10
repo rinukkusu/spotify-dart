@@ -86,5 +86,20 @@ Future main() async {
         ),
       );
     });
+
+    test('getUsersPlaylists stream pause and resume before first page', () async {
+      final playlists = spotify.playlists.getUsersPlaylists('X123Y');
+      final received = <Page<PlaylistSimple>>[];
+
+      final subscription = playlists.stream().listen(received.add);
+      subscription.pause();
+      subscription.resume();
+
+      await subscription.asFuture<void>();
+      await subscription.cancel();
+
+      expect(received, hasLength(1));
+      expect(received.single.items, hasLength(2));
+    });
   });
 }
