@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.16.1
+
+- migrate playlist endpoints from `/tracks` to `/items` (#256)
+- remove deprecated `users` endpoints (#255)
+
 ## 0.16.0
 
 - add full PKCE (Proof Key for Code Exchange) support for public clients (#237)
