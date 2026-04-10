@@ -202,8 +202,8 @@ abstract class _Pages<T> implements NextStrategy<T> {
   }
 
   void _ensureLimitWithinBoundaries(int limit) {
-    if (_maxLimit < limit) {
-      throw ArgumentError.value(limit, 'limit', 'Argument limit($limit) > maxLimit($_maxLimit)');
+    if (limit < 1 || _maxLimit < limit) {
+      throw RangeError.range(limit, 1, _maxLimit, 'limit');
     }
   }
 

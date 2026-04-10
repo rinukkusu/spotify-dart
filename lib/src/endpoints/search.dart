@@ -42,7 +42,7 @@ class Search extends EndpointPaging {
       'episodes': (json) => Episode.fromJson(json),
     });
     bundle.defaultLimit = 5;
-    bundle.maxLimit = 20;
+    bundle.maxLimit = 10;
     return bundle;
   }
 }
