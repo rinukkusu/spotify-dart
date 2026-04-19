@@ -33,16 +33,24 @@ class Search extends EndpointPaging {
       'market': market?.name,
     });
 
-    final bundle = _getBundledPages('$_path?$query', {
-      'playlists': (json) => PlaylistSimple.fromJson(json),
-      'albums': (json) => AlbumSimple.fromJson(json),
-      'artists': (json) => Artist.fromJson(json),
-      'tracks': (json) => Track.fromJson(json),
-      'shows': (json) => Show.fromJson(json),
-      'episodes': (json) => Episode.fromJson(json),
-    });
-    bundle.defaultLimit = 5;
-    bundle.maxLimit = 10;
+    final bundle = _getBundledPages(
+      '$_path?$query',
+      {
+        'playlists': (json) => PlaylistSimple.fromJson(json),
+        'albums': (json) => AlbumSimple.fromJson(json),
+        'artists': (json) => Artist.fromJson(json),
+        'tracks': (json) => Track.fromJson(json),
+        'shows': (json) => Show.fromJson(json),
+        'episodes': (json) => Episode.fromJson(json),
+      },
+      '',
+      null,
+      null,
+      5,
+      10,
+    );
+    // bundle.defaultLimit = 5;
+    // bundle.maxLimit = 10;
     return bundle;
   }
 }

@@ -42,8 +42,8 @@ Future main() async {
 
   test('getPage in boundary', () async {
     final search = spotify.search.get('metallica');
-    search.maxLimit = 20;
-    expect(await search.getPage(20), isA<List<Page>>());
+    search.maxLimit = 10;
+    expect(await search.getPage(10), isA<List<Page>>());
   });
 
   test('illegal maxLimit set', () async {
