@@ -31,3 +31,4 @@ part 'episode.dart';
 part 'track.dart';
 part 'user.dart';
 part 'queue.dart';
+part 'uris.dart';
