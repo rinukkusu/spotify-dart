@@ -3,78 +3,66 @@
 
 part of '_models.dart';
 
-final _validUriTypes = _UriType.values.map((t) => t.name);
+final _validUriTypes = UriType.values.map((t) => t.name);
 
 // ignore: prefer_interpolation_to_compose_strings
+/// Checks whethes thi given [uri] has the valid format of `spotify:<type>:<id>`
 bool isValidUri(SpotifyUri uri) =>
     uri.toString().matchAsPrefix(r'spotify:(?:' + _validUriTypes.join('|') + '):*') != null;
 
-/// Base class for a spotify uri of the format `spotify:<type>:<id>`
+/// Base class for a spotify uri of the format `spotify:<type>:<id>`.
+/// 
+/// See [UriType] for valid types.
 abstract class SpotifyUri {
   final String id;
 
-  String get type;
+  final UriType _type;
 
-  SpotifyUri(this.id);
+  SpotifyUri(this.id, this._type);
 
   @override
-  String toString() => 'spotify:$type:$id';
+  String toString() => 'spotify:${_type.name}:$id';
 }
 
 final class TrackUri extends SpotifyUri {
-  TrackUri(super.id);
-
-  @override
-  String get type => _UriType.track.name;
+  TrackUri(String id) : super(id, UriType.track);
 }
 
 final class AudiobookUri extends SpotifyUri {
-  AudiobookUri(super.id);
-  @override
-  String get type => _UriType.audiobook.name;
+  AudiobookUri(String id) : super(id, UriType.audiobook);
 }
 
 final class UserUri extends SpotifyUri {
-  UserUri(super.id);
-  @override
-  String get type => _UriType.user.name;
+  UserUri(String id) : super(id, UriType.user);
 }
 
 final class ShowUri extends SpotifyUri {
-  ShowUri(super.id);
-
-  @override
-  String get type => _UriType.show.name;
+  ShowUri(String id) : super(id, UriType.show);
 }
 
 final class PlaylistUri extends SpotifyUri {
-  PlaylistUri(super.id);
-  @override
-  String get type => _UriType.playlist.name;
+  PlaylistUri(String id) : super(id, UriType.playlist);
 }
 
 final class EpisodeUri extends SpotifyUri {
-  EpisodeUri(super.id);
-  @override
-  String get type => _UriType.episode.name;
+  EpisodeUri(String id) : super(id, UriType.episode);
 }
 
 final class AlbumUri extends SpotifyUri {
-  AlbumUri(super.id);
-
-  @override
-  String get type => _UriType.playlist.name;
+  AlbumUri(String id) : super(id, UriType.album);
 }
 
-enum _UriType {
+/// Enum of valid types a [SpotifyUri] can have
+enum UriType {
   playlist('playlist'),
   episode('episode'),
   show('show'),
   user('user'),
   audiobook('audiobook'),
-  track('track');
+  track('track'),
+  album('album');
 
   final String name;
 
-  const _UriType(this.name);
+  const UriType(this.name);
 }
