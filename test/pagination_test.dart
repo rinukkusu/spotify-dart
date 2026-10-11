@@ -36,26 +36,17 @@ Future main() async {
   test('invalid first', () async {
     final search = spotify.search.get('metallica');
     search.defaultLimit = 10;
-    search.maxLimit = 11;
     expect(() => search.first(12), throwsArgumentError);
   });
 
   test('getPage in boundary', () async {
     final search = spotify.search.get('metallica');
-    search.maxLimit = 10;
     expect(await search.getPage(10), isA<List<Page>>());
-  });
-
-  test('illegal maxLimit set', () async {
-    final search = spotify.search.get('metallica');
-    expect(() => search.maxLimit = 1, throwsArgumentError);
   });
 
   test('defaultLimit boundaries exceeded', () async {
     final search = spotify.search.get('metallica');
-    search.defaultLimit = 1;
-    search.maxLimit = 2;
-    expect(() => search.defaultLimit = 3, throwsArgumentError);
+    expect(() => search.defaultLimit = 15, throwsRangeError);
   });
 
   test('limit boundaries exceeded', () async {

@@ -43,14 +43,12 @@ class Search extends EndpointPaging {
         'shows': (json) => Show.fromJson(json),
         'episodes': (json) => Episode.fromJson(json),
       },
-      '',
+      null,
       null,
       null,
       5,
       10,
     );
-    // bundle.defaultLimit = 5;
-    // bundle.maxLimit = 10;
     return bundle;
   }
 }
