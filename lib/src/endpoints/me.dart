@@ -13,7 +13,6 @@ abstract class _MeEndpointBase extends EndpointPaging {
 
 /// Endpoint for authenticated users `v1/me/*`
 class Me extends _MeEndpointBase {
-  late PlayerEndpoint _player;
   late final AlbumsMe _albumsMe = AlbumsMe._(super._api);
   late final AudiobooksMe _audiobooksMe = AudiobooksMe._(super._api);
   late final EpisodesMe _episodesMe = EpisodesMe._(super._api);
@@ -39,9 +38,7 @@ class Me extends _MeEndpointBase {
   /// Accesses the user's playlists.
   PlaylistsMe get playlists => _playlistsMe;
 
-  Me(super.api, PlayerEndpoint player) {
-    _player = player;
-  }
+  Me(super.api);
 
   Future<User> get() async {
     final jsonString = await _api._get(_path);
@@ -74,13 +71,6 @@ class Me extends _MeEndpointBase {
       (json) => json,
     );
   }
-
-  /// Check to see if the current user is following one or more artists or
-  /// other Spotify users. The output [bool] list
-  /// is in the same order as the provided artist-id list
-  @Deprecated('Use [spotify.me.checkFollowing(type, ids)] instead')
-  Future<List<bool>> isFollowing(FollowingType type, List<String> ids) async =>
-      (await checkFollowing(type, ids)).values.toList();
 
   /// Check if current user follow the provided [FollowingType.artist]s or
   /// [FollowingType.user]s.
@@ -123,18 +113,6 @@ class Me extends _MeEndpointBase {
     await _api._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
   }
 
-  /// Get the object currently being played on the user’s Spotify account.
-  @Deprecated('Use [spotify.player.currentlyPlaying()] instead')
-  Future<PlaybackState> currentlyPlaying() async => _player.currentlyPlaying();
-
-  // Get the currently playing as well as the queued objects.
-  @Deprecated('Use [spotify.player.queue()] instead')
-  Future<Queue> queue() async => _player.queue();
-
-  // Add an object to the queue with a trackId.
-  @Deprecated('Use [spotify.player.addToQueue()]')
-  Future<void> addToQueue(String trackId) async => _player.addToQueue(trackId);
-
   /// Get tracks from the current user's recently played tracks.
   /// Note: Currently doesn't support podcast episodes.
   CursorPages<PlayHistory> recentlyPlayed({
@@ -155,18 +133,6 @@ class Me extends _MeEndpointBase {
       (json) => PlayHistory.fromJson(json),
     );
   }
-
-  /// Toggle Shuffle For User's Playback.
-  ///
-  /// Use [state] to toggle the shuffle. `true` to turn shuffle on and `false`
-  /// to turn it off respectively.
-  /// Returns the current player state by making another request.
-  /// See [player];
-  @Deprecated('Use [spotify.player.shuffle()]')
-  Future<PlaybackState?> shuffle(bool state, [String? deviceId]) async => _player.shuffle(state, deviceId: deviceId);
-
-  @Deprecated('Use [spotify.player.playbackState()]')
-  Future<PlaybackState> player([String? market]) async => _player.playbackState(Market.values.asNameMap()[market]);
 
   /// Get the current user's top tracks, spanning over a [timeRange].
   /// The [timeRange]'s default is [TimeRange.mediumTerm].
@@ -189,87 +155,6 @@ class Me extends _MeEndpointBase {
             })}',
         parser,
       );
-
-  /// Get information about a user’s available devices.
-  @Deprecated('Use [spotify.player.devices()] instead')
-  Future<Iterable<Device>> devices() async => _player.devices();
-
-  /// Get a list of shows saved in the current Spotify user’s library.
-  @Deprecated('Use [spotify.me.shows.saved()] instead')
-  Pages<Show> savedShows() => _showsMe.saved();
-
-  /// Save shows for the current user. It requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the shows to save
-  @Deprecated('Use [spotify.me.shows.save(ids)] instead.')
-  Future<void> saveShows(List<String> ids) async => _showsMe.save(ids);
-
-  /// Removes shows for the current user. It requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the shows to remove
-  /// [market] - An ISO 3166-1 alpha-2 country code. If a country code is
-  /// specified, only content that is available in that market will be returned.
-  @Deprecated('Use [spotify.me.shows.remove(ids)] instead.')
-  Future<void> removeShows(List<String> ids, [Market? market]) async => _showsMe.remove(ids, market);
-
-  /// Check if passed albums (ids) are saved by current user.
-  /// [ids] - list of IDs to check
-  /// Returns the list of IDs mapped with the response whether it has been saved
-  @Deprecated('Use [spotify.me.shows.contains(ids)] instead.')
-  Future<Map<String, bool>> containsSavedShows(List<String> ids) async => _showsMe.contains(ids);
-
-  /// gets current user's saved albums in pages
-  @Deprecated('Use [spotify.me.albums.saved()] instead]')
-  Pages<AlbumSimple> savedAlbums() => _albumsMe.saved();
-
-  /// Save albums for the current-user. It requires the
-  /// `user-library-modify` scope of Spotify WebSDK\
-  /// [ids] - the ids of the albums
-  @Deprecated('Use [spotify.me.albums.save(ids)] instead')
-  Future<void> saveAlbums(List<String> ids) async => _albumsMe.save(ids);
-
-  /// Remove albums for the current-user. It requires the
-  /// `user-library-modify` scope of Spotify WebSDK\
-  /// [ids] - the ids of the albums
-  @Deprecated('Use [spotify.me.albums.remove(ids)] instead')
-  Future<void> removeAlbums(List<String> ids) async => _albumsMe.remove(ids);
-
-  /// Check if passed albums (ids) are saved by current user. The output
-  /// [bool] list is in the same order as the provided album ids list
-  @Deprecated('Use [spotify.me.albums.contains(ids)]')
-  Future<List<bool>> isSavedAlbums(List<String> ids) async {
-    final result = await containsSavedAlbums(ids);
-    return result.values.toList();
-  }
-
-  /// Check if passed albums (ids) are saved by current user.
-  /// Returns the list of IDs mapped with the response whether it has been
-  /// saved.
-  @Deprecated('Use [spotify.me.albums.contains(ids)]')
-  Future<Map<String, bool>> containsSavedAlbums(List<String> ids) async => _albumsMe.contains(ids);
-
-  /// Returns the current user's saved episodes. Requires the
-  /// `user-library-read` scope.
-  @Deprecated('Use [spotify.me.saved()] instead')
-  Pages<EpisodeFull> savedEpisodes() => _episodesMe.saved();
-
-  /// Saves episodes for the current user. Requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the episodes
-  @Deprecated('Use [spotify.me.episodes.save(ids)] instead')
-  Future<void> saveEpisodes(List<String> ids) async => _episodesMe.save(ids);
-
-  /// Removes episodes for the current user. Requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the episodes
-  @Deprecated('Use [spotify.me.episodes.remove(ids)] instead')
-  Future<void> removeEpisodes(List<String> ids) async => _episodesMe.remove(ids);
-
-  /// Check if passed episode [ids] are saved by current user.
-  /// Returns the list of IDs mapped with the response whether it has been
-  /// saved.
-  @Deprecated('Use [spotify.me.episodes.contains(ids)] instead')
-  Future<Map<String, bool>> containsSavedEpisodes(List<String> ids) async => _episodesMe.contains(ids);
 }
 
 abstract class MeOperations<T> extends _MeEndpointBase {
@@ -488,6 +373,39 @@ class PlaylistsMe extends MeOperations<PlaylistSimple> {
   /// Requires [PlaylistAuthorizationScope.readPrivate] scope.
   @override
   Pages<PlaylistSimple> saved() => _savedImpl((json) => PlaylistSimple.fromJson(json));
+
+  /// Create a playlist for the current Spotify user.
+  ///
+  /// The playlist will be empty until you add tracks to it.
+  /// Each user is generally limited to a maximum of 11000 playlists.
+  ///
+  /// [name] - The name for the new playlist.
+  ///
+  /// [public] - Defaults to `true`. If `true` the playlist will be public,
+  /// if `false` the playlist will be private.
+  ///
+  /// [collaborative] - Defaults to `false`. If `true` the playlist will be
+  /// collaborative. Note: to create a collaborative playlist you must also
+  /// set [public] to `false`.
+  ///
+  /// [description] - The playlist description as displayed in Spotify Clients.
+  ///
+  /// Requires [PlaylistAuthorizationScope.modifyPublic] and/or
+  /// [PlaylistAuthorizationScope.modifyPrivate] scope.
+  Future<Playlist> create(
+    String name, {
+    bool? public,
+    bool? collaborative,
+    String? description,
+  }) async {
+    final body = <String, dynamic>{'name': name};
+    if (public != null) body['public'] = public;
+    if (collaborative != null) body['collaborative'] = collaborative;
+    if (description != null) body['description'] = description;
+
+    final response = await _api._post(_path, jsonEncode(body));
+    return Playlist.fromJson(jsonDecode(response));
+  }
 }
 
 enum FollowingType {

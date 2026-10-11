@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+- **Breaking:** remove deprecated `me` endpoints after grace period (#242)
+  - remove `spotify.tracks.me` and `spotify.playlists.me`, use `spotify.me.tracks` and `spotify.me.playlists`
+  - remove `savedShows`, `saveShows`, `removeShows`, `containsSavedShows` from `Me`, use `spotify.me.shows`
+  - remove `savedAlbums`, `saveAlbums`, `removeAlbums`, `isSavedAlbums`, `containsSavedAlbums` from `Me`, use `spotify.me.albums`
+  - remove `savedEpisodes`, `saveEpisodes`, `removeEpisodes`, `containsSavedEpisodes` from `Me`, use `spotify.me.episodes`
+  - remove `currentlyPlaying`, `queue`, `addToQueue`, `shuffle`, `player`, `devices` from `Me`, use `spotify.player`
+  - remove `isFollowing` from `Me`, use `checkFollowing`
+  - `Me` and `Tracks` constructors no longer take a `PlayerEndpoint`/`Me` argument
+- add `audiobook` as search result type (#258)
+
+## 0.16.1
+
+- migrate playlist endpoints from `/tracks` to `/items` (#256)
+- remove deprecated `users` endpoints (#255)
+
 ## 0.16.0
 
 - add full PKCE (Proof Key for Code Exchange) support for public clients (#237)

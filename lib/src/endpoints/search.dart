@@ -12,10 +12,11 @@ class Search extends EndpointPaging {
   Search(super.api);
 
   /// Get Spotify Catalog information about albums, artists, playlists,
-  /// tracks, shows or episodes that match a keyword string.
+  /// tracks, shows, episodes or audiobooks that match a keyword string.
   ///
-  /// [types]: Valid types are: album , artist, playlist, track, show and
-  /// episode. Search results include hits from all the specified item types.
+  /// [types]: Valid types are: album, artist, playlist, track, show, episode
+  /// and audiobook. Search results include hits from all the specified item
+  /// types.
   ///
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with
@@ -33,23 +34,15 @@ class Search extends EndpointPaging {
       'market': market?.name,
     });
 
-    final bundle = _getBundledPages(
-      '$_path?$query',
-      {
-        'playlists': (json) => PlaylistSimple.fromJson(json),
-        'albums': (json) => AlbumSimple.fromJson(json),
-        'artists': (json) => Artist.fromJson(json),
-        'tracks': (json) => Track.fromJson(json),
-        'shows': (json) => Show.fromJson(json),
-        'episodes': (json) => Episode.fromJson(json),
-      },
-      null,
-      null,
-      null,
-      5,
-      10,
-    );
-    return bundle;
+    return _getBundledPages('$_path?$query', {
+      'playlists': (json) => PlaylistSimple.fromJson(json),
+      'albums': (json) => AlbumSimple.fromJson(json),
+      'artists': (json) => Artist.fromJson(json),
+      'tracks': (json) => Track.fromJson(json),
+      'shows': (json) => Show.fromJson(json),
+      'episodes': (json) => Episode.fromJson(json),
+      'audiobooks': (json) => AudiobookSimple.fromJson(json),
+    });
   }
 }
 
@@ -60,7 +53,8 @@ enum SearchType {
   playlist(key: 'playlist'),
   track(key: 'track'),
   show(key: 'show'),
-  episode(key: 'episode');
+  episode(key: 'episode'),
+  audiobook(key: 'audiobook');
 
   const SearchType({required String key}) : _key = key;
 

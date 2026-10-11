@@ -258,14 +258,9 @@ Future<Playlist> _createPrivatePlaylist(SpotifyApi spotify) async {
   const name = 'My awesome playlist';
   const trackIds = ['34HKskUook8LY2JFy6e4Ob', '0F0MA0ns8oXwGw66B2BSXm'];
 
-  final userId = (await spotify.me.get()).id;
   print('Creating dummy Playlist with name \'$name\'');
 
-  final playlist = await spotify.playlists.createPlaylist(
-    userId ?? '',
-    name,
-    public: false,
-  );
+  final playlist = await spotify.me.playlists.create(name, public: false);
 
   await spotify.playlists.addTracks(
     [for (final trackId in trackIds) 'spotify:track:$trackId'],
