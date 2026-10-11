@@ -35,21 +35,22 @@ class Search extends EndpointPaging {
     });
 
     return _getBundledPages(
-        '$_path?$query',
-        {
-          'playlists': (json) => PlaylistSimple.fromJson(json),
-          'albums': (json) => AlbumSimple.fromJson(json),
-          'artists': (json) => Artist.fromJson(json),
-          'tracks': (json) => Track.fromJson(json),
-          'shows': (json) => Show.fromJson(json),
-          'episodes': (json) => Episode.fromJson(json),
-          'audiobooks': (json) => AudiobookSimple.fromJson(json),
-        },
-        null,
-        null,
-        null,
-        5,
-        10,);
+      '$_path?$query',
+      {
+        'playlists': (json) => PlaylistSimple.fromJson(json),
+        'albums': (json) => AlbumSimple.fromJson(json),
+        'artists': (json) => Artist.fromJson(json),
+        'tracks': (json) => Track.fromJson(json),
+        'shows': (json) => Show.fromJson(json),
+        'episodes': (json) => Episode.fromJson(json),
+        'audiobooks': (json) => AudiobookSimple.fromJson(json),
+      },
+      null,
+      null,
+      null,
+      5,
+      10,
+    );
   }
 }
 
