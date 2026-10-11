@@ -10,7 +10,7 @@ Add `spotify` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  spotify: ^0.15.0
+  spotify: ^0.16.1
 ```
 
 Alternatively, run

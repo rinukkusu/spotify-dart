@@ -14,7 +14,15 @@ Future main() async {
   group('Search', () {
     test('get', () async {
       final searchResult = await spotify.search.get('metallica').first();
-      expect(searchResult.length, 2);
+      expect(searchResult.length, 3);
+    });
+
+    test('get audiobooks', () async {
+      final searchResult = await spotify.search.get('metallica', types: [SearchType.audiobook]).first();
+      final audiobooks = searchResult.firstWhere((page) => page.items?.first is AudiobookSimple);
+      final audiobook = audiobooks.items!.first as AudiobookSimple;
+      expect(audiobook.id, '7iHfbu1YPACw6oZPAFJtqe');
+      expect(audiobook.name, 'Sample Audiobook');
     });
 
     test('getError', () async {

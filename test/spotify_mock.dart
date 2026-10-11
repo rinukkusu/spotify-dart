@@ -56,13 +56,17 @@ class MockClient implements oauth2.Client {
     return null;
   }
 
-  String _readPath(Uri url) {
+  String _readPath(Uri url, {String? method}) {
     final regexString =
         url.host.contains('api.spotify.com') ? r'api.spotify.com\/([A-Za-z0-9/\-]+)\??' : r'api/([A-Za-z0-9/\-]+)\??';
 
     final regex = RegExp(regexString);
     final urlString = url.toString();
-    final partialPath = regex.firstMatch(urlString)!.group(1);
+    var partialPath = regex.firstMatch(urlString)!.group(1)!;
+    // POST to /v1/me/playlists returns a single Playlist, not a paged list
+    if (method == 'POST' && partialPath == 'v1/me/playlists') {
+      partialPath = 'v1/me/playlists-create';
+    }
     final file = File('test/data/$partialPath.json');
     return file.readAsStringSync();
   }
@@ -125,7 +129,7 @@ class MockClient implements oauth2.Client {
     if (err != null) {
       return createErrorResponse(err);
     }
-    return createSuccessResponse(_readPath(url));
+    return createSuccessResponse(_readPath(url, method: 'POST'));
   }
 
   @override
