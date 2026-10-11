@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- add `audiobook` as search result type (#258)
+
 ## 0.16.1
 
 - migrate playlist endpoints from `/tracks` to `/items` (#256)
