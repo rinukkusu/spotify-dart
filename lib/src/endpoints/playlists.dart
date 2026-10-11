@@ -29,14 +29,6 @@ class Playlists extends EndpointPaging {
         (json) => PlaylistsFeatured.fromJson(json),
       );
 
-  @Deprecated('Use [spotify.me.playlists] instead')
-  Pages<PlaylistSimple> get me {
-    return _getPages(
-      'v1/me/playlists',
-      (json) => PlaylistSimple.fromJson(json),
-    );
-  }
-
   /// Returns a playlist of a user with [userId]
   Pages<PlaylistSimple> getUsersPlaylists(
     String userId, [

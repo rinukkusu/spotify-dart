@@ -5,17 +5,10 @@ part of '../../spotify.dart';
 
 /// Endpoint of tracks `v1/tracks`
 class Tracks extends EndpointBase {
-  late TracksMe _me;
-
   @override
   String get _path => 'v1/tracks';
 
-  Tracks(super.api, Me me) {
-    _me = me.tracks;
-  }
-
-  @Deprecated('Use [spotify.me.tracks] instead')
-  TracksMe get me => _me;
+  Tracks(super.api);
 
   Future<Track> get(String trackId) async {
     final jsonString = await _api._get('$_path/$trackId');
