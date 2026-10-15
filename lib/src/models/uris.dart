@@ -5,13 +5,13 @@ part of '_models.dart';
 
 final _validUriTypes = UriType.values.map((t) => t.name);
 
-// ignore: prefer_interpolation_to_compose_strings
 /// Checks whethes thi given [uri] has the valid format of `spotify:<type>:<id>`
 bool isValidUri(SpotifyUri uri) =>
-    uri.toString().matchAsPrefix(r'spotify:(?:' + _validUriTypes.join('|') + '):*') != null;
+    // ignore: prefer_interpolation_to_compose_strings
+    RegExp(r'^spotify:(?:' + _validUriTypes.join('|') + r'):[^:\s/?#,\\\x00-\x1F\x7F]+$').hasMatch(uri.toString());
 
 /// Base class for a spotify uri of the format `spotify:<type>:<id>`.
-/// 
+///
 /// See [UriType] for valid types.
 abstract class SpotifyUri {
   final String id;
@@ -22,6 +22,21 @@ abstract class SpotifyUri {
 
   @override
   String toString() => 'spotify:${_type.name}:$id';
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! SpotifyUri) {
+      return false;
+    }
+    final SpotifyUri otherUri = other;
+    if (id == otherUri.id && _type == otherUri._type) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ _type.name.hashCode;
 }
 
 final class TrackUri extends SpotifyUri {

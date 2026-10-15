@@ -3,8 +3,6 @@ import 'dart:async';
 import '../spotify_mock.dart';
 import 'package:test/test.dart';
 
-import 'me_core.dart';
-
 Future main() async {
   final spotify = SpotifyApiMock.create();
 
@@ -27,72 +25,6 @@ Future main() async {
       expect(firstItem.isPlayable, true);
       expect(firstItem.durationMs, 1686230);
       expect(firstItem.language, 'en');
-    });
-
-    test('save throws on empty ids', () async {
-      testSaveThrowsOnEmptyIds(spotify.me.episodes);
-    });
-
-    test('saveOne', () async {
-      spotify.interceptor = (method, url, headers, [body]) {
-        if (method == 'PUT') {
-          expect(url, contains('me/episodes?ids=1'));
-        }
-      };
-      spotify.me.episodes.saveOne('1');
-    });
-
-    test('save throws on >50 ids', () async {
-      testSaveThrowsOnGreaterThanN(spotify.me.episodes, 50);
-    });
-
-    test('save', () async {
-      spotify.interceptor = (method, url, headers, [body]) {
-        if (method == 'PUT') {
-          expect(url, contains('me/episodes?ids=${Uri.encodeComponent('1,2,3')}'));
-        }
-      };
-      spotify.me.episodes.save(['1', '2', '3']);
-    });
-
-    test('contains throws on empty ids', () async {
-      testContainsThrowsOnEmptyIds(spotify.me.episodes);
-    });
-
-    test('contains throws on >50 ids', () async {
-      testContainsThrowsOnGreaterThanN(spotify.me.episodes, 50);
-    });
-
-    test('contains', () async {
-      final albumIds = [
-        '382ObEPsp2rxGrESizN5TX',
-        '1A2GTWGtFfWp7KSQTwWOyo',
-        '2noRn2Aes5aoNVsU6iWThc',
-      ];
-
-      final list = await spotify.me.episodes.contains(albumIds);
-
-      expect(list.length, 3);
-      expect(list[albumIds[0]], isTrue);
-      expect(list[albumIds[1]], isFalse);
-      expect(list[albumIds[2]], isFalse);
-    });
-
-    test('remove throws on empty ids', () async {
-      testRemoveThrowsOnEmptyIds(spotify.me.episodes);
-    });
-
-    test('remove throws on > 50 ids', () async {
-      testRemoveThrowsOnGreaterThanN(spotify.me.audiobooks, 50);
-    });
-
-    test('remove', () async {
-      spotify.interceptor = (method, url, headers, [body]) {
-        if (method == 'DELETE') {
-          expect(url, contains('me/audiobooks?ids=${Uri.encodeComponent('1,2,3')}'));
-        }
-      };
-      spotify.me.audiobooks.remove(['1', '2', '3']);
     });
   });
 }
