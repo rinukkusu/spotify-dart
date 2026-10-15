@@ -3,12 +3,11 @@
 
 part of '_models.dart';
 
-final _validUriTypes = UriType.values.map((t) => t.name);
-
 /// Checks whethes thi given [uri] has the valid format of `spotify:<type>:<id>`
+final _invalidIdCharacters = RegExp(r'[\s:/?#,\\\x00-\x1F\x7F]');
+
 bool isValidUri(SpotifyUri uri) =>
-    // ignore: prefer_interpolation_to_compose_strings
-    RegExp(r'^spotify:(?:' + _validUriTypes.join('|') + r'):[^:\s/?#,\\\x00-\x1F\x7F]+$').hasMatch(uri.toString());
+    uri.id.isNotEmpty && !_invalidIdCharacters.hasMatch(uri.id);
 
 /// Base class for a spotify uri of the format `spotify:<type>:<id>`.
 ///
