@@ -124,7 +124,6 @@ void main() async {
             'uri: ${item.uri}\n'
             'albumType: ${item.albumType}\n'
             'artists: ${item.artists!.length}\n'
-            'availableMarkets: ${item.availableMarkets!.length}\n'
             'images: ${item.images!.length}\n'
             'releaseDate: ${item.releaseDate}\n'
             'releaseDatePrecision: ${item.releaseDatePrecision}\n'
