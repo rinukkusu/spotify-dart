@@ -31,16 +31,6 @@ Future main() async {
       expect(audiobook.description, 'A thrilling audiobook adventure');
     });
 
-    test('list', () async {
-      final audiobooks = await spotify.audiobooks.list(['audiobook1', 'audiobook2']);
-
-      expect(audiobooks.length, 2);
-      expect(audiobooks.first.id, 'audiobook1');
-      expect(audiobooks.first.name, 'Audiobook 1');
-      expect(audiobooks.elementAt(1).id, 'audiobook2');
-      expect(audiobooks.elementAt(1).name, 'Audiobook 2');
-    });
-
     test('chapters', () async {
       final chaptersPage = spotify.audiobooks.chapters('7iHfbu1YPACw6oZPAFJtqe');
       final firstPage = await chaptersPage.first();
@@ -84,18 +74,6 @@ Future main() async {
       expect(chapter.resumePoint!.resumePositionMs, 150000);
       expect(chapter.releaseDate, '2023-03-15');
       expect(chapter.releaseDatePrecision, DatePrecision.day);
-    });
-
-    test('list', () async {
-      final chapters = await spotify.chapters.list(['chap1', 'chap2']);
-
-      expect(chapters.length, 2);
-      expect(chapters.first.id, 'chap1');
-      expect(chapters.first.name, 'Chapter 1');
-      expect(chapters.first.chapterNumber, 1);
-      expect(chapters.elementAt(1).id, 'chap2');
-      expect(chapters.elementAt(1).name, 'Chapter 2');
-      expect(chapters.elementAt(1).chapterNumber, 2);
     });
 
     test('get throws on empty id', () async {

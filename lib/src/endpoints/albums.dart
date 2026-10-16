@@ -18,14 +18,6 @@ class Albums extends EndpointPaging {
     return Album.fromJson(map);
   }
 
-  /// Returns album informations about a list of [albumIds]
-  Future<Iterable<Album>> list(List<String> albumIds) async => _listWithIds(
-        path: _path,
-        ids: albumIds,
-        jsonKey: 'albums',
-        fromJson: Album.fromJson,
-      );
-
   /// Returns the tracks of a given [albumId]
   @Deprecated('Use [tracks] instead')
   Pages<TrackSimple> getTracks(String albumId) => tracks(albumId);

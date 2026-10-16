@@ -17,16 +17,4 @@ class Episodes extends EndpointBase {
     final jsonString = await _api._get('$_path/$id?${_buildQuery({'market': market?.name})}');
     return EpisodeFull.fromJson(jsonDecode(jsonString));
   }
-
-  Future<Iterable<EpisodeFull>> list(
-    List<String> ids, [
-    Market? market,
-  ]) async =>
-      _listWithIds(
-        path: _path,
-        ids: ids,
-        jsonKey: 'episodes',
-        fromJson: EpisodeFull.fromJson,
-        optionalParams: {'market': market?.name},
-      );
 }

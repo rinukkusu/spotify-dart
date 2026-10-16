@@ -22,12 +22,6 @@ Future main() async {
       expect(show.availableMarkets, isNotEmpty);
       expect(show.availableMarkets?.first, Market.AD);
     });
-
-    test('list', () async {
-      final shows = await spotify.shows.list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
-
-      expect(shows.length, 2);
-    });
   });
 
   group('Show episodes', () {

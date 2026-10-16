@@ -31,14 +31,6 @@ class Shows extends EndpointPaging {
     return Show.fromJson(map);
   }
 
-  /// Get one or several shows
-  Future<Iterable<Show>> list(List<String> showsId) async => _listWithIds(
-        path: _path,
-        ids: showsId,
-        jsonKey: 'shows',
-        fromJson: Show.fromJson,
-      );
-
   /// Get a Show's Episodes
   ///
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
