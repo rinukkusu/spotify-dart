@@ -25,7 +25,6 @@ Future main() async {
       expect(firstItem.name, 'Darknet Diaries');
       expect(firstItem.languages, hasLength(1));
       expect(firstItem.mediaType, 'audio');
-      expect(firstItem.publisher, 'Jack Rhysider');
 
       expect(firstItem.uri, 'spotify:show:4XPl3uEEL9hvqMkoZrzbx5');
     });

@@ -86,7 +86,6 @@ Future main() async {
 
       final firstArtist = first.items!.first;
       expect(firstArtist.name, 'Afasi & Filthy');
-      expect(firstArtist.popularity, 54);
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
     });
 

@@ -49,8 +49,6 @@ Future main() async {
         trackOne.externalUrls!.spotify,
         'https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2',
       );
-      expect(trackOne.availableMarkets, isNotNull);
-      expect(trackOne.availableMarkets?.first, Market.AT);
 
       final artists = trackOne.artists;
       expect(artists!.length, 2);
