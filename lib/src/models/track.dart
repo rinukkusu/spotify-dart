@@ -22,12 +22,6 @@ class Track extends Object implements TrackSimple {
   @override
   List<Artist>? artists;
 
-  /// A list of the countries in which the track can be played, identified by
-  /// their ISO 3166-1 alpha-2 code.
-  @JsonKey(name: 'available_markets')
-  @override
-  List<Market>? availableMarkets;
-
   /// The disc number
   /// (usually `1` unless the album consists of more than one disc)
   @JsonKey(name: 'disc_number', fromJson: convertToIntIfDoubleValue)
