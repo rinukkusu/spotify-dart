@@ -87,6 +87,10 @@ class AlbumSimple extends Object {
   /// The Spotify URI for the album.
   String? uri;
 
+  /// Known external IDs for this track.
+  @JsonKey(name: 'external_ids')
+  ExternalIds? externalIds;
+
   /// The tracks of this album.
   @JsonKey(fromJson: _extractTracksFromPage)
   Iterable<TrackSimple>? tracks = [];

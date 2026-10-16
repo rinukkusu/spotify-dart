@@ -20,6 +20,8 @@ Future main() async {
       expect(album.images!.length, 3);
       expect(album.releaseDatePrecision, DatePrecision.day);
       expect(album.releaseDate, '2012-11-13');
+      expect(album.externalIds, isNotNull);
+      expect(album.externalIds?.upc, '886443671584');
     });
 
     test('album tracks', () async {
