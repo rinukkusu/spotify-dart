@@ -144,8 +144,15 @@ Contributions are welcome! Here's how to work on this project:
 
 ### Development Setup
 
-1. Clone the repository
-2. Run `dart pub get` to install dependencies
+1. Clone this repository
+2. Run:
+
+```sh
+sh setup.sh
+```
+
+This installs dependencies and enables a pre-commit hook that generates models,
+formats code, runs analysis and tests.
 
 ### Generating JSON Serializers
 
@@ -153,13 +160,6 @@ This project uses [json_serializable][json_serializable] for model serialization
 
 - Run `dart run build_runner build` to generate serializers
 - Run `dart run build_runner watch` to continuously rebuild when files change
-
-### Code Quality
-
-Before committing, ensure your code passes:
-
-- **Formatting**: `dart format .`
-- **Analysis**: `dart analyze`
 
 ### Running Tests
 
