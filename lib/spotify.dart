@@ -23,8 +23,6 @@ part 'src/endpoints/artists.dart';
 part 'src/endpoints/audio_analysis.dart';
 part 'src/endpoints/audio_features.dart';
 part 'src/endpoints/audiobooks.dart';
-part 'src/endpoints/browse.dart';
-part 'src/endpoints/categories.dart';
 part 'src/endpoints/chapters.dart';
 part 'src/endpoints/endpoint_base.dart';
 part 'src/endpoints/endpoint_paging.dart';
