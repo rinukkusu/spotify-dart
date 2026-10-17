@@ -26,6 +26,8 @@ Map<String, dynamic> _$ExternalIdsToJson(ExternalIds instance) => <String, dynam
 Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
   ..albumType = AlbumSimple._convertForAlbumType(json['album_type'] as String?)
   ..artists = (json['artists'] as List<dynamic>?)?.map((e) => ArtistSimple.fromJson(e as Map<String, dynamic>)).toList()
+  ..externalUrls =
+      json['external_urls'] == null ? null : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
   ..href = json['href'] as String?
   ..id = json['id'] as String?
   ..images = (json['images'] as List<dynamic>?)?.map((e) => Image.fromJson(e as Map<String, dynamic>)).toList()
@@ -34,16 +36,17 @@ Album _$AlbumFromJson(Map<String, dynamic> json) => Album()
   ..releaseDatePrecision = $enumDecodeNullable(_$DatePrecisionEnumMap, json['release_date_precision'])
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?
-  ..externalIds =
-      json['external_ids'] == null ? null : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
   ..tracks = AlbumSimple._extractTracksFromPage(json['tracks'])
   ..copyrights =
       (json['copyrights'] as List<dynamic>?)?.map((e) => Copyright.fromJson(e as Map<String, dynamic>)).toList()
+  ..externalIds =
+      json['external_ids'] == null ? null : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
   ..genres = (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList();
 
 Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
       'album_type': _$AlbumTypeEnumMap[instance.albumType],
       'artists': instance.artists?.map((e) => e.toJson()).toList(),
+      'external_urls': instance.externalUrls?.toJson(),
       'href': instance.href,
       'id': instance.id,
       'images': instance.images?.map((e) => e.toJson()).toList(),
@@ -52,9 +55,9 @@ Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
       'release_date_precision': _$DatePrecisionEnumMap[instance.releaseDatePrecision],
       'type': instance.type,
       'uri': instance.uri,
-      'external_ids': instance.externalIds?.toJson(),
       'tracks': instance.tracks?.map((e) => e.toJson()).toList(),
       'copyrights': instance.copyrights?.map((e) => e.toJson()).toList(),
+      'external_ids': instance.externalIds?.toJson(),
       'genres': instance.genres,
     };
 
@@ -73,6 +76,8 @@ const _$AlbumTypeEnumMap = {
 AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) => AlbumSimple()
   ..albumType = AlbumSimple._convertForAlbumType(json['album_type'] as String?)
   ..artists = (json['artists'] as List<dynamic>?)?.map((e) => ArtistSimple.fromJson(e as Map<String, dynamic>)).toList()
+  ..externalUrls =
+      json['external_urls'] == null ? null : ExternalUrls.fromJson(json['external_urls'] as Map<String, dynamic>)
   ..href = json['href'] as String?
   ..id = json['id'] as String?
   ..images = (json['images'] as List<dynamic>?)?.map((e) => Image.fromJson(e as Map<String, dynamic>)).toList()
@@ -81,13 +86,12 @@ AlbumSimple _$AlbumSimpleFromJson(Map<String, dynamic> json) => AlbumSimple()
   ..releaseDatePrecision = $enumDecodeNullable(_$DatePrecisionEnumMap, json['release_date_precision'])
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?
-  ..externalIds =
-      json['external_ids'] == null ? null : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
   ..tracks = AlbumSimple._extractTracksFromPage(json['tracks']);
 
 Map<String, dynamic> _$AlbumSimpleToJson(AlbumSimple instance) => <String, dynamic>{
       'album_type': _$AlbumTypeEnumMap[instance.albumType],
       'artists': instance.artists?.map((e) => e.toJson()).toList(),
+      'external_urls': instance.externalUrls?.toJson(),
       'href': instance.href,
       'id': instance.id,
       'images': instance.images?.map((e) => e.toJson()).toList(),
@@ -96,7 +100,6 @@ Map<String, dynamic> _$AlbumSimpleToJson(AlbumSimple instance) => <String, dynam
       'release_date_precision': _$DatePrecisionEnumMap[instance.releaseDatePrecision],
       'type': instance.type,
       'uri': instance.uri,
-      'external_ids': instance.externalIds?.toJson(),
       'tracks': instance.tracks?.map((e) => e.toJson()).toList(),
     };
 
@@ -1252,7 +1255,6 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..isPlayable = json['is_playable'] as bool?
   ..linkedFrom = json['linked_from'] == null ? null : TrackLink.fromJson(json['linked_from'] as Map<String, dynamic>)
   ..name = json['name'] as String?
-  ..popularity = convertToIntIfDoubleValue(json['popularity'])
   ..previewUrl = json['preview_url'] as String?
   ..trackNumber = convertToIntIfDoubleValue(json['track_number'])
   ..type = json['type'] as String?
@@ -1271,7 +1273,6 @@ Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
       'is_playable': instance.isPlayable,
       'linked_from': instance.linkedFrom?.toJson(),
       'name': instance.name,
-      'popularity': instance.popularity,
       'preview_url': instance.previewUrl,
       'track_number': instance.trackNumber,
       'type': instance.type,
