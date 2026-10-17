@@ -16,48 +16,6 @@ class Playlists extends EndpointPaging {
     );
   }
 
-  /// Returns the featuerd playlists
-  @Deprecated(
-    'The Spotify featured playlist endpoint has been officially deprecated '
-    'by Spotify. '
-    'This functionality may be removed in a future version of this library.',
-  )
-  Pages<PlaylistSimple> get featured => _getPages(
-        '$_path/featured-playlists',
-        (json) => PlaylistSimple.fromJson(json),
-        'playlists',
-        (json) => PlaylistsFeatured.fromJson(json),
-      );
-
-  /// Returns a playlist of a user with [userId]
-  Pages<PlaylistSimple> getUsersPlaylists(
-    String userId, [
-    int limit = defaultLimit,
-    int offset = 0,
-  ]) {
-    if (userId.isEmpty) {
-      throw ArgumentError('UserId cannot be empty');
-    }
-    return _getPages(
-      'v1/users/$userId/playlists',
-      (json) => PlaylistSimple.fromJson(json),
-    );
-  }
-
-  /// Returns `track`s from a given spotify [playlistId].
-  @Deprecated('Use `getPlaylistTracks` instead')
-  Pages<Track> getTracksByPlaylistId(String playlistId) {
-    // restricting the return items to `track`
-    final query = _buildQuery({'additional_types': 'track'});
-    return _getPages(
-      'v1/playlists/$playlistId/items?$query',
-      (json) => Track.fromJson(json['track']),
-      null,
-      null,
-      (json) => json['track'] != null,
-    );
-  }
-
   /// Returns [PlaylistTrack]s for a given [playlistId].
   Pages<PlaylistTrack> getPlaylistTracks(String playlistId) {
     // restricting the return items to `track`
@@ -68,44 +26,6 @@ class Playlists extends EndpointPaging {
       null,
       null,
       (json) => json['track'] != null,
-    );
-  }
-
-  /// Create a playlist for the current Spotify user.
-  ///
-  /// **Deprecated**: Use [spotify.me.playlists.create] instead. The
-  /// `POST /users/{user_id}/playlists` endpoint has been deprecated by
-  /// Spotify (February 2026); use `POST /me/playlists` instead.
-  ///
-  /// [userId] - the Spotify user ID (ignored when creating for current user;
-  /// kept for backwards compatibility)
-  ///
-  /// [playlistName] - the name of the new playlist
-  ///
-  /// [public] - Defaults to `true`. If `true` the playlist will be public,
-  /// if `false` it will be private.
-  ///
-  /// [collaborative] - Defaults to `false`. If `true` the playlist will
-  /// be collaborative.
-  ///
-  /// [description] - the description of the new playlist
-  @Deprecated(
-    'Use spotify.me.playlists.create(playlistName, ...) instead. '
-    'The POST /users/{user_id}/playlists endpoint has been deprecated by Spotify.',
-  )
-  Future<Playlist> createPlaylist(
-    String userId,
-    String playlistName, {
-    bool? public,
-    bool? collaborative,
-    String? description,
-  }) async {
-    // Use new POST /me/playlists endpoint
-    return _api.me.playlists.create(
-      playlistName,
-      public: public,
-      collaborative: collaborative,
-      description: description,
     );
   }
 

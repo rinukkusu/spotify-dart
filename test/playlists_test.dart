@@ -14,23 +14,6 @@ Future main() async {
   });
 
   group('Playlists', () {
-    test('getUsersPlaylists', () async {
-      final playlists = spotify.playlists.getUsersPlaylists('X123Y');
-      final firstPage = (await playlists.first());
-      expect(
-        firstPage.metadata.href,
-        'https://api.spotify.com/v1/users/superinteressante/playlists?offset=0&limit=20',
-      );
-      final items = firstPage.items!;
-      expect(items.length, 2);
-      expect(items.first.id, '1XIAxOGAEK2h4ravpNTmYF');
-      expect(
-        items.first.href,
-        'https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF',
-      );
-      expect(items.first.name, 'Hot News @ Melhores Eletrônicas 2022');
-    });
-
     test('Get Playlist images', () async {
       final images = await spotify.playlists.images('1XIAxOGAEK2h4ravpNTmYF');
       expect(images.length, 1);
@@ -44,7 +27,7 @@ Future main() async {
     });
 
     test('getTracksByPlaylistId', () async {
-      final tracks = await spotify.playlists.getTracksByPlaylistId('1XIAxOGAEK2h4ravpNTmYF').all();
+      final tracks = await spotify.playlists.getPlaylistTracks('1XIAxOGAEK2h4ravpNTmYF').all();
 
       expect(tracks, hasLength(2));
       expect(
@@ -76,21 +59,6 @@ Future main() async {
           isA<Track>().having((t) => t.id, 'id', 'track-3'),
         ),
       );
-    });
-
-    test('getUsersPlaylists stream pause and resume before first page', () async {
-      final playlists = spotify.playlists.getUsersPlaylists('X123Y');
-      final received = <Page<PlaylistSimple>>[];
-
-      final subscription = playlists.stream().listen(received.add);
-      subscription.pause();
-      subscription.resume();
-
-      await subscription.asFuture<void>();
-      await subscription.cancel();
-
-      expect(received, hasLength(1));
-      expect(received.single.items, hasLength(2));
     });
   });
 }
