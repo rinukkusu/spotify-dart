@@ -75,27 +75,6 @@ class Me extends _MeEndpointBase {
     );
   }
 
-  /// Check if current user follow the provided [FollowingType.artist]s or
-  /// [FollowingType.user]s.
-  ///
-  /// Returns the list of [ids] mapped with the response whether it has been
-  /// followed or not
-  Future<Map<String, bool>> checkFollowing(
-    FollowingType type,
-    List<String> ids,
-  ) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-
-    final jsonString = await _api._get('$_path/following/contains?${_buildQuery({
-          'type': type._key,
-          'ids': ids.join(','),
-        })}');
-    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return Map.fromIterables(ids, list);
-  }
-
   /// Follow provided users/artists\
   /// [type] - Type of Follow\
   /// [ids] - user/artist
@@ -169,7 +148,7 @@ abstract class _SavedMe<T> extends _MeEndpointBase {
   Pages<T> saved();
 
   Pages<T> _savedImpl(ParserFunction<T> pageItemParser, [Market? market]) => _getPages(
-        "$_path?$_buildQuery({'market' : $market})",
+        '$_path?${_buildQuery({'market' : market?.name})}',
         pageItemParser,
       );
 }
@@ -181,7 +160,7 @@ class LibraryMe extends _MeEndpointBase {
 
   String get _errorMessage => 'No uri\'s were provided';
 
-  int get _idSizeConstraint => 50;
+  int get _maxUriConstraint => 40;
 
   LibraryMe(super.api);
 
@@ -194,10 +173,11 @@ class LibraryMe extends _MeEndpointBase {
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
   ///
-  /// **Note:** Only the 50 [uris] are allowed, otherwise throws [RangeError].
+  /// **Note:** Only the 40 [uris] are allowed, otherwise throws [RangeError].
   Future<void> save(List<SpotifyUri> uris) async {
     _ensureListContainsElements(uris);
     _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
     await _api._put('$_path?${_buildQuery({'uris': uris.join(',')})}');
   }
 
@@ -211,10 +191,11 @@ class LibraryMe extends _MeEndpointBase {
   /// Returns the same list of [uris] mapped with the response whether it has been saved or not.
   ///
   /// Requires [LibraryAuthorizationScope.read] scope.
-  /// **Note:** Only the 50 [uris] are allowed, otherwise throws [RangeError].
+  /// **Note:** Only the 40 [uris] are allowed, otherwise throws [RangeError].
   Future<Map<SpotifyUri, bool>> contains(List<SpotifyUri> uris) async {
     _ensureListContainsElements(uris);
     _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
     final query = _buildQuery({'uris': uris.join(',')});
     final jsonString = await _api._get('$_path/contains?$query');
     final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
@@ -225,7 +206,7 @@ class LibraryMe extends _MeEndpointBase {
   /// Removes content with given [uri] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
-  Future<void> removeOne(SpotifyUri uri, [Market? market]) async => remove([uri]);
+  Future<void> removeOne(SpotifyUri uri) async => remove([uri]);
 
   /// Removes content with given list of [uri] for the current user.
   ///
@@ -244,13 +225,13 @@ class LibraryMe extends _MeEndpointBase {
   }
 
   void _ensureListWithinSizeContrants<T>(List<T> elements, String name) {
-    if (elements.length > _idSizeConstraint) {
+    if (elements.length > _maxUriConstraint) {
       throw RangeError.range(
         elements.length,
         0,
-        _idSizeConstraint,
+        _maxUriConstraint,
         name,
-        'Maximum of $_idSizeConstraint Uri\'s allowed per request',
+        'Maximum of $_maxUriConstraint Uri\'s allowed per request',
       );
     }
   }

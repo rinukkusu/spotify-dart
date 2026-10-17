@@ -37,6 +37,10 @@ abstract class SpotifyUri {
   int get hashCode => id.hashCode ^ _type.name.hashCode;
 }
 
+final class ArtistUri extends SpotifyUri {
+  ArtistUri(String id) : super(id, UriType.artist);
+}
+
 final class TrackUri extends SpotifyUri {
   TrackUri(String id) : super(id, UriType.track);
 }
@@ -67,15 +71,12 @@ final class AlbumUri extends SpotifyUri {
 
 /// Enum of valid types a [SpotifyUri] can have
 enum UriType {
-  playlist('playlist'),
-  episode('episode'),
-  show('show'),
-  user('user'),
-  audiobook('audiobook'),
-  track('track'),
-  album('album');
-
-  final String name;
-
-  const UriType(this.name);
+  artist,
+  playlist,
+  episode,
+  show,
+  user,
+  audiobook,
+  track,
+  album;
 }

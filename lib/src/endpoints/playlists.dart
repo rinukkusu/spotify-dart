@@ -137,20 +137,6 @@ class Playlists extends EndpointPaging {
     await _api._put(url, jsonEncode(json));
   }
 
-  /// Removes a playlist with [playlistId]
-  ///
-  /// Since there is actually no endpoint for removing a playlist,
-  /// the spotify [documentation](https://developer.spotify.com/documentation/general/guides/working-with-playlists/#following-and-unfollowing-a-playlist)
-  /// says this:
-  /// > We have no endpoint for deleting a playlist in the Web API;
-  /// the notion of deleting a playlist is not relevant within the Spotify’s
-  /// playlist system. Even if you are the playlist’s owner and you
-  /// choose to manually remove it from your own list of playlists,
-  /// you are simply unfollowing it. Although this behavior may sound strange,
-  /// it means that other users who are already following the playlist
-  /// can keep enjoying it.
-  Future<void> removePlaylist(String playlistId) async => unfollowPlaylist(playlistId);
-
   /// [playlistId] - the ID of the playlist to update
   ///
   /// [imageData] - BASE64 encoded JPEG image data
@@ -347,55 +333,7 @@ class Playlists extends EndpointPaging {
     );
   }
 
-  /// [playlistId] - the playlist ID
-  ///
-  /// [public] - Defaults to `true`. If `true` the playlist will be included
-  /// in user’s public playlists, if `false` it will remain private.
-  Future<void> followPlaylist(String playlistId, {bool public = true}) async {
-    final url = 'v1/playlists/$playlistId/followers';
-    final body = jsonEncode({'public': public});
-    await _api._put(url, body);
-  }
 
-  /// unfollow a certain private/public playlist
-  ///
-  /// it requires `playlist-modify-public` & `playlist-modify-private`
-  /// scopes
-  ///
-  /// [playlistId] - the playlist ID
-  Future<void> unfollowPlaylist(String playlistId) async {
-    final url = 'v1/playlists/$playlistId/followers';
-    await _api._delete(url);
-  }
-
-  /// check if a playlist is followed by provided users
-  /// [playlistId] - the playlist ID
-  /// [userIds] - the ids of the users
-  /// The output List of boolean maps to the order of provided userIds list
-  @Deprecated('Use [followedByUsers(playListId, userIds)] instead')
-  Future<List<bool>> followedBy(String playlistId, List<String> userIds) async {
-    return (await followedByUsers(playlistId, userIds)).values.toList();
-  }
-
-  /// check if a playlist is followed by provided users
-  /// [playlistId] - the playlist ID
-  /// [userIds] - the ids of the users
-  ///
-  /// Returns the list of [userIds] mapped with whether they are following or
-  /// not
-  Future<Map<String, bool>> followedByUsers(
-    String playlistId,
-    List<String> userIds,
-  ) async {
-    if (userIds.isEmpty) {
-      throw ArgumentError('No user id was provided for checking');
-    }
-    final jsonString = await _api._get(
-      'v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',
-    );
-    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return Map.fromIterables(userIds, list);
-  }
 
   /// Returns the cover images of [playlistId]
   Future<Iterable<Image>> images(String playlistId) async {
