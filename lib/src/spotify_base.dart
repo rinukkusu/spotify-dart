@@ -37,12 +37,6 @@ abstract class SpotifyApiBase {
   late Episodes _episodes;
   Episodes get episodes => _episodes;
 
-  late Markets _markets;
-  Markets get markets => _markets;
-
-  late Users _users;
-  Users get users => _users;
-
   late Search _search;
   Search get search => _search;
 
@@ -67,9 +61,7 @@ abstract class SpotifyApiBase {
     _tracks = Tracks(this);
     _episodes = Episodes(this);
     _playlists = Playlists(this);
-    _markets = Markets(this);
 
-    _users = Users(this);
     _search = Search(this);
     _shows = Shows(this);
   }

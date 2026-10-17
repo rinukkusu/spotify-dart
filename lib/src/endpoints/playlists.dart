@@ -315,38 +315,6 @@ class Playlists extends EndpointPaging {
     return await _api._put('v1/playlists/$playlistId/items', body);
   }
 
-  /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
-  /// parameter to ensure that the category exists for a particular country.
-  ///
-  /// [locale] - the desired language, consisting of an ISO 639-1 language code
-  /// and an ISO 3166-1 alpha-2 country code, joined by an underscore. For
-  /// example: es_MX, meaning "Spanish (Mexico)". Provide this parameter if you
-  /// want the category strings returned in a particular language. Note that,
-  /// if locale is not supplied, or if the specified language is not available,
-  /// the category strings returned will be in the Spotify default language
-  /// (American English).
-  ///
-  /// [categoryId] - the Spotify category ID for the category.
-  @Deprecated(
-    'The Spotify category\'s playlist endpoint has been officially deprecated '
-    'by Spotify. '
-    'This functionality may be removed in a future version of this library.',
-  )
-  Pages<PlaylistSimple> getByCategoryId(
-    String categoryId, {
-    Market? country,
-    String? locale,
-  }) {
-    final query = _buildQuery({'country': country?.name, 'locale': locale});
-
-    return _getPages(
-      '$_path/categories/$categoryId/playlists?$query',
-      (json) => PlaylistSimple.fromJson(json),
-      'playlists',
-      (json) => PlaylistsFeatured.fromJson(json),
-    );
-  }
-
   /// [playlistId] - the playlist ID
   ///
   /// [public] - Defaults to `true`. If `true` the playlist will be included
