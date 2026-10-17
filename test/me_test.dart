@@ -90,18 +90,6 @@ Future main() async {
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
     });
 
-    test('checkFollowing', () async {
-      final result = await spotify.me.checkFollowing(FollowingType.artist, [
-        '2CIMQHirSU0MQqyYHq0eOx',
-        '57dN52uHvrHOxijzpIgu3E',
-        '1vCWHaC5f2uS3yhpwWbIA6',
-      ]);
-      expect(result.isNotEmpty, isTrue);
-      expect(result['2CIMQHirSU0MQqyYHq0eOx'], isTrue);
-      expect(result['57dN52uHvrHOxijzpIgu3E'], isFalse);
-      expect(result['1vCWHaC5f2uS3yhpwWbIA6'], isTrue);
-    });
-
     group('me/top', () {
       test('tracks', () async {
         final result = await spotify.me.topTracks().first();

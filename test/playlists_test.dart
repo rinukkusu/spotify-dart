@@ -43,15 +43,6 @@ Future main() async {
       expect(firstImage.width, 300);
     });
 
-    test('followedByUsers', () async {
-      final result = await spotify.playlists.followedByUsers('1XIAxOGAEK2h4ravpNTmYF', ['1', '2', '3']);
-
-      expect(result.length, 3);
-      expect(result['1'], isTrue);
-      expect(result['2'], isFalse);
-      expect(result['3'], isTrue);
-    });
-
     test('getTracksByPlaylistId', () async {
       final tracks = await spotify.playlists.getTracksByPlaylistId('1XIAxOGAEK2h4ravpNTmYF').all();
 

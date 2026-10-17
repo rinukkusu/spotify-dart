@@ -333,8 +333,6 @@ class Playlists extends EndpointPaging {
     );
   }
 
-
-
   /// Returns the cover images of [playlistId]
   Future<Iterable<Image>> images(String playlistId) async {
     if (playlistId.isEmpty) {

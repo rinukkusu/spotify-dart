@@ -275,7 +275,7 @@ Future<void> _removePrivatePlaylist(
   String playlistId,
 ) async {
   print('Removing playlist $playlistId');
-  await spotify.playlists.unfollowPlaylist(playlistId);
+  await spotify.me.library.removeOne(PlaylistUri(playlistId));
 }
 
 Future<void> _clearPlaylist(SpotifyApi spotify) async {

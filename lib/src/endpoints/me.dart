@@ -139,8 +139,8 @@ class Me extends _MeEndpointBase {
       );
 }
 
-abstract class _SavedMe<T> extends _MeEndpointBase {
-  _SavedMe(super.api);
+abstract class SavedMe<T> extends _MeEndpointBase {
+  SavedMe(super.api);
 
   /// Returns the saved content for the current user.
   ///
@@ -148,7 +148,7 @@ abstract class _SavedMe<T> extends _MeEndpointBase {
   Pages<T> saved();
 
   Pages<T> _savedImpl(ParserFunction<T> pageItemParser, [Market? market]) => _getPages(
-        '$_path?${_buildQuery({'market' : market?.name})}',
+        '$_path?${_buildQuery({'market': market?.name})}',
         pageItemParser,
       );
 }
@@ -245,7 +245,7 @@ class LibraryMe extends _MeEndpointBase {
 }
 
 /// Endpoint for authenticated user's shows `v1/me/shows`
-class ShowsMe extends _SavedMe<Show> {
+class ShowsMe extends SavedMe<Show> {
   ShowsMe._(super.api);
 
   @override
@@ -257,7 +257,7 @@ class ShowsMe extends _SavedMe<Show> {
 }
 
 /// Endpoint for authenticated user's episodes `v1/me/episodes`
-class EpisodesMe extends _SavedMe<EpisodeFull> {
+class EpisodesMe extends SavedMe<EpisodeFull> {
   @override
   String get _path => '${super._path}/episodes';
 
@@ -274,7 +274,7 @@ class EpisodesMe extends _SavedMe<EpisodeFull> {
 }
 
 /// Endpoint for authenticated user's albums `v1/me/albums`
-class AlbumsMe extends _SavedMe<AlbumSimple> {
+class AlbumsMe extends SavedMe<AlbumSimple> {
   @override
   String get _path => '${super._path}/albums';
 
@@ -289,7 +289,7 @@ class AlbumsMe extends _SavedMe<AlbumSimple> {
 }
 
 /// Endpoint for authenticated user's tracks `v1/me/tracks`
-class TracksMe extends _SavedMe<TrackSaved> {
+class TracksMe extends SavedMe<TrackSaved> {
   @override
   String get _path => '${super._path}/tracks';
 
@@ -304,7 +304,7 @@ class TracksMe extends _SavedMe<TrackSaved> {
 }
 
 /// Endpoint for authenticated user's audiobooks `v1/me/audiobooks`
-class AudiobooksMe extends _SavedMe<AudiobookSaved> {
+class AudiobooksMe extends SavedMe<AudiobookSaved> {
   @override
   String get _path => '${super._path}/audiobooks';
 
@@ -319,7 +319,7 @@ class AudiobooksMe extends _SavedMe<AudiobookSaved> {
 }
 
 /// Endpoint for authenticated user's playlists `v1/me/playlists`
-class PlaylistsMe extends _SavedMe<PlaylistSimple> {
+class PlaylistsMe extends SavedMe<PlaylistSimple> {
   PlaylistsMe._(super.api);
 
   @override
