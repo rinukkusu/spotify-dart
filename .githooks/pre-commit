@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
 
-dart run build_runner build
-dart format -o write .
-dart run test
+dart run build_runner build --delete-conflicting-outputs
+dart format --set-exit-if-changed .
+dart analyze --fatal-infos --fatal-warnings .

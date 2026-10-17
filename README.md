@@ -152,7 +152,7 @@ sh setup.sh
 ```
 
 This installs dependencies and enables a pre-commit hook that generates models,
-formats code, runs analysis and tests.
+formats code and runs analysis. Tests are run before push.
 
 ### Generating JSON Serializers
 
