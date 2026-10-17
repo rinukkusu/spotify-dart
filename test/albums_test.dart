@@ -57,11 +57,5 @@ Future main() async {
       expect(artists[0].name, 'Pitbull');
       expect(artists[1].name, 'Sensato');
     });
-
-    test('list', () async {
-      final albums = await spotify.albums.list(['4aawyAB9vmqN3uQ7FjRGTy', '4aawyAB9vmqN3uQ7FjRGTy']);
-
-      expect(albums.length, 2);
-    });
   });
 }

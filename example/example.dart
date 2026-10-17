@@ -31,12 +31,6 @@ void main() async {
         (error, stackTrace) => print((error as SpotifyException).message),
       );
 
-  print('\nArtists:');
-  final artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
-  for (final x in artists) {
-    print(x.name);
-  }
-
   print('\nAlbum:');
   final album = await spotify.albums.get('2Hog1V8mdTWKhCYqI5paph');
   print(album.name);
@@ -45,12 +39,6 @@ void main() async {
   final tracks = await spotify.albums.getTracks(album.id!).all();
   for (final track in tracks) {
     print(track.name);
-  }
-
-  print('\nNew Releases');
-  final newReleases = await spotify.browse.getNewReleases().first();
-  for (final album in newReleases.items!) {
-    print(album.name);
   }
 
   print('\nFeatured Playlist:');
@@ -132,9 +120,6 @@ void main() async {
       }
     }
   }
-
-  final relatedArtists = await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
-  print('\nRelated Artists: ${relatedArtists.length}');
 
   credentials = await spotify.getCredentials();
   print('\nCredentials:');

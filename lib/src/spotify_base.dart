@@ -25,9 +25,6 @@ abstract class SpotifyApiBase {
   late Audiobooks _audiobooks;
   Audiobooks get audiobooks => _audiobooks;
 
-  late Browse _browse;
-  Browse get browse => _browse;
-
   late Chapters _chapters;
   Chapters get chapters => _chapters;
 
@@ -40,11 +37,6 @@ abstract class SpotifyApiBase {
   late Episodes _episodes;
   Episodes get episodes => _episodes;
 
-  // ignore: deprecated_member_use_from_same_package
-  late RecommendationsEndpoint _recommendations;
-  // ignore: deprecated_member_use_from_same_package
-  RecommendationsEndpoint get recommendations => _recommendations;
-
   late Markets _markets;
   Markets get markets => _markets;
 
@@ -53,19 +45,6 @@ abstract class SpotifyApiBase {
 
   late Search _search;
   Search get search => _search;
-
-  // ignore: deprecated_member_use_from_same_package
-  late AudioFeatures _audioFeatures;
-  // ignore: deprecated_member_use_from_same_package
-  AudioFeatures get audioFeatures => _audioFeatures;
-
-  // ignore: deprecated_member_use_from_same_package
-  late AudioAnalysisEndpoint _audioAnalysis;
-  // ignore: deprecated_member_use_from_same_package
-  AudioAnalysisEndpoint get audioAnalysis => _audioAnalysis;
-
-  late Categories _categories;
-  Categories get categories => _categories;
 
   late Me _me;
   Me get me => _me;
@@ -84,22 +63,14 @@ abstract class SpotifyApiBase {
     _artists = Artists(this);
     _albums = Albums(this);
     _audiobooks = Audiobooks(this);
-    _browse = Browse(this);
     _chapters = Chapters(this);
     _tracks = Tracks(this);
     _episodes = Episodes(this);
     _playlists = Playlists(this);
-    // ignore: deprecated_member_use_from_same_package
-    _recommendations = RecommendationsEndpoint(this);
     _markets = Markets(this);
 
     _users = Users(this);
     _search = Search(this);
-    // ignore: deprecated_member_use_from_same_package
-    _audioFeatures = AudioFeatures(this);
-    // ignore: deprecated_member_use_from_same_package
-    _audioAnalysis = AudioAnalysisEndpoint(this);
-    _categories = Categories(this);
     _shows = Shows(this);
   }
 
