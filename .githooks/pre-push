@@ -1,0 +1,2 @@
+#!/bin/sh
+dart run test
