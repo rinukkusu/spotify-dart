@@ -111,18 +111,11 @@ Future<void> _user(SpotifyApi spotify) async {
     buffer.writeln(user.id);
     buffer.write('name:');
     buffer.writeln(user.displayName);
-    buffer.write('email:');
-    buffer.writeln(user.email);
     buffer.write('type:');
     buffer.writeln(user.type);
     buffer.write('birthdate:');
     buffer.writeln(user.birthdate);
     buffer.write('country:');
-    buffer.writeln(user.country);
-    buffer.write('followers:');
-    buffer.writeln(user.followers?.href);
-    buffer.write('country:');
-    buffer.writeln(user.country);
     print(buffer.toString());
   });
 }

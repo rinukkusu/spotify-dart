@@ -26,15 +26,6 @@ class Album extends AlbumSimple {
   ///
   /// (If not yet classified, the array is empty.)
   List<String>? genres;
-
-  /// The label for the album.
-  String? label;
-
-  /// The popularity of the artist. The value will be between 0 and 100, with
-  /// 100 being the most popular. The artist's popularity is calculated from the
-  /// popularity of all the artist's tracks.
-  @JsonKey(fromJson: convertToIntIfDoubleValue)
-  int? popularity;
 }
 
 @JsonSerializable()
@@ -70,12 +61,6 @@ class AlbumSimple extends Object {
   /// The artists of the album. Each artist object includes a link in href to
   /// more detailed information about the artist.
   List<ArtistSimple>? artists;
-
-  /// The markets in which the album is available: ISO 3166-1 alpha-2 country
-  /// codes. Note that an album is considered available in a market when at
-  /// least 1 of its tracks is available in that market.
-  @JsonKey(name: 'available_markets')
-  List<Market>? availableMarkets;
 
   /// Known external URLs for this album.
   @JsonKey(name: 'external_urls')

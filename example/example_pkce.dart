@@ -123,10 +123,6 @@ Future<void> _testApi(SpotifyApi spotify) async {
     final user = await spotify.me.get();
     print('👤 Hello, ${user.displayName ?? user.id}!');
 
-    if (user.email != null) {
-      print('📧 Email: ${user.email}');
-    }
-
     print('\nFetching your top artists...');
     final artists = await spotify.me.following(FollowingType.artist).first();
     if (artists.items != null && artists.items!.isNotEmpty) {

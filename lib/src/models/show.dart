@@ -8,12 +8,6 @@ part of '_models.dart';
 class Show {
   Show();
 
-  /// The markets in which the show is available: ISO 3166-1 alpha-2 country
-  /// codes. Note that an album is considered available in a market when at
-  /// least 1 of its tracks is available in that market.
-  @JsonKey(name: 'available_markets')
-  List<Market>? availableMarkets;
-
   /// The copyright statements of the show.
   List<Copyright>? copyrights;
 
@@ -51,9 +45,6 @@ class Show {
 
   /// The name of the show.
   String? name;
-
-  /// The publisher of the show.
-  String? publisher;
 
   /// The object type: "show"
   String? type;

@@ -49,11 +49,10 @@ Future main() async {
       expect(firstTrack.artists!.length, 1);
       expect(firstTrack.artists!.first.name, 'Tame Impala');
 
-      // test album and popularity fields (Track instead of TrackSimple)
+      // test album fields (Track instead of TrackSimple)
       expect(firstTrack.album != null, true);
       expect(firstTrack.album!.name, 'Currents');
       expect(firstTrack.album!.id, '79dL7FLiJFOO0EoehUHQBv');
-      expect(firstTrack.popularity, 75);
 
       final second = result.last;
       expect(second.playedAt, DateTime.tryParse('2016-12-13T20:42:17.016Z'));
@@ -86,7 +85,6 @@ Future main() async {
 
       final firstArtist = first.items!.first;
       expect(firstArtist.name, 'Afasi & Filthy');
-      expect(firstArtist.popularity, 54);
       expect(first.after, '0aV6DOiouImYTqrR5YlIqx');
     });
 

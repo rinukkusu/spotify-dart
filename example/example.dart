@@ -96,7 +96,6 @@ void main() async {
             'href: ${item.href}\n'
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
-            'popularity: ${item.popularity}\n'
             '-------------------------------');
       }
       if (item is Track) {
@@ -108,11 +107,9 @@ void main() async {
             'uri: ${item.uri}\n'
             'isPlayable: ${item.isPlayable}\n'
             'artists: ${item.artists!.length}\n'
-            'availableMarkets: ${item.availableMarkets!.length}\n'
             'discNumber: ${item.discNumber}\n'
             'trackNumber: ${item.trackNumber}\n'
             'explicit: ${item.explicit}\n'
-            'popularity: ${item.popularity}\n'
             '-------------------------------');
       }
       if (item is AlbumSimple) {
@@ -124,7 +121,6 @@ void main() async {
             'uri: ${item.uri}\n'
             'albumType: ${item.albumType}\n'
             'artists: ${item.artists!.length}\n'
-            'availableMarkets: ${item.availableMarkets!.length}\n'
             'images: ${item.images!.length}\n'
             'releaseDate: ${item.releaseDate}\n'
             'releaseDatePrecision: ${item.releaseDatePrecision}\n'

@@ -91,9 +91,6 @@ class AudiobookSimple extends Object {
   /// The narrator(s) for the audiobook
   List<Narrator>? narrators;
 
-  /// The publisher of the audiobook
-  String? publisher;
-
   /// The number of chapters in this audiobook
   @JsonKey(name: 'total_chapters', fromJson: convertToIntIfDoubleValue)
   int? totalChapters;
