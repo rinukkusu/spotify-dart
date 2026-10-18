@@ -67,13 +67,16 @@ class Playlist extends Object implements PlaylistSimple {
   @override
   String? snapshotId;
 
-  /// Use [Playlist.tracks]
+  /// Use [Playlist.items]
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  TracksLink? tracksLink;
+  TracksLink? itemsLink;
 
-  /// Information about the tracks of the playlist.
-  Paging<Track>? tracks;
+  /// The items (tracks, episodes) of the playlist.
+  ///
+  /// Only returned for playlists the current user owns or collaborates on,
+  /// otherwise `null`.
+  Paging<PlaylistTrack>? items;
 
   /// The object type: "playlist"
   @override
@@ -135,10 +138,10 @@ class PlaylistSimple extends Object {
   String? snapshotId;
 
   /// A collection containing a link (href) to the Web API endpoint where full
-  /// details of the playlist's tracks can be retrieved, along with the total
-  /// number of tracks in the playlist.
-  @JsonKey(name: 'tracks')
-  TracksLink? tracksLink;
+  /// details of the playlist's items can be retrieved, along with the total
+  /// number of items in the playlist.
+  @JsonKey(name: 'items')
+  TracksLink? itemsLink;
 
   /// The object type: "playlist"
   String? type;
@@ -184,5 +187,5 @@ class PlaylistTrack extends Object {
   bool? isLocal;
 
   /// Information about the track
-  Track? track;
+  Track? item;
 }

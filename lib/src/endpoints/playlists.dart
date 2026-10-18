@@ -26,7 +26,7 @@ class Playlists extends EndpointPaging {
       (json) => PlaylistTrack.fromJson(json),
       null,
       null,
-      (json) => json['track'] != null,
+      (json) => json['item'] != null,
     );
   }
 

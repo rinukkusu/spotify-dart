@@ -32,16 +32,16 @@ Future main() async {
       expect(
         tracks.elementAt(0),
         isA<PlaylistTrack>().having(
-          (p) => p.track,
-          'track',
+          (p) => p.item,
+          'item',
           isA<Track>().having((t) => t.id, 'id', 'track-1'),
         ),
       );
       expect(
         tracks.elementAt(1),
         isA<PlaylistTrack>().having(
-          (p) => p.track,
-          'track',
+          (p) => p.item,
+          'item',
           isA<Track>().having((t) => t.id, 'id', 'track-3'),
         ),
       );

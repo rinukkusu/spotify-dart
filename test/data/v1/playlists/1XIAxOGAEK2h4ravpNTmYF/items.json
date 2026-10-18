@@ -7,7 +7,7 @@
   "total": 4,
   "items": [
     {
-      "track": {
+      "item": {
         "album": {
           "album_type": "compilation",
           "total_tracks": 9,
@@ -106,10 +106,10 @@
       }
     },
     {
-      "track": null
+      "item": null
     },
     {
-      "track": {
+      "item": {
         "album": {
           "album_type": "compilation",
           "total_tracks": 9,
