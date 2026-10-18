@@ -44,10 +44,6 @@ class AudiobookSimple extends Object {
   /// The author(s) for the audiobook
   List<Author>? authors;
 
-  /// A list of the countries in which the audiobook can be played
-  @JsonKey(name: 'available_markets')
-  List<Market>? availableMarkets;
-
   /// The copyright statements of the audiobook
   List<Copyright>? copyrights;
 
