@@ -19,8 +19,8 @@ Future main() async {
       expect(firstItem!.name, 'Playlist#1');
       expect(firstItem.id, 'a123');
       expect(firstItem.public, false);
-      expect(firstItem.tracksLink, isNotNull);
-      expect(firstItem.tracksLink!.href, 'https://api.spotify.com/v1/playlists/a123/tracks');
+      expect(firstItem.itemsLink, isNotNull);
+      expect(firstItem.itemsLink!.href, 'https://api.spotify.com/v1/playlists/a123/items');
       expect(firstItem.uri, 'spotify:playlist:a123');
     });
 
@@ -40,6 +40,9 @@ Future main() async {
       expect(playlist.id, 'a123');
       expect(playlist.name, 'Playlist#1');
       expect(playlist.public, false);
+      expect(playlist.items, isNotNull);
+      expect(playlist.items!.href, 'https://api.spotify.com/v1/playlists/a123/items');
+      expect(playlist.items!.total, 0);
     });
   });
 }

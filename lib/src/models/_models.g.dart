@@ -566,7 +566,7 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) => Playlist()
   ..owner = json['owner'] == null ? null : User.fromJson(json['owner'] as Map<String, dynamic>)
   ..public = json['public'] as bool?
   ..snapshotId = json['snapshot_id'] as String?
-  ..tracks = json['tracks'] == null ? null : Paging<Track>.fromJson(json['tracks'] as Map<String, dynamic>)
+  ..items = json['items'] == null ? null : Paging<PlaylistTrack>.fromJson(json['items'] as Map<String, dynamic>)
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
@@ -582,7 +582,7 @@ Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
       'owner': instance.owner?.toJson(),
       'public': instance.public,
       'snapshot_id': instance.snapshotId,
-      'tracks': instance.tracks?.toJson(),
+      'items': instance.items?.toJson(),
       'type': instance.type,
       'uri': instance.uri,
     };
@@ -599,7 +599,7 @@ PlaylistSimple _$PlaylistSimpleFromJson(Map<String, dynamic> json) => PlaylistSi
   ..owner = json['owner'] == null ? null : User.fromJson(json['owner'] as Map<String, dynamic>)
   ..public = json['public'] as bool?
   ..snapshotId = json['snapshot_id'] as String?
-  ..tracksLink = json['tracks'] == null ? null : TracksLink.fromJson(json['tracks'] as Map<String, dynamic>)
+  ..itemsLink = json['items'] == null ? null : TracksLink.fromJson(json['items'] as Map<String, dynamic>)
   ..type = json['type'] as String?
   ..uri = json['uri'] as String?;
 
@@ -614,7 +614,7 @@ Map<String, dynamic> _$PlaylistSimpleToJson(PlaylistSimple instance) => <String,
       'owner': instance.owner?.toJson(),
       'public': instance.public,
       'snapshot_id': instance.snapshotId,
-      'tracks': instance.tracksLink?.toJson(),
+      'items': instance.itemsLink?.toJson(),
       'type': instance.type,
       'uri': instance.uri,
     };
@@ -630,13 +630,13 @@ PlaylistTrack _$PlaylistTrackFromJson(Map<String, dynamic> json) => PlaylistTrac
   ..addedAt = json['added_at'] == null ? null : DateTime.parse(json['added_at'] as String)
   ..addedBy = json['added_by'] == null ? null : UserPublic.fromJson(json['added_by'] as Map<String, dynamic>)
   ..isLocal = json['is_local'] as bool?
-  ..track = json['track'] == null ? null : Track.fromJson(json['track'] as Map<String, dynamic>);
+  ..item = json['item'] == null ? null : Track.fromJson(json['item'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$PlaylistTrackToJson(PlaylistTrack instance) => <String, dynamic>{
       'added_at': instance.addedAt?.toIso8601String(),
       'added_by': instance.addedBy?.toJson(),
       'is_local': instance.isLocal,
-      'track': instance.track?.toJson(),
+      'item': instance.item?.toJson(),
     };
 
 Restrictions _$RestrictionsFromJson(Map<String, dynamic> json) => Restrictions()..reason = json['reason'] as String?;

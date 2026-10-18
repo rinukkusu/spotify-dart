@@ -56,7 +56,7 @@ void main() async {
             'name: ${item.name}:\n'
             'collaborative: ${item.collaborative}\n'
             'href: ${item.href}\n'
-            'trackslink: ${item.tracksLink!.href}\n'
+            'itemslink: ${item.itemsLink!.href}\n'
             'owner: ${item.owner}\n'
             'public: ${item.owner}\n'
             'snapshotId: ${item.snapshotId}\n'

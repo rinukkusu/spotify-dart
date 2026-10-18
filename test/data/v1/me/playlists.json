@@ -35,8 +35,8 @@
       "primary_color": null,
       "public": false,
       "snapshot_id": "AAAAAueFIcA3xKucOxnKURVRufxfuqb0",
-      "tracks": {
-        "href": "https://api.spotify.com/v1/playlists/a123/tracks",
+      "items": {
+        "href": "https://api.spotify.com/v1/playlists/a123/items",
         "total": 1
       },
       "type": "playlist",
