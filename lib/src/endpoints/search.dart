@@ -21,7 +21,7 @@ class Search extends EndpointPaging {
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
-  BundledPages get(
+  SearchResults get(
     String searchQuery, {
     Iterable<SearchType> types = SearchType.values,
     Market? market,
@@ -34,15 +34,50 @@ class Search extends EndpointPaging {
       'market': market?.name,
     });
 
-    return _getBundledPages('$_path?$query', {
-      'playlists': (json) => PlaylistSimple.fromJson(json),
-      'albums': (json) => AlbumSimple.fromJson(json),
-      'artists': (json) => Artist.fromJson(json),
-      'tracks': (json) => Track.fromJson(json),
-      'shows': (json) => Show.fromJson(json),
-      'episodes': (json) => Episode.fromJson(json),
-      'audiobooks': (json) => AudiobookSimple.fromJson(json),
-    });
+    return SearchResults(
+      _api,
+      '$_path?$query',
+      {
+        'playlists': (json) => PlaylistSimple.fromJson(json),
+        'albums': (json) => AlbumSimple.fromJson(json),
+        'artists': (json) => Artist.fromJson(json),
+        'tracks': (json) => Track.fromJson(json),
+        'shows': (json) => Show.fromJson(json),
+        'episodes': (json) => Episode.fromJson(json),
+        'audiobooks': (json) => AudiobookSimple.fromJson(json),
+      },
+      null,
+      null,
+      null,
+      5,
+      10,
+    );
+  }
+}
+
+/// Page that allows multiple types (artist, track, episode etc.) together
+/// with additional offset constraints.
+class SearchResults extends BundledPages {
+  SearchResults(
+    super.api,
+    super.path,
+    super.pageMappers, [
+    super.pageKey,
+    super.pageContainerParser,
+    super.pageItemFilter,
+    super.defaultLimit,
+    super.maxLimit,
+  ]);
+
+  @override
+  Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
+    const maxOffsetLimit = 1000;
+    const minOffsetLimit = 0;
+
+    if (offset < minOffsetLimit || offset > maxOffsetLimit) {
+      throw RangeError.range(offset, minOffsetLimit, maxOffsetLimit);
+    }
+    return super.getPage(limit, offset);
   }
 }
 

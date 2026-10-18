@@ -6,6 +6,11 @@ part of '../../spotify.dart';
 
 typedef FilterFunction = bool Function(dynamic json);
 
+// ignore: constant_identifier_names
+const int _defaultPageLimit = 20;
+// ignore: constant_identifier_names
+const int _maximumPageLimit = 50;
+
 /// Base class of all endpoints using pagination
 abstract class EndpointPaging extends EndpointBase {
   EndpointPaging(super.api);
@@ -16,6 +21,8 @@ abstract class EndpointPaging extends EndpointBase {
     String? pageKey,
     ParserFunction<Object>? pageContainerParser,
     FilterFunction? pageItemFilter,
+    int defaultLimit = _defaultPageLimit,
+    int maxLimit = _maximumPageLimit,
   ]) =>
       Pages(
         _api,
@@ -24,6 +31,8 @@ abstract class EndpointPaging extends EndpointBase {
         pageKey,
         pageContainerParser,
         pageItemFilter,
+        defaultLimit,
+        maxLimit,
       );
 
   CursorPages<T> _getCursorPages<T>(
@@ -32,6 +41,8 @@ abstract class EndpointPaging extends EndpointBase {
     String? pageKey,
     ParserFunction<Object>? pageContainerParser,
     FilterFunction? pageItemFilter,
+    int defaultLimit = _defaultPageLimit,
+    int maxLimit = _maximumPageLimit,
   ]) =>
       CursorPages(
         _api,
@@ -40,26 +51,22 @@ abstract class EndpointPaging extends EndpointBase {
         pageKey,
         pageContainerParser,
         pageItemFilter,
+        defaultLimit,
+        maxLimit,
       );
 
+  // ignore: unused_element
   BundledPages _getBundledPages<T>(
     String path,
     Map<String, ParserFunction<T>> pageItemParsers, [
     String? pageKey,
     ParserFunction<Object>? pageContainerParser,
     FilterFunction? pageItemFilter,
+    int defaultLimit = _defaultPageLimit,
+    int maxLimit = _maximumPageLimit,
   ]) =>
-      BundledPages(
-        _api,
-        path,
-        pageItemParsers,
-        pageKey,
-        pageContainerParser,
-        pageItemFilter,
-      );
+      BundledPages(_api, path, pageItemParsers, pageKey, pageContainerParser, pageItemFilter, defaultLimit, maxLimit);
 }
-
-const defaultLimit = 20;
 
 /// Base class that represents a generic response page.
 abstract class BasePage<T> {
@@ -97,11 +104,15 @@ abstract class BasePage<T> {
   /// it. For example: `int get foo => _next as int`.
   ///
   /// Needs to be overridden by subclasses.
+  @mustBeOverridden
   dynamic get _next;
 
   /// The object containing this page, if applicable
   Object? get container => _container;
 }
+
+@Deprecated('Use the [Page]\'s defaultLimit attribute instead')
+const defaultLimit = 20;
 
 /// A page that uses an offset to get to the next page.
 class Page<T> extends BasePage<T> {
@@ -148,62 +159,66 @@ class CursorPage<T> extends BasePage<T> {
   bool get isLast => after.isEmpty;
 }
 
-/// Generic strategy to first and next
+/// Generic strategy for the next page
 abstract class NextStrategy<T> {
-  Future<T> first([int limit = defaultLimit]);
-
   Future<T> _getPage(int limit, dynamic next);
 }
 
-/// Strategy to get the next set of elements from an offset
-mixin OffsetStrategy<T> implements NextStrategy<T> {
-  @override
-  Future<T> first([int limit = defaultLimit]) => getPage(limit);
-
-  @override
-  Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as int);
-
-  /// Abstract method that is used to do the api call and json serializing
-  Future<T> getPage(int limit, [int offset = 0]);
-}
-
-/// Strategy to get the next set of elements from a cursor
-mixin CursorStrategy<T> implements NextStrategy<T> {
-  @override
-  Future<T> first([int limit = defaultLimit]) => getPage(limit);
-
-  @override
-  Future<T> _getPage(int limit, dynamic next) => getPage(limit, next as String);
-
-  /// Abstract method that is used to do the api call and json serializing
-  Future<T> getPage(int limit, [String after = '']);
-}
-
-abstract class _Pages {
+abstract class _Pages<T> implements NextStrategy<T> {
   final SpotifyApiBase _api;
   final String _path;
   final String? _pageKey;
   final ParserFunction<dynamic>? _pageContainerParser;
   final FilterFunction? _pageItemFilter;
+  late int _defaultLimit;
+  final int _maxLimit;
 
   _Pages(
     this._api,
     this._path,
     this._pageKey,
     this._pageContainerParser,
-    this._pageItemFilter,
-  ) {
+    this._pageItemFilter, [
+    this._defaultLimit = _defaultPageLimit,
+    this._maxLimit = _maximumPageLimit,
+  ]) {
     if (_pageKey != null && _pageContainerParser == null) {
       throw ArgumentError.notNull('pageContainerParser');
     } else if (_pageKey == null && _pageContainerParser != null) {
       throw ArgumentError.notNull('pageKey');
     }
+    _ensureLimitWithinBoundaries(_defaultLimit);
   }
+
+  int get defaultLimit => _defaultLimit;
+
+  set defaultLimit(int value) {
+    _ensureLimitWithinBoundaries(value);
+    _defaultLimit = value;
+  }
+
+  int get maxLimit => _maxLimit;
+
+  Future<T> first([int? limit]) {
+    final resolvedLimit = limit ?? defaultLimit;
+    _ensureLimitWithinBoundaries(resolvedLimit);
+    return _getPage(resolvedLimit, null);
+  }
+
+  void _ensureLimitWithinBoundaries(int limit) {
+    if (limit < 1 || _maxLimit < limit) {
+      throw RangeError.range(limit, 1, _maxLimit, 'limit');
+    }
+  }
+
+  int _resolveOffset(dynamic next) => next as int? ?? 0;
+
+  String _resolveAfter(dynamic next) => next as String? ?? '';
 }
 
 /// Base class that handles retrieval of pages with one type
 /// (e.g. [Artist], [Playlist] etc.)
-abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements NextStrategy<V> {
+abstract class SinglePages<T, V extends BasePage<T>> extends _Pages<V> implements NextStrategy<V> {
   bool _cancelled = false;
   final ParserFunction<T> _pageParser;
   final List<V> _bufferedPages = [];
@@ -215,13 +230,26 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
     String? pageKey,
     ParserFunction<Object>? pageContainerMapper,
     FilterFunction? pageItemFilter,
-  ]) : super(api, path, pageKey, pageContainerMapper, pageItemFilter);
+    int defaultLimit = _defaultPageLimit,
+    int maxLimit = _maximumPageLimit,
+  ]) : super(
+          api,
+          path,
+          pageKey,
+          pageContainerMapper,
+          pageItemFilter,
+          defaultLimit,
+          maxLimit,
+        );
 
-  Future<Iterable<T>> all([int limit = defaultLimit]) {
-    return stream(limit).map((page) => page.items).toList().then((pages) => pages.expand((page) => page!));
+  Future<Iterable<T>> all([int? limit]) {
+    return stream(limit ?? this.defaultLimit)
+        .map((page) => page.items)
+        .toList()
+        .then((pages) => pages.expand((page) => page!));
   }
 
-  Stream<V> stream([int limit = defaultLimit]) {
+  Stream<V> stream([int? limit]) {
     late StreamController<V> stream;
 
     void handlePageAndGetNext(V page) {
@@ -245,7 +273,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
       }
 
       // Otherwise get the next page
-      _getPage(limit, page._next).then(handlePageAndGetNext);
+      _getPage(limit ?? this.defaultLimit, page._next).then(handlePageAndGetNext);
     }
 
     stream = StreamController<V>(
@@ -282,7 +310,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages implements N
 }
 
 /// Handles retrieval of a page through an offset
-class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
+class Pages<T> extends SinglePages<T, Page<T>> {
   Pages(
     super.api,
     super.path,
@@ -290,6 +318,8 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
     super.pageKey,
     super.pageContainerMapper,
     super.pageItemFilter,
+    super.defaultLimit,
+    super.maxLimit,
   ]);
 
   Pages.fromPaging(
@@ -299,6 +329,8 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
     String? pageKey,
     ParserFunction<Object>? pageContainerMapper,
     FilterFunction? pageItemFilter,
+    int defaultLimit = _defaultPageLimit,
+    int maxLimit = _maximumPageLimit,
   ]) : super(
           api,
           Uri.parse(paging.href!).path.substring(1),
@@ -306,12 +338,17 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
           pageKey,
           pageContainerMapper,
           pageItemFilter,
+          defaultLimit,
+          maxLimit,
         ) {
     _bufferedPages.add(Page<T>(paging, _pageParser, null, _pageItemFilter));
   }
 
   @override
+  Future<Page<T>> _getPage(int limit, [dynamic next]) => getPage(limit, _resolveOffset(next));
+
   Future<Page<T>> getPage(int limit, [int offset = 0]) async {
+    _ensureLimitWithinBoundaries(limit);
     final pathDelimiter = _path.contains('?') ? '&' : '?';
     final newPath = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
@@ -330,7 +367,7 @@ class Pages<T> extends SinglePages<T, Page<T>> with OffsetStrategy<Page<T>> {
 }
 
 /// Handles retrieval of a page through a cursor
-class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<CursorPage<T>> {
+class CursorPages<T> extends SinglePages<T, CursorPage<T>> {
   CursorPages(
     super.api,
     super.path,
@@ -338,6 +375,8 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<C
     super.pageKey,
     super.pageContainerMapper,
     super.pageItemFilter,
+    super.defaultLimit,
+    super.maxLimit,
   ]);
 
   CursorPages.fromCursorPaging(
@@ -347,6 +386,8 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<C
     String? pageKey,
     ParserFunction<Object>? pageContainerMapper,
     FilterFunction? pageItemFilter,
+    int defaultLimit = _defaultPageLimit,
+    int maxLimit = _maximumPageLimit,
   ]) : super(
           api,
           Uri.parse(paging.href!).path.substring(1),
@@ -354,12 +395,17 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<C
           pageKey,
           pageContainerMapper,
           pageItemFilter,
+          defaultLimit,
+          maxLimit,
         ) {
     _bufferedPages.add(CursorPage<T>(paging, _pageParser, null, _pageItemFilter));
   }
 
   @override
+  Future<CursorPage<T>> _getPage(int limit, [dynamic next]) => getPage(limit, _resolveAfter(next));
+
   Future<CursorPage<T>> getPage(int limit, [String after = '']) async {
+    _ensureLimitWithinBoundaries(limit);
     final pathDelimiter = _path.contains('?') ? '&' : '?';
     var newPath = '$_path${pathDelimiter}limit=$limit';
     if (after.isNotEmpty) {
@@ -381,7 +427,7 @@ class CursorPages<T> extends SinglePages<T, CursorPage<T>> with CursorStrategy<C
 }
 
 /// Page that allows multiple types (artist, track, episode etc.) together
-class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
+class BundledPages extends _Pages<List<Page<dynamic>>> {
   final Map<String, ParserFunction<dynamic>> _pageMappers;
 
   BundledPages(
@@ -391,10 +437,23 @@ class BundledPages extends _Pages with OffsetStrategy<List<Page<dynamic>>> {
     String? pageKey,
     ParserFunction<dynamic>? pageContainerParser,
     FilterFunction? pageItemFilter,
-  ]) : super(api, path, pageKey, pageContainerParser, pageItemFilter);
+    int defaultLimit = _defaultPageLimit,
+    int maxLimit = _maximumPageLimit,
+  ]) : super(
+          api,
+          path,
+          pageKey,
+          pageContainerParser,
+          pageItemFilter,
+          defaultLimit,
+          maxLimit,
+        );
 
   @override
+  Future<List<Page<dynamic>>> _getPage(int limit, [dynamic next]) async => getPage(limit, _resolveOffset(next));
+
   Future<List<Page<dynamic>>> getPage(int limit, [int offset = 0]) async {
+    _ensureLimitWithinBoundaries(limit);
     final pathDelimiter = _path.contains('?') ? '&' : '?';
     final path = '$_path${pathDelimiter}limit=$limit&offset=$offset';
 
