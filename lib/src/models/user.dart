@@ -13,6 +13,10 @@ class User extends Object implements UserPublic {
   @override
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
+  /// A public, immutable, pseudoanonymous identifier for the user's account.
+  @JsonKey(name: 'account_id')
+  String? accountId;
+
   /// The user's date-of-birth.
   ///
   /// This field is only available when the current user has granted access to

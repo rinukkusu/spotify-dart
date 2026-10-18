@@ -109,6 +109,8 @@ Future<void> _user(SpotifyApi spotify) async {
     final buffer = StringBuffer();
     buffer.write('id:');
     buffer.writeln(user.id);
+    buffer.write('account_id:');
+    buffer.writeln(user.accountId);
     buffer.write('name:');
     buffer.writeln(user.displayName);
     buffer.write('email:');
