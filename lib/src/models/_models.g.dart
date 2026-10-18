@@ -410,176 +410,6 @@ Map<String, dynamic> _$ArtistSimpleToJson(ArtistSimple instance) => <String, dyn
       'uri': instance.uri,
     };
 
-AudioAnalysis _$AudioAnalysisFromJson(Map<String, dynamic> json) => AudioAnalysis()
-  ..track = json['track'] == null ? null : TrackAudioAnalysis.fromJson(json['track'] as Map<String, dynamic>)
-  ..bars = (json['bars'] as List<dynamic>?)?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>)).toList()
-  ..beats = (json['beats'] as List<dynamic>?)?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>)).toList()
-  ..sections = (json['sections'] as List<dynamic>?)?.map((e) => Section.fromJson(e as Map<String, dynamic>)).toList()
-  ..segments = (json['segments'] as List<dynamic>?)?.map((e) => Segment.fromJson(e as Map<String, dynamic>)).toList()
-  ..tatums = (json['tatums'] as List<dynamic>?)?.map((e) => TimeInterval.fromJson(e as Map<String, dynamic>)).toList();
-
-Map<String, dynamic> _$AudioAnalysisToJson(AudioAnalysis instance) => <String, dynamic>{
-      'track': instance.track?.toJson(),
-      'bars': instance.bars?.map((e) => e.toJson()).toList(),
-      'beats': instance.beats?.map((e) => e.toJson()).toList(),
-      'sections': instance.sections?.map((e) => e.toJson()).toList(),
-      'segments': instance.segments?.map((e) => e.toJson()).toList(),
-      'tatums': instance.tatums?.map((e) => e.toJson()).toList(),
-    };
-
-TrackAudioAnalysis _$TrackAudioAnalysisFromJson(Map<String, dynamic> json) => TrackAudioAnalysis()
-  ..duration = (json['duration'] as num?)?.toDouble()
-  ..confidence = (json['confidence'] as num?)?.toDouble()
-  ..loudness = (json['loudness'] as num?)?.toDouble()
-  ..tempo = (json['tempo'] as num?)?.toDouble()
-  ..tempoConfidence = (json['tempo_confidence'] as num?)?.toDouble()
-  ..key = convertToIntIfDoubleValue(json['key'])
-  ..keyConfidence = (json['key_confidence'] as num?)?.toDouble()
-  ..mode = convertToIntIfDoubleValue(json['mode'])
-  ..modeConfidence = (json['mode_confidence'] as num?)?.toDouble()
-  ..timeSignature = convertToIntIfDoubleValue(json['time_signature'])
-  ..timeSignatureConfidence = (json['time_signature_confidence'] as num?)?.toDouble()
-  ..numSamples = convertToIntIfDoubleValue(json['num_samples'])
-  ..analysisSampleRate = convertToIntIfDoubleValue(json['analysis_sample_rate'])
-  ..analysisChannels = convertToIntIfDoubleValue(json['analysis_channels'])
-  ..endOfFadeIn = (json['end_of_fade_in'] as num?)?.toDouble()
-  ..startOfFadeOut = (json['start_of_fade_out'] as num?)?.toDouble()
-  ..synchString = json['synchstring'] as String?
-  ..synchVersion = (json['synch_version'] as num?)?.toDouble()
-  ..rhythmString = json['rhythmstring'] as String?
-  ..rhythmVersion = (json['rhythm_version'] as num?)?.toDouble()
-  ..codeString = json['codestring'] as String?
-  ..codeVersion = (json['code_version'] as num?)?.toDouble();
-
-Map<String, dynamic> _$TrackAudioAnalysisToJson(TrackAudioAnalysis instance) => <String, dynamic>{
-      'duration': instance.duration,
-      'confidence': instance.confidence,
-      'loudness': instance.loudness,
-      'tempo': instance.tempo,
-      'tempo_confidence': instance.tempoConfidence,
-      'key': instance.key,
-      'key_confidence': instance.keyConfidence,
-      'mode': instance.mode,
-      'mode_confidence': instance.modeConfidence,
-      'time_signature': instance.timeSignature,
-      'time_signature_confidence': instance.timeSignatureConfidence,
-      'num_samples': instance.numSamples,
-      'analysis_sample_rate': instance.analysisSampleRate,
-      'analysis_channels': instance.analysisChannels,
-      'end_of_fade_in': instance.endOfFadeIn,
-      'start_of_fade_out': instance.startOfFadeOut,
-      'synchstring': instance.synchString,
-      'synch_version': instance.synchVersion,
-      'rhythmstring': instance.rhythmString,
-      'rhythm_version': instance.rhythmVersion,
-      'codestring': instance.codeString,
-      'code_version': instance.codeVersion,
-    };
-
-Section _$SectionFromJson(Map<String, dynamic> json) => Section()
-  ..duration = (json['duration'] as num?)?.toDouble()
-  ..confidence = (json['confidence'] as num?)?.toDouble()
-  ..loudness = (json['loudness'] as num?)?.toDouble()
-  ..tempo = (json['tempo'] as num?)?.toDouble()
-  ..tempoConfidence = (json['tempo_confidence'] as num?)?.toDouble()
-  ..key = convertToIntIfDoubleValue(json['key'])
-  ..keyConfidence = (json['key_confidence'] as num?)?.toDouble()
-  ..mode = convertToIntIfDoubleValue(json['mode'])
-  ..modeConfidence = (json['mode_confidence'] as num?)?.toDouble()
-  ..timeSignature = convertToIntIfDoubleValue(json['time_signature'])
-  ..timeSignatureConfidence = (json['time_signature_confidence'] as num?)?.toDouble()
-  ..start = (json['start'] as num?)?.toDouble();
-
-Map<String, dynamic> _$SectionToJson(Section instance) => <String, dynamic>{
-      'duration': instance.duration,
-      'confidence': instance.confidence,
-      'loudness': instance.loudness,
-      'tempo': instance.tempo,
-      'tempo_confidence': instance.tempoConfidence,
-      'key': instance.key,
-      'key_confidence': instance.keyConfidence,
-      'mode': instance.mode,
-      'mode_confidence': instance.modeConfidence,
-      'time_signature': instance.timeSignature,
-      'time_signature_confidence': instance.timeSignatureConfidence,
-      'start': instance.start,
-    };
-
-Segment _$SegmentFromJson(Map<String, dynamic> json) => Segment()
-  ..start = (json['start'] as num?)?.toDouble()
-  ..duration = (json['duration'] as num?)?.toDouble()
-  ..confidence = (json['confidence'] as num?)?.toDouble()
-  ..loudnessStart = (json['loudness_start'] as num?)?.toDouble()
-  ..loudnessMax = (json['loudness_max'] as num?)?.toDouble()
-  ..loudnessMaxTime = (json['loudness_max_time'] as num?)?.toDouble()
-  ..loudnessEnd = (json['loudness_end'] as num?)?.toDouble()
-  ..pitches = (json['pitches'] as List<dynamic>?)?.map((e) => (e as num).toDouble()).toList()
-  ..timbre = (json['timbre'] as List<dynamic>?)?.map((e) => (e as num).toDouble()).toList();
-
-Map<String, dynamic> _$SegmentToJson(Segment instance) => <String, dynamic>{
-      'start': instance.start,
-      'duration': instance.duration,
-      'confidence': instance.confidence,
-      'loudness_start': instance.loudnessStart,
-      'loudness_max': instance.loudnessMax,
-      'loudness_max_time': instance.loudnessMaxTime,
-      'loudness_end': instance.loudnessEnd,
-      'pitches': instance.pitches,
-      'timbre': instance.timbre,
-    };
-
-TimeInterval _$TimeIntervalFromJson(Map<String, dynamic> json) => TimeInterval()
-  ..confidence = (json['confidence'] as num?)?.toDouble()
-  ..duration = (json['duration'] as num?)?.toDouble()
-  ..start = (json['start'] as num?)?.toDouble();
-
-Map<String, dynamic> _$TimeIntervalToJson(TimeInterval instance) => <String, dynamic>{
-      'confidence': instance.confidence,
-      'duration': instance.duration,
-      'start': instance.start,
-    };
-
-AudioFeature _$AudioFeatureFromJson(Map<String, dynamic> json) => AudioFeature()
-  ..acousticness = (json['acousticness'] as num?)?.toDouble()
-  ..analysisUrl = json['analysis_url'] as String?
-  ..danceability = (json['danceability'] as num?)?.toDouble()
-  ..durationMs = convertToIntIfDoubleValue(json['duration_ms'])
-  ..energy = (json['energy'] as num?)?.toDouble()
-  ..id = json['id'] as String?
-  ..instrumentalness = (json['instrumentalness'] as num?)?.toDouble()
-  ..key = convertToIntIfDoubleValue(json['key'])
-  ..liveness = (json['liveness'] as num?)?.toDouble()
-  ..loudness = (json['loudness'] as num?)?.toDouble()
-  ..mode = convertToIntIfDoubleValue(json['mode'])
-  ..speechiness = (json['speechiness'] as num?)?.toDouble()
-  ..tempo = (json['tempo'] as num?)?.toDouble()
-  ..timeSignature = convertToIntIfDoubleValue(json['time_signature'])
-  ..trackHref = json['track_href'] as String?
-  ..type = json['type'] as String?
-  ..uri = json['uri'] as String?
-  ..valence = (json['valence'] as num?)?.toDouble();
-
-Map<String, dynamic> _$AudioFeatureToJson(AudioFeature instance) => <String, dynamic>{
-      'acousticness': instance.acousticness,
-      'analysis_url': instance.analysisUrl,
-      'danceability': instance.danceability,
-      'duration_ms': instance.durationMs,
-      'energy': instance.energy,
-      'id': instance.id,
-      'instrumentalness': instance.instrumentalness,
-      'key': instance.key,
-      'liveness': instance.liveness,
-      'loudness': instance.loudness,
-      'mode': instance.mode,
-      'speechiness': instance.speechiness,
-      'tempo': instance.tempo,
-      'time_signature': instance.timeSignature,
-      'track_href': instance.trackHref,
-      'type': instance.type,
-      'uri': instance.uri,
-      'valence': instance.valence,
-    };
-
 Audiobook _$AudiobookFromJson(Map<String, dynamic> json) => Audiobook()
   ..authors = (json['authors'] as List<dynamic>?)?.map((e) => Author.fromJson(e as Map<String, dynamic>)).toList()
   ..availableMarkets =
@@ -686,19 +516,6 @@ Map<String, dynamic> _$AudiobookSavedToJson(AudiobookSaved instance) => <String,
 Author _$AuthorFromJson(Map<String, dynamic> json) => Author()..name = json['name'] as String?;
 
 Map<String, dynamic> _$AuthorToJson(Author instance) => <String, dynamic>{
-      'name': instance.name,
-    };
-
-Category _$CategoryFromJson(Map<String, dynamic> json) => Category()
-  ..href = json['href'] as String?
-  ..icons = (json['icons'] as List<dynamic>?)?.map((e) => Image.fromJson(e as Map<String, dynamic>)).toList()
-  ..id = json['id'] as String?
-  ..name = json['name'] as String?;
-
-Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
-      'href': instance.href,
-      'icons': instance.icons?.map((e) => e.toJson()).toList(),
-      'id': instance.id,
       'name': instance.name,
     };
 
@@ -1105,33 +922,6 @@ Map<String, dynamic> _$PlaylistTrackToJson(PlaylistTrack instance) => <String, d
       'track': instance.track?.toJson(),
     };
 
-Recommendations _$RecommendationsFromJson(Map<String, dynamic> json) => Recommendations()
-  ..seeds =
-      (json['seeds'] as List<dynamic>?)?.map((e) => RecommendationsSeed.fromJson(e as Map<String, dynamic>)).toList()
-  ..tracks = (json['tracks'] as List<dynamic>?)?.map((e) => Track.fromJson(e as Map<String, dynamic>)).toList();
-
-Map<String, dynamic> _$RecommendationsToJson(Recommendations instance) => <String, dynamic>{
-      'seeds': instance.seeds?.map((e) => e.toJson()).toList(),
-      'tracks': instance.tracks?.map((e) => e.toJson()).toList(),
-    };
-
-RecommendationsSeed _$RecommendationsSeedFromJson(Map<String, dynamic> json) => RecommendationsSeed()
-  ..afterFilteringSize = convertToIntIfDoubleValue(json['afterFilteringSize'])
-  ..afterRelinkingSize = convertToIntIfDoubleValue(json['afterRelinkingSize'])
-  ..href = json['href'] as String?
-  ..id = json['id'] as String?
-  ..initialPoolSize = convertToIntIfDoubleValue(json['initialPoolSize'])
-  ..type = json['type'] as String?;
-
-Map<String, dynamic> _$RecommendationsSeedToJson(RecommendationsSeed instance) => <String, dynamic>{
-      'afterFilteringSize': instance.afterFilteringSize,
-      'afterRelinkingSize': instance.afterRelinkingSize,
-      'href': instance.href,
-      'id': instance.id,
-      'initialPoolSize': instance.initialPoolSize,
-      'type': instance.type,
-    };
-
 Restrictions _$RestrictionsFromJson(Map<String, dynamic> json) => Restrictions()..reason = json['reason'] as String?;
 
 Map<String, dynamic> _$RestrictionsToJson(Restrictions instance) => <String, dynamic>{
@@ -1386,6 +1176,7 @@ Map<String, dynamic> _$TracksLinkToJson(TracksLink instance) => <String, dynamic
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User()
+  ..accountId = json['account_id'] as String?
   ..birthdate = json['birthdate'] as String?
   ..country = $enumDecodeNullable(_$MarketEnumMap, json['country'])
   ..displayName = json['display_name'] as String?
@@ -1399,6 +1190,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User()
   ..uri = json['uri'] as String?;
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'account_id': instance.accountId,
       'birthdate': instance.birthdate,
       'country': _$MarketEnumMap[instance.country],
       'display_name': instance.displayName,

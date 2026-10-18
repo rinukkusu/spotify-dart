@@ -21,24 +21,6 @@ Future main() async {
       expect(artist.images![0].width, 640);
     });
 
-    test('list', () async {
-      final artists = await spotify.artists.list(['0TnOYISbd1XYRBk9myaseg', '0TnOYISbd1XYRBk9myaseg']);
-
-      expect(artists.length, 2);
-    });
-
-    test('getRelatedArtists', () async {
-      // ignore: deprecated_member_use_from_same_package
-      final relatedArtists = await spotify.artists.relatedArtists('0TnOYISbd1XYRBk9myaseg');
-      final first = relatedArtists.first;
-      expect(first.id, '0jnsk9HBra6NMjO2oANoPY');
-      expect(
-        first.href,
-        'https://api.spotify.com/v1/artists/0jnsk9HBra6NMjO2oANoPY',
-      );
-      expect(first.name, 'Flo Rida');
-    });
-
     test('getError', () async {
       spotify.mockHttpErrors = [MockHttpError(statusCode: 401, message: 'Bad Request')].iterator;
       late SpotifyException ex;
