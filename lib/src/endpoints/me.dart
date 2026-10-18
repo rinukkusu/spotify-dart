@@ -75,26 +75,6 @@ class Me extends _MeEndpointBase {
     );
   }
 
-  /// Follow provided users/artists\
-  /// [type] - Type of Follow\
-  /// [ids] - user/artist
-  Future<void> follow(FollowingType type, List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-    await _api._put("$_path/following?type=${type._key}&ids=${ids.join(",")}");
-  }
-
-  /// Unfollow already following users/artists\
-  /// [type] - Type of Follow\
-  /// [ids] - user/artist
-  Future<void> unfollow(FollowingType type, List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-    await _api._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
-  }
-
   /// Get tracks from the current user's recently played tracks.
   /// Note: Currently doesn't support podcast episodes.
   CursorPages<PlayHistory> recentlyPlayed({
