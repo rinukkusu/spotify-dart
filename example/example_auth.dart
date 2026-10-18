@@ -37,11 +37,9 @@ void main() async {
   await _savedTracks(spotify);
   await _recentlyPlayed(spotify);
   await _getShow(spotify);
-  await _listShows(spotify);
   await _savedShows(spotify);
   await _saveAndRemoveShow(spotify);
   await _getEpisode(spotify);
-  await _listEpisodes(spotify);
   await _savedEpisodes(spotify);
   await _saveAndRemoveEpisode(spotify);
   await _clearPlaylist(spotify);
@@ -181,14 +179,6 @@ Future<void> _getShow(SpotifyApi spotify) async {
   print(response.name);
 }
 
-Future<void> _listShows(SpotifyApi spotify) async {
-  const showId = '3kbLJJLzRGsAKESODPSbiB';
-  final response = await spotify.shows.list([showId]);
-  for (final show in response) {
-    print(show.name);
-  }
-}
-
 Future<void> _savedShows(SpotifyApi spotify) async {
   print('Users saved shows');
   final response = spotify.me.shows.saved().stream();
@@ -220,16 +210,6 @@ Future<void> _getEpisode(SpotifyApi spotify) async {
   print('\nRetriving Information about episode with id $episodeId');
   final episode = await spotify.episodes.get(episodeId);
   print('${episode.name} - ${episode.show?.name}');
-}
-
-Future<void> _listEpisodes(SpotifyApi spotify) async {
-  const episodeIds = ['2TkVS48EgJwFUMiH8UwqGL', '4Bje2xtE4VxqO2HO1PQdsG'];
-
-  print('\nRetriving Information about episodes $episodeIds');
-  final episodes = await spotify.episodes.list(episodeIds);
-  for (final episode in episodes) {
-    print('${episode.name} - ${episode.show?.name}');
-  }
 }
 
 Future<void> _savedEpisodes(SpotifyApi spotify) async {
