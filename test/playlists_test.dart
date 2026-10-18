@@ -14,6 +14,55 @@ Future main() async {
   });
 
   group('Playlists', () {
+    test('addTrack returns snapshot ID', () async {
+      await expectLater(
+        spotify.playlists.addTrack('spotify:track:track-1', '1XIAxOGAEK2h4ravpNTmYF'),
+        completion('updated-snapshot-id'),
+      );
+    });
+
+    test('addTracks returns snapshot ID', () async {
+      await expectLater(
+        spotify.playlists.addTracks(['spotify:track:track-1'], '1XIAxOGAEK2h4ravpNTmYF'),
+        completion('updated-snapshot-id'),
+      );
+    });
+
+    test('removeTrack returns snapshot ID', () async {
+      await expectLater(
+        spotify.playlists.removeTrack('spotify:track:track-1', '1XIAxOGAEK2h4ravpNTmYF'),
+        completion('updated-snapshot-id'),
+      );
+    });
+
+    test('removeTracks returns snapshot ID', () async {
+      await expectLater(
+        spotify.playlists.removeTracks(['spotify:track:track-1'], '1XIAxOGAEK2h4ravpNTmYF'),
+        completion('updated-snapshot-id'),
+      );
+    });
+
+    test('replace returns snapshot ID', () async {
+      await expectLater(
+        spotify.playlists.replace('1XIAxOGAEK2h4ravpNTmYF', ['spotify:track:track-1']),
+        completion('updated-snapshot-id'),
+      );
+    });
+
+    test('clear returns snapshot ID', () async {
+      await expectLater(
+        spotify.playlists.clear('1XIAxOGAEK2h4ravpNTmYF'),
+        completion('updated-snapshot-id'),
+      );
+    });
+
+    test('reorder returns snapshot ID', () async {
+      await expectLater(
+        spotify.playlists.reorder('1XIAxOGAEK2h4ravpNTmYF', rangeStart: 0, insertBefore: 2),
+        completion('updated-snapshot-id'),
+      );
+    });
+
     test('Get Playlist images', () async {
       final images = await spotify.playlists.images('1XIAxOGAEK2h4ravpNTmYF');
       expect(images.length, 1);

@@ -6,14 +6,13 @@ part of '../../spotify.dart';
 /// Endpoint of playlists
 class Playlists extends EndpointPaging {
   @override
-  // ignore: unused_element
   String get _path => 'v1/playlists';
 
   Playlists(super.api);
 
   Future<Playlist> get(String playlistId) async {
     return Playlist.fromJson(
-      jsonDecode(await _api._get('v1/playlists/$playlistId')),
+      jsonDecode(await _api._get('$_path/$playlistId')),
     );
   }
 
@@ -22,7 +21,7 @@ class Playlists extends EndpointPaging {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
-      'v1/playlists/$playlistId/items?$query',
+      '$_path/$playlistId/items?$query',
       (json) => PlaylistTrack.fromJson(json),
       null,
       null,
@@ -41,21 +40,21 @@ class Playlists extends EndpointPaging {
   /// be collaborative.
   ///
   /// [description] - the new description of the playlist
-  Future<void> updatePlaylist(
+  Future<String> updatePlaylist(
     String playlistId,
     String playlistName, {
     bool? public,
     bool? collaborative,
     String? description,
   }) async {
-    final url = 'v1/playlists/$playlistId';
+    final url = '$_path/$playlistId';
     final json = <String, dynamic>{'name': playlistName};
 
     if (public != null) json['public'] = public;
     if (collaborative != null) json['collaborative'] = collaborative;
     if (description != null) json['description'] = description;
 
-    await _api._put(url, jsonEncode(json));
+    return _extractSnapshotID(await _api._put(url, jsonEncode(json)));
   }
 
   /// [playlistId] - the ID of the playlist to update
@@ -63,43 +62,45 @@ class Playlists extends EndpointPaging {
   /// [imageData] - BASE64 encoded JPEG image data
   ///
   Future<void> updatePlaylistImage(String playlistId, String imageData) async {
-    final url = 'v1/playlists/$playlistId/images';
+    final url = '$_path/$playlistId/images';
     await _api._put(url, imageData);
   }
 
   /// Adds a track with [trackUri] (i.e spotify:track:4iV5W9uYEdYUVa79Axb7Rh)
   /// to a playlist with [playlistId]
-  Future<void> addTrack(
+  Future<String> addTrack(
     String trackUri,
     String playlistId, {
     int position = -1,
   }) async {
-    var url = 'v1/playlists/$playlistId/items';
+    var url = '$_path/$playlistId/items';
 
     if (position >= 0) {
       url = '$url?position=$position';
     }
 
-    await _api._post(
-      url,
-      jsonEncode({
-        'uris': [trackUri],
-      }),
+    return _extractSnapshotID(
+      await _api._post(
+        url,
+        jsonEncode({
+          'uris': [trackUri],
+        }),
+      ),
     );
   }
 
   /// Adds a collection of [uris] (i.e each list
   /// item in the format of "spotify:track:4iV5W9uYEdYUVa79Axb7Rh") to a
   /// playlist with [playlistId]
-  Future<void> addTracks(List<String> uris, String playlistId) async {
+  Future<String> addTracks(List<String> uris, String playlistId) async {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
     if (uris.isEmpty) {
       throw ArgumentError('No uris provided');
     }
-    final url = 'v1/playlists/$playlistId/items';
-    await _api._post(url, jsonEncode({'uris': uris}));
+    final url = '$_path/$playlistId/items';
+    return _extractSnapshotID(await _api._post(url, jsonEncode({'uris': uris})));
   }
 
   /// Removes a track with [trackUri] in the playlist with [playlistId]
@@ -109,7 +110,7 @@ class Playlists extends EndpointPaging {
   /// "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
   ///
   /// [positions] - the positions of the tracks to remove.
-  Future<void> removeTrack(
+  Future<String> removeTrack(
     String trackUri,
     String playlistId, [
     List<int>? positions,
@@ -117,7 +118,7 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/items';
+    final url = '$_path/$playlistId/items';
     final item = <String, dynamic>{'uri': trackUri};
     if (positions != null) {
       item['positions'] = positions;
@@ -126,27 +127,27 @@ class Playlists extends EndpointPaging {
     final body = jsonEncode({
       'items': [item],
     });
-    await _api._delete(url, body);
+    return _extractSnapshotID(await _api._delete(url, body));
   }
 
   /// Removes multiple tracks from a playlist wish [playlistId]
   /// [trackUris] - the Spotify track uris
   /// (i.e each list item in the format of
   /// "spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
-  Future<void> removeTracks(List<String> trackUris, String playlistId) async {
+  Future<String> removeTracks(List<String> trackUris, String playlistId) async {
     if (trackUris.isEmpty) {
       throw ArgumentError('No trackUris are provided');
     }
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/items';
+    final url = '$_path/$playlistId/items';
     final items = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
 
     final body = jsonEncode({
       'items': items,
     });
-    await _api._delete(url, body);
+    return _extractSnapshotID(await _api._delete(url, body));
   }
 
   /// Replaces items (tracks, episodes etc.) in a playlist with [playlistId]
@@ -219,8 +220,11 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    return await _api._put('v1/playlists/$playlistId/items', body);
+    final response = await _api._put('v1/playlists/$playlistId/items', body);
+    return _extractSnapshotID(response);
   }
+
+  String _extractSnapshotID(String jsonString) => jsonDecode(jsonString)['snapshot_id'];
 
   /// Returns the cover images of [playlistId]
   Future<Iterable<Image>> images(String playlistId) async {
