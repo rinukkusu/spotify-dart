@@ -22,7 +22,7 @@
         "publisher": "Saved Publisher",
         "total_chapters": 12,
         "type": "audiobook",
-        "uri": "spotify:show:savedbook"
+        "uri": "spotify:audiobook:savedbook"
       }
     }
   ],

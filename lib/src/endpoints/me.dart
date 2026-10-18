@@ -19,6 +19,7 @@ class Me extends _MeEndpointBase {
   late final ShowsMe _showsMe = ShowsMe._(super._api);
   late final TracksMe _tracksMe = TracksMe._(super._api);
   late final PlaylistsMe _playlistsMe = PlaylistsMe._(super._api);
+  late final LibraryMe _libraryMe = LibraryMe(super._api);
 
   /// Accesses the user's audiobooks.
   AudiobooksMe get audiobooks => _audiobooksMe;
@@ -37,6 +38,8 @@ class Me extends _MeEndpointBase {
 
   /// Accesses the user's playlists.
   PlaylistsMe get playlists => _playlistsMe;
+
+  LibraryMe get library => _libraryMe;
 
   Me(super.api);
 
@@ -70,47 +73,6 @@ class Me extends _MeEndpointBase {
       'artists',
       (json) => json,
     );
-  }
-
-  /// Check if current user follow the provided [FollowingType.artist]s or
-  /// [FollowingType.user]s.
-  ///
-  /// Returns the list of [ids] mapped with the response whether it has been
-  /// followed or not
-  Future<Map<String, bool>> checkFollowing(
-    FollowingType type,
-    List<String> ids,
-  ) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-
-    final jsonString = await _api._get('$_path/following/contains?${_buildQuery({
-          'type': type._key,
-          'ids': ids.join(','),
-        })}');
-    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return Map.fromIterables(ids, list);
-  }
-
-  /// Follow provided users/artists\
-  /// [type] - Type of Follow\
-  /// [ids] - user/artist
-  Future<void> follow(FollowingType type, List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-    await _api._put("$_path/following?type=${type._key}&ids=${ids.join(",")}");
-  }
-
-  /// Unfollow already following users/artists\
-  /// [type] - Type of Follow\
-  /// [ids] - user/artist
-  Future<void> unfollow(FollowingType type, List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-    await _api._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
   }
 
   /// Get tracks from the current user's recently played tracks.
@@ -157,212 +119,187 @@ class Me extends _MeEndpointBase {
       );
 }
 
-abstract class MeOperations<T> extends _MeEndpointBase {
-  MeOperations(super.api);
+abstract class SavedMe<T> extends _MeEndpointBase {
+  SavedMe(super.api);
 
   /// Returns the saved content for the current user.
   ///
   /// Requires [LibraryAuthorizationScope.read] scope.
   Pages<T> saved();
 
-  Pages<T> _savedImpl(ParserFunction<T> pageItemParser) => _getPages(
-        _path,
+  Pages<T> _savedImpl(ParserFunction<T> pageItemParser, [Market? market]) => _getPages(
+        '$_path?${_buildQuery({'market': market?.name})}',
         pageItemParser,
       );
 }
 
-mixin LibraryModifiable<T> on MeOperations<T> {
-  String get _errorMessage;
+///
+class LibraryMe extends _MeEndpointBase {
+  @override
+  String get _path => '${super._path}/library';
 
-  int get _idSizeConstraint => 50;
+  String get _errorMessage => 'No uri\'s were provided';
 
-  /// Save this content with given [id] for the current user.
+  int get _maxUriConstraint => 40;
+
+  LibraryMe(super.api);
+
+  /// Save this content with given [uri] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
-  Future<void> saveOne(String id) async => save([id]);
+  Future<void> saveOne(SpotifyUri uri) async => save([uri]);
 
-  /// Save this content with given [ids] for the current user.
+  /// Save this content with given [uris] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
   ///
-  /// **Note:** Only the 50 [ids] are allowed, otherwise throws [RangeError].
-  Future<void> save(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError(_errorMessage);
-    }
-    if (ids.length > _idSizeConstraint) {
-      throw RangeError.range(
-        ids.length,
-        0,
-        _idSizeConstraint,
-        'ids',
-        'Maximum of $_idSizeConstraint IDs allowed per request',
-      );
-    }
-    await _api._put('$_path?${_buildQuery({'ids': ids.join(',')})}');
+  /// **Note:** Only the 40 [uris] are allowed, otherwise throws [RangeError].
+  Future<void> save(List<SpotifyUri> uris) async {
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
+    await _api._put('$_path?${_buildQuery({'uris': uris.join(',')})}');
   }
 
-  /// Check if the passed [id] are saved by current user.
+  /// Check if the passed [uri] are saved by current user.
   /// Returns `true` or `false` whether the content has been saved.
   ///
   /// Requires [LibraryAuthorizationScope.read] scope.
-  Future<bool> containsOne(String id) async => (await contains([id]))[id] ?? false;
+  Future<bool> containsOne(SpotifyUri uri) async => (await contains([uri]))[uri] ?? false;
 
-  /// Check if passed [ids] are saved by current user.
-  /// Returns the same list of [ids] mapped with the response whether it has been saved or not.
+  /// Check if passed [uris] are saved by current user.
+  /// Returns the same list of [uris] mapped with the response whether it has been saved or not.
   ///
   /// Requires [LibraryAuthorizationScope.read] scope.
-  /// **Note:** Only the 50 [ids] are allowed, otherwise throws [RangeError].
-  Future<Map<String, bool>> contains(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError(_errorMessage);
-    }
-    if (ids.length > _idSizeConstraint) {
-      throw RangeError.range(
-        ids.length,
-        0,
-        _idSizeConstraint,
-        'ids',
-        'Maximum of $_idSizeConstraint IDs allowed per request',
-      );
-    }
-    final query = _buildQuery({'ids': ids.join(',')});
+  /// **Note:** Only the 40 [uris] are allowed, otherwise throws [RangeError].
+  Future<Map<SpotifyUri, bool>> contains(List<SpotifyUri> uris) async {
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
+    final query = _buildQuery({'uris': uris.join(',')});
     final jsonString = await _api._get('$_path/contains?$query');
     final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
 
-    return Map.fromIterables(ids, response);
+    return Map.fromIterables(uris, response);
   }
 
-  /// Removes content with given [id] for the current user.
+  /// Removes content with given [uri] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
-  Future<void> removeOne(String id, [Market? market]) async => remove([id]);
+  Future<void> removeOne(SpotifyUri uri) async => remove([uri]);
 
-  /// Removes content with given list of [ids] for the current user.
+  /// Removes content with given list of [uri] for the current user.
   ///
   /// Requires the [LibraryAuthorizationScope.modify] scope.
-  Future<void> remove(List<String> ids) async => _removeImpl(ids);
+  Future<void> remove(List<SpotifyUri> uris) async {
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
+    await _api._delete('$_path?${_buildQuery({'uris': uris.join(',')})}');
+  }
 
-  Future<void> _removeImpl(List<String> ids, [Market? market]) async {
-    if (ids.isEmpty) {
+  void _ensureListContainsElements<T>(List<T> elements) {
+    if (elements.isEmpty) {
       throw ArgumentError(_errorMessage);
     }
-    if (ids.length > _idSizeConstraint) {
+  }
+
+  void _ensureListWithinSizeContrants<T>(List<T> elements, String name) {
+    if (elements.length > _maxUriConstraint) {
       throw RangeError.range(
-        ids.length,
+        elements.length,
         0,
-        _idSizeConstraint,
-        'ids',
-        'Maximum of $_idSizeConstraint IDs allowed per request',
+        _maxUriConstraint,
+        name,
+        'Maximum of $_maxUriConstraint Uri\'s allowed per request',
       );
     }
-    await _api._delete('$_path?${_buildQuery({
-          'ids': ids.join(','),
-          'market': market?.name,
-        })}');
   }
-}
 
-mixin MarketRemovable<T> on MeOperations<T>, LibraryModifiable<T> {
-  @override
-  Future<void> removeOne(String id, [Market? market]) async => remove([id], market);
-
-  /// Removes content with given [ids] for the current user and an optional [market] ISO 3166-1 alpha-2 country code.
-  /// If [market] is specified, only content that is available in that market will be returned.
-  ///
-  /// Requires the [LibraryAuthorizationScope.modify] scope.
-  @override
-  Future<void> remove(List<String> ids, [Market? market]) async => _removeImpl(ids, market);
+  void _ensureValidUris(List<SpotifyUri> uris) {
+    final valid = uris.map((uri) => isValidUri(uri)).reduce((b1, b2) => b1 && b2);
+    if (!valid) {
+      throw ArgumentError('Invalid uris found');
+    }
+  }
 }
 
 /// Endpoint for authenticated user's shows `v1/me/shows`
-class ShowsMe extends MeOperations<Show> with LibraryModifiable, MarketRemovable {
+class ShowsMe extends SavedMe<Show> {
+  ShowsMe._(super.api);
+
   @override
   String get _path => '${super._path}/shows';
 
-  @override
-  String get _errorMessage => 'No show id\'s were provided';
-
-  ShowsMe._(super.api);
-
+  /// gets current user's shows albums in [Pages]
   @override
   Pages<Show> saved() => _savedImpl((json) => Show.fromJson(json['show']));
 }
 
 /// Endpoint for authenticated user's episodes `v1/me/episodes`
-class EpisodesMe extends MeOperations<EpisodeFull> with LibraryModifiable {
+class EpisodesMe extends SavedMe<EpisodeFull> {
   @override
   String get _path => '${super._path}/episodes';
 
-  @override
-  String get _errorMessage => 'No episode id\'s were provided';
-
   EpisodesMe._(super.api);
 
-  /// Returns the current user's saved episodes. Requires the
-  /// [LibraryAuthorizationScope.read] scope.
+  /// Returns the current user's saved episodes.
+  ///
+  /// Requires the [LibraryAuthorizationScope.read] scope.
   @override
-  Pages<EpisodeFull> saved() => _savedImpl(
+  Pages<EpisodeFull> saved([Market? market]) => _savedImpl(
         (json) => EpisodeFull.fromJson(json['episode']),
+        market,
       );
 }
 
 /// Endpoint for authenticated user's albums `v1/me/albums`
-class AlbumsMe extends MeOperations<AlbumSimple> with LibraryModifiable {
+class AlbumsMe extends SavedMe<AlbumSimple> {
   @override
   String get _path => '${super._path}/albums';
 
-  @override
-  String get _errorMessage => 'No album id\'s were provided';
-
-  @override
-  int get _idSizeConstraint => 20;
-
   AlbumsMe._(super.api);
 
-  /// gets current user's saved albums in pages
+  /// gets current user's saved albums in [Pages]
   @override
-  Pages<AlbumSimple> saved() => _savedImpl(
+  Pages<AlbumSimple> saved([Market? market]) => _savedImpl(
         (json) => Album.fromJson(json['album']),
+        market,
       );
 }
 
 /// Endpoint for authenticated user's tracks `v1/me/tracks`
-class TracksMe extends MeOperations<TrackSaved> with LibraryModifiable {
+class TracksMe extends SavedMe<TrackSaved> {
   @override
   String get _path => '${super._path}/tracks';
 
-  @override
-  String get _errorMessage => 'No show id\'s were provided';
-
   TracksMe._(super.api);
 
+  /// gets current user's saved tracks in [Pages]
   @override
-  Pages<TrackSaved> saved() => _savedImpl(
+  Pages<TrackSaved> saved([Market? market]) => _savedImpl(
         (json) => TrackSaved.fromJson(json),
+        market,
       );
 }
 
 /// Endpoint for authenticated user's audiobooks `v1/me/audiobooks`
-class AudiobooksMe extends MeOperations<AudiobookSaved> with LibraryModifiable {
+class AudiobooksMe extends SavedMe<AudiobookSaved> {
   @override
   String get _path => '${super._path}/audiobooks';
-
-  @override
-  String get _errorMessage => 'No audiobook id\'s were provided';
 
   AudiobooksMe._(super.api);
 
   /// Get a list of the audiobooks saved in the current Spotify user's 'Your
   /// Music' library.
   ///
-  /// Requires the `user-library-read` scope.
+  /// Requires the [LibraryAuthorizationScope.read] scope.
   @override
   Pages<AudiobookSaved> saved() => _savedImpl((json) => AudiobookSaved.fromJson(json));
 }
 
 /// Endpoint for authenticated user's playlists `v1/me/playlists`
-class PlaylistsMe extends MeOperations<PlaylistSimple> {
+class PlaylistsMe extends SavedMe<PlaylistSimple> {
   PlaylistsMe._(super.api);
 
   @override

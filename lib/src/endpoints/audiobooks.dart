@@ -33,23 +33,6 @@ class Audiobooks extends EndpointPaging {
     return Audiobook.fromJson(map);
   }
 
-  /// Get Spotify catalog information for several audiobooks identified by
-  /// their Spotify IDs.
-  ///
-  /// Audiobooks are only available within the US, UK, Canada, Ireland, New
-  /// Zealand and Australia markets.
-  ///
-  /// [audiobookIds] : A list of the Spotify IDs for the audiobooks. Maximum: 50 IDs
-  /// [market] : An ISO 3166-1 alpha-2 country code. If a country code is
-  /// specified, only content that is available in that market will be returned
-  Future<Iterable<Audiobook>> list(List<String> audiobookIds, {Market? market}) async => _listWithIds(
-        path: _path,
-        ids: audiobookIds,
-        jsonKey: 'audiobooks',
-        fromJson: Audiobook.fromJson,
-        optionalParams: {'market': market?.name},
-      );
-
   /// Get Spotify catalog information about an audiobook's chapters.
   ///
   /// Audiobooks are only available within the US, UK, Canada, Ireland, New
