@@ -1176,6 +1176,7 @@ Map<String, dynamic> _$TracksLinkToJson(TracksLink instance) => <String, dynamic
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User()
+  ..accountId = json['account_id'] as String?
   ..birthdate = json['birthdate'] as String?
   ..country = $enumDecodeNullable(_$MarketEnumMap, json['country'])
   ..displayName = json['display_name'] as String?
@@ -1189,6 +1190,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User()
   ..uri = json['uri'] as String?;
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'account_id': instance.accountId,
       'birthdate': instance.birthdate,
       'country': _$MarketEnumMap[instance.country],
       'display_name': instance.displayName,

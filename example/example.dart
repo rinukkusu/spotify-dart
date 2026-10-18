@@ -41,18 +41,6 @@ void main() async {
     print(track.name);
   }
 
-  print('\nFeatured Playlist:');
-  final featuredPlaylists = await spotify.playlists.featured.all();
-  for (final playlist in featuredPlaylists) {
-    print(playlist.name);
-  }
-
-  print('\nUser\'s playlists:');
-  final usersPlaylists = await spotify.playlists.getUsersPlaylists('superinteressante').all();
-  for (final playlist in usersPlaylists) {
-    print(playlist.name);
-  }
-
   print("\nSearching for 'Metallica':");
   final search = await spotify.search.get('metallica').first(2);
 

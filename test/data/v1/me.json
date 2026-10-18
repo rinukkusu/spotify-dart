@@ -1,0 +1,23 @@
+{
+  "account_id": "67676767",
+  "country": "US",
+  "display_name": "asdf",
+  "email": "asdfi@gas.df",
+  "explicit_content": {
+    "filter_enabled": false,
+    "filter_locked": false
+  },
+  "external_urls": {
+    "spotify": "https://open.spotify.com/user/asdf"
+  },
+  "followers": {
+    "href": null,
+    "total": 1
+  },
+  "href": "https://api.spotify.com/v1/users/asdf",
+  "id": "asdf",
+  "images": [],
+  "product": "premium",
+  "type": "user",
+  "uri": "spotify:user:asdf"
+}
