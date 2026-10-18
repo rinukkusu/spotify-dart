@@ -55,6 +55,7 @@ abstract class EndpointPaging extends EndpointBase {
         maxLimit,
       );
 
+  // ignore: unused_element
   BundledPages _getBundledPages<T>(
     String path,
     Map<String, ParserFunction<T>> pageItemParsers, [

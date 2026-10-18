@@ -61,7 +61,7 @@ Future main() async {
       await search.first(2);
     });
 
-    test('invalid first', () async {
+    test('first exceeds maxLimit', () async {
       final search = spotify.search.get('metallica');
       search.defaultLimit = 10;
       expect(() => search.first(12), throwsArgumentError);
