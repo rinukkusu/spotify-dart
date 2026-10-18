@@ -22,12 +22,6 @@ class Track extends Object implements TrackSimple {
   @override
   List<Artist>? artists;
 
-  /// A list of the countries in which the track can be played, identified by
-  /// their ISO 3166-1 alpha-2 code.
-  @JsonKey(name: 'available_markets')
-  @override
-  List<Market>? availableMarkets;
-
   /// The disc number
   /// (usually `1` unless the album consists of more than one disc)
   @JsonKey(name: 'disc_number', fromJson: convertToIntIfDoubleValue)
@@ -72,34 +66,9 @@ class Track extends Object implements TrackSimple {
   @override
   bool? isPlayable;
 
-  /// Part of the response when Track Relinking is applied and is only part of
-  /// the response if the track linking, in fact, exists. The requested track
-  /// has been replaced with a different track. The track in the linked_from
-  /// object contains information about the originally requested track.
-  @JsonKey(name: 'linked_from')
-  @override
-  TrackLink? linkedFrom;
-
   /// The name of the track.
   @override
   String? name;
-
-  /// The popularity of the track. The value will be between 0 and 100, with 100
-  /// being the most popular.
-  ///
-  /// The popularity of a track is a value between 0 and 100, with 100 being the
-  /// most popular. The popularity is calculated by algorithm and is based, in
-  /// the most part, on the total number of plays the track has had and how
-  /// recent those plays are.
-  ///
-  /// Generally speaking, songs that are being played a lot now will have a
-  /// higher popularity than songs that were played a lot in the past. Duplicate
-  /// tracks (e.g. the same track from a single and an album) are rated
-  /// independently. Artist and album popularity is derived mathematically from
-  /// track popularity. Note that the popularity value may lag actual popularity
-  /// by a few days: the value is not updated in real time.
-  @JsonKey(fromJson: convertToIntIfDoubleValue)
-  int? popularity;
 
   /// A URL to a 30 second preview (MP3 format) of the track. `null` if not
   /// available.
@@ -139,11 +108,6 @@ class TrackSimple extends Object {
   /// in [href] to more detailed information about the artist.
   List<Artist>? artists;
 
-  /// A list of the countries in which the track can be played, identified by
-  /// their ISO 3166-1 alpha-2 code.
-  @JsonKey(name: 'available_markets')
-  List<Market>? availableMarkets;
-
   /// The disc number
   /// (usually `1` unless the album consists of more than one disc)
   @JsonKey(name: 'disc_number', fromJson: convertToIntIfDoubleValue)
@@ -175,13 +139,6 @@ class TrackSimple extends Object {
   /// is playable in the given market. Otherwise false.
   @JsonKey(name: 'is_playable')
   bool? isPlayable;
-
-  /// Part of the response when Track Relinking is applied and is only part of
-  /// the response if the track linking, in fact, exists. The requested track
-  /// has been replaced with a different track. The track in the linked_from
-  /// object contains information about the originally requested track.
-  @JsonKey(name: 'linked_from')
-  TrackLink? linkedFrom;
 
   /// The name of the track.
   String? name;
@@ -218,31 +175,6 @@ class TrackSaved extends Object {
 
   /// Information about the track.
   Track? track;
-}
-
-@JsonSerializable()
-class TrackLink extends Object {
-  TrackLink();
-
-  factory TrackLink.fromJson(Map<String, dynamic> json) => _$TrackLinkFromJson(json);
-
-  Map<String, dynamic> toJson() => _$TrackLinkToJson(this);
-
-  /// Known external URLs for this track.
-  @JsonKey(name: 'external_urls')
-  Map<String, String>? externalUrls;
-
-  /// A link to the Web API endpoint providing full details of the track.
-  String? href;
-
-  /// The Spotify ID for the track.
-  String? id;
-
-  /// The object type: "track".
-  String? type;
-
-  /// The Spotify URI for the track.
-  String? uri;
 }
 
 @JsonSerializable()

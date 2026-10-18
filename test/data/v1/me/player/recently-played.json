@@ -75,7 +75,6 @@
             "type": "album",
             "uri": "spotify:album:79dL7FLiJFOO0EoehUHQBv"
           },
-          "popularity": 75,
           "external_ids": {
             "isrc": "GBAHT1500338"
           }
@@ -165,7 +164,6 @@
             "type": "album",
             "uri": "spotify:album:79dL7FLiJFOO0EoehUHQBv"
           },
-          "popularity": 82,
           "external_ids": {
             "isrc": "GBAHT1500325"
           }

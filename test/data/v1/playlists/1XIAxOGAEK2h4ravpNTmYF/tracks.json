@@ -94,12 +94,10 @@
         "href": "string",
         "id": "track-1",
         "is_playable": false,
-        "linked_from": {},
         "restrictions": {
           "reason": "string"
         },
         "name": "string",
-        "popularity": 0,
         "preview_url": "string",
         "track_number": 0,
         "type": "track",
@@ -198,12 +196,10 @@
         "href": "string",
         "id": "track-3",
         "is_playable": false,
-        "linked_from": {},
         "restrictions": {
           "reason": "string"
         },
         "name": "string",
-        "popularity": 0,
         "preview_url": "string",
         "track_number": 0,
         "type": "track",

@@ -126,12 +126,10 @@
     "href": "string",
     "id": "string",
     "is_playable": true,
-    "linked_from": {},
     "restrictions": {
       "reason": "string"
     },
     "name": "As I Am",
-    "popularity": 0,
     "preview_url": "string",
     "track_number": 1,
     "type": "track",
