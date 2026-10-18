@@ -25,7 +25,6 @@ Future main() async {
       expect(audiobook.narrators!.length, 1);
       expect(audiobook.narrators!.first.name, 'Stephen Fry');
       expect(audiobook.totalChapters, 25);
-      expect(audiobook.publisher, 'Audible Studios');
       expect(audiobook.edition, 'Unabridged');
       expect(audiobook.explicit, false);
       expect(audiobook.description, 'A thrilling audiobook adventure');

@@ -25,7 +25,6 @@ Future main() async {
 
       expect(firstItem.audiobook!.totalChapters, 12);
       expect(firstItem.audiobook!.name, 'Saved Audiobook');
-      expect(firstItem.audiobook!.publisher, 'Saved Publisher');
       expect(firstItem.audiobook!.explicit, false);
       expect(firstItem.audiobook!.edition, 'Unabridged');
       expect(firstItem.audiobook!.uri, AudiobookUri('savedbook').toString());

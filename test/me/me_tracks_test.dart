@@ -22,7 +22,6 @@ Future main() async {
       expect(firstItem.track!.artists!.first.id, '2hl0xAkS2AIRAu23TVMBG1');
 
       expect(firstItem.track!.duration, const Duration(milliseconds: 323000));
-      expect(firstItem.track!.popularity, 76);
       expect(firstItem.track!.trackNumber, 1);
       expect(firstItem.track!.isPlayable, true);
       expect(firstItem.track!.explicit, false);

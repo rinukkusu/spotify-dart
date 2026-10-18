@@ -72,15 +72,6 @@
           "id" : "7soJgKhQTO8hLP2JPRkL5O",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/37R0bQOQj5a7DOqh1TGzvB"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/37R0bQOQj5a7DOqh1TGzvB",
-            "id" : "37R0bQOQj5a7DOqh1TGzvB",
-            "type" : "track",
-            "uri" : "spotify:track:37R0bQOQj5a7DOqh1TGzvB"
-          },
           "name" : "One Call Away",
           "preview_url" : "https://p.scdn.co/mp3-preview/8e6aa8f4eeef389ece3f0a173f7c2aad4d21e84d?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 1,
@@ -107,15 +98,6 @@
           "id" : "6GBMbvX7sqyOxT5wWK4hgN",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/3qonjOrhFCfTnaaMruHzxW"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/3qonjOrhFCfTnaaMruHzxW",
-            "id" : "3qonjOrhFCfTnaaMruHzxW",
-            "type" : "track",
-            "uri" : "spotify:track:3qonjOrhFCfTnaaMruHzxW"
-          },
           "name" : "Dangerously",
           "preview_url" : "https://p.scdn.co/mp3-preview/b39780ce76a7580e98bcdbf999b18029d03287b5?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 2,
@@ -151,15 +133,6 @@
           "id" : "7rl1z4j7MurMDnn9rHh4M2",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/3rKYiySCDMUKTw5kGVVhaa"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/3rKYiySCDMUKTw5kGVVhaa",
-            "id" : "3rKYiySCDMUKTw5kGVVhaa",
-            "type" : "track",
-            "uri" : "spotify:track:3rKYiySCDMUKTw5kGVVhaa"
-          },
           "name" : "Marvin Gaye (feat. Meghan Trainor)",
           "preview_url" : "https://p.scdn.co/mp3-preview/40a13ee49941d463c8155fce3a0ff15c8080991d?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 3,
@@ -186,15 +159,6 @@
           "id" : "6qHPJleQOdQDEZvbxjY7jR",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/5QTYKyXxIJaLupn1J6W9QU"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/5QTYKyXxIJaLupn1J6W9QU",
-            "id" : "5QTYKyXxIJaLupn1J6W9QU",
-            "type" : "track",
-            "uri" : "spotify:track:5QTYKyXxIJaLupn1J6W9QU"
-          },
           "name" : "Losing My Mind",
           "preview_url" : "https://p.scdn.co/mp3-preview/4d02656d809c39025a41bf2372e65efaabb670a9?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 4,
@@ -230,15 +194,6 @@
           "id" : "37FXw5QGFN7uwwsLy8uAc0",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/06KyNuuMOX1ROXRhj787tj"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/06KyNuuMOX1ROXRhj787tj",
-            "id" : "06KyNuuMOX1ROXRhj787tj",
-            "type" : "track",
-            "uri" : "spotify:track:06KyNuuMOX1ROXRhj787tj"
-          },
           "name" : "We Don't Talk Anymore (feat. Selena Gomez)",
           "preview_url" : "https://p.scdn.co/mp3-preview/0b61b7c36bd426086481769a4bb2e08cc417a01b?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 5,
@@ -265,15 +220,6 @@
           "id" : "1RdykyqZss4snJH9e58CQJ",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/2o5YDkVrId7JeumduZJ6NL"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/2o5YDkVrId7JeumduZJ6NL",
-            "id" : "2o5YDkVrId7JeumduZJ6NL",
-            "type" : "track",
-            "uri" : "spotify:track:2o5YDkVrId7JeumduZJ6NL"
-          },
           "name" : "My Gospel",
           "preview_url" : "https://p.scdn.co/mp3-preview/24845d66bf8589d53a370d9b649902f06a11dbaa?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 6,
@@ -300,15 +246,6 @@
           "id" : "2Y1LWNrO3Ls6tK9LZVehXk",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/51cJFmn6j0LUaxef2lQ3dz"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/51cJFmn6j0LUaxef2lQ3dz",
-            "id" : "51cJFmn6j0LUaxef2lQ3dz",
-            "type" : "track",
-            "uri" : "spotify:track:51cJFmn6j0LUaxef2lQ3dz"
-          },
           "name" : "Up All Night",
           "preview_url" : "https://p.scdn.co/mp3-preview/5ac5a4ded0202ece0ed396dddd5c2d1372175c09?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 7,
@@ -335,15 +272,6 @@
           "id" : "4KVzPTFZXByIdBBH9dXiLT",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/197CUwGpX84IMI7aWB1Cjk"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/197CUwGpX84IMI7aWB1Cjk",
-            "id" : "197CUwGpX84IMI7aWB1Cjk",
-            "type" : "track",
-            "uri" : "spotify:track:197CUwGpX84IMI7aWB1Cjk"
-          },
           "name" : "Left Right Left",
           "preview_url" : "https://p.scdn.co/mp3-preview/8846537423114c803da25ef6d4701c9fb210f868?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 8,
@@ -370,15 +298,6 @@
           "id" : "73E8dgeUdDu8iaZbQv1Fmk",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/1hlFygofCSO8PfIrAougLY"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/1hlFygofCSO8PfIrAougLY",
-            "id" : "1hlFygofCSO8PfIrAougLY",
-            "type" : "track",
-            "uri" : "spotify:track:1hlFygofCSO8PfIrAougLY"
-          },
           "name" : "Then There's You",
           "preview_url" : "https://p.scdn.co/mp3-preview/a737aafc4fc7c9f3935fa9014754dd1866020e08?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 9,
@@ -405,15 +324,6 @@
           "id" : "5uAeahijdsH6Pu4es1OVCt",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/60wzbPwV6EHfBTAf95rb9n"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/60wzbPwV6EHfBTAf95rb9n",
-            "id" : "60wzbPwV6EHfBTAf95rb9n",
-            "type" : "track",
-            "uri" : "spotify:track:60wzbPwV6EHfBTAf95rb9n"
-          },
           "name" : "Suffer",
           "preview_url" : "https://p.scdn.co/mp3-preview/f829202f3ee8ebb1ce978ca76e0d9dee55b62fe6?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 10,
@@ -449,15 +359,6 @@
           "id" : "5T5X1awq0Tzg0NgQ4bSVAE",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/2LGgnbDYSeeMhuZGWwLQPL"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/2LGgnbDYSeeMhuZGWwLQPL",
-            "id" : "2LGgnbDYSeeMhuZGWwLQPL",
-            "type" : "track",
-            "uri" : "spotify:track:2LGgnbDYSeeMhuZGWwLQPL"
-          },
           "name" : "As You Are (feat. Shy Carter)",
           "preview_url" : "https://p.scdn.co/mp3-preview/d7bf68ca971e18238587b8b5e60e4425e5a4f04e?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 11,
@@ -484,15 +385,6 @@
           "id" : "1KoSVcMX0QEQSvqxTemRnR",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/6wFwJpXsdvOrPzNwg8HfDj"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/6wFwJpXsdvOrPzNwg8HfDj",
-            "id" : "6wFwJpXsdvOrPzNwg8HfDj",
-            "type" : "track",
-            "uri" : "spotify:track:6wFwJpXsdvOrPzNwg8HfDj"
-          },
           "name" : "Some Type of Love",
           "preview_url" : "https://p.scdn.co/mp3-preview/86b1414fb5841e0c5570af874fbe92898f1b4aaa?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 12,
@@ -528,15 +420,6 @@
           "id" : "2JzZzZUQj3Qff7wapcbKjc",
           "is_local" : false,
           "is_playable" : true,
-          "linked_from" : {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/track/66CFbqJScx6zRieGllITcs"
-            },
-            "href" : "https://api.spotify.com/v1/tracks/66CFbqJScx6zRieGllITcs",
-            "id" : "66CFbqJScx6zRieGllITcs",
-            "type" : "track",
-            "uri" : "spotify:track:66CFbqJScx6zRieGllITcs"
-          },
           "name" : "See You Again (feat. Charlie Puth)",
           "preview_url" : "https://p.scdn.co/mp3-preview/5e12e18dbe096e7168a73675fd4e9892029fafe5?cid=774b29d4f13844c495f206cafdad9c86",
           "track_number" : 1,

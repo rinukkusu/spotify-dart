@@ -44,10 +44,6 @@ class AudiobookSimple extends Object {
   /// The author(s) for the audiobook
   List<Author>? authors;
 
-  /// A list of the countries in which the audiobook can be played
-  @JsonKey(name: 'available_markets')
-  List<Market>? availableMarkets;
-
   /// The copyright statements of the audiobook
   List<Copyright>? copyrights;
 
@@ -90,9 +86,6 @@ class AudiobookSimple extends Object {
 
   /// The narrator(s) for the audiobook
   List<Narrator>? narrators;
-
-  /// The publisher of the audiobook
-  String? publisher;
 
   /// The number of chapters in this audiobook
   @JsonKey(name: 'total_chapters', fromJson: convertToIntIfDoubleValue)

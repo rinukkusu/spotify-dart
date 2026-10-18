@@ -21,11 +21,6 @@ class Chapter extends Object implements ChapterSimple {
   @override
   String? audioPreviewUrl;
 
-  /// A list of the countries in which the chapter can be played
-  @JsonKey(name: 'available_markets')
-  @override
-  List<Market>? availableMarkets;
-
   /// The number of the chapter
   @JsonKey(name: 'chapter_number', fromJson: convertToIntIfDoubleValue)
   @override
@@ -127,10 +122,6 @@ class ChapterSimple extends Object {
   /// A URL to a 30 second preview (MP3 format) of the chapter
   @JsonKey(name: 'audio_preview_url')
   String? audioPreviewUrl;
-
-  /// A list of the countries in which the chapter can be played
-  @JsonKey(name: 'available_markets')
-  List<Market>? availableMarkets;
 
   /// The number of the chapter
   @JsonKey(name: 'chapter_number', fromJson: convertToIntIfDoubleValue)
