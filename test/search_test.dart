@@ -14,7 +14,15 @@ Future main() async {
   group('Search', () {
     test('get', () async {
       final searchResult = await spotify.search.get('metallica').first();
-      expect(searchResult.length, 2);
+      expect(searchResult.length, 3);
+    });
+
+    test('get audiobooks', () async {
+      final searchResult = await spotify.search.get('metallica', types: [SearchType.audiobook]).first();
+      final audiobooks = searchResult.firstWhere((page) => page.items?.first is AudiobookSimple);
+      final audiobook = audiobooks.items!.first as AudiobookSimple;
+      expect(audiobook.id, '7iHfbu1YPACw6oZPAFJtqe');
+      expect(audiobook.name, 'Sample Audiobook');
     });
 
     test('getError', () async {
@@ -29,6 +37,48 @@ Future main() async {
       expect(ex, isNotNull);
       expect(ex.status, 401);
       expect(ex.message, 'Bad Request');
+    });
+
+    test('set defaultLimit is in url', () async {
+      spotify.interceptor = (String method, String url, Map<String, String>? headers, [String? body]) {
+        expect(method, 'GET');
+        final uri = Uri.parse(url);
+        expect(uri.queryParameters['limit'], '1');
+      };
+      final search = spotify.search.get('metallica');
+      search.defaultLimit = 1;
+      await search.first();
+    });
+
+    test('override defaultLimit in first()', () async {
+      spotify.interceptor = (String method, String url, Map<String, String>? headers, [String? body]) {
+        expect(method, 'GET');
+        final uri = Uri.parse(url);
+        expect(uri.queryParameters['limit'], '2');
+      };
+      final search = spotify.search.get('metallica');
+      search.defaultLimit = 1;
+      await search.first(2);
+    });
+
+    test('first exceeds maxLimit', () async {
+      final search = spotify.search.get('metallica');
+      search.defaultLimit = 10;
+      expect(() => search.first(12), throwsArgumentError);
+    });
+
+    test('getPage in boundary', () async {
+      final search = spotify.search.get('metallica');
+      expect(await search.getPage(10), isA<List<Page>>());
+    });
+
+    test('defaultLimit boundaries exceeded', () async {
+      final search = spotify.search.get('metallica');
+      expect(() => search.defaultLimit = 15, throwsRangeError);
+    });
+
+    test('limit boundaries exceeded', () async {
+      await expectLater(spotify.search.get('metallica').getPage(100), throwsArgumentError);
     });
   });
 }

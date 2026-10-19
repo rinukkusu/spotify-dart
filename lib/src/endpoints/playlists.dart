@@ -6,7 +6,8 @@ part of '../../spotify.dart';
 /// Endpoint of playlists
 class Playlists extends EndpointPaging {
   @override
-  String get _path => 'v1/browse';
+  // ignore: unused_element
+  String get _path => 'v1/playlists';
 
   Playlists(super.api);
 
@@ -16,90 +17,17 @@ class Playlists extends EndpointPaging {
     );
   }
 
-  /// Returns the featuerd playlists
-  Pages<PlaylistSimple> get featured => _getPages(
-        '$_path/featured-playlists',
-        (json) => PlaylistSimple.fromJson(json),
-        'playlists',
-        (json) => PlaylistsFeatured.fromJson(json),
-      );
-
-  Pages<PlaylistSimple> get me {
-    return _getPages(
-      'v1/me/playlists',
-      (json) => PlaylistSimple.fromJson(json),
-    );
-  }
-
-  /// Returns a playlist of a user with [userId]
-  Pages<PlaylistSimple> getUsersPlaylists(
-    String userId, [
-    int limit = defaultLimit,
-    int offset = 0,
-  ]) {
-    if (userId.isEmpty) {
-      throw ArgumentError('UserId cannot be empty');
-    }
-    return _getPages(
-      'v1/users/$userId/playlists',
-      (json) => PlaylistSimple.fromJson(json),
-    );
-  }
-
-  /// Returns `track`s from a given spotify [playlistId].
-  @Deprecated('Use `getPlaylistTracks` instead')
-  Pages<Track> getTracksByPlaylistId(String playlistId) {
-    // restricting the return items to `track`
-    final query = _buildQuery({'additional_types': 'track'});
-    return _getPages(
-      'v1/playlists/$playlistId/tracks?$query',
-      (json) => Track.fromJson(json['track']),
-      null,
-      null,
-      (json) => json['track'] != null,
-    );
-  }
-
   /// Returns [PlaylistTrack]s for a given [playlistId].
   Pages<PlaylistTrack> getPlaylistTracks(String playlistId) {
     // restricting the return items to `track`
     final query = _buildQuery({'additional_types': 'track'});
     return _getPages(
-      'v1/playlists/$playlistId/tracks?$query',
+      'v1/playlists/$playlistId/items?$query',
       (json) => PlaylistTrack.fromJson(json),
       null,
       null,
-      (json) => json['track'] != null,
+      (json) => json['item'] != null,
     );
-  }
-
-  /// [userId] - the Spotify user ID
-  ///
-  /// [playlistName] - the name of the new playlist
-  ///
-  /// [public] - Defaults to `true`. If `true` the playlist will be public,
-  /// if `false` it will be private.
-  ///
-  /// [collaborative] - Defaults to `false`. If `true` the playlist will
-  /// be collaborative.
-  ///
-  /// [description] - the description of the new playlist
-  Future<Playlist> createPlaylist(
-    String userId,
-    String playlistName, {
-    bool? public,
-    bool? collaborative,
-    String? description,
-  }) async {
-    final url = 'v1/users/$userId/playlists';
-    final json = <String, dynamic>{'name': playlistName};
-
-    if (public != null) json['public'] = public;
-    if (collaborative != null) json['collaborative'] = collaborative;
-    if (description != null) json['description'] = description;
-
-    final playlistJson = await _api._post(url, jsonEncode(json));
-    return Playlist.fromJson(jsonDecode(playlistJson));
   }
 
   /// [playlistId] - the ID of the playlist to update
@@ -130,20 +58,6 @@ class Playlists extends EndpointPaging {
     await _api._put(url, jsonEncode(json));
   }
 
-  /// Removes a playlist with [playlistId]
-  ///
-  /// Since there is actually no endpoint for removing a playlist,
-  /// the spotify [documentation](https://developer.spotify.com/documentation/general/guides/working-with-playlists/#following-and-unfollowing-a-playlist)
-  /// says this:
-  /// > We have no endpoint for deleting a playlist in the Web API;
-  /// the notion of deleting a playlist is not relevant within the Spotify’s
-  /// playlist system. Even if you are the playlist’s owner and you
-  /// choose to manually remove it from your own list of playlists,
-  /// you are simply unfollowing it. Although this behavior may sound strange,
-  /// it means that other users who are already following the playlist
-  /// can keep enjoying it.
-  Future<void> removePlaylist(String playlistId) async => unfollowPlaylist(playlistId);
-
   /// [playlistId] - the ID of the playlist to update
   ///
   /// [imageData] - BASE64 encoded JPEG image data
@@ -160,7 +74,7 @@ class Playlists extends EndpointPaging {
     String playlistId, {
     int position = -1,
   }) async {
-    var url = 'v1/playlists/$playlistId/tracks';
+    var url = 'v1/playlists/$playlistId/items';
 
     if (position >= 0) {
       url = '$url?position=$position';
@@ -184,7 +98,7 @@ class Playlists extends EndpointPaging {
     if (uris.isEmpty) {
       throw ArgumentError('No uris provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
+    final url = 'v1/playlists/$playlistId/items';
     await _api._post(url, jsonEncode({'uris': uris}));
   }
 
@@ -203,14 +117,14 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
-    final track = <String, dynamic>{'uri': trackUri};
+    final url = 'v1/playlists/$playlistId/items';
+    final item = <String, dynamic>{'uri': trackUri};
     if (positions != null) {
-      track['positions'] = positions;
+      item['positions'] = positions;
     }
 
     final body = jsonEncode({
-      'tracks': [track],
+      'items': [item],
     });
     await _api._delete(url, body);
   }
@@ -226,11 +140,11 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final url = 'v1/playlists/$playlistId/tracks';
-    final tracks = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
+    final url = 'v1/playlists/$playlistId/items';
+    final items = trackUris.map((uri) => <String, dynamic>{'uri': uri}).toList();
 
     final body = jsonEncode({
-      'tracks': tracks,
+      'items': items,
     });
     await _api._delete(url, body);
   }
@@ -305,84 +219,7 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    return await _api._put('v1/playlists/$playlistId/tracks', body);
-  }
-
-  /// [country] - a country: an ISO 3166-1 alpha-2 country code. Provide this
-  /// parameter to ensure that the category exists for a particular country.
-  ///
-  /// [locale] - the desired language, consisting of an ISO 639-1 language code
-  /// and an ISO 3166-1 alpha-2 country code, joined by an underscore. For
-  /// example: es_MX, meaning "Spanish (Mexico)". Provide this parameter if you
-  /// want the category strings returned in a particular language. Note that,
-  /// if locale is not supplied, or if the specified language is not available,
-  /// the category strings returned will be in the Spotify default language
-  /// (American English).
-  ///
-  /// [categoryId] - the Spotify category ID for the category.
-  Pages<PlaylistSimple> getByCategoryId(
-    String categoryId, {
-    Market? country,
-    String? locale,
-  }) {
-    final query = _buildQuery({'country': country?.name, 'locale': locale});
-
-    return _getPages(
-      '$_path/categories/$categoryId/playlists?$query',
-      (json) => PlaylistSimple.fromJson(json),
-      'playlists',
-      (json) => PlaylistsFeatured.fromJson(json),
-    );
-  }
-
-  /// [playlistId] - the playlist ID
-  ///
-  /// [public] - Defaults to `true`. If `true` the playlist will be included
-  /// in user’s public playlists, if `false` it will remain private.
-  Future<void> followPlaylist(String playlistId, {bool public = true}) async {
-    final url = 'v1/playlists/$playlistId/followers';
-    final body = jsonEncode({'public': public});
-    await _api._put(url, body);
-  }
-
-  /// unfollow a certain private/public playlist
-  ///
-  /// it requires `playlist-modify-public` & `playlist-modify-private`
-  /// scopes
-  ///
-  /// [playlistId] - the playlist ID
-  Future<void> unfollowPlaylist(String playlistId) async {
-    final url = 'v1/playlists/$playlistId/followers';
-    await _api._delete(url);
-  }
-
-  /// check if a playlist is followed by provided users
-  /// [playlistId] - the playlist ID
-  /// [userIds] - the ids of the users
-  /// The output List of boolean maps to the order of provided userIds list
-  @Deprecated('Use [followedByUsers(playListId, userIds)] instead')
-  Future<List<bool>> followedBy(String playlistId, List<String> userIds) async {
-    return (await followedByUsers(playlistId, userIds)).values.toList();
-  }
-
-  /// check if a playlist is followed by provided users
-  /// [playlistId] - the playlist ID
-  /// [userIds] - the ids of the users
-  ///
-  /// Returns the list of [userIds] mapped with whether they are following or
-  /// not
-  Future<Map<String, bool>> followedByUsers(
-    String playlistId,
-    List<String> userIds,
-  ) async {
-    if (userIds.isEmpty) {
-      throw ArgumentError('No user id was provided for checking');
-    }
-    final jsonString = await _api._get(
-      'v1/playlists/$playlistId/followers/contains?ids=${userIds.join(",")}',
-    );
-    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return Map.fromIterables(userIds, list);
+    return await _api._put('v1/playlists/$playlistId/items', body);
   }
 
   /// Returns the cover images of [playlistId]

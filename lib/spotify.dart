@@ -3,13 +3,14 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:spotify/spotify.dart';
 import 'package:meta/meta.dart';
-import 'dart:developer';
 
 import 'src/models/_models.dart';
 
@@ -19,22 +20,17 @@ export 'src/models/_models.dart';
 part 'src/spotify_logger.dart';
 part 'src/endpoints/albums.dart';
 part 'src/endpoints/artists.dart';
-part 'src/endpoints/audio_analysis.dart';
-part 'src/endpoints/audio_features.dart';
-part 'src/endpoints/browse.dart';
-part 'src/endpoints/categories.dart';
+part 'src/endpoints/audiobooks.dart';
+part 'src/endpoints/chapters.dart';
 part 'src/endpoints/endpoint_base.dart';
 part 'src/endpoints/endpoint_paging.dart';
 part 'src/endpoints/episodes.dart';
-part 'src/endpoints/markets.dart';
 part 'src/endpoints/me.dart';
 part 'src/endpoints/player.dart';
 part 'src/endpoints/playlists.dart';
-part 'src/endpoints/recommendations.dart';
 part 'src/endpoints/search.dart';
 part 'src/endpoints/shows.dart';
 part 'src/endpoints/tracks.dart';
-part 'src/endpoints/users.dart';
 part 'src/spotify_api.dart';
 part 'src/spotify_base.dart';
 part 'src/spotify_credentials.dart';

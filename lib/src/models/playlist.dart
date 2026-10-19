@@ -3,8 +3,100 @@
 
 part of '_models.dart';
 
-class PlaylistBase<T> extends SpotifyContent {
-  /// `true` if the owner allows other users to modify the playlist.
+/// Json representation of a playlist
+@JsonSerializable()
+class Playlist extends Object implements PlaylistSimple {
+  Playlist();
+
+  factory Playlist.fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$PlaylistToJson(this);
+
+  /// true if the owner allows other users to modify the playlist.
+  @override
+  bool? collaborative;
+
+  /// The playlist description. Only returned for modified, verified playlists,
+  /// otherwise `null`.
+  @override
+  String? description;
+
+  /// Known external URLs for this playlist.
+  @JsonKey(name: 'external_urls')
+  @override
+  ExternalUrls? externalUrls;
+
+  /// Information about the followers of the playlist.
+  Followers? followers;
+
+  /// A link to the Web API endpoint providing full details of the playlist.
+  @override
+  String? href;
+
+  /// The Spotify ID for the playlist.
+  @override
+  String? id;
+
+  /// Images for the playlist. The array may be empty or contain up to three
+  /// images. The images are returned by size in descending order. See Working
+  /// with Playlists.
+  ///
+  /// Note: If returned, the source URL for the image (url) is temporary and
+  /// will expire in less than a day.
+  @override
+  List<Image>? images;
+
+  /// The name of the playlist.
+  @override
+  String? name;
+
+  /// The user who owns the playlist
+  @override
+  User? owner;
+
+  /// The playlist's public/private status: `true` the playlist is public,
+  /// `false` the playlist is private, null the playlist status is not relevant.
+  /// For more about public/private status, see Working with Playlists.
+  @override
+  bool? public;
+
+  /// The version identifier for the current playlist. Can be supplied in other
+  /// requests to target a specific playlist version
+  @JsonKey(name: 'snapshot_id')
+  @override
+  String? snapshotId;
+
+  /// Use [Playlist.items]
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  TracksLink? itemsLink;
+
+  /// The items (tracks, episodes) of the playlist.
+  ///
+  /// Only returned for playlists the current user owns or collaborates on,
+  /// otherwise `null`.
+  Paging<PlaylistTrack>? items;
+
+  /// The object type: "playlist"
+  @override
+  String? type;
+
+  /// The Spotify URI for the playlist.
+  @override
+  String? uri;
+}
+
+/// Json representation of a simplified playlist
+@JsonSerializable()
+class PlaylistSimple extends Object {
+  PlaylistSimple();
+
+  factory PlaylistSimple.fromJson(Map<String, dynamic> json) => _$PlaylistSimpleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlaylistSimpleToJson(this);
+
+  /// true if the owner allows other users to modify the playlist.
   bool? collaborative;
 
   /// The playlist description. Only returned for modified, verified playlists,
@@ -42,29 +134,17 @@ class PlaylistBase<T> extends SpotifyContent {
   @JsonKey(name: 'snapshot_id')
   String? snapshotId;
 
-  /// Information about the tracks of the playlist.
-  @JsonKey(name: 'tracks')
-  T? tracks;
-}
+  /// A collection containing a link (href) to the Web API endpoint where full
+  /// details of the playlist's items can be retrieved, along with the total
+  /// number of items in the playlist.
+  @JsonKey(name: 'items')
+  TracksLink? itemsLink;
 
-/// Json representation of a simplified playlist
-@JsonSerializable()
-class PlaylistSimple extends PlaylistBase<TracksLink> {
-  PlaylistSimple();
+  /// The object type: "playlist"
+  String? type;
 
-  factory PlaylistSimple.fromJson(Map<String, dynamic> json) => _$PlaylistSimpleFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PlaylistSimpleToJson(this);
-}
-
-/// Json representation of a playlist
-@JsonSerializable()
-class Playlist extends PlaylistBase<Paging<Track>> {
-  Playlist();
-
-  factory Playlist.fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PlaylistToJson(this);
+  /// The Spotify URI for the playlist.
+  String? uri;
 }
 
 /// Json representation of a featured playlist. Used as a wrapper object.
@@ -101,5 +181,5 @@ class PlaylistTrack extends Object {
   bool? isLocal;
 
   /// Information about the track
-  Track? track;
+  Track? item;
 }

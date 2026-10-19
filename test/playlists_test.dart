@@ -14,23 +14,6 @@ Future main() async {
   });
 
   group('Playlists', () {
-    test('getUsersPlaylists', () async {
-      final playlists = spotify.playlists.getUsersPlaylists('X123Y');
-      final firstPage = (await playlists.first());
-      expect(
-        firstPage.metadata.href,
-        'https://api.spotify.com/v1/users/superinteressante/playlists?offset=0&limit=20',
-      );
-      final items = firstPage.items!;
-      expect(items.length, 2);
-      expect(items.first.id, '1XIAxOGAEK2h4ravpNTmYF');
-      expect(
-        items.first.href,
-        'https://api.spotify.com/v1/playlists/1XIAxOGAEK2h4ravpNTmYF',
-      );
-      expect(items.first.name, 'Hot News @ Melhores Eletrônicas 2022');
-    });
-
     test('Get Playlist images', () async {
       final images = await spotify.playlists.images('1XIAxOGAEK2h4ravpNTmYF');
       expect(images.length, 1);
@@ -43,45 +26,22 @@ Future main() async {
       expect(firstImage.width, 300);
     });
 
-    test('followedByUsers', () async {
-      final result = await spotify.playlists.followedByUsers('1XIAxOGAEK2h4ravpNTmYF', ['1', '2', '3']);
-
-      expect(result.length, 3);
-      expect(result['1'], isTrue);
-      expect(result['2'], isFalse);
-      expect(result['3'], isTrue);
-    });
-
-    test('getTracksByPlaylistId', () async {
-      final tracks = await spotify.playlists.getTracksByPlaylistId('1XIAxOGAEK2h4ravpNTmYF').all();
-
-      expect(tracks, hasLength(2));
-      expect(
-        tracks.elementAt(0),
-        isA<Track>().having((t) => t.id, 'id', 'track-1'),
-      );
-      expect(
-        tracks.elementAt(1),
-        isA<Track>().having((t) => t.id, 'id', 'track-3'),
-      );
-    });
-
     test('getPlaylistTracks', () async {
       final tracks = await spotify.playlists.getPlaylistTracks('1XIAxOGAEK2h4ravpNTmYF').all();
       expect(tracks, hasLength(2));
       expect(
         tracks.elementAt(0),
         isA<PlaylistTrack>().having(
-          (p) => p.track,
-          'track',
+          (p) => p.item,
+          'item',
           isA<Track>().having((t) => t.id, 'id', 'track-1'),
         ),
       );
       expect(
         tracks.elementAt(1),
         isA<PlaylistTrack>().having(
-          (p) => p.track,
-          'track',
+          (p) => p.item,
+          'item',
           isA<Track>().having((t) => t.id, 'id', 'track-3'),
         ),
       );

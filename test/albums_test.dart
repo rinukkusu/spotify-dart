@@ -20,6 +20,8 @@ Future main() async {
       expect(album.images!.length, 3);
       expect(album.releaseDatePrecision, DatePrecision.day);
       expect(album.releaseDate, '2012-11-13');
+      expect(album.externalIds, isNotNull);
+      expect(album.externalIds?.upc, '886443671584');
     });
 
     test('album tracks', () async {
@@ -49,19 +51,11 @@ Future main() async {
         trackOne.externalUrls!.spotify,
         'https://open.spotify.com/track/6OmhkSOpvYBokMKQxpIGx2',
       );
-      expect(trackOne.availableMarkets, isNotNull);
-      expect(trackOne.availableMarkets?.first, Market.AT);
 
       final artists = trackOne.artists;
       expect(artists!.length, 2);
       expect(artists[0].name, 'Pitbull');
       expect(artists[1].name, 'Sensato');
-    });
-
-    test('list', () async {
-      final albums = await spotify.albums.list(['4aawyAB9vmqN3uQ7FjRGTy', '4aawyAB9vmqN3uQ7FjRGTy']);
-
-      expect(albums.length, 2);
     });
   });
 }

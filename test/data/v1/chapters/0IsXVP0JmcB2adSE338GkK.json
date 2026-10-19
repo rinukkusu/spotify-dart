@@ -1,0 +1,53 @@
+{
+  "audiobook": {
+    "authors": [{"name": "Sample Author"}],
+    "available_markets": ["US", "CA", "GB"],
+    "copyrights": [{"text": "2023 Sample Publisher", "type": "C"}],
+    "description": "Parent audiobook description",
+    "html_description": "<p>Parent audiobook description</p>",
+    "edition": "Unabridged",
+    "explicit": false,
+    "external_urls": {"spotify": "https://open.spotify.com/show/parentbook"},
+    "href": "https://api.spotify.com/v1/audiobooks/parentbook",
+    "id": "parentbook",
+    "images": [{"height": 640, "url": "https://i.scdn.co/image/parent", "width": 640}],
+    "languages": ["en"],
+    "media_type": "audio",
+    "name": "Parent Audiobook",
+    "narrators": [{"name": "Sample Narrator"}],
+    "publisher": "Sample Publisher",
+    "total_chapters": 20,
+    "type": "audiobook",
+    "uri": "spotify:show:parentbook"
+  },
+  "audio_preview_url": "https://p.scdn.co/mp3-preview/0IsXVP0JmcB2adSE338GkK",
+  "available_markets": ["US", "CA", "GB", "IE", "AU", "NZ"],
+  "chapter_number": 5,
+  "description": "Chapter five of the audiobook",
+  "html_description": "<p>Chapter five of the audiobook</p>",
+  "duration_ms": 480000,
+  "explicit": false,
+  "external_urls": {
+    "spotify": "https://open.spotify.com/episode/0IsXVP0JmcB2adSE338GkK"
+  },
+  "href": "https://api.spotify.com/v1/chapters/0IsXVP0JmcB2adSE338GkK",
+  "id": "0IsXVP0JmcB2adSE338GkK",
+  "images": [
+    {
+      "height": 640,
+      "url": "https://i.scdn.co/image/0IsXVP0JmcB2adSE338GkK",
+      "width": 640
+    }
+  ],
+  "is_playable": true,
+  "languages": ["en"],
+  "name": "Chapter 5: The Climax",
+  "release_date": "2023-03-15",
+  "release_date_precision": "day",
+  "resume_point": {
+    "fully_played": false,
+    "resume_position_ms": 150000
+  },
+  "type": "episode",
+  "uri": "spotify:episode:0IsXVP0JmcB2adSE338GkK"
+}

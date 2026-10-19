@@ -1,5 +1,41 @@
 # Changelog
 
+## Unreleased
+
+- **Breaking:** remove deprecated `me` endpoints after grace period (#242)
+  - remove `spotify.tracks.me` and `spotify.playlists.me`, use `spotify.me.tracks` and `spotify.me.playlists`
+  - remove `savedShows`, `saveShows`, `removeShows`, `containsSavedShows` from `Me`, use `spotify.me.shows`
+  - remove `savedAlbums`, `saveAlbums`, `removeAlbums`, `isSavedAlbums`, `containsSavedAlbums` from `Me`, use `spotify.me.albums`
+  - remove `savedEpisodes`, `saveEpisodes`, `removeEpisodes`, `containsSavedEpisodes` from `Me`, use `spotify.me.episodes`
+  - remove `currentlyPlaying`, `queue`, `addToQueue`, `shuffle`, `player`, `devices` from `Me`, use `spotify.player`
+  - remove `isFollowing` from `Me`, use `checkFollowing`
+  - `Me` and `Tracks` constructors no longer take a `PlayerEndpoint`/`Me` argument
+- add `audiobook` as search result type (#258)
+
+## 0.16.1
+
+- migrate playlist endpoints from `/tracks` to `/items` (#256)
+- remove deprecated `users` endpoints (#255)
+
+## 0.16.0
+
+- add full PKCE (Proof Key for Code Exchange) support for public clients (#237)
+  - add `codeVerifier` field to `SpotifyApiCredentials`
+  - add `SpotifyApiCredentials.pkce()` constructor for public client flows
+  - add `SpotifyApi.generateCodeVerifier()` helper method
+  - add `isPkce` getter to identify PKCE credentials
+  - update `fullyQualified` to support PKCE credentials (with verifier but no secret)
+  - code verifier is now preserved during credential refresh
+  - add comprehensive PKCE example (`example/example_pkce.dart`)
+  - add PKCE test suite (`test/pkce_test.dart`)
+  - update README with PKCE documentation
+- add audiobooks and chapters endpoints (#232)
+- add duration field to episodes (#244)
+- refactor me endpoint structure (#243)
+- enhance deprecation messages for Spotify-deprecated endpoints (#240)
+- improve README structure and documentation (#236, #239)
+- enforce trailing commas and linter rules (#235)
+
 ## 0.15.0
 
 - use Track instead of TrackSimple in PlayHistory and Recommendations for more complete track information

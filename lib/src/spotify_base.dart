@@ -22,8 +22,11 @@ abstract class SpotifyApiBase {
   late Albums _albums;
   Albums get albums => _albums;
 
-  late Browse _browse;
-  Browse get browse => _browse;
+  late Audiobooks _audiobooks;
+  Audiobooks get audiobooks => _audiobooks;
+
+  late Chapters _chapters;
+  Chapters get chapters => _chapters;
 
   late Tracks _tracks;
   Tracks get tracks => _tracks;
@@ -34,32 +37,8 @@ abstract class SpotifyApiBase {
   late Episodes _episodes;
   Episodes get episodes => _episodes;
 
-  // ignore: deprecated_member_use_from_same_package
-  late RecommendationsEndpoint _recommendations;
-  // ignore: deprecated_member_use_from_same_package
-  RecommendationsEndpoint get recommendations => _recommendations;
-
-  late Markets _markets;
-  Markets get markets => _markets;
-
-  late Users _users;
-  Users get users => _users;
-
   late Search _search;
   Search get search => _search;
-
-  // ignore: deprecated_member_use_from_same_package
-  late AudioFeatures _audioFeatures;
-  // ignore: deprecated_member_use_from_same_package
-  AudioFeatures get audioFeatures => _audioFeatures;
-
-  // ignore: deprecated_member_use_from_same_package
-  late AudioAnalysisEndpoint _audioAnalysis;
-  // ignore: deprecated_member_use_from_same_package
-  AudioAnalysisEndpoint get audioAnalysis => _audioAnalysis;
-
-  late Categories _categories;
-  Categories get categories => _categories;
 
   late Me _me;
   Me get me => _me;
@@ -72,25 +51,18 @@ abstract class SpotifyApiBase {
 
   SpotifyApiBase.fromClient(FutureOr<oauth2.Client> client) {
     _spotifyClient = SpotifyClient(client);
+    _player = PlayerEndpoint(this);
+    _me = Me(this);
 
     _artists = Artists(this);
     _albums = Albums(this);
-    _browse = Browse(this);
+    _audiobooks = Audiobooks(this);
+    _chapters = Chapters(this);
     _tracks = Tracks(this);
     _episodes = Episodes(this);
     _playlists = Playlists(this);
-    // ignore: deprecated_member_use_from_same_package
-    _recommendations = RecommendationsEndpoint(this);
-    _markets = Markets(this);
-    _player = PlayerEndpoint(this);
-    _me = Me(this, _player);
-    _users = Users(this);
+
     _search = Search(this);
-    // ignore: deprecated_member_use_from_same_package
-    _audioFeatures = AudioFeatures(this);
-    // ignore: deprecated_member_use_from_same_package
-    _audioAnalysis = AudioAnalysisEndpoint(this);
-    _categories = Categories(this);
     _shows = Shows(this);
   }
 
@@ -131,12 +103,15 @@ abstract class SpotifyApiBase {
     String? codeVerifier,
     Function(SpotifyApiCredentials)? onCredentialsRefreshed,
   }) {
+    // Use codeVerifier from parameter, or fall back to credentials
+    final verifier = codeVerifier ?? credentials.codeVerifier;
+
     return oauth2.AuthorizationCodeGrant(
       credentials.clientId!,
       Uri.parse(SpotifyApiBase._authorizationUrl),
       Uri.parse(SpotifyApiBase._tokenUrl),
       secret: credentials.clientSecret,
-      codeVerifier: codeVerifier,
+      codeVerifier: verifier,
       httpClient: httpClient,
       onCredentialsRefreshed: onCredentialsRefreshed != null
           ? (oauth2.Credentials cred) {
@@ -147,6 +122,7 @@ abstract class SpotifyApiBase {
                 expiration: cred.expiration,
                 refreshToken: cred.refreshToken,
                 scopes: cred.scopes,
+                codeVerifier: verifier,
               );
               onCredentialsRefreshed(newCredentials);
             }
@@ -171,6 +147,7 @@ abstract class SpotifyApiBase {
             expiration: cred.expiration,
             refreshToken: cred.refreshToken,
             scopes: cred.scopes,
+            codeVerifier: credentials.codeVerifier,
           ),
         );
       }

@@ -13,11 +13,35 @@ abstract class _MeEndpointBase extends EndpointPaging {
 
 /// Endpoint for authenticated users `v1/me/*`
 class Me extends _MeEndpointBase {
-  late PlayerEndpoint _player;
+  late final AlbumsMe _albumsMe = AlbumsMe._(super._api);
+  late final AudiobooksMe _audiobooksMe = AudiobooksMe._(super._api);
+  late final EpisodesMe _episodesMe = EpisodesMe._(super._api);
+  late final ShowsMe _showsMe = ShowsMe._(super._api);
+  late final TracksMe _tracksMe = TracksMe._(super._api);
+  late final PlaylistsMe _playlistsMe = PlaylistsMe._(super._api);
+  late final LibraryMe _libraryMe = LibraryMe(super._api);
 
-  Me(super.api, PlayerEndpoint player) {
-    _player = player;
-  }
+  /// Accesses the user's audiobooks.
+  AudiobooksMe get audiobooks => _audiobooksMe;
+
+  /// Accesses the user's shows.
+  ShowsMe get shows => _showsMe;
+
+  /// Accesses the user's episodes.
+  EpisodesMe get episodes => _episodesMe;
+
+  /// Accesses the user's albums.
+  AlbumsMe get albums => _albumsMe;
+
+  /// Accesses the user's tracks.
+  TracksMe get tracks => _tracksMe;
+
+  /// Accesses the user's playlists.
+  PlaylistsMe get playlists => _playlistsMe;
+
+  LibraryMe get library => _libraryMe;
+
+  Me(super.api);
 
   Future<User> get() async {
     final jsonString = await _api._get(_path);
@@ -51,66 +75,6 @@ class Me extends _MeEndpointBase {
     );
   }
 
-  /// Check to see if the current user is following one or more artists or
-  /// other Spotify users. The output [bool] list
-  /// is in the same order as the provided artist-id list
-  @Deprecated('Use [spotify.me.checkFollowing(type, ids)] instead')
-  Future<List<bool>> isFollowing(FollowingType type, List<String> ids) async =>
-      (await checkFollowing(type, ids)).values.toList();
-
-  /// Check if current user follow the provided [FollowingType.artist]s or
-  /// [FollowingType.user]s.
-  ///
-  /// Returns the list of [ids] mapped with the response whether it has been
-  /// followed or not
-  Future<Map<String, bool>> checkFollowing(
-    FollowingType type,
-    List<String> ids,
-  ) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-
-    final jsonString = await _api._get('$_path/following/contains?${_buildQuery({
-          'type': type._key,
-          'ids': ids.join(','),
-        })}');
-    final list = List.castFrom<dynamic, bool>(json.decode(jsonString));
-    return Map.fromIterables(ids, list);
-  }
-
-  /// Follow provided users/artists\
-  /// [type] - Type of Follow\
-  /// [ids] - user/artist
-  Future<void> follow(FollowingType type, List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-    await _api._put("$_path/following?type=${type._key}&ids=${ids.join(",")}");
-  }
-
-  /// Unfollow already following users/artists\
-  /// [type] - Type of Follow\
-  /// [ids] - user/artist
-  Future<void> unfollow(FollowingType type, List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No user/artist id was provided');
-    }
-    await _api._delete("$_path/following?type=${type._key}&ids=${ids.join(",")}");
-  }
-
-  /// Get the object currently being played on the user’s Spotify account.
-  @Deprecated('Use [spotify.player.currentlyPlaying()]')
-  Future<PlaybackState> currentlyPlaying() async => _player.currentlyPlaying();
-
-  // Get the currently playing as well as the queued objects.
-  @Deprecated('Use [spotify.player.queue()]')
-  Future<Queue> queue() async => _player.queue();
-
-  // Add an object to the queue with a trackId.
-  @Deprecated('Use [spotify.player.addToQueue()]')
-  Future<void> addToQueue(String trackId) async => _player.addToQueue(trackId);
-
   /// Get tracks from the current user's recently played tracks.
   /// Note: Currently doesn't support podcast episodes.
   CursorPages<PlayHistory> recentlyPlayed({
@@ -131,18 +95,6 @@ class Me extends _MeEndpointBase {
       (json) => PlayHistory.fromJson(json),
     );
   }
-
-  /// Toggle Shuffle For User's Playback.
-  ///
-  /// Use [state] to toggle the shuffle. `true` to turn shuffle on and `false`
-  /// to turn it off respectively.
-  /// Returns the current player state by making another request.
-  /// See [player];
-  @Deprecated('Use [spotify.player.shuffle()]')
-  Future<PlaybackState?> shuffle(bool state, [String? deviceId]) async => _player.shuffle(state, deviceId: deviceId);
-
-  @Deprecated('Use [spotify.player.playbackState()]')
-  Future<PlaybackState> player([String? market]) async => _player.playbackState(Market.values.asNameMap()[market]);
 
   /// Get the current user's top tracks, spanning over a [timeRange].
   /// The [timeRange]'s default is [TimeRange.mediumTerm].
@@ -165,142 +117,231 @@ class Me extends _MeEndpointBase {
             })}',
         parser,
       );
+}
 
-  /// Get information about a user’s available devices.
-  @Deprecated('Use [spotify.player.devices()]')
-  Future<Iterable<Device>> devices() async => _player.devices();
+abstract class SavedMe<T> extends _MeEndpointBase {
+  SavedMe(super.api);
 
-  /// Get a list of shows saved in the current Spotify user’s library.
-  Pages<Show> savedShows() {
-    return _getPages('$_path/shows', (json) => Show.fromJson(json['show']));
+  /// Returns the saved content for the current user.
+  ///
+  /// Requires [LibraryAuthorizationScope.read] scope.
+  Pages<T> saved();
+
+  Pages<T> _savedImpl(ParserFunction<T> pageItemParser, [Market? market]) => _getPages(
+        '$_path?${_buildQuery({'market': market?.name})}',
+        pageItemParser,
+      );
+}
+
+///
+class LibraryMe extends _MeEndpointBase {
+  @override
+  String get _path => '${super._path}/library';
+
+  String get _errorMessage => 'No uri\'s were provided';
+
+  int get _maxUriConstraint => 40;
+
+  LibraryMe(super.api);
+
+  /// Save this content with given [uri] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  Future<void> saveOne(SpotifyUri uri) async => save([uri]);
+
+  /// Save this content with given [uris] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  ///
+  /// **Note:** Only the 40 [uris] are allowed, otherwise throws [RangeError].
+  Future<void> save(List<SpotifyUri> uris) async {
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
+    await _api._put('$_path?${_buildQuery({'uris': uris.join(',')})}');
   }
 
-  /// Save shows for the current user. It requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the shows to save
-  Future<void> saveShows(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No show ids were provided for saving');
-    }
-    await _api._put('$_path/shows?${_buildQuery({'ids': ids.join(',')})}');
-  }
+  /// Check if the passed [uri] are saved by current user.
+  /// Returns `true` or `false` whether the content has been saved.
+  ///
+  /// Requires [LibraryAuthorizationScope.read] scope.
+  Future<bool> containsOne(SpotifyUri uri) async => (await contains([uri]))[uri] ?? false;
 
-  /// Removes shows for the current user. It requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the shows to remove
-  /// [market] - An ISO 3166-1 alpha-2 country code. If a country code is
-  /// specified, only content that is available in that market will be returned.
-  Future<void> removeShows(List<String> ids, [Market? market]) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No show ids were provided for removing');
-    }
-    final queryMap = {
-      'ids': ids.join(','),
-      'market': market?.name,
-    };
-    await _api._delete('$_path/shows?${_buildQuery(queryMap)}');
-  }
-
-  /// Check if passed albums (ids) are saved by current user.
-  /// [ids] - list of IDs to check
-  /// Returns the list of IDs mapped with the response whether it has been saved
-  Future<Map<String, bool>> containsSavedShows(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No show ids were provided for checking saved shows');
-    }
-    final query = _buildQuery({'ids': ids.join(',')});
-    final jsonString = await _api._get('$_path/shows/contains?$query');
+  /// Check if passed [uris] are saved by current user.
+  /// Returns the same list of [uris] mapped with the response whether it has been saved or not.
+  ///
+  /// Requires [LibraryAuthorizationScope.read] scope.
+  /// **Note:** Only the 40 [uris] are allowed, otherwise throws [RangeError].
+  Future<Map<SpotifyUri, bool>> contains(List<SpotifyUri> uris) async {
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
+    final query = _buildQuery({'uris': uris.join(',')});
+    final jsonString = await _api._get('$_path/contains?$query');
     final response = List.castFrom<dynamic, bool>(jsonDecode(jsonString));
 
-    return Map.fromIterables(ids, response);
+    return Map.fromIterables(uris, response);
   }
 
-  /// gets current user's saved albums in pages
-  Pages<AlbumSimple> savedAlbums() {
-    return _getPages('$_path/albums', (json) => Album.fromJson(json['album']));
+  /// Removes content with given [uri] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  Future<void> removeOne(SpotifyUri uri) async => remove([uri]);
+
+  /// Removes content with given list of [uri] for the current user.
+  ///
+  /// Requires the [LibraryAuthorizationScope.modify] scope.
+  Future<void> remove(List<SpotifyUri> uris) async {
+    _ensureListContainsElements(uris);
+    _ensureListWithinSizeContrants(uris, 'uris');
+    _ensureValidUris(uris);
+    await _api._delete('$_path?${_buildQuery({'uris': uris.join(',')})}');
   }
 
-  /// Save albums for the current-user. It requires the
-  /// `user-library-modify` scope of Spotify WebSDK\
-  /// [ids] - the ids of the albums
-  Future<void> saveAlbums(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No album ids were provided for saving');
+  void _ensureListContainsElements<T>(List<T> elements) {
+    if (elements.isEmpty) {
+      throw ArgumentError(_errorMessage);
     }
-    await _api._put('$_path/albums?ids=${ids.join(",")}');
   }
 
-  /// Remove albums for the current-user. It requires the
-  /// `user-library-modify` scope of Spotify WebSDK\
-  /// [ids] - the ids of the albums
-  Future<void> removeAlbums(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No album ids were provided for removing');
-    }
-    await _api._delete('$_path/albums?ids=${ids.join(",")}');
-  }
-
-  /// Check if passed albums (ids) are saved by current user. The output
-  /// [bool] list is in the same order as the provided album ids list
-  @Deprecated('Use [containsSavedAbums(ids)]')
-  Future<List<bool>> isSavedAlbums(List<String> ids) async {
-    final result = await containsSavedAlbums(ids);
-    return result.values.toList();
-  }
-
-  /// Check if passed albums (ids) are saved by current user.
-  /// Returns the list of IDs mapped with the response whether it has been
-  /// saved.
-  Future<Map<String, bool>> containsSavedAlbums(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No album ids were provided for checking');
-    }
-    final jsonString = await _api._get('$_path/albums/contains?ids=${ids.join(",")}');
-    final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
-
-    return Map.fromIterables(ids, result);
-  }
-
-  /// Returns the current user's saved episodes. Requires the
-  /// `user-library-read` scope.
-  Pages<EpisodeFull> savedEpisodes() => _getPages(
-        '$_path/episodes',
-        (json) => EpisodeFull.fromJson(json['episode']),
+  void _ensureListWithinSizeContrants<T>(List<T> elements, String name) {
+    if (elements.length > _maxUriConstraint) {
+      throw RangeError.range(
+        elements.length,
+        0,
+        _maxUriConstraint,
+        name,
+        'Maximum of $_maxUriConstraint Uri\'s allowed per request',
       );
-
-  /// Saves episodes for the current user. Requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the episodes
-  Future<void> saveEpisodes(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No episode ids were provided for saving');
     }
-    await _api._put('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
   }
 
-  /// Removes episodes for the current user. Requires the `user-library-modify`
-  /// scope.
-  /// [ids] - the ids of the episodes
-  Future<void> removeEpisodes(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No episode ids were provided for removing');
+  void _ensureValidUris(List<SpotifyUri> uris) {
+    final valid = uris.map((uri) => isValidUri(uri)).reduce((b1, b2) => b1 && b2);
+    if (!valid) {
+      throw ArgumentError('Invalid uris found');
     }
-    await _api._delete('$_path/episodes?${_buildQuery({'ids': ids.join(',')})}');
   }
+}
 
-  /// Check if passed episode [ids] are saved by current user.
-  /// Returns the list of IDs mapped with the response whether it has been
-  /// saved.
-  Future<Map<String, bool>> containsSavedEpisodes(List<String> ids) async {
-    if (ids.isEmpty) {
-      throw ArgumentError('No episode ids were provided for checking');
-    }
-    final jsonString = await _api._get(
-      '$_path/episodes/contains?${_buildQuery({'ids': ids.join(',')})}',
-    );
-    final result = List.castFrom<dynamic, bool>(json.decode(jsonString));
+/// Endpoint for authenticated user's shows `v1/me/shows`
+class ShowsMe extends SavedMe<Show> {
+  ShowsMe._(super.api);
 
-    return Map.fromIterables(ids, result);
+  @override
+  String get _path => '${super._path}/shows';
+
+  /// gets current user's shows albums in [Pages]
+  @override
+  Pages<Show> saved() => _savedImpl((json) => Show.fromJson(json['show']));
+}
+
+/// Endpoint for authenticated user's episodes `v1/me/episodes`
+class EpisodesMe extends SavedMe<EpisodeFull> {
+  @override
+  String get _path => '${super._path}/episodes';
+
+  EpisodesMe._(super.api);
+
+  /// Returns the current user's saved episodes.
+  ///
+  /// Requires the [LibraryAuthorizationScope.read] scope.
+  @override
+  Pages<EpisodeFull> saved([Market? market]) => _savedImpl(
+        (json) => EpisodeFull.fromJson(json['episode']),
+        market,
+      );
+}
+
+/// Endpoint for authenticated user's albums `v1/me/albums`
+class AlbumsMe extends SavedMe<AlbumSimple> {
+  @override
+  String get _path => '${super._path}/albums';
+
+  AlbumsMe._(super.api);
+
+  /// gets current user's saved albums in [Pages]
+  @override
+  Pages<AlbumSimple> saved([Market? market]) => _savedImpl(
+        (json) => Album.fromJson(json['album']),
+        market,
+      );
+}
+
+/// Endpoint for authenticated user's tracks `v1/me/tracks`
+class TracksMe extends SavedMe<TrackSaved> {
+  @override
+  String get _path => '${super._path}/tracks';
+
+  TracksMe._(super.api);
+
+  /// gets current user's saved tracks in [Pages]
+  @override
+  Pages<TrackSaved> saved([Market? market]) => _savedImpl(
+        (json) => TrackSaved.fromJson(json),
+        market,
+      );
+}
+
+/// Endpoint for authenticated user's audiobooks `v1/me/audiobooks`
+class AudiobooksMe extends SavedMe<AudiobookSaved> {
+  @override
+  String get _path => '${super._path}/audiobooks';
+
+  AudiobooksMe._(super.api);
+
+  /// Get a list of the audiobooks saved in the current Spotify user's 'Your
+  /// Music' library.
+  ///
+  /// Requires the [LibraryAuthorizationScope.read] scope.
+  @override
+  Pages<AudiobookSaved> saved() => _savedImpl((json) => AudiobookSaved.fromJson(json));
+}
+
+/// Endpoint for authenticated user's playlists `v1/me/playlists`
+class PlaylistsMe extends SavedMe<PlaylistSimple> {
+  PlaylistsMe._(super.api);
+
+  @override
+  String get _path => '${super._path}/playlists';
+
+  /// Returns the saved content for the current user.
+  ///
+  /// Requires [PlaylistAuthorizationScope.readPrivate] scope.
+  @override
+  Pages<PlaylistSimple> saved() => _savedImpl((json) => PlaylistSimple.fromJson(json));
+
+  /// Create a playlist for the current Spotify user.
+  ///
+  /// The playlist will be empty until you add tracks to it.
+  /// Each user is generally limited to a maximum of 11000 playlists.
+  ///
+  /// [name] - The name for the new playlist.
+  ///
+  /// [public] - Defaults to `true`. If `true` the playlist will be public,
+  /// if `false` the playlist will be private.
+  ///
+  /// [collaborative] - Defaults to `false`. If `true` the playlist will be
+  /// collaborative. Note: to create a collaborative playlist you must also
+  /// set [public] to `false`.
+  ///
+  /// [description] - The playlist description as displayed in Spotify Clients.
+  ///
+  /// Requires [PlaylistAuthorizationScope.modifyPublic] and/or
+  /// [PlaylistAuthorizationScope.modifyPrivate] scope.
+  Future<Playlist> create(
+    String name, {
+    bool? public,
+    bool? collaborative,
+    String? description,
+  }) async {
+    final body = <String, dynamic>{'name': name};
+    if (public != null) body['public'] = public;
+    if (collaborative != null) body['collaborative'] = collaborative;
+    if (description != null) body['description'] = description;
+
+    final response = await _api._post(_path, jsonEncode(body));
+    return Playlist.fromJson(jsonDecode(response));
   }
 }
 

@@ -1,0 +1,46 @@
+{
+  "chapters": [
+    {
+      "audio_preview_url": "https://p.scdn.co/mp3-preview/chap1",
+      "available_markets": ["US", "CA"],
+      "chapter_number": 1,
+      "description": "First chapter",
+      "html_description": "<p>First chapter</p>",
+      "duration_ms": 300000,
+      "explicit": false,
+      "external_urls": {"spotify": "https://open.spotify.com/episode/chap1"},
+      "href": "https://api.spotify.com/v1/chapters/chap1",
+      "id": "chap1",
+      "images": [{"height": 640, "url": "https://i.scdn.co/image/chap1", "width": 640}],
+      "is_playable": true,
+      "languages": ["en"],
+      "name": "Chapter 1",
+      "release_date": "2023-01-01",
+      "release_date_precision": "day",
+      "resume_point": {"fully_played": false, "resume_position_ms": 0},
+      "type": "episode",
+      "uri": "spotify:episode:chap1"
+    },
+    {
+      "audio_preview_url": "https://p.scdn.co/mp3-preview/chap2",
+      "available_markets": ["US", "GB"],
+      "chapter_number": 2,
+      "description": "Second chapter",
+      "html_description": "<p>Second chapter</p>",
+      "duration_ms": 350000,
+      "explicit": false,
+      "external_urls": {"spotify": "https://open.spotify.com/episode/chap2"},
+      "href": "https://api.spotify.com/v1/chapters/chap2",
+      "id": "chap2",
+      "images": [{"height": 640, "url": "https://i.scdn.co/image/chap2", "width": 640}],
+      "is_playable": true,
+      "languages": ["en"],
+      "name": "Chapter 2",
+      "release_date": "2023-01-01",
+      "release_date_precision": "day",
+      "resume_point": {"fully_played": true, "resume_position_ms": 350000},
+      "type": "episode",
+      "uri": "spotify:episode:chap2"
+    }
+  ]
+}

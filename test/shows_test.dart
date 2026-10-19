@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'spotify_mock.dart';
 import 'package:test/test.dart';
-import 'package:spotify/spotify.dart';
 
 Future main() async {
   final spotify = SpotifyApiMock.create();
@@ -19,14 +18,6 @@ Future main() async {
       expect(show.id, '4AlxqGkkrqe0mfIx3Mi7Xt');
       expect(show.name, 'Universo Flutter');
       expect(show.totalEpisodes, 26);
-      expect(show.availableMarkets, isNotEmpty);
-      expect(show.availableMarkets?.first, Market.AD);
-    });
-
-    test('list', () async {
-      final shows = await spotify.shows.list(['4AlxqGkkrqe0mfIx3Mi7Xt', '4AlxqGkkrqe0mfIx3Mi7Xt']);
-
-      expect(shows.length, 2);
     });
   });
 

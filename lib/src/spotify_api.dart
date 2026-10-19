@@ -47,4 +47,32 @@ class SpotifyApi extends SpotifyApiBase {
       onCredentialsRefreshed: onCredentialsRefreshed,
     );
   }
+
+  /// Generates a cryptographically secure code verifier for PKCE flows.
+  ///
+  /// Use this when implementing OAuth authorization code flow with PKCE
+  /// (Proof Key for Code Exchange) for public clients that cannot securely
+  /// store client secrets.
+  ///
+  /// Example:
+  /// ```dart
+  /// final verifier = SpotifyApi.generateCodeVerifier();
+  /// final credentials = SpotifyApiCredentials.pkce(
+  ///   'my-client-id',
+  ///   codeVerifier: verifier,
+  /// );
+  /// final grant = SpotifyApi.authorizationCodeGrant(credentials);
+  /// ```
+  ///
+  /// See also:
+  /// - [SpotifyApiCredentials.pkce] for creating PKCE credentials
+  /// - [authorizationCodeGrant] for initiating the OAuth flow
+  static String generateCodeVerifier() {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+    final random = math.Random.secure();
+    return List.generate(
+      128,
+      (_) => charset[random.nextInt(charset.length)],
+    ).join();
+  }
 }

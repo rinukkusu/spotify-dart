@@ -31,12 +31,6 @@ void main() async {
         (error, stackTrace) => print((error as SpotifyException).message),
       );
 
-  print('\nArtists:');
-  final artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
-  for (final x in artists) {
-    print(x.name);
-  }
-
   print('\nAlbum:');
   final album = await spotify.albums.get('2Hog1V8mdTWKhCYqI5paph');
   print(album.name);
@@ -45,24 +39,6 @@ void main() async {
   final tracks = await spotify.albums.getTracks(album.id!).all();
   for (final track in tracks) {
     print(track.name);
-  }
-
-  print('\nNew Releases');
-  final newReleases = await spotify.browse.getNewReleases().first();
-  for (final album in newReleases.items!) {
-    print(album.name);
-  }
-
-  print('\nFeatured Playlist:');
-  final featuredPlaylists = await spotify.playlists.featured.all();
-  for (final playlist in featuredPlaylists) {
-    print(playlist.name);
-  }
-
-  print('\nUser\'s playlists:');
-  final usersPlaylists = await spotify.playlists.getUsersPlaylists('superinteressante').all();
-  for (final playlist in usersPlaylists) {
-    print(playlist.name);
   }
 
   print("\nSearching for 'Metallica':");
@@ -80,7 +56,7 @@ void main() async {
             'name: ${item.name}:\n'
             'collaborative: ${item.collaborative}\n'
             'href: ${item.href}\n'
-            'trackslink: ${item.tracks!.href}\n'
+            'itemslink: ${item.itemsLink!.href}\n'
             'owner: ${item.owner}\n'
             'public: ${item.owner}\n'
             'snapshotId: ${item.snapshotId}\n'
@@ -96,7 +72,6 @@ void main() async {
             'href: ${item.href}\n'
             'type: ${item.type}\n'
             'uri: ${item.uri}\n'
-            'popularity: ${item.popularity}\n'
             '-------------------------------');
       }
       if (item is Track) {
@@ -108,11 +83,9 @@ void main() async {
             'uri: ${item.uri}\n'
             'isPlayable: ${item.isPlayable}\n'
             'artists: ${item.artists!.length}\n'
-            'availableMarkets: ${item.availableMarkets!.length}\n'
             'discNumber: ${item.discNumber}\n'
             'trackNumber: ${item.trackNumber}\n'
             'explicit: ${item.explicit}\n'
-            'popularity: ${item.popularity}\n'
             '-------------------------------');
       }
       if (item is AlbumSimple) {
@@ -124,7 +97,6 @@ void main() async {
             'uri: ${item.uri}\n'
             'albumType: ${item.albumType}\n'
             'artists: ${item.artists!.length}\n'
-            'availableMarkets: ${item.availableMarkets!.length}\n'
             'images: ${item.images!.length}\n'
             'releaseDate: ${item.releaseDate}\n'
             'releaseDatePrecision: ${item.releaseDatePrecision}\n'
@@ -132,9 +104,6 @@ void main() async {
       }
     }
   }
-
-  final relatedArtists = await spotify.artists.relatedArtists('0OdUWJ0sBjDrqHygGUXeCF');
-  print('\nRelated Artists: ${relatedArtists.length}');
 
   credentials = await spotify.getCredentials();
   print('\nCredentials:');
