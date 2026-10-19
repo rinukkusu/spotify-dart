@@ -1,0 +1,78 @@
+name: Spotify API sync
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  SPEC_URL: https://developer.spotify.com/reference/web-api/open-api-schema.yaml
+  SNAPSHOT: tool/spotify-openapi.yaml
+  OASDIFF_VERSION: 1.33.0
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch current spec
+        run: curl -fsSL "$SPEC_URL" -o "$RUNNER_TEMP/spec-new.yaml"
+
+      - name: Check for changes
+        id: check
+        run: |
+          if cmp -s "$SNAPSHOT" "$RUNNER_TEMP/spec-new.yaml"; then
+            echo "Spec unchanged."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install oasdiff
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          curl -fsSL "https://github.com/oasdiff/oasdiff/releases/download/v${OASDIFF_VERSION}/oasdiff_${OASDIFF_VERSION}_linux_amd64.tar.gz" \
+            | tar -xz -C "$RUNNER_TEMP" oasdiff
+
+      - name: Generate changelog
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          # Spotify's spec has a boolean `required` on a schema, which oasdiff can't parse.
+          # Only the copies used for diffing are normalized, the snapshot stays as published.
+          normalize='del(.. | select(type == "!!map" and has("required") and (.required | type) == "!!bool" and (has("in") | not)) | .required)'
+          yq "$normalize" "$SNAPSHOT" > "$RUNNER_TEMP/base.yaml"
+          yq "$normalize" "$RUNNER_TEMP/spec-new.yaml" > "$RUNNER_TEMP/revision.yaml"
+
+          if ! "$RUNNER_TEMP/oasdiff" changelog "$RUNNER_TEMP/base.yaml" "$RUNNER_TEMP/revision.yaml" --format markdown > "$RUNNER_TEMP/changelog.md"; then
+            echo "_oasdiff failed - check the workflow logs and diff the snapshot manually._" > "$RUNNER_TEMP/changelog.md"
+          fi
+
+          {
+            echo "The [Spotify Web API spec]($SPEC_URL) changed since the last snapshot."
+            echo
+            if grep -q '^### ' "$RUNNER_TEMP/changelog.md"; then
+              # PR bodies are limited to 65536 characters
+              head -c 60000 "$RUNNER_TEMP/changelog.md"
+            else
+              echo "No API changes detected by oasdiff - probably only descriptions or formatting changed."
+            fi
+            echo
+            echo "_Opened by the [Spotify API sync workflow](https://github.com/${GITHUB_REPOSITORY}/actions/workflows/spotify-api-sync.yml)._"
+          } > "$RUNNER_TEMP/pr-body.md"
+
+          cp "$RUNNER_TEMP/spec-new.yaml" "$SNAPSHOT"
+
+      - name: Open or update PR
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: chore/spotify-api-sync
+          commit-message: Update Spotify Web API spec snapshot
+          title: Spotify Web API spec changed
+          body-path: ${{ runner.temp }}/pr-body.md
+          delete-branch: true
