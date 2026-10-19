@@ -144,7 +144,7 @@ Future main() async {
         expect(result.items!.length, 1);
 
         final firstEpisode = result.items!.first;
-        expect(firstEpisode.type, 'episode');
+        expect(firstEpisode.type, SpotifyContentType.episode);
         expect(firstEpisode.name, isNotNull);
         expect(firstEpisode.id, '5Xt5DXGzch68nYYamXrNxZ');
         expect(firstEpisode.show, isNotNull);

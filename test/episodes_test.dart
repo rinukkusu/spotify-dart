@@ -32,7 +32,7 @@ Future main() async {
         'and Advice From Anchor Creators',
       );
       expect(result.releaseDate, DateTime(1981, 12, 15));
-      expect(result.type, 'episode');
+      expect(result.type, SpotifyContentType.episode);
       expect(result.description, contains('A Spotify podcast'));
       expect(result.show == null, false);
 

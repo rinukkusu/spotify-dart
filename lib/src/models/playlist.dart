@@ -28,14 +28,15 @@ class Playlist extends Object implements PlaylistSimple {
   ExternalUrls? externalUrls;
 
   /// Information about the followers of the playlist.
+  @override
   Followers? followers;
 
   /// A link to the Web API endpoint providing full details of the playlist.
-  @override
+  // @override
   String? href;
 
   /// The Spotify ID for the playlist.
-  @override
+  // @override
   String? id;
 
   /// Images for the playlist. The array may be empty or contain up to three

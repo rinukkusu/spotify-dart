@@ -33,7 +33,7 @@ Future main() async {
       expect(trackOne.durationMs, 85400);
       expect(trackOne.id, '6OmhkSOpvYBokMKQxpIGx2');
       expect(trackOne.isPlayable, isNull);
-      expect(trackOne.type, 'track');
+      expect(trackOne.type, SpotifyContentType.track);
       expect(trackOne.uri, 'spotify:track:6OmhkSOpvYBokMKQxpIGx2');
       expect(trackOne.explicit, true);
       expect(

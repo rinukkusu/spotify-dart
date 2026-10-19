@@ -93,7 +93,7 @@
         "name": "string",
         "preview_url": "string",
         "track_number": 0,
-        "type": "string",
+        "type": "track",
         "uri": "string",
         "is_local": true
     },
@@ -192,7 +192,7 @@
             "name": "string",
             "preview_url": "string",
             "track_number": 0,
-            "type": "string",
+            "type": "track",
             "uri": "string",
             "is_local": true
         }

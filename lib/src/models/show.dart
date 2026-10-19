@@ -41,10 +41,12 @@ class Show extends SpotifyContent {
   String? name;
 
   /// The object type: "show"
-  String? type;
+  // @ove
+  // SpotifyContentType? type;
 
-  /// The Spotify URI for the show.
-  String? uri;
+  // /// The Spotify URI for the show.
+  // @override
+  // String? uri;
 
   /// The number of total episodes in this show
   @JsonKey(

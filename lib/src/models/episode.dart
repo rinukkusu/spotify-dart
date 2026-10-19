@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of an episode
 @JsonSerializable()
-class Episode extends Object {
+class Episode extends PlayableContent {
   Episode();
 
   /// The episode length in milliseconds.
@@ -17,39 +17,12 @@ class Episode extends Object {
   /// A description of the episode.
   String? description;
 
-  /// The episode length in milliseconds.
-  @JsonKey(name: 'duration_ms', fromJson: convertToIntIfDoubleValue)
-  int? durationMs;
-
-  /// The track length
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  Duration? get duration => Duration(milliseconds: durationMs ?? 0);
-
-  /// Whether or not the episode has explicit content
-  /// (`true` = yes it does; `false` = no it does not OR unknown).
-  bool? explicit;
-
-  /// Known external URLs for this episode.
-  @JsonKey(name: 'external_urls')
-  ExternalUrls? externalUrls;
-
-  /// A link to the Web API endpoint providing full details of the episode.
-  String? href;
-
-  /// The Spotify ID for the episode.
-  String? id;
-
   /// The cover art for the episode in various sizes, widest first.
   List<Image>? images;
 
   /// True if the episode is hosted outside of Spotify’s CDN.
   @JsonKey(name: 'is_externally_hosted')
   bool? isExternallyHosted;
-
-  /// Part of the response when Track Relinking is applied. If true, the track
-  /// is playable in the given market. Otherwise false.
-  @JsonKey(name: 'is_playable')
-  bool? isPlayable;
 
   /// Note: This field is deprecated and might be removed in the future.
   /// Please use the languages field instead. The language used in the episode,
@@ -60,9 +33,6 @@ class Episode extends Object {
   /// code.
   List<String>? languages;
 
-  /// The name of the episode.
-  String? name;
-
   /// The date the episode was first released, for example "1981-12-15".
   /// Depending on the precision, it might be shown as "1981" or "1981-12".
   @JsonKey(name: 'release_date')
@@ -72,12 +42,6 @@ class Episode extends Object {
   ///     "year", "month", or "day".
   @JsonKey(name: 'release_date_precision')
   String? releaseDatePrecision;
-
-  /// The object type: "episode".
-  String? type;
-
-  /// The Spotify ID for the episode.
-  String? uri;
 
   factory Episode.fromJson(Map<String, dynamic> json) => _$EpisodeFromJson(json);
 
