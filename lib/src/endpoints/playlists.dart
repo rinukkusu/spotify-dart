@@ -40,7 +40,7 @@ class Playlists extends EndpointPaging {
   /// be collaborative.
   ///
   /// [description] - the new description of the playlist
-  Future<String> updatePlaylist(
+  Future<void> updatePlaylist(
     String playlistId,
     String playlistName, {
     bool? public,
@@ -54,7 +54,7 @@ class Playlists extends EndpointPaging {
     if (collaborative != null) json['collaborative'] = collaborative;
     if (description != null) json['description'] = description;
 
-    return _extractSnapshotID(await _api._put(url, jsonEncode(json)));
+    await _api._put(url, jsonEncode(json));
   }
 
   /// [playlistId] - the ID of the playlist to update
@@ -220,7 +220,7 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('No playlist id was provided');
     }
-    final response = await _api._put('v1/playlists/$playlistId/items', body);
+    final response = await _api._put('$_path/$playlistId/items', body);
     return _extractSnapshotID(response);
   }
 
@@ -231,7 +231,7 @@ class Playlists extends EndpointPaging {
     if (playlistId.isEmpty) {
       throw ArgumentError('PlaylistId cannot be empty');
     }
-    final jsonString = await _api._get('v1/playlists/$playlistId/images');
+    final jsonString = await _api._get('$_path/$playlistId/images');
     final items = json.decode(jsonString) as Iterable<dynamic>;
     return items.map((item) => Image.fromJson(item));
   }
