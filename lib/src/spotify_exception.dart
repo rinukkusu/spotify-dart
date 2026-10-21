@@ -6,16 +6,23 @@ part of '../spotify.dart';
 class SpotifyException implements Exception {
   int? status;
   String? message;
+  SpotifyErrorReason? reason;
 
   SpotifyException([this.message]);
 
   SpotifyException.fromSpotify(SpotifyError error) {
     status = error.status;
     message = error.message;
+    reason = error.reason;
   }
 
   @override
   String toString() => 'Error Code: $status\r\n$message';
+}
+
+/// Exception when the API quota has been exceeded.
+class ApiQuotaException extends SpotifyException {
+  ApiQuotaException.fromSpotify(super.error) : super.fromSpotify();
 }
 
 /// Exception when the api requests have exceeded the rate limit
@@ -23,4 +30,10 @@ class ApiRateException extends SpotifyException {
   final num retryAfter;
 
   ApiRateException.fromSpotify(super.error, this.retryAfter) : super.fromSpotify();
+}
+
+enum SpotifyErrorReason {
+  @JsonValue('QUOTA_EXCEEDED')
+  quotaExceeded,
+  unknown;
 }

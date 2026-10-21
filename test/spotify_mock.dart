@@ -194,7 +194,7 @@ class MockClient implements oauth2.Client {
 
   http.Response createErrorResponse(MockHttpError error) {
     return http.Response(
-      _wrapMessageToJson(error.statusCode!, error.message!),
+      _wrapMessageToJson(error),
       error.statusCode!,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
@@ -202,8 +202,13 @@ class MockClient implements oauth2.Client {
     );
   }
 
-  String _wrapMessageToJson(int statusCode, String message) =>
-      '{ "error": {"status":$statusCode, "message": "$message"}}';
+  String _wrapMessageToJson(MockHttpError error) => jsonEncode({
+        'error': {
+          'status': error.statusCode,
+          'message': error.message,
+          if (error.reason != null) 'reason': error.reason,
+        },
+      });
 }
 
 class MockHttpError {
@@ -211,7 +216,9 @@ class MockHttpError {
   String? message;
   Map<String, String>? headers;
 
-  MockHttpError({this.statusCode, this.message, this.headers}) {
+  String? reason;
+
+  MockHttpError({this.statusCode, this.message, this.headers, this.reason}) {
     headers;
   }
 }

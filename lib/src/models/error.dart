@@ -19,4 +19,8 @@ class SpotifyError extends Object {
 
   /// A short description of the cause of the error.
   String? message;
+
+  /// An optional reason for the error e.g. `QUOTA_EXCEEDED`.
+  @JsonKey(unknownEnumValue: SpotifyErrorReason.unknown)
+  SpotifyErrorReason? reason;
 }
