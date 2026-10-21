@@ -67,6 +67,11 @@ class MockClient implements oauth2.Client {
     if (method == 'POST' && partialPath == 'v1/me/playlists') {
       partialPath = 'v1/me/playlists-create';
     }
+    if (['PUT', 'POST', 'DELETE'].contains(method) &&
+        partialPath.startsWith('v1/playlists/') &&
+        partialPath.endsWith('/items')) {
+      partialPath = '$partialPath-update';
+    }
     final file = File('test/data/$partialPath.json');
     return file.readAsStringSync();
   }
@@ -88,7 +93,7 @@ class MockClient implements oauth2.Client {
     if (err != null) {
       return createErrorResponse(err);
     }
-    return createSuccessResponse(_readPath(url));
+    return createSuccessResponse(_readPath(url, method: 'DELETE'));
   }
 
   @override
@@ -140,7 +145,7 @@ class MockClient implements oauth2.Client {
     Encoding? encoding,
   }) async {
     _intercept('PUT', url.toString(), headers, body.toString());
-    return createSuccessResponse(_readPath(url));
+    return createSuccessResponse(_readPath(url, method: 'PUT'));
   }
 
   @override
@@ -161,6 +166,14 @@ class MockClient implements oauth2.Client {
       return http.StreamedResponse(
         Stream.error(err),
         err.statusCode!,
+      );
+    }
+    if (request.method == 'DELETE' &&
+        request.url.path.startsWith('/v1/playlists/') &&
+        request.url.path.endsWith('/items')) {
+      return http.StreamedResponse(
+        Stream.value(utf8.encode(_readPath(request.url, method: 'DELETE'))),
+        HttpStatus.ok,
       );
     }
     return http.StreamedResponse(const Stream.empty(), HttpStatus.ok);
