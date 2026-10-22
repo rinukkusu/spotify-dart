@@ -67,6 +67,10 @@ class TrackSimple extends PlayableContent implements Restrictable {
   /// is the number on the specified disc.
   @JsonKey(name: 'track_number', fromJson: convertToIntIfDoubleValue)
   int? trackNumber;
+
+  /// Whether the track is a local file.
+  @JsonKey(name: 'is_local')
+  bool? isLocal;
 }
 
 /// A song saved in a Spotify user’s “Your Music” library

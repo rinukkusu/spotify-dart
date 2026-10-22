@@ -786,6 +786,7 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track()
   ..artists = (json['artists'] as List<dynamic>?)?.map((e) => Artist.fromJson(e as Map<String, dynamic>)).toList()
   ..discNumber = convertToIntIfDoubleValue(json['disc_number'])
   ..trackNumber = convertToIntIfDoubleValue(json['track_number'])
+  ..isLocal = json['is_local'] as bool?
   ..album = json['album'] == null ? null : AlbumSimple.fromJson(json['album'] as Map<String, dynamic>)
   ..externalIds =
       json['external_ids'] == null ? null : ExternalIds.fromJson(json['external_ids'] as Map<String, dynamic>)
@@ -804,6 +805,7 @@ Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
       'artists': instance.artists?.map((e) => e.toJson()).toList(),
       'disc_number': instance.discNumber,
       'track_number': instance.trackNumber,
+      'is_local': instance.isLocal,
       'album': instance.album?.toJson(),
       'external_ids': instance.externalIds?.toJson(),
       'preview_url': instance.previewUrl,
@@ -825,7 +827,8 @@ TrackSimple _$TrackSimpleFromJson(Map<String, dynamic> json) => TrackSimple()
   ..artists = (json['artists'] as List<dynamic>?)?.map((e) => Artist.fromJson(e as Map<String, dynamic>)).toList()
   ..discNumber = convertToIntIfDoubleValue(json['disc_number'])
   ..previewUrl = json['preview_url'] as String?
-  ..trackNumber = convertToIntIfDoubleValue(json['track_number']);
+  ..trackNumber = convertToIntIfDoubleValue(json['track_number'])
+  ..isLocal = json['is_local'] as bool?;
 
 Map<String, dynamic> _$TrackSimpleToJson(TrackSimple instance) => <String, dynamic>{
       'href': instance.href,
@@ -841,6 +844,7 @@ Map<String, dynamic> _$TrackSimpleToJson(TrackSimple instance) => <String, dynam
       'disc_number': instance.discNumber,
       'preview_url': instance.previewUrl,
       'track_number': instance.trackNumber,
+      'is_local': instance.isLocal,
     };
 
 TrackSaved _$TrackSavedFromJson(Map<String, dynamic> json) => TrackSaved()
