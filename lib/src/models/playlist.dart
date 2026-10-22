@@ -76,17 +76,6 @@ class Playlist extends SpotifyPlaylist {
 /// A playlist entry containing a track or podcast episode and its metadata.
 @JsonSerializable(createToJson: false)
 class PlaylistItem {
-  static PlayableContent? _itemFromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return null;
-    }
-    return switch (json['type']) {
-      'track' => Track.fromJson(json),
-      'episode' => Episode.fromJson(json),
-      _ => null,
-    };
-  }
-
   PlaylistItem();
 
   factory PlaylistItem.fromJson(Map<String, dynamic> json) => _$PlaylistItemFromJson(json);
@@ -107,6 +96,6 @@ class PlaylistItem {
 
   /// The track or episode in this entry.
   /// Unavailable items and unrecognized item types decode to `null`.
-  @JsonKey(fromJson: _itemFromJson, includeToJson: false)
+  @JsonKey(fromJson: _playableContentFromJson, includeToJson: false)
   PlayableContent? item;
 }

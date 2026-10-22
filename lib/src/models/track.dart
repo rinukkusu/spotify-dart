@@ -41,7 +41,7 @@ class Track extends TrackSimple {
 
 /// Json representation of a simplified track.
 @JsonSerializable()
-class TrackSimple extends PlayableContent {
+class TrackSimple extends PlayableContent implements Restrictable {
   TrackSimple();
 
   factory TrackSimple.fromJson(Map<String, dynamic> json) => _$TrackSimpleFromJson(json);

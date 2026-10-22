@@ -19,12 +19,14 @@ class PlaybackState {
   /// A [PlayerContext] Object. Can be `null`.
   PlayerContext? context;
 
-  /// Progress into the currently playing track. Can be `null`.
+  /// Progress into the currently playing track or episode. Can be `null`.
   @JsonKey(name: 'progress_ms', fromJson: convertToIntIfDoubleValue)
   int? progressMs;
 
-  /// The currently playing track. Can be `null`.
-  Track? item;
+  /// The currently playing track or episode. Unavailable or unrecognized items
+  /// decode to `null`.
+  @JsonKey(fromJson: _playableContentFromJson)
+  PlayableContent? item;
 
   /// The object type of the currently playing item. Can be one of
   /// [CurrentlyPlayingType.track], [CurrentlyPlayingType.episode],

@@ -34,7 +34,4 @@ class ChapterSimple extends SpokenAudioContent {
   /// The number of the chapter.
   @JsonKey(name: 'chapter_number', fromJson: convertToIntIfDoubleValue)
   int? chapterNumber;
-
-  /// Included in the response when a content restriction is applied.
-  Restrictions? restrictions;
 }

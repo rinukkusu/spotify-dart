@@ -10,6 +10,9 @@ class Album extends AlbumSimple {
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
 
+  @override
+  Map<String, dynamic> toJson() => _$AlbumToJson(this);
+
   /// The copyright statements of the album.
   List<Copyright>? copyrights;
 
@@ -26,7 +29,7 @@ class Album extends AlbumSimple {
 }
 
 @JsonSerializable()
-class AlbumSimple extends SpotifyContent {
+class AlbumSimple extends SpotifyContent implements Restrictable {
   AlbumSimple();
 
   factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
@@ -51,6 +54,9 @@ class AlbumSimple extends SpotifyContent {
   static AlbumType? _convertForAlbumType(String? json) {
     return AlbumType.values.asNameMap()[json?.toLowerCase()];
   }
+
+  @override
+  Restrictions? restrictions;
 
   /// The type of the album: one of "album", "single", or "compilation".
   @JsonKey(name: 'album_type', fromJson: _convertForAlbumType)

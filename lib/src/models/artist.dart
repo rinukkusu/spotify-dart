@@ -10,6 +10,9 @@ class Artist extends ArtistSimple {
 
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
 
+  @override
+  Map<String, dynamic> toJson() => _$ArtistToJson(this);
+
   /// A list of the genres the artist is associated with.
   /// For example:
   ///    "Prog Rock", "Post-Grunge".

@@ -9,10 +9,19 @@ class Queue extends Object {
 
   Map<String, dynamic> toJson() => _$QueueToJson(this);
 
-  /// The currently playing track in the queue
-  @JsonKey(name: 'currently_playing')
-  Track? currentlyPlaying;
+  static List<PlayableContent>? _queueFromJson(List<dynamic>? items) {
+    return items
+        ?.map((item) => _playableContentFromJson(item as Map<String, dynamic>?))
+        .whereType<PlayableContent>()
+        .toList();
+  }
 
-  /// All of the tracks that are added in the queue
-  List<Track>? queue;
+  /// The currently playing track or episode in the queue
+  @JsonKey(name: 'currently_playing', fromJson: _playableContentFromJson)
+  PlayableContent? currentlyPlaying;
+
+  /// The queued tracks and episodes, in playback order.
+  /// Unavailable items and unrecognized item types are omitted.
+  @JsonKey(fromJson: _queueFromJson)
+  List<PlayableContent>? queue;
 }

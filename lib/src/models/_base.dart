@@ -1,5 +1,17 @@
 part of '_models.dart';
 
+/// Decodes the [Track] or [Episode] returned by playlist and playback endpoints.
+/// Unavailable items and unrecognized types decode to `null`.
+PlayableContent? _playableContentFromJson(Map<String, dynamic>? json) {
+  if (json == null) return null;
+
+  return switch (json['type']) {
+    'track' => Track.fromJson(json),
+    'episode' => Episode.fromJson(json),
+    _ => null,
+  };
+}
+
 /// Base class for a Spotify resource with an ID and a Web API link.
 abstract class SpotifyResource {
   /// A link to the Web API endpoint providing full details of the resource.
@@ -31,9 +43,12 @@ abstract class SpotifyContent extends SpotifyResource {
 }
 
 /// Common base for audio content such as [Track]s, [EpisodeSimple]s, and [Chapter]s.
-abstract class PlayableContent extends SpotifyContent implements Explicitable {
+abstract class PlayableContent extends SpotifyContent implements Explicitable, Restrictable {
   /// The name of the content.
   String? name;
+
+  @override
+  Restrictions? restrictions;
 
   /// Whether the content has explicit lyrics or other explicit material.
   @override
@@ -55,6 +70,10 @@ abstract class PlayableContent extends SpotifyContent implements Explicitable {
 abstract interface class Explicitable {
   /// Whether the content has explicit lyrics or other explicit material.
   bool? explicit;
+}
+
+abstract interface class Restrictable {
+  Restrictions? get restrictions;
 }
 
 /// Shared metadata for podcast episodes and audiobook chapters.
