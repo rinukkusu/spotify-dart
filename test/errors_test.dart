@@ -108,7 +108,7 @@ Future main() async {
         spotify.artists.get('0TnOYISbd1XYRBk9myaseg'),
         completion(
           isA<Artist>()
-              .having((artist) => artist.type, 'type', 'artist')
+              .having((artist) => artist.type, 'type', SpotifyContentType.artist)
               .having((artist) => artist.id, 'id', '0TnOYISbd1XYRBk9myaseg')
               .having((artist) => artist.images!.length, 'images length', 3),
         ),
