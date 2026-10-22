@@ -24,7 +24,7 @@ Future main() async {
       expect(firstItem.explicit, true);
       expect(firstItem.isPlayable, true);
       expect(firstItem.durationMs, 1686230);
-      expect(firstItem.languages, ['en']);
+      expect(firstItem.languages, ['fr', 'en']);
     });
   });
 }
