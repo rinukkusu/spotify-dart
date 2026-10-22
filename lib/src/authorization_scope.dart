@@ -7,13 +7,16 @@ part of '../spotify.dart';
 
 /// Class holding all available authorization scopes.
 /// See [Spotify scopes documentation](https://developer.spotify.com/documentation/web-api/concepts/scopes)
+///
+/// For [LibraryMe] methods, request the scopes for the URI types being passed.
+/// A request containing multiple item types needs the scopes for each type.
 class AuthorizationScope {
   const AuthorizationScope();
 
   /// Scope regarding users
   static const UserAuthorizationScope user = UserAuthorizationScope();
 
-  /// Scope regarding playback
+  /// Scope regarding playlists
   static PlaylistAuthorizationScope playlist = const PlaylistAuthorizationScope();
 
   /// Scope regarding images (e.g. playlist images)
@@ -55,15 +58,15 @@ class FollowAuthorizationScope extends _Scope {
   /// Read access to the list of artists and other users that the user follows.
   ///
   /// Endpoints that require the `user-follow-read` scope:
-  /// * [Me.containsFollowing]
   /// * [Me.following]
+  /// * [LibraryMe.contains] and [LibraryMe.containsOne] with [ArtistUri] or [UserUri]
   String get read => 'user-follow-read';
 
   /// Write/delete access to the list of artists and other users that the user follows.
   ///
   /// Endpoints that require the `user-follow-modify` scope:
-  /// * [Me.follow]
-  /// * [Me.unfollow]
+  /// * [LibraryMe.save] and [LibraryMe.saveOne] with [ArtistUri] or [UserUri]
+  /// * [LibraryMe.remove] and [LibraryMe.removeOne] with [ArtistUri] or [UserUri]
   String get modify => 'user-follow-modify';
 
   @override
@@ -77,9 +80,7 @@ class ListeningHistoryAuthorizationScope extends _Scope {
   ///
   /// Endpoints that require the `user-read-playback-position` scope:
   /// * [Episodes.get]
-  /// * [Episodes.list]
   /// * [Shows.get]
-  /// * [Shows.list]
   /// * [Shows.episodes]
   String get readPlaybackPosition => 'user-read-playback-position';
 
@@ -93,7 +94,7 @@ class ListeningHistoryAuthorizationScope extends _Scope {
   /// Read access to a user’s recently played tracks.
   ///
   /// Endpoints that require the `user-read-recently-played` scope:
-  /// * [PlayerEndpoint.currentlyPlaying]
+  /// * [Me.recentlyPlayed]
   String get readRecentlyPlayed => 'user-read-recently-played';
 
   @override
@@ -139,41 +140,24 @@ class ConnectAuthorizationScope extends _Scope {
 }
 
 class LibraryAuthorizationScope extends _Scope {
-  /// Read access to a user's library.
+  /// Read access to a user's saved albums, tracks, episodes, audiobooks, and shows.
   ///
   /// Endpoints that require the `user-library-read` scope:
-  /// * [AlbumsMe.containsOne]
-  /// * [AlbumsMe.contains]
+  /// * [LibraryMe.contains] and [LibraryMe.containsOne] with [AlbumUri],
+  ///   [TrackUri], [EpisodeUri], [AudiobookUri], or [ShowUri]
   /// * [AlbumsMe.saved]
-  /// * [TracksMe.containsOne]
-  /// * [TracksMe.contains]
   /// * [TracksMe.saved]
-  /// * [EpisodesMe.containsOne]
-  /// * [EpisodesMe.contains]
   /// * [EpisodesMe.saved]
-  /// * [AudiobooksMe.containsOne]
-  /// * [AudiobooksMe.contains]
   /// * [AudiobooksMe.saved]
-  /// * [ShowsMe.containsOne]
-  /// * [ShowsMe.contains]
   /// * [ShowsMe.saved]
   String get read => 'user-library-read';
 
-  /// Write/delete access to a user's "Your Music" library.
+  /// Save/remove access to a user's albums, tracks, episodes, audiobooks, and shows.
   ///
   /// Endpoints that require the `user-library-modify` scope:
-  /// * [TracksMe.saveOne]
-  /// * [TracksMe.save]
-  /// * [TracksMe.remove]
-  /// * [TracksMe.removeOne]
-  /// * [PlaylistsMe.save]
-  /// * [PlaylistsMe.remove]
-  /// * [ShowsMe.save]
-  /// * [ShowsMe.remove]
-  /// * [EpisodesMe.save]
-  /// * [EpisodesMe.remove]
-  /// * [AlbumsMe.save]
-  /// * [AlbumsMe.remove]
+  /// * [LibraryMe.save] and [LibraryMe.saveOne] with [AlbumUri], [TrackUri],
+  ///   [EpisodeUri], [AudiobookUri], or [ShowUri]
+  /// * [LibraryMe.remove] and [LibraryMe.removeOne] with the same URI types
   String get modify => 'user-library-modify';
 
   @override
@@ -207,22 +191,17 @@ class PlaylistAuthorizationScope extends _Scope {
   /// Read access to user's private playlists.
   ///
   /// Endpoints that require the `playlist-read-private` scope:
-  /// * [Playlists.followedByUsers]
+  /// * [LibraryMe.contains] and [LibraryMe.containsOne] with [PlaylistUri]
   /// * [PlaylistsMe.saved]
-  /// * [Users.playlist]
   String get readPrivate => 'playlist-read-private';
 
   /// Write access to a user's private playlists.
   ///
   /// Endpoints that require the `playlist-modify-private` scope:
-  /// * [Playlists.followPlaylist]
-  /// * [Playlists.unfollowPlaylist]
   /// * [Playlists.addTrack]
   /// * [Playlists.addTracks]
   /// * [PlaylistsMe.create]
-  /// * [Playlists.createPlaylist]
   /// * [Playlists.updatePlaylist]
-  /// * [Playlists.removePlaylist]
   /// * [Playlists.removeTrack]
   /// * [Playlists.removeTracks]
   /// * [Playlists.replace]
@@ -233,20 +212,18 @@ class PlaylistAuthorizationScope extends _Scope {
   /// Include collaborative playlists when requesting a user's playlists.
   ///
   /// Endpoints that require the `playlist-read-collaborative` scope:
-  /// * [Users.playlist]
+  /// * [PlaylistsMe.saved]
   String get readCollaborative => 'playlist-read-collaborative';
 
-  /// Write access to a user's public playlists.
+  /// Write access to a user's public playlists and save/remove access to playlists.
   ///
   /// Endpoints that require the `playlist-modify-public` scope:
-  /// * [Playlists.followPlaylist]
-  /// * [Playlists.unfollowPlaylist]
+  /// * [LibraryMe.save] and [LibraryMe.saveOne] with [PlaylistUri]
+  /// * [LibraryMe.remove] and [LibraryMe.removeOne] with [PlaylistUri]
   /// * [Playlists.addTrack]
   /// * [Playlists.addTracks]
   /// * [PlaylistsMe.create]
-  /// * [Playlists.createPlaylist]
   /// * [Playlists.updatePlaylist]
-  /// * [Playlists.removePlaylist]
   /// * [Playlists.removeTrack]
   /// * [Playlists.removeTracks]
   /// * [Playlists.replace]

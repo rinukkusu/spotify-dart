@@ -1,0 +1,30 @@
+# When this file exists, pub ignores .gitignore in this directory,
+# so its rules are repeated here. Keep both files in sync.
+
+# Files and directories created by pub
+.dart_tool/
+.packages
+.pub/
+build/
+pubspec.lock
+
+# Directory created by dartdoc
+doc/api/
+
+.apikeys
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# MacOS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
+
+# Spotify API spec snapshot, only used by the sync workflow
+tool/

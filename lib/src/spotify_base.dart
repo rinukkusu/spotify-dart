@@ -322,10 +322,13 @@ abstract class SpotifyApiBase {
       final jsonMap = json.decode(responseBody);
       final error = SpotifyError.fromJson(jsonMap['error']);
       if (response.statusCode == 429) {
-        throw ApiRateException.fromSpotify(
-          error,
-          num.parse(response.headers['retry-after']!),
-        );
+        if (error.reason == SpotifyErrorReason.quotaExceeded) {
+          throw ApiQuotaException.fromSpotify(error);
+        }
+        final retryAfter = num.tryParse(response.headers['retry-after'] ?? '');
+        if (retryAfter != null && retryAfter.isFinite && retryAfter >= 0) {
+          throw ApiRateException.fromSpotify(error, retryAfter);
+        }
       }
       throw SpotifyException.fromSpotify(
         error,

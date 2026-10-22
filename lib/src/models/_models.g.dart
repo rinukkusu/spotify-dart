@@ -402,12 +402,19 @@ const _$DeviceTypeEnumMap = {
 
 SpotifyError _$SpotifyErrorFromJson(Map<String, dynamic> json) => SpotifyError()
   ..status = convertToIntIfDoubleValue(json['status'])
-  ..message = json['message'] as String?;
+  ..message = json['message'] as String?
+  ..reason = $enumDecodeNullable(_$SpotifyErrorReasonEnumMap, json['reason'], unknownValue: SpotifyErrorReason.unknown);
 
 Map<String, dynamic> _$SpotifyErrorToJson(SpotifyError instance) => <String, dynamic>{
       'status': instance.status,
       'message': instance.message,
+      'reason': _$SpotifyErrorReasonEnumMap[instance.reason],
     };
+
+const _$SpotifyErrorReasonEnumMap = {
+  SpotifyErrorReason.quotaExceeded: 'QUOTA_EXCEEDED',
+  SpotifyErrorReason.unknown: 'unknown',
+};
 
 Followers _$FollowersFromJson(Map<String, dynamic> json) => Followers()
   ..href = json['href'] as String?
