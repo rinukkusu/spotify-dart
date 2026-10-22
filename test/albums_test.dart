@@ -34,7 +34,7 @@ Future main() async {
       expect(trackOne.id, '6OmhkSOpvYBokMKQxpIGx2');
       expect(trackOne.isPlayable, isNull);
       expect(trackOne.type, SpotifyContentType.track);
-      expect(trackOne.uri, 'spotify:track:6OmhkSOpvYBokMKQxpIGx2');
+      expect(trackOne.uri, TrackUri('6OmhkSOpvYBokMKQxpIGx2'));
       expect(trackOne.explicit, true);
       expect(
         trackOne.href,

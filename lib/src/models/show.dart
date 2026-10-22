@@ -18,10 +18,6 @@ class Show extends SpotifyContent {
   /// (true = yes it does; false = no it does not OR unknown).
   bool? explicit;
 
-  /// Known external URLs for this show.
-  @JsonKey(name: 'external_urls')
-  ExternalUrls? externalUrls;
-
   /// The cover art for the show in various sizes, widest first.
   List<Image>? images;
 
@@ -58,5 +54,6 @@ class Show extends SpotifyContent {
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ShowToJson(this);
 }

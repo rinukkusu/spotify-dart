@@ -20,11 +20,12 @@ class Audiobook extends AudiobookSimple {
 
 /// Json representation of a simplified audiobook object
 @JsonSerializable()
-class AudiobookSimple extends Object {
+class AudiobookSimple extends SpotifyContent implements Explicitable {
   AudiobookSimple();
 
   factory AudiobookSimple.fromJson(Map<String, dynamic> json) => _$AudiobookSimpleFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$AudiobookSimpleToJson(this);
 
   /// Helper function that unwraps the items from the paging object
@@ -58,17 +59,8 @@ class AudiobookSimple extends Object {
   String? edition;
 
   /// Whether or not the audiobook has explicit content
+  @override
   bool? explicit;
-
-  /// Known external URLs for this audiobook
-  @JsonKey(name: 'external_urls')
-  ExternalUrls? externalUrls;
-
-  /// A link to the Web API endpoint providing full details of the audiobook
-  String? href;
-
-  /// The Spotify ID for the audiobook
-  String? id;
 
   /// The cover art for the audiobook in various sizes
   List<Image>? images;
@@ -90,27 +82,30 @@ class AudiobookSimple extends Object {
   /// The number of chapters in this audiobook
   @JsonKey(name: 'total_chapters', fromJson: convertToIntIfDoubleValue)
   int? totalChapters;
-
-  /// The object type
-  String? type;
-
-  /// The Spotify URI for the audiobook
-  String? uri;
 }
 
-/// Json representation of a saved audiobook
+/// Json representation of an audiobook author
 @JsonSerializable()
-class AudiobookSaved extends Object {
-  AudiobookSaved();
+class Author {
+  Author();
 
-  factory AudiobookSaved.fromJson(Map<String, dynamic> json) => _$AudiobookSavedFromJson(json);
+  factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AudiobookSavedToJson(this);
+  Map<String, dynamic> toJson() => _$AuthorToJson(this);
 
-  /// The date and time the audiobook was saved
-  @JsonKey(name: 'added_at')
-  DateTime? addedAt;
+  /// The name of the author
+  String? name;
+}
 
-  /// Information about the audiobook
-  Audiobook? audiobook;
+/// Json representation of an audiobook narrator
+@JsonSerializable()
+class Narrator {
+  Narrator();
+
+  factory Narrator.fromJson(Map<String, dynamic> json) => _$NarratorFromJson(json);
+
+  Map<String, dynamic> toJson() => _$NarratorToJson(this);
+
+  /// The name of the narrator
+  String? name;
 }

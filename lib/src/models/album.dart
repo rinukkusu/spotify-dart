@@ -10,9 +10,6 @@ class Album extends AlbumSimple {
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
 
-  @override
-  Map<String, dynamic> toJson() => _$AlbumToJson(this);
-
   /// The copyright statements of the album.
   List<Copyright>? copyrights;
 
@@ -29,11 +26,12 @@ class Album extends AlbumSimple {
 }
 
 @JsonSerializable()
-class AlbumSimple extends Object {
+class AlbumSimple extends SpotifyContent {
   AlbumSimple();
 
   factory AlbumSimple.fromJson(Map<String, dynamic> json) => _$AlbumSimpleFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$AlbumSimpleToJson(this);
 
   /// Helper function that unwraps the items from the paging object.
@@ -62,16 +60,6 @@ class AlbumSimple extends Object {
   /// more detailed information about the artist.
   List<ArtistSimple>? artists;
 
-  /// Known external URLs for this album.
-  @JsonKey(name: 'external_urls')
-  ExternalUrls? externalUrls;
-
-  /// A link to the Web API endpoint providing full details of the album.
-  String? href;
-
-  /// The Spotify ID for the album.
-  String? id;
-
   /// The cover art for the album in various sizes, widest first.
   List<Image>? images;
 
@@ -89,11 +77,8 @@ class AlbumSimple extends Object {
   @JsonKey(name: 'release_date_precision')
   DatePrecision? releaseDatePrecision;
 
-  /// The object type: "album"
-  String? type;
-
-  /// The Spotify URI for the album.
-  String? uri;
+  @JsonKey(name: 'total_tracks')
+  int? totalTracks;
 
   /// The tracks of this album.
   @JsonKey(fromJson: _extractTracksFromPage)

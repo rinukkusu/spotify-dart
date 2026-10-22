@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of a user
 @JsonSerializable()
-class User extends Object implements UserPublic {
+class User extends UserPublic {
   User();
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -22,60 +22,24 @@ class User extends Object implements UserPublic {
   /// This field is only available when the current user has granted access to
   /// the user-read-birthdate scope.
   String? birthdate;
-
-  /// The name displayed on the user's profile. null if not available.
-  @JsonKey(name: 'display_name')
-  @override
-  String? displayName;
-
-  /// A link to the Web API endpoint for this user.
-  @override
-  String? href;
-
-  /// The Spotify user ID for this user.
-  @override
-  String? id;
-
-  /// The user's profile image.
-  @override
-  List<Image>? images;
-
-  /// The object type: "user"
-  @override
-  String? type;
-
-  /// The Spotify URI for this user.
-  @override
-  String? uri;
 }
 
 /// Json representation of a publicly displayed user
 @JsonSerializable()
-class UserPublic extends Object {
+class UserPublic extends SpotifyContent {
   UserPublic();
 
   factory UserPublic.fromJson(Map<String, dynamic> json) => _$UserPublicFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$UserPublicToJson(this);
 
   /// The name displayed on the user's profile. null if not available.
   @JsonKey(name: 'display_name')
   String? displayName;
 
-  /// A link to the Web API endpoint for this user.
-  String? href;
-
-  /// The Spotify user ID for this user.
-  String? id;
-
   /// The user's profile image.
   List<Image>? images;
-
-  /// The object type: "user"
-  String? type;
-
-  /// The Spotify URI for this user.
-  String? uri;
 }
 
 /// Json representation of the playback history

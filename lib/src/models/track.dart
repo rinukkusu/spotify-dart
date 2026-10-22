@@ -46,6 +46,7 @@ class TrackSimple extends PlayableContent {
 
   factory TrackSimple.fromJson(Map<String, dynamic> json) => _$TrackSimpleFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$TrackSimpleToJson(this);
 
   /// The artists who performed the track. Each artist object includes a link
@@ -86,7 +87,7 @@ class TrackSaved extends Object {
 }
 
 @JsonSerializable()
-class TracksLink extends Object {
+class TracksLink {
   TracksLink();
 
   factory TracksLink.fromJson(Map<String, dynamic> json) => _$TracksLinkFromJson(json);

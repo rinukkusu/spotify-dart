@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of the playback state
 @JsonSerializable()
-class PlaybackState extends Object {
+class PlaybackState {
   PlaybackState();
 
   factory PlaybackState.fromJson(Map<String, dynamic> json) => _$PlaybackStateFromJson(json);
@@ -76,7 +76,7 @@ class PlayerContext extends Object {
 }
 
 @JsonSerializable()
-class Actions extends Object {
+class Actions {
   Actions();
 
   factory Actions.fromJson(Map<String, dynamic> json) => _$ActionsFromJson(json);

@@ -18,6 +18,44 @@ abstract class SpotifyUri {
 
   SpotifyUri(this.id, this._type);
 
+  /// Parses a URI of the form `spotify:<type>:<id>`.
+  ///
+  /// Throws [FormatException] for malformed or unsupported URI formats.
+  factory SpotifyUri.parse(String value) {
+    final uri = SpotifyUri.tryParse(value);
+    if (uri == null) {
+      throw FormatException('Malformed or unsupported Spotify URI', value);
+    }
+    return uri;
+  }
+
+  /// Parses a supported URI, returning `null` for malformed, unsupported,
+  /// or non-string values.
+  static SpotifyUri? tryParse(Object? value) {
+    if (value is! String || !value.startsWith('spotify:')) {
+      return null;
+    }
+    final separator = value.indexOf(':', 8);
+    if (separator < 0) {
+      return null;
+    }
+    final type = UriType.values.asNameMap()[value.substring(8, separator)];
+    final id = value.substring(separator + 1);
+    if (type == null || id.isEmpty || _invalidIdCharacters.hasMatch(id)) {
+      return null;
+    }
+    return switch (type) {
+      UriType.album => AlbumUri(id),
+      UriType.artist => ArtistUri(id),
+      UriType.audiobook => AudiobookUri(id),
+      UriType.episode => EpisodeUri(id),
+      UriType.playlist => PlaylistUri(id),
+      UriType.show => ShowUri(id),
+      UriType.track => TrackUri(id),
+      UriType.user => UserUri(id),
+    };
+  }
+
   @override
   String toString() => 'spotify:${_type.name}:$id';
 

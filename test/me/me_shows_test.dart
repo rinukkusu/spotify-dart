@@ -24,7 +24,7 @@ Future main() async {
       expect(firstItem.languages, hasLength(1));
       expect(firstItem.mediaType, 'audio');
 
-      expect(firstItem.uri, ShowUri('4XPl3uEEL9hvqMkoZrzbx5').toString());
+      expect(firstItem.uri, ShowUri('4XPl3uEEL9hvqMkoZrzbx5'));
     });
   });
 }

@@ -23,7 +23,7 @@ Future main() async {
       expect(firstItem.artists!.first.id, '6VuMaDnrHyPL1p4EHjYLi7');
       expect(firstItem.tracks, hasLength(13));
       expect(firstItem.releaseDate, '2016-01-29');
-      expect(firstItem.uri, AlbumUri('5Nwsra93UQYJ6xxcjcE10x').toString());
+      expect(firstItem.uri, AlbumUri('5Nwsra93UQYJ6xxcjcE10x'));
     });
   });
 }

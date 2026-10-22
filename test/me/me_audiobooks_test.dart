@@ -18,16 +18,15 @@ Future main() async {
       final firstPage = await (albumsPage.first());
       final firstItem = firstPage.items?.first;
       expect(firstItem, isNotNull);
-      expect(firstItem!.audiobook, isNotNull);
-      expect(firstItem.audiobook!.id, 'savedbook');
-      expect(firstItem.audiobook!.authors, hasLength(1));
-      expect(firstItem.audiobook!.description, 'A saved audiobook');
+      expect(firstItem!.id, 'savedbook');
+      expect(firstItem.authors, hasLength(1));
+      expect(firstItem.description, 'A saved audiobook');
 
-      expect(firstItem.audiobook!.totalChapters, 12);
-      expect(firstItem.audiobook!.name, 'Saved Audiobook');
-      expect(firstItem.audiobook!.explicit, false);
-      expect(firstItem.audiobook!.edition, 'Unabridged');
-      expect(firstItem.audiobook!.uri, AudiobookUri('savedbook').toString());
+      expect(firstItem.totalChapters, 12);
+      expect(firstItem.name, 'Saved Audiobook');
+      expect(firstItem.explicit, false);
+      expect(firstItem.edition, 'Unabridged');
+      expect(firstItem.uri, AudiobookUri('savedbook'));
     });
   });
 }

@@ -10,11 +10,11 @@ class Episodes extends EndpointBase {
 
   Episodes(super.api);
 
-  Future<EpisodeFull> get(String id, [Market? market]) async {
+  Future<Episode> get(String id, [Market? market]) async {
     if (id.isEmpty) {
       throw ArgumentError('No episode id was provided');
     }
     final jsonString = await _api._get('$_path/$id?${_buildQuery({'market': market?.name})}');
-    return EpisodeFull.fromJson(jsonDecode(jsonString));
+    return Episode.fromJson(jsonDecode(jsonString));
   }
 }

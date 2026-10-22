@@ -291,7 +291,7 @@ Future<void> _replaceItemsInPlaylist(SpotifyApi spotify) async {
   print('Tracks before: ${playlistTracks.map((e) => e.item!.name)}');
 
   // replaces the whole playlist with only the first item
-  await spotify.playlists.replace(playlistId, [playlistTracks.first.item!.uri ?? '']);
+  await spotify.playlists.replace(playlistId, [playlistTracks.first.item!.uri?.toString() ?? '']);
 
   playlistTracks = await _getPlaylistTracks(spotify, playlistId);
   print('Tracks after: ${playlistTracks.map((e) => e.item!.name)}');
@@ -299,7 +299,7 @@ Future<void> _replaceItemsInPlaylist(SpotifyApi spotify) async {
   await _removePrivatePlaylist(spotify, playlist.id ?? '');
 }
 
-Future<Iterable<PlaylistTrack>> _getPlaylistTracks(
+Future<Iterable<PlaylistItem>> _getPlaylistTracks(
   SpotifyApi spotify,
   String playlistId,
 ) async {

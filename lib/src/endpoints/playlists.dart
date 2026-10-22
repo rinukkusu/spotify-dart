@@ -17,13 +17,12 @@ class Playlists extends EndpointPaging {
     );
   }
 
-  /// Returns [PlaylistTrack]s for a given [playlistId].
-  Pages<PlaylistTrack> getPlaylistTracks(String playlistId) {
-    // restricting the return items to `track`
-    final query = _buildQuery({'additional_types': 'track'});
+  /// Returns playlist entries containing tracks or episodes for [playlistId].
+  Pages<PlaylistItem> getPlaylistTracks(String playlistId) {
+    final query = _buildQuery({'additional_types': 'track,episode'});
     return _getPages(
       'v1/playlists/$playlistId/items?$query',
-      (json) => PlaylistTrack.fromJson(json),
+      (json) => PlaylistItem.fromJson(json),
       null,
       null,
       (json) => json['item'] != null,

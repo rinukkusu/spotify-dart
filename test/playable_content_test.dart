@@ -27,7 +27,6 @@ Map<String, dynamic> trackJson() => {
 
 Map<String, dynamic> episodeJson() => {
       ...audioJson('episode'),
-      'audio_preview_url': 'https://example.com/episode.mp3',
       'description': 'Episode description',
       'images': [
         {'url': 'https://example.com/cover.jpg', 'width': 640, 'height': 640},
@@ -35,17 +34,17 @@ Map<String, dynamic> episodeJson() => {
       'is_externally_hosted': true,
       'language': 'en',
       'languages': ['en', 'de'],
-      'release_date': '2024-01-02T00:00:00.000',
+      'release_date': '2024-01-02',
       'release_date_precision': 'day',
     };
 
 // Exercise the public JSON encoder, including nested model serialization.
 Map<String, dynamic> encoded(Object model) => jsonDecode(jsonEncode(model)) as Map<String, dynamic>;
 
-void expectAudio(PlayableContent content, SpotifyContentType type) {
+void expectAudio(PlayableContent content, SpotifyContentType type, {bool hasUri = true}) {
   expect(content.href, 'https://api.spotify.com/v1/${type.name}s/audio-id');
   expect(content.id, 'audio-id');
-  expect(content.uri, 'spotify:${type.name}:audio-id');
+  expect(content.uri, hasUri ? SpotifyUri.parse('spotify:${type.name}:audio-id') : isNull);
   expect(content.type, type);
   expect(content.name, 'Audio title');
   expect(content.externalUrls?.spotify, 'https://open.spotify.com/${type.name}/audio-id');
@@ -55,24 +54,23 @@ void expectAudio(PlayableContent content, SpotifyContentType type) {
   expect(content.isPlayable, isFalse);
 }
 
-void expectTrack(TrackSimple track) {
-  expectAudio(track, SpotifyContentType.track);
+void expectTrack(TrackSimple track, {bool hasUri = true}) {
+  expectAudio(track, SpotifyContentType.track, hasUri: hasUri);
   expect(track.artists?.single.name, 'Artist');
   expect(track.discNumber, 2);
   expect(track.trackNumber, 3);
   expect(track.previewUrl, 'https://example.com/preview.mp3');
 }
 
-void expectEpisode(Episode episode) {
-  expectAudio(episode, SpotifyContentType.episode);
-  expect(episode.audioPreviewUrl, 'https://example.com/episode.mp3');
+void expectEpisode(EpisodeSimple episode, {bool hasUri = true}) {
+  expectAudio(episode, SpotifyContentType.episode, hasUri: hasUri);
   expect(episode.description, 'Episode description');
   expect(episode.images?.single.url, 'https://example.com/cover.jpg');
   expect(episode.isExternallyHosted, isTrue);
   expect(episode.language, 'en');
   expect(episode.languages, ['en', 'de']);
-  expect(episode.releaseDate, DateTime(2024, 1, 2));
-  expect(episode.releaseDatePrecision, 'day');
+  expect(episode.releaseDate, '2024-01-02');
+  expect(episode.releaseDatePrecision, DatePrecision.day);
 }
 
 void expectJsonFields(Map<String, dynamic> actual, Map<String, dynamic> expected) {
@@ -99,11 +97,12 @@ void main() {
     final track = TrackSimple.fromJson(input);
     expectTrack(track);
     final output = encoded(track);
-    expectJsonFields(output, input);
+    expectJsonFields(output, {...input}..remove('uri'));
+    expect(output, isNot(contains('uri')));
     expect(output['duration_ms'], isA<int>());
     expect(output['disc_number'], isA<int>());
     expect(output['track_number'], isA<int>());
-    expectTrack(TrackSimple.fromJson(output));
+    expectTrack(TrackSimple.fromJson(output), hasUri: false);
   });
 
   test('Track inherits track fields and preserves album and external IDs', () {
@@ -117,9 +116,10 @@ void main() {
     expect(track.album?.id, 'album-id');
     expect(track.externalIds?.isrc, 'TEST123');
     final output = encoded(track);
-    expectJsonFields(output, input);
+    expectJsonFields(output, {...input}..remove('uri'));
+    expect(output, isNot(contains('uri')));
     final roundTrip = Track.fromJson(output);
-    expectTrack(roundTrip);
+    expectTrack(roundTrip, hasUri: false);
     expect(roundTrip.album?.name, 'Album');
     expect(roundTrip.externalIds?.isrc, 'TEST123');
 
@@ -131,11 +131,12 @@ void main() {
 
   test('Episode inherits audio fields and preserves episode JSON', () {
     final input = episodeJson();
-    final episode = Episode.fromJson(input);
+    final episode = EpisodeSimple.fromJson(input);
     expectEpisode(episode);
     final output = encoded(episode);
-    expectJsonFields(output, input);
-    expectEpisode(Episode.fromJson(output));
+    expectJsonFields(output, {...input}..remove('uri'));
+    expect(output, isNot(contains('uri')));
+    expectEpisode(EpisodeSimple.fromJson(output), hasUri: false);
   });
 
   test('EpisodeFull inherits episode fields and preserves the show', () {
@@ -143,14 +144,15 @@ void main() {
       ...episodeJson(),
       'show': {'id': 'show-id', 'name': 'Show', 'type': 'show', 'total_episodes': 12},
     };
-    final episode = EpisodeFull.fromJson(input);
+    final episode = Episode.fromJson(input);
     expectEpisode(episode);
     expect(episode.show?.id, 'show-id');
     expect(episode.show?.type, SpotifyContentType.show);
     final output = encoded(episode);
-    expectJsonFields(output, input);
-    final roundTrip = EpisodeFull.fromJson(output);
-    expectEpisode(roundTrip);
+    expectJsonFields(output, {...input}..remove('uri'));
+    expect(output, isNot(contains('uri')));
+    final roundTrip = Episode.fromJson(output);
+    expectEpisode(roundTrip, hasUri: false);
     expect(roundTrip.show?.name, 'Show');
     expect(roundTrip.show?.totalEpisodes, 12);
   });
@@ -158,8 +160,8 @@ void main() {
   final factories = <String, PlayableContent Function(Map<String, dynamic>)>{
     'TrackSimple': TrackSimple.fromJson,
     'Track': Track.fromJson,
-    'Episode': Episode.fromJson,
-    'EpisodeFull': EpisodeFull.fromJson,
+    'Episode': EpisodeSimple.fromJson,
+    'EpisodeFull': Episode.fromJson,
   };
   for (final entry in factories.entries) {
     test('${entry.key} preserves nullable audio fields and derives duration', () {

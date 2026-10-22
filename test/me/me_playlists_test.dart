@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:spotify/spotify.dart';
+
 import '../spotify_mock.dart';
 import 'package:test/test.dart';
 
@@ -21,7 +23,7 @@ Future main() async {
       expect(firstItem.public, false);
       expect(firstItem.itemsLink, isNotNull);
       expect(firstItem.itemsLink!.href, 'https://api.spotify.com/v1/playlists/a123/items');
-      expect(firstItem.uri, 'spotify:playlist:a123');
+      expect(firstItem.uri, PlaylistUri('a123'));
     });
 
     test('create', () async {

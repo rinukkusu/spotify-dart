@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of an image
 @JsonSerializable()
-class Image extends Object {
+class Image {
   Image();
 
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);

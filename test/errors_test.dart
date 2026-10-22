@@ -22,7 +22,7 @@ Future main() async {
         ),
       ).iterator;
       final artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
-      expect(artist.type, 'artist');
+      expect(artist.type, SpotifyContentType.artist);
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
       expect(artist.images!.length, 3);
     });
