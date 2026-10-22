@@ -17,7 +17,7 @@ Future main() async {
 
       expect(audiobook.id, '7iHfbu1YPACw6oZPAFJtqe');
       expect(audiobook.name, 'Sample Audiobook');
-      expect(audiobook.type, 'audiobook');
+      expect(audiobook.type, SpotifyContentType.audiobook);
       expect(audiobook.authors, isNotNull);
       expect(audiobook.authors!.length, 1);
       expect(audiobook.authors!.first.name, 'J.K. Rowling');
@@ -42,7 +42,7 @@ Future main() async {
       expect(chapter.name, 'Chapter 1: The Beginning');
       expect(chapter.chapterNumber, 1);
       expect(chapter.durationMs, 360000);
-      expect(chapter.type, 'episode');
+      expect(chapter.type, SpotifyContentType.episode);
       expect(chapter.resumePoint, isNotNull);
       expect(chapter.resumePoint!.fullyPlayed, false);
       expect(chapter.resumePoint!.resumePositionMs, 12000);
@@ -62,7 +62,7 @@ Future main() async {
 
       expect(chapter.id, '0IsXVP0JmcB2adSE338GkK');
       expect(chapter.name, 'Chapter 5: The Climax');
-      expect(chapter.type, 'episode');
+      expect(chapter.type, SpotifyContentType.episode);
       expect(chapter.chapterNumber, 5);
       expect(chapter.durationMs, 480000);
       expect(chapter.audiobook, isNotNull);

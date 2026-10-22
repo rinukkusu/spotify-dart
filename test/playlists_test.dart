@@ -31,7 +31,7 @@ Future main() async {
       expect(tracks, hasLength(2));
       expect(
         tracks.elementAt(0),
-        isA<PlaylistTrack>().having(
+        isA<PlaylistItem>().having(
           (p) => p.item,
           'item',
           isA<Track>().having((t) => t.id, 'id', 'track-1'),
@@ -39,10 +39,10 @@ Future main() async {
       );
       expect(
         tracks.elementAt(1),
-        isA<PlaylistTrack>().having(
+        isA<PlaylistItem>().having(
           (p) => p.item,
           'item',
-          isA<Track>().having((t) => t.id, 'id', 'track-3'),
+          isA<Episode>().having((t) => t.id, 'id', '5Xt5DXGzch68nYYamXrNxZ'),
         ),
       );
     });

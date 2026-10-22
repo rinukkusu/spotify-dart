@@ -36,7 +36,7 @@ class Shows extends EndpointPaging {
   /// [market]: An ISO 3166-1 alpha-2 country code or the string 'from_token'.
   /// If a country code is specified, only artists, albums, and tracks with
   /// content that is playable in that market is returned.
-  Pages<Episode> episodes(String showId, [Market? market]) {
+  Pages<EpisodeSimple> episodes(String showId, [Market? market]) {
     final query = _buildQuery({
       'market': market?.name,
     });
@@ -44,7 +44,7 @@ class Shows extends EndpointPaging {
 
     return _getPages(
       '$_path/$showId/episodes$queryString',
-      (json) => Episode.fromJson(json),
+      (json) => EpisodeSimple.fromJson(json),
     );
   }
 }

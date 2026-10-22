@@ -45,10 +45,10 @@ Future main() async {
         if (method == 'PUT') {
           expect(method, 'PUT');
           expect(body, isNotNull);
-          expect(body, '{"uris":["track1"],"position_ms":10}');
+          expect(body, '{"uris":["spotify:track:track1"],"position_ms":10}');
         }
       };
-      await spotify.player.startWithTracks(['track1'], positionMs: 10);
+      await spotify.player.startWithTracks([TrackUri('track1')], positionMs: 10);
     });
   });
 }

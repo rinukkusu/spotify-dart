@@ -35,14 +35,6 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// Returns the current playback state, including progress, track
   /// and active device. Returns an empty [PlaybackState] object when
   /// no playback context has been started.
-  @Deprecated('Use [playbackState] instead')
-  Future<PlaybackState> player([String? market]) async {
-    return playbackState(Market.values.asNameMap()[market]);
-  }
-
-  /// Returns the current playback state, including progress, track
-  /// and active device. Returns an empty [PlaybackState] object when
-  /// no playback context has been started.
   Future<PlaybackState> playbackState([Market? market]) async {
     final jsonString = await _api._get('$_path?${_buildQuery({'market': market?.name})}');
 
@@ -93,20 +85,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     return items.map((item) => Device.fromJson(item));
   }
 
-  /// Start a new context or resume current playback on the user's active
-  /// device.
-  ///
-  /// [deviceId] is optional. If not provided, the user's currently active
-  /// device is the target.
-  /// [options] is optional. If not provided, playback will start
-  /// from the context's current track.
-  /// [retrievePlaybackState] is optional. If true, the current playback state
-  /// will be retrieved. Defaults to true.
-  @Deprecated(
-    'Use `startWithTracks()` or `startWithContext()` to start a new context '
-    'and `resume()` instead',
-  )
-  Future<PlaybackState?> startOrResume({
+  Future<PlaybackState?> _startOrResume({
     String? deviceId,
     StartOrResumeOptions? options,
     bool retrievePlaybackState = true,
@@ -133,7 +112,7 @@ class PlayerEndpoint extends _MeEndpointBase {
   /// Note: Before starting a new playback context check the [playbackState] if
   /// necessary before [resume]ing, otherwise you overwrite the current context.
   Future<PlaybackState?> startWithTracks(
-    List<String> trackUris, {
+    List<SpotifyUri> trackUris, {
     String? deviceId,
     int positionMs = 0,
     bool retrievePlaybackState = true,
@@ -146,7 +125,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     }
 
     final options = StartWithUrisOptions(uris: trackUris, positionMs: positionMs);
-    return startOrResume(
+    return _startOrResume(
       deviceId: deviceId,
       options: options,
       retrievePlaybackState: retrievePlaybackState,
@@ -173,7 +152,7 @@ class PlayerEndpoint extends _MeEndpointBase {
       throw ArgumentError('Cannot start playback with empty context uri');
     }
     final options = StartWithContextOptions(contextUri: contextUri, offset: offset);
-    return startOrResume(
+    return _startOrResume(
       deviceId: deviceId,
       options: options,
       retrievePlaybackState: retrievePlaybackState,
@@ -190,7 +169,7 @@ class PlayerEndpoint extends _MeEndpointBase {
     String? deviceId,
     bool retrievePlaybackState = true,
   }) async =>
-      startOrResume(
+      _startOrResume(
         deviceId: deviceId,
         retrievePlaybackState: retrievePlaybackState,
       );

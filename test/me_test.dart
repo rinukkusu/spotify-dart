@@ -96,7 +96,7 @@ Future main() async {
         final firstItem = result.items?.first;
         expect(firstItem?.album?.albumType, AlbumType.album);
         expect(firstItem?.album?.name, 'Ali');
-        expect(firstItem?.album?.uri, 'spotify:album:4dfAJiDQHQf4dGX0ZdtxPh');
+        expect(firstItem?.album?.uri, AlbumUri('4dfAJiDQHQf4dGX0ZdtxPh'));
         expect(firstItem?.artists?.length, 2);
         expect(firstItem?.artists?.first.name, 'Vieux Farka Touré');
       });
@@ -116,7 +116,7 @@ Future main() async {
         expect(result.items!.length, 2);
 
         final firstShow = result.items!.first;
-        expect(firstShow.type, 'show');
+        expect(firstShow.type, SpotifyContentType.show);
         expect(firstShow.name != null, true);
         expect(firstShow.id, '4XPl3uEEL9hvqMkoZrzbx5');
       });
@@ -144,7 +144,7 @@ Future main() async {
         expect(result.items!.length, 1);
 
         final firstEpisode = result.items!.first;
-        expect(firstEpisode.type, 'episode');
+        expect(firstEpisode.type, SpotifyContentType.episode);
         expect(firstEpisode.name, isNotNull);
         expect(firstEpisode.id, '5Xt5DXGzch68nYYamXrNxZ');
         expect(firstEpisode.show, isNotNull);
@@ -175,11 +175,11 @@ Future main() async {
         expect(result.items!.length, 1);
 
         final saved = result.items!.first;
-        expect(saved.addedAt, isNotNull);
-        expect(saved.audiobook, isNotNull);
-        expect(saved.audiobook!.id, 'savedbook');
-        expect(saved.audiobook!.name, 'Saved Audiobook');
-        expect(saved.audiobook!.type, 'audiobook');
+        // expect(saved.addedAt, isNotNull);
+        expect(saved, isNotNull);
+        expect(saved.id, 'savedbook');
+        expect(saved.name, 'Saved Audiobook');
+        expect(saved.type, SpotifyContentType.audiobook);
       });
 
       test('contains audiobooks', () async {

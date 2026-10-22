@@ -14,7 +14,7 @@ Future main() async {
   group('Artists', () {
     test('get', () async {
       final artist = await spotify.artists.get('0TnOYISbd1XYRBk9myaseg');
-      expect(artist.type, 'artist');
+      expect(artist.type, SpotifyContentType.artist);
       expect(artist.id, '0TnOYISbd1XYRBk9myaseg');
       expect(artist.images!.length, 3);
       expect(artist.images![0].height, 640);

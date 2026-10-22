@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of the playback state
 @JsonSerializable()
-class PlaybackState extends Object {
+class PlaybackState {
   PlaybackState();
 
   factory PlaybackState.fromJson(Map<String, dynamic> json) => _$PlaybackStateFromJson(json);
@@ -19,12 +19,14 @@ class PlaybackState extends Object {
   /// A [PlayerContext] Object. Can be `null`.
   PlayerContext? context;
 
-  /// Progress into the currently playing track. Can be `null`.
+  /// Progress into the currently playing track or episode. Can be `null`.
   @JsonKey(name: 'progress_ms', fromJson: convertToIntIfDoubleValue)
   int? progressMs;
 
-  /// The currently playing track. Can be `null`.
-  Track? item;
+  /// The currently playing track or episode. Unavailable or unrecognized items
+  /// decode to `null`.
+  @JsonKey(fromJson: _playableContentFromJson)
+  PlayableContent? item;
 
   /// The object type of the currently playing item. Can be one of
   /// [CurrentlyPlayingType.track], [CurrentlyPlayingType.episode],
@@ -76,7 +78,7 @@ class PlayerContext extends Object {
 }
 
 @JsonSerializable()
-class Actions extends Object {
+class Actions {
   Actions();
 
   factory Actions.fromJson(Map<String, dynamic> json) => _$ActionsFromJson(json);
@@ -154,6 +156,8 @@ class StartWithContextOptions extends StartOrResumeOptions {
 class StartWithUrisOptions extends StartOrResumeOptions {
   StartWithUrisOptions({this.uris, this.positionMs});
 
+  static List<String>? _urisToJson(List<SpotifyUri>? uris) => uris?.map((uri) => uri.toString()).toList();
+
   /// Optional. A JSON array of the Spotify track URIs to play.
   ///
   /// Example:
@@ -163,7 +167,8 @@ class StartWithUrisOptions extends StartOrResumeOptions {
   ///     "spotify:track:1301WleyT98MSxVHPZCA6M"
   /// ]
   /// ```
-  List<String>? uris;
+  @JsonKey(toJson: _urisToJson)
+  List<SpotifyUri>? uris;
 
   /// Optional. The position in milliseconds to start playback.
   @JsonKey(name: 'position_ms', fromJson: convertToIntIfDoubleValue)

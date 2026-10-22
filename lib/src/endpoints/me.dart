@@ -237,7 +237,7 @@ class ShowsMe extends SavedMe<Show> {
 }
 
 /// Endpoint for authenticated user's episodes `v1/me/episodes`
-class EpisodesMe extends SavedMe<EpisodeFull> {
+class EpisodesMe extends SavedMe<Episode> {
   @override
   String get _path => '${super._path}/episodes';
 
@@ -247,8 +247,8 @@ class EpisodesMe extends SavedMe<EpisodeFull> {
   ///
   /// Requires the [LibraryAuthorizationScope.read] scope.
   @override
-  Pages<EpisodeFull> saved([Market? market]) => _savedImpl(
-        (json) => EpisodeFull.fromJson(json['episode']),
+  Pages<Episode> saved([Market? market]) => _savedImpl(
+        (json) => Episode.fromJson(json['episode']),
         market,
       );
 }
@@ -284,7 +284,7 @@ class TracksMe extends SavedMe<TrackSaved> {
 }
 
 /// Endpoint for authenticated user's audiobooks `v1/me/audiobooks`
-class AudiobooksMe extends SavedMe<AudiobookSaved> {
+class AudiobooksMe extends SavedMe<AudiobookSimple> {
   @override
   String get _path => '${super._path}/audiobooks';
 
@@ -295,7 +295,7 @@ class AudiobooksMe extends SavedMe<AudiobookSaved> {
   ///
   /// Requires the [LibraryAuthorizationScope.read] scope.
   @override
-  Pages<AudiobookSaved> saved() => _savedImpl((json) => AudiobookSaved.fromJson(json));
+  Pages<AudiobookSimple> saved() => _savedImpl((json) => AudiobookSimple.fromJson(json));
 }
 
 /// Endpoint for authenticated user's playlists `v1/me/playlists`

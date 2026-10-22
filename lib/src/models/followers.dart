@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of followers
 @JsonSerializable()
-class Followers extends Object {
+class Followers {
   Followers();
 
   factory Followers.fromJson(Map<String, dynamic> json) => _$FollowersFromJson(json);

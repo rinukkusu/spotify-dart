@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:spotify/spotify.dart';
 
 import '../spotify_mock.dart';
 import 'package:test/test.dart';
@@ -25,7 +26,7 @@ Future main() async {
       expect(firstItem.track!.trackNumber, 1);
       expect(firstItem.track!.isPlayable, true);
       expect(firstItem.track!.explicit, false);
-      expect(firstItem.track!.uri, 'spotify:track:4DMKwE2E2iYDKY01C335Uw');
+      expect(firstItem.track!.uri, TrackUri('4DMKwE2E2iYDKY01C335Uw'));
     });
   });
 }

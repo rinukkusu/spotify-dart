@@ -5,7 +5,7 @@ part of '_models.dart';
 
 /// Json representation of a show
 @JsonSerializable()
-class Show {
+class Show extends SpotifyContent implements Explicitable {
   Show();
 
   /// The copyright statements of the show.
@@ -14,19 +14,11 @@ class Show {
   /// A description of the show.
   String? description;
 
-  /// Whether or not the episode has explicit content
-  /// (true = yes it does; false = no it does not OR unknown).
+  @JsonKey(name: 'html_description')
+  String? htmlDescription;
+
+  @override
   bool? explicit;
-
-  /// Known external URLs for this show.
-  @JsonKey(name: 'external_urls')
-  ExternalUrls? externalUrls;
-
-  /// A link to the Web API endpoint providing full details of the show.
-  String? href;
-
-  /// The Spotify ID for the show.
-  String? id;
 
   /// The cover art for the show in various sizes, widest first.
   List<Image>? images;
@@ -46,12 +38,6 @@ class Show {
   /// The name of the show.
   String? name;
 
-  /// The object type: "show"
-  String? type;
-
-  /// The Spotify URI for the show.
-  String? uri;
-
   /// The number of total episodes in this show
   @JsonKey(
     name: 'total_episodes',
@@ -62,5 +48,6 @@ class Show {
 
   factory Show.fromJson(Map<String, dynamic> json) => _$ShowFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ShowToJson(this);
 }

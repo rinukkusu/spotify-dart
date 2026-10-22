@@ -111,9 +111,6 @@ abstract class BasePage<T> {
   Object? get container => _container;
 }
 
-@Deprecated('Use the [Page]\'s defaultLimit attribute instead')
-const defaultLimit = 20;
-
 /// A page that uses an offset to get to the next page.
 class Page<T> extends BasePage<T> {
   Page(
@@ -243,7 +240,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages<V> implement
         );
 
   Future<Iterable<T>> all([int? limit]) {
-    return stream(limit ?? this.defaultLimit)
+    return stream(limit ?? defaultLimit)
         .map((page) => page.items)
         .toList()
         .then((pages) => pages.expand((page) => page!));
@@ -273,7 +270,7 @@ abstract class SinglePages<T, V extends BasePage<T>> extends _Pages<V> implement
       }
 
       // Otherwise get the next page
-      _getPage(limit ?? this.defaultLimit, page._next).then(handlePageAndGetNext);
+      _getPage(limit ?? defaultLimit, page._next).then(handlePageAndGetNext);
     }
 
     stream = StreamController<V>(

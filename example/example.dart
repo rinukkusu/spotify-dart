@@ -36,7 +36,7 @@ void main() async {
   print(album.name);
 
   print('\nAlbum Tracks:');
-  final tracks = await spotify.albums.getTracks(album.id!).all();
+  final tracks = await spotify.albums.tracks(album.id!).all();
   for (final track in tracks) {
     print(track.name);
   }
@@ -52,10 +52,10 @@ void main() async {
     for (final item in pages.items!) {
       if (item is PlaylistSimple) {
         print('Playlist: \n'
-            'id: ${item.id}\n'
+            // 'id: ${item.id}\n'
             'name: ${item.name}:\n'
             'collaborative: ${item.collaborative}\n'
-            'href: ${item.href}\n'
+            // 'href: ${item.href}\n'
             'itemslink: ${item.itemsLink!.href}\n'
             'owner: ${item.owner}\n'
             'public: ${item.owner}\n'
@@ -79,7 +79,7 @@ void main() async {
             'id: ${item.id}\n'
             'name: ${item.name}\n'
             'href: ${item.href}\n'
-            'type: ${item.type}\n'
+            'type: ${item.type?.name}\n'
             'uri: ${item.uri}\n'
             'isPlayable: ${item.isPlayable}\n'
             'artists: ${item.artists!.length}\n'
