@@ -40,10 +40,6 @@ Future main() async {
         trackOne.href,
         'https://api.spotify.com/v1/tracks/6OmhkSOpvYBokMKQxpIGx2',
       );
-      expect(
-        trackOne.previewUrl,
-        'https://p.scdn.co/mp3-preview/81b57845f672fa5a0af749489e311ffb9fd552fe?cid=0b297fa8a249464ba34f5861d4140e58',
-      );
       expect(trackOne.name, 'Global Warming (feat. Sensato)');
 
       expect(trackOne.externalUrls != null, true);

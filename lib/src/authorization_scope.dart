@@ -121,7 +121,7 @@ class ConnectAuthorizationScope extends _Scope {
   /// * [PlayerEndpoint.volume]
   /// * [PlayerEndpoint.shuffle]
   /// * [PlayerEndpoint.repeat]
-  /// * [PlayerEndpoint.startOrResume]
+  /// * [PlayerEndpoint._startOrResume]
   /// * [PlayerEndpoint.addToQueue]
   String get modifyPlaybackState => 'user-modify-playback-state';
 

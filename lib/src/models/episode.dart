@@ -16,11 +16,6 @@ class EpisodeSimple extends SpokenAudioContent {
   /// True if the episode is hosted outside of Spotify’s CDN.
   @JsonKey(name: 'is_externally_hosted')
   bool? isExternallyHosted;
-
-  /// Note: This field is deprecated and might be removed in the future.
-  /// Please use the languages field instead. The language used in the episode,
-  /// identified by a ISO 639 code.
-  String? language;
 }
 
 /// Json representation of an episode with information about its show

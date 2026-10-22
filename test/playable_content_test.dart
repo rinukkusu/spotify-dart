@@ -59,7 +59,6 @@ void expectTrack(TrackSimple track, {bool hasUri = true}) {
   expect(track.artists?.single.name, 'Artist');
   expect(track.discNumber, 2);
   expect(track.trackNumber, 3);
-  expect(track.previewUrl, 'https://example.com/preview.mp3');
 }
 
 void expectEpisode(EpisodeSimple episode, {bool hasUri = true}) {
@@ -67,7 +66,6 @@ void expectEpisode(EpisodeSimple episode, {bool hasUri = true}) {
   expect(episode.description, 'Episode description');
   expect(episode.images?.single.url, 'https://example.com/cover.jpg');
   expect(episode.isExternallyHosted, isTrue);
-  expect(episode.language, 'en');
   expect(episode.languages, ['en', 'de']);
   expect(episode.releaseDate, '2024-01-02');
   expect(episode.releaseDatePrecision, DatePrecision.day);
@@ -122,11 +120,6 @@ void main() {
     expectTrack(roundTrip, hasUri: false);
     expect(roundTrip.album?.name, 'Album');
     expect(roundTrip.externalIds?.isrc, 'TEST123');
-
-    // The deprecated full-track accessor must share the inherited storage.
-    final TrackSimple simple = track;
-    simple.previewUrl = 'https://example.com/changed.mp3';
-    expect(encoded(track)['preview_url'], simple.previewUrl);
   });
 
   test('Episode inherits audio fields and preserves episode JSON', () {

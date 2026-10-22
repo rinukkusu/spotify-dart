@@ -36,7 +36,7 @@ void main() async {
   print(album.name);
 
   print('\nAlbum Tracks:');
-  final tracks = await spotify.albums.getTracks(album.id!).all();
+  final tracks = await spotify.albums.tracks(album.id!).all();
   for (final track in tracks) {
     print(track.name);
   }

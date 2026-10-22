@@ -20,23 +20,6 @@ class Track extends TrackSimple {
   /// Known external IDs for this track.
   @JsonKey(name: 'external_ids')
   ExternalIds? externalIds;
-
-  /// A URL to a 30 second preview (MP3 format) of the track. `null` if not
-  /// available.
-  @JsonKey(name: 'preview_url')
-  @override
-  @Deprecated(
-    'This property has been officially deprecated by Spotify'
-    'and may be removed in a future version of this library.',
-  )
-  String? get previewUrl => super.previewUrl;
-
-  @override
-  @Deprecated(
-    'This property has been officially deprecated by Spotify'
-    'and may be removed in a future version of this library.',
-  )
-  set previewUrl(String? value) => super.previewUrl = value;
 }
 
 /// Json representation of a simplified track.
@@ -57,11 +40,6 @@ class TrackSimple extends PlayableContent {
   /// (usually `1` unless the album consists of more than one disc)
   @JsonKey(name: 'disc_number', fromJson: convertToIntIfDoubleValue)
   int? discNumber;
-
-  /// A URL to a 30 second preview (MP3 format) of the track. `null` if not
-  /// available.
-  @JsonKey(name: 'preview_url')
-  String? previewUrl;
 
   /// The number of the track. If an album has several discs, the track number
   /// is the number on the specified disc.

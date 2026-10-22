@@ -156,6 +156,8 @@ class StartWithContextOptions extends StartOrResumeOptions {
 class StartWithUrisOptions extends StartOrResumeOptions {
   StartWithUrisOptions({this.uris, this.positionMs});
 
+  static List<String>? _urisToJson(List<SpotifyUri>? uris) => uris?.map((uri) => uri.toString()).toList();
+
   /// Optional. A JSON array of the Spotify track URIs to play.
   ///
   /// Example:
@@ -165,7 +167,8 @@ class StartWithUrisOptions extends StartOrResumeOptions {
   ///     "spotify:track:1301WleyT98MSxVHPZCA6M"
   /// ]
   /// ```
-  List<String>? uris;
+  @JsonKey(toJson: _urisToJson)
+  List<SpotifyUri>? uris;
 
   /// Optional. The position in milliseconds to start playback.
   @JsonKey(name: 'position_ms', fromJson: convertToIntIfDoubleValue)

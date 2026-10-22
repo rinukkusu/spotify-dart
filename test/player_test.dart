@@ -48,7 +48,7 @@ Future main() async {
           expect(body, '{"uris":["track1"],"position_ms":10}');
         }
       };
-      await spotify.player.startWithTracks(['track1'], positionMs: 10);
+      await spotify.player.startWithTracks([TrackUri('track1')], positionMs: 10);
     });
   });
 }

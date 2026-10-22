@@ -27,10 +27,6 @@ class ChapterSimple extends SpokenAudioContent {
   @override
   Map<String, dynamic> toJson() => _$ChapterSimpleToJson(this);
 
-  /// A URL to a 30 second preview (MP3 format) of the chapter.
-  @JsonKey(name: 'audio_preview_url')
-  String? audioPreviewUrl;
-
   /// The number of the chapter.
   @JsonKey(name: 'chapter_number', fromJson: convertToIntIfDoubleValue)
   int? chapterNumber;

@@ -321,7 +321,7 @@ Future<PlaybackState?> _play(SpotifyApi spotify) async {
     return null;
   }
   var result = await spotify.player.startWithTracks(
-    ['spotify:track:${trackIds.first}?si=0b5aefa2bc764646'],
+    [TrackUri(trackIds.first)],
     positionMs: 10000,
     deviceId: devices.first.id,
   );
