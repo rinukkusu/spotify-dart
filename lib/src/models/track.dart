@@ -41,7 +41,7 @@ class Track extends TrackSimple {
 
 /// Json representation of a simplified track.
 @JsonSerializable()
-class TrackSimple extends PlayableContent implements Restrictable {
+class TrackSimple extends PlayableContent {
   TrackSimple();
 
   factory TrackSimple.fromJson(Map<String, dynamic> json) => _$TrackSimpleFromJson(json);
@@ -75,7 +75,7 @@ class TrackSimple extends PlayableContent implements Restrictable {
 
 /// A song saved in a Spotify user’s “Your Music” library
 @JsonSerializable()
-class TrackSaved extends Object {
+class TrackSaved {
   TrackSaved();
 
   factory TrackSaved.fromJson(Map<String, dynamic> json) => _$TrackSavedFromJson(json);
