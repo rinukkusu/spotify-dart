@@ -654,6 +654,7 @@ Show _$ShowFromJson(Map<String, dynamic> json) => Show()
   ..copyrights =
       (json['copyrights'] as List<dynamic>?)?.map((e) => Copyright.fromJson(e as Map<String, dynamic>)).toList()
   ..description = json['description'] as String?
+  ..htmlDescription = json['html_description'] as String?
   ..explicit = json['explicit'] as bool?
   ..images = (json['images'] as List<dynamic>?)?.map((e) => Image.fromJson(e as Map<String, dynamic>)).toList()
   ..isExternallyHosted = json['is_externally_hosted'] as bool?
@@ -669,6 +670,7 @@ Map<String, dynamic> _$ShowToJson(Show instance) => <String, dynamic>{
       'external_urls': instance.externalUrls?.toJson(),
       'copyrights': instance.copyrights?.map((e) => e.toJson()).toList(),
       'description': instance.description,
+      'html_description': instance.htmlDescription,
       'explicit': instance.explicit,
       'images': instance.images?.map((e) => e.toJson()).toList(),
       'is_externally_hosted': instance.isExternallyHosted,
